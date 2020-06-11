@@ -1,0 +1,47 @@
+<div class="d-flex col">
+  <div class="col">
+    <mat-card>
+      <div class="form-container">
+        <form [formGroup] = productForm>
+          <div class="container" fxLayout="column" fxLayout.xs="column" fxLayoutAlign="start" fxLayoutGap="10px" fxLayoutGap.xs="0">
+            <mat-form-field>
+              <input matInput placeholder="Model Number" formControlName="model_number">
+            </mat-form-field>
+
+            <mat-form-field>
+              <mat-placeholder>Product Name</mat-placeholder>
+              <input matInput formControlName="product_name">
+            </mat-form-field>
+          </div>
+        </form>
+
+        <div class="container" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="end" fxLayoutGap="10px" fxLayoutGap.xs="0" >
+          <button mat-button (click)="onSubmit()" mat-stroked-button [disabled]="!productForm.valid" >
+            Save
+          </button>
+        </div>
+
+      </div>
+    </mat-card>
+
+
+  </div>
+  <div class="col" id="customer-table">
+    <table class="table" id="my-table">
+      <thead>
+      <tr>
+        <th>ID</th>
+        <th>Product Name</th>
+        <th>Model Number</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr  *ngFor="let product of products">
+        <td>{{product.id}}</td>
+        <td sortable-column="person_name">{{product.product_name}}</td>
+        <td>{{product.model_number}}</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

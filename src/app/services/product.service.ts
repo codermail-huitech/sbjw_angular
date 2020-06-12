@@ -3,6 +3,7 @@ import {Product} from '../models/product.model';
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {Observable, Subject, throwError} from 'rxjs';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {PriceCode} from '../models/priceCode.model';
 
 export interface ProductResponseData {
   success: number;
@@ -21,10 +22,7 @@ export class ProductService {
   constructor(private http: HttpClient) {
     this.http.get('http://127.0.0.1:8000/api/products')
       .subscribe((response: {success: number, data: Product[]}) => {
-        // console.log(response);
-        // @ts-ignore
         const {data} = response;
-        // const data=response.data;
         this.products = data;
         this.productSubject.next([...this.products]);
       });
@@ -34,6 +32,10 @@ export class ProductService {
       product_name : new FormControl(null, [Validators.required, Validators.maxLength(20), Validators.minLength(4)]),
       model_number : new FormControl(null, [Validators.required]),
     });
+  }
+
+  getProductUpdateListener(){
+    return this.productSubject.asObservable();
   }
 
   saveProduct(product){

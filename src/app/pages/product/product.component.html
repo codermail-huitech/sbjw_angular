@@ -12,18 +12,35 @@
               <mat-placeholder>Product Name</mat-placeholder>
               <input matInput formControlName="product_name">
             </mat-form-field>
+
+            <mat-form-field>
+              <mat-label>Price Code</mat-label>
+              <mat-select>
+                <mat-option *ngFor="let priceCode of priceCodes" [value]="priceCode.id">
+                  {{priceCode.price_code_name}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <mat-form-field>
+              <mat-label>Price Code</mat-label>
+              <mat-select>
+                <mat-option *ngFor="let productCategory of productCategories" [value]="productCategory.id">
+                  {{productCategory.category_name}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
           </div>
         </form>
 
         <div class="container" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="end" fxLayoutGap="10px" fxLayoutGap.xs="0" >
-          <button mat-button (click)="onSubmit()" mat-stroked-button [disabled]="!productForm.valid" >
+          <button mat-button (click)="onSubmit()" mat-stroked-button >
             Save
           </button>
         </div>
 
       </div>
     </mat-card>
-
 
   </div>
   <div class="col" id="customer-table">

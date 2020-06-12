@@ -2,6 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import {ProductService} from '../../services/product.service';
 import {Product} from '../../models/product.model';
 import {FormGroup} from '@angular/forms';
+import {PriceCodeService} from '../../services/price-code.service';
+import {PriceCode} from '../../models/priceCode.model';
+import {ProductCategoryService} from '../../services/product-category.service';
+import {ProductCategory} from '../../models/productCategory.model';
 
 @Component({
   selector: 'app-product',
@@ -10,16 +14,25 @@ import {FormGroup} from '@angular/forms';
 })
 export class ProductComponent implements OnInit {
   products: Product[] = [];
+  priceCodes: PriceCode[] = [];
+  productCategories: ProductCategory[] = [];
   productForm: FormGroup;
-  constructor(private productService: ProductService) {
+  constructor(private productService: ProductService, private priceCodeService: PriceCodeService, private productCategoryService: ProductCategoryService) {
   }
 
   ngOnInit(): void {
 
     this.productForm = this.productService.productForm;
-
-    this.productService.productSubject.subscribe((responseProducts: Product[]) => {
+    this.productService.getProductUpdateListener().subscribe((responseProducts: Product[]) => {
       this.products = responseProducts;
+    });
+
+    this.priceCodeService.getPriceCodeUpdateListener().subscribe((responsePriceCodes: PriceCode[]) => {
+      this.priceCodes = responsePriceCodes;
+    });
+
+    this.productCategoryService.getProductCategoryUpdateListener().subscribe((responseProductCategory: ProductCategory[]) => {
+      this.productCategories = responseProductCategory;
     });
   }
 

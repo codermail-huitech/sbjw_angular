@@ -42,6 +42,7 @@ export class ProductComponent implements OnInit {
   }
 
   populateFormByCurrentProduct(product: Product){
+    console.log(product);
     this.productService.fillFormByUpdatebaleData(product);
   }
 

@@ -50,6 +50,8 @@
         <th>ID</th>
         <th>Product Name</th>
         <th>Model Number</th>
+        <th>Price Code</th>
+        <th>Product Category</th>
         <th>Edit</th>
       </tr>
       </thead>
@@ -58,6 +60,8 @@
         <td>{{product.id}}</td>
         <td sortable-column="person_name">{{product.product_name}}</td>
         <td>{{product.model_number}}</td>
+        <td>{{product.price_code_name}}</td>
+        <td>{{product.category_name}}</td>
         <td>
           <button mat-icon-button color="primary" aria-label="Edit Product" (click)="populateFormByCurrentProduct(product)">
             <mat-icon>edit</mat-icon>

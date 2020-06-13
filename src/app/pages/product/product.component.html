@@ -15,7 +15,7 @@
 
             <mat-form-field>
               <mat-label>Price Code</mat-label>
-              <mat-select>
+              <mat-select formControlName="price_code_id">
                 <mat-option *ngFor="let priceCode of priceCodes" [value]="priceCode.id">
                   {{priceCode.price_code_name}}
                 </mat-option>
@@ -24,7 +24,7 @@
 
             <mat-form-field>
               <mat-label>Price Code</mat-label>
-              <mat-select>
+              <mat-select formControlName="product_category_id">
                 <mat-option *ngFor="let productCategory of productCategories" [value]="productCategory.id">
                   {{productCategory.category_name}}
                 </mat-option>

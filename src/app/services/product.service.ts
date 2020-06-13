@@ -31,6 +31,8 @@ export class ProductService {
       id : new FormControl(null),
       product_name : new FormControl(null, [Validators.required, Validators.maxLength(20), Validators.minLength(4)]),
       model_number : new FormControl(null, [Validators.required]),
+      price_code_id : new FormControl(null, [Validators.required]),
+      product_category_id : new FormControl(null, [Validators.required])
     });
   }
 
@@ -39,11 +41,11 @@ export class ProductService {
   }
 
   saveProduct(product){
-    console.log(product);
     return this.http.post<ProductResponseData>('http://127.0.0.1:8000/api/products', product)
       .subscribe((response: {success: number, data: Product})  => {
-        // this.products.unshift(response.data);
-        // this.productSubject.next([...this.products]);
+        console.log(response);
+        this.products.unshift(response.data);
+        this.productSubject.next([...this.products]);
       });
   }
 

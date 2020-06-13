@@ -60,10 +60,12 @@ export class ProductService {
   }
 
   updateProduct(product){
+
     return this.http.patch<ProductResponseData>('http://127.0.0.1:8000/api/products' , product)
       .pipe(catchError(this._serverError), tap((response: {success: number, data: Product}) => {
         const index = this.products.findIndex(x => x.id === product.id);
         this.products[index] = response.data;
+        console.log(response);
         this.productSubject.next([...this.products]);
       }));
   }
@@ -76,11 +78,11 @@ export class ProductService {
       // instead of the line above:
       // return Observable.throw(err.text() || 'backend server error');
     }
-    if (err.status == 0){
+    if (err.status === 0){
       // tslint:disable-next-line:label-position
       return throwError ({status: err.status, message: 'Backend Server is not Working', statusText: err.statusText});
     }
-    if (err.status == 401){
+    if (err.status === 401){
       // tslint:disable-next-line:label-position
       return throwError ({status: err.status, message: 'Your are not authorised', statusText: err.statusText});
     }

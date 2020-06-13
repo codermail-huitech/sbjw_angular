@@ -6,6 +6,9 @@ import {PriceCodeService} from '../../services/price-code.service';
 import {PriceCode} from '../../models/priceCode.model';
 import {ProductCategoryService} from '../../services/product-category.service';
 import {ProductCategory} from '../../models/productCategory.model';
+import {Observable} from 'rxjs';
+import {UpdateSncakBarComponent} from '../customer/update-sncak-bar/update-sncak-bar.component';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-product',
@@ -17,7 +20,10 @@ export class ProductComponent implements OnInit {
   priceCodes: PriceCode[] = [];
   productCategories: ProductCategory[] = [];
   productForm: FormGroup;
-  constructor(private productService: ProductService, private priceCodeService: PriceCodeService, private productCategoryService: ProductCategoryService) {
+
+
+  // tslint:disable-next-line:max-line-length
+  constructor(private productService: ProductService, private priceCodeService: PriceCodeService, private productCategoryService: ProductCategoryService, private snackBar: MatSnackBar) {
   }
 
   ngOnInit(): void {
@@ -51,7 +57,21 @@ export class ProductComponent implements OnInit {
   }
 
   updateProduct(){
-    this.productService.updateProduct(this.productForm.value);
+    let updateObserable: Observable<any>;
+    updateObserable = this.productService.updateProduct(this.productForm.value);
+    updateObserable.subscribe((response) => {
+      if (response.success === 1){
+        this.snackBar.openFromComponent(UpdateSncakBarComponent, {
+          duration: 4000, data: {message: 'Product Updated!'}
+        });
+      }
+    }, (error) => {
+      console.log('error occured ');
+      console.log(error);
+      this.snackBar.openFromComponent(UpdateSncakBarComponent, {
+        duration: 4000, data: {message: error.message}
+      });
+    });
   }
 
 }

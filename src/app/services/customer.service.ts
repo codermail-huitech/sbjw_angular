@@ -1,10 +1,9 @@
 import {Injectable} from '@angular/core';
 import {Customer} from '../models/customer.model';
-import {Observable, Subject, throwError} from 'rxjs';
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
-import {User} from '../models/user.model';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {catchError, tap} from 'rxjs/operators';
+import {Subject, throwError} from 'rxjs';
 
 
 export interface CustomerResponseData {
@@ -85,7 +84,7 @@ export class CustomerService {
   deleteCustomer(id){
     return this.http.delete<{success: number, data: string}>('http://127.0.0.1:8000/api/customers/' + id)
       .pipe(catchError(this._serverError), tap((response: {success: number, data: string}) => {
-       if (response.success == 1){
+       if (response.success === 1){
          const index = this.customerData.findIndex(x => x.id === id);
          if (index !== -1) {
            this.customerData.splice(index, 1);
@@ -114,11 +113,11 @@ export class CustomerService {
       // instead of the line above:
       // return Observable.throw(err.text() || 'backend server error');
     }
-    if (err.status == 0){
+    if (err.status === 0){
       // tslint:disable-next-line:label-position
       return throwError ({status: err.status, message: 'Backend Server is not Working', statusText: err.statusText});
     }
-    if (err.status == 401){
+    if (err.status === 401){
       // tslint:disable-next-line:label-position
       return throwError ({status: err.status, message: 'Your are not authorised', statusText: err.statusText});
     }

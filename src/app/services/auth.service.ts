@@ -33,7 +33,7 @@ export class AuthService {
     const loadedUser = new User(userData.id, userData.personName, userData._authKey, userData.personTypeId);
     if (loadedUser.authKey){
       this.user.next(loadedUser);
-      // if (loadedUser.isOwner){
+      //  if (loadedUser.isOwner){
       //   this.router.navigate(['/owner']);
       // }
     }

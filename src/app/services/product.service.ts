@@ -55,7 +55,9 @@ export class ProductService {
     return this.http.post<ProductResponseData>('http://127.0.0.1:8000/api/products', product)
       .subscribe((response: {success: number, data: Product})  => {
         this.products.unshift(response.data);
+
         this.productSubject.next([...this.products]);
+        console.log(this.products);
       });
   }
 
@@ -87,6 +89,20 @@ export class ProductService {
       return throwError ({status: err.status, message: 'Your are not authorised', statusText: err.statusText});
     }
     return throwError(err);
+  }
+
+  deleteProduct(id){
+    return this.http.delete<{success: number, id: number}>('http://127.0.0.1:8000/api/products/' + id)
+      .pipe(catchError(this._serverError), tap((response: {success: number, id: number}) => {
+        if (response.success == 1){
+          const index = this.products.findIndex(x => x.id === id);
+          if (index !== -1) {
+            this.products.splice(index, 1);
+          }
+        }
+
+        this.productSubject.next([...this.products]); // here two user is used one is user and another user is subject of rxjs
+      }));  // this.handleError is a method created by me
   }
 
 }

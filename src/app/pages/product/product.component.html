@@ -47,17 +47,18 @@
     <table class="table" id="my-table">
       <thead>
       <tr>
-        <th>ID</th>
+        <th>SL No.</th>
         <th>Product Name</th>
         <th>Model Number</th>
         <th>Price Code</th>
         <th>Product Category</th>
         <th>Edit</th>
+        <th>Delete</th>
       </tr>
       </thead>
       <tbody>
-      <tr  *ngFor="let product of products">
-        <td>{{product.id}}</td>
+      <tr  *ngFor="let product of products;let indexOfelement=index;">
+        <td>{{indexOfelement+1}}</td>
         <td sortable-column="person_name">{{product.product_name}}</td>
         <td>{{product.model_number}}</td>
         <td>{{product.price_code_name}}</td>
@@ -65,6 +66,11 @@
         <td>
           <button mat-icon-button color="primary" aria-label="Edit Product" (click)="populateFormByCurrentProduct(product)">
             <mat-icon>edit</mat-icon>
+          </button>
+        </td>
+        <td>
+          <button mat-icon-button color="warn" aria-label="Edit Customer" (click)="deleteCurrentProduct(product)">
+            <mat-icon>delete</mat-icon>
           </button>
         </td>
       </tr>

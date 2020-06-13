@@ -31,6 +31,8 @@ export class ProductService {
       id : new FormControl(null),
       product_name : new FormControl(null, [Validators.required, Validators.maxLength(20), Validators.minLength(4)]),
       model_number : new FormControl(null, [Validators.required]),
+      price_code_id : new FormControl(null, [Validators.required]),
+      product_category_id : new FormControl(null, [Validators.required]),
     });
   }
 

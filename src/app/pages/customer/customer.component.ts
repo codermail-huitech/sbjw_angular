@@ -45,6 +45,7 @@ export class CustomerComponent implements OnInit {
   }
 
   onSubmit() {
+    console.log(this.customerForm.value);
     this.customerService.saveCustomer(this.customerForm.value);
   }
 

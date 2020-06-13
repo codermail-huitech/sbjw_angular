@@ -23,6 +23,7 @@ export class ProductComponent implements OnInit {
   ngOnInit(): void {
 
     this.productForm = this.productService.productForm;
+    this.products = this.productService.getProducts();
     this.productService.getProductUpdateListener().subscribe((responseProducts: Product[]) => {
       this.products = responseProducts;
     });
@@ -36,9 +37,20 @@ export class ProductComponent implements OnInit {
     });
   }
 
+  clearProductForm(){
+    this.productForm.reset();
+  }
+
+  populateFormByCurrentProduct(product: Product){
+    this.productService.fillFormByUpdatebaleData(product);
+  }
+
   onSubmit(){
-    console.log(this.productForm.value);
     this.productService.saveProduct(this.productForm.value);
+  }
+
+  updateProduct(){
+    this.productService.updateProduct(this.productForm.value);
   }
 
 }

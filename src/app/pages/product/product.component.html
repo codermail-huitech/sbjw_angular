@@ -34,9 +34,9 @@
         </form>
 
         <div class="container" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="end" fxLayoutGap="10px" fxLayoutGap.xs="0" >
-          <button mat-button (click)="onSubmit()" mat-stroked-button >
-            Save
-          </button>
+          <button mat-button (click)="onSubmit()" [disabled]="!productForm.valid" mat-stroked-button>Save</button>
+          <button mat-button (click)="updateProduct()" [disabled]="!productForm.dirty" mat-stroked-button>Update</button>
+          <button mat-button (click)="clearProductForm()" mat-stroked-button>clear</button>
         </div>
 
       </div>
@@ -50,6 +50,7 @@
         <th>ID</th>
         <th>Product Name</th>
         <th>Model Number</th>
+        <th>Edit</th>
       </tr>
       </thead>
       <tbody>
@@ -57,6 +58,11 @@
         <td>{{product.id}}</td>
         <td sortable-column="person_name">{{product.product_name}}</td>
         <td>{{product.model_number}}</td>
+        <td>
+          <button mat-icon-button color="primary" aria-label="Edit Product" (click)="populateFormByCurrentProduct(product)">
+            <mat-icon>edit</mat-icon>
+          </button>
+        </td>
       </tr>
       </tbody>
     </table>

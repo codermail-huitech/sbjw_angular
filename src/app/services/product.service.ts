@@ -35,17 +35,33 @@ export class ProductService {
       product_category_id : new FormControl(null, [Validators.required]),
     });
   }
+  getProducts(){
+    // when no data it will return null;
+    return [...this.products];
+  }
+
+  fillFormByUpdatebaleData(product){
+    this.productForm.setValue(product);
+  }
 
   getProductUpdateListener(){
     return this.productSubject.asObservable();
   }
 
   saveProduct(product){
-    console.log(product);
     return this.http.post<ProductResponseData>('http://127.0.0.1:8000/api/products', product)
       .subscribe((response: {success: number, data: Product})  => {
-        // this.products.unshift(response.data);
-        // this.productSubject.next([...this.products]);
+        this.products.unshift(response.data);
+        this.productSubject.next([...this.products]);
+      });
+  }
+
+  updateProduct(product){
+    return this.http.patch<ProductResponseData>('http://127.0.0.1:8000/api/products', product)
+      .subscribe((response: {success: number, data: Product})  => {
+        const index = this.products.findIndex(x => x.id === product.id);
+        this.products[index] = response.data;
+        this.productSubject.next([...this.products]);
       });
   }
 

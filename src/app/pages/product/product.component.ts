@@ -6,6 +6,10 @@ import {PriceCodeService} from '../../services/price-code.service';
 import {PriceCode} from '../../models/priceCode.model';
 import {ProductCategoryService} from '../../services/product-category.service';
 import {ProductCategory} from '../../models/productCategory.model';
+import {Customer} from "../../models/customer.model";
+import {UpdateSncakBarComponent} from "../customer/update-sncak-bar/update-sncak-bar.component";
+import {MatSnackBar} from "@angular/material/snack-bar";
+import {ConfirmationDialogService} from "../../common/confirmation-dialog/confirmation-dialog.service";
 
 @Component({
   selector: 'app-product',
@@ -13,11 +17,15 @@ import {ProductCategory} from '../../models/productCategory.model';
   styleUrls: ['./product.component.scss']
 })
 export class ProductComponent implements OnInit {
+
+  public searchTerm: string;
+  public currentError: any;
   products: Product[] = [];
   priceCodes: PriceCode[] = [];
   productCategories: ProductCategory[] = [];
   productForm: FormGroup;
-  constructor(private productService: ProductService, private priceCodeService: PriceCodeService, private productCategoryService: ProductCategoryService) {
+  constructor(private productService: ProductService, private priceCodeService: PriceCodeService, private productCategoryService: ProductCategoryService,private _snackBar: MatSnackBar
+    ,private confirmationDialogService: ConfirmationDialogService) {
   }
 
   ngOnInit(): void {
@@ -52,6 +60,35 @@ export class ProductComponent implements OnInit {
 
   updateProduct(){
     this.productService.updateProduct(this.productForm.value);
+  }
+
+
+  public deleteCurrentProduct(product: Product) {
+    this.confirmationDialogService.confirm('Please confirm..', 'Do you really want to delete customer ?')
+      .then((confirmed) => {
+        // deleting record if confirmed
+        if (confirmed){
+          this.productService.deleteProduct(product.id).subscribe((response) => {
+            if (response.success == 1){
+              this._snackBar.openFromComponent(UpdateSncakBarComponent, {
+                duration: 4000, data: {message: 'Product Deleted'}
+              });
+            }
+            this.currentError = null;
+          }, (error) => {
+            console.log('error occured ');
+            console.log(error);
+            this.currentError = error;
+            this._snackBar.openFromComponent(UpdateSncakBarComponent, {
+              duration: 4000, data: {message: error.message}
+            });
+          });
+        }
+
+      })
+      .catch(() => {
+        console.log('User dismissed the dialog (e.g., by using ESC, clicking the cross icon, or clicking outside the dialog)');
+      });
   }
 
 }

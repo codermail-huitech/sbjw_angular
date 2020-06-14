@@ -57,9 +57,9 @@
             <input matInput placeholder="Search..." [(ngModel)]="searchTerm" name="search" type="text" autofocus>
           </mat-form-field>
 
-<!--          <mat-form-field class="example-full-width">-->
-<!--            <input matInput placeholder="Items per page" [(ngModel)]="pageSize" name="PageSize" type="text">-->
-<!--          </mat-form-field>-->
+          <mat-form-field class="example-full-width">
+            <input matInput placeholder="Items per page" [(ngModel)]="pageSize" name="PageSize" type="text">
+          </mat-form-field>
         </div>
       </form>
       <table class="table" id="my-table">
@@ -74,7 +74,7 @@
         </tr>
       </thead>
       <tbody>
-      <tr  *ngFor="let product of products | filter:searchTerm;let indexOfelement = index;">
+      <tr  *ngFor="let product of products | filter:searchTerm | paginate: { itemsPerPage: pageSize, currentPage: p };let indexOfelement = index;">
         <td>{{indexOfelement+1}}</td>
         <td sortable-column="person_name">{{product.product_name}}</td>
         <td>{{product.model_number}}</td>
@@ -93,6 +93,23 @@
       </tr>
       </tbody>
     </table>
+      <div fxLayout.xs="column" fxLayout="column" fxFlexFill>
+        <!--    https://www.npmjs.com/package/ngx-pagination-->
+        <!--    npm i ngx-pagination-->
+        <pagination-controls (pageChange)="p = $event"></pagination-controls>
+        <pagination-controls  id="some_id"
+                              (pageChange)="p=($event)"
+                              maxSize="5"
+                              directionLinks="true"
+                              autoHide="true"
+                              responsive="true"
+                              previousLabel="Previous"
+                              nextLabel="Next"
+                              screenReaderPaginationLabel="Pagination"
+                              screenReaderPageLabel="page"
+                              screenReaderCurrentLabel="You're on page">
+        </pagination-controls>
+      </div>
     </div>
   </div>
 </div>

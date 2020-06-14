@@ -27,9 +27,10 @@ export class ProductComponent implements OnInit {
   priceCodes: PriceCode[] = [];
   productCategories: ProductCategory[] = [];
   productForm: FormGroup;
-
+  page: number;
+  pageSize: number;
   filter = new FormControl('');
-
+  p = 1;
 
 
   // tslint:disable-next-line:max-line-length

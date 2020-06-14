@@ -1,6 +1,6 @@
-<div class="d-flex col">
-  <div class="col">
-    <mat-card>
+<div fxLayout.xs="column" fxLayout="row" fxLayoutAlign="space-between stretch" fxFlexFill id="product-div">
+  <div fxLayout="column" fxFlex="40" class="mr-1">
+    <mat-card class="mt-2">
       <div class="form-container">
         <form [formGroup] = productForm>
           <div class="container" fxLayout="column" fxLayout.xs="column" fxLayoutAlign="start" fxLayoutGap="10px" fxLayoutGap.xs="0">
@@ -41,9 +41,8 @@
 
       </div>
     </mat-card>
-
   </div>
-  <div class="col" id="customer-table">
+  <div fxLayout="column" fxFlex="60" class="mr-1">
     <table class="table" id="my-table">
       <thead>
       <tr>
@@ -52,12 +51,11 @@
         <th>Model Number</th>
         <th>Price Code</th>
         <th>Product Category</th>
-        <th>Edit</th>
-        <th>Delete</th>
+        <th colspan="2">Action</th>
       </tr>
       </thead>
       <tbody>
-      <tr  *ngFor="let product of products;let indexOfelement=index;">
+      <tr  *ngFor="let product of products;let indexOfelement = index;">
         <td>{{indexOfelement+1}}</td>
         <td sortable-column="person_name">{{product.product_name}}</td>
         <td>{{product.model_number}}</td>
@@ -78,3 +76,4 @@
     </table>
   </div>
 </div>
+

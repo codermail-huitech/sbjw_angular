@@ -1,12 +1,10 @@
 import { Injectable } from '@angular/core';
 import {Product} from '../models/product.model';
-import {HttpClient, HttpErrorResponse} from '@angular/common/http';
-import {Observable, Subject, throwError} from 'rxjs';
+import {HttpClient} from '@angular/common/http';
+import { Subject, throwError} from 'rxjs';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {PriceCode} from '../models/priceCode.model';
 import {catchError, tap} from 'rxjs/operators';
-import {Customer} from '../models/customer.model';
-import {CustomerResponseData} from './customer.service';
+
 
 export interface ProductResponseData {
   success: number;
@@ -64,7 +62,7 @@ export class ProductService {
   updateProduct(product){
 
     return this.http.patch<ProductResponseData>('http://127.0.0.1:8000/api/products' , product)
-      .pipe(catchError(this._serverError), tap((response: {success: number, data: Product}) => {
+      .pipe(catchError(this.serverError), tap((response: {success: number, data: Product}) => {
         const index = this.products.findIndex(x => x.id === product.id);
         this.products[index] = response.data;
         console.log(response);
@@ -72,7 +70,24 @@ export class ProductService {
       }));
   }
 
-  private _serverError(err: any) {
+
+
+  deleteProduct(id){
+    return this.http.delete<{success: number, id: number}>('http://127.0.0.1:8000/api/products/' + id)
+      .pipe(catchError(this.serverError), tap((response: {success: number, id: number}) => {
+        if (response.success === 1){
+          const index = this.products.findIndex(x => x.id === id);
+          if (index !== -1) {
+            this.products.splice(index, 1);
+          }
+        }
+
+        this.productSubject.next([...this.products]); // here two user is used one is user and another user is subject of rxjs
+      }));  // this.handleError is a method created by me
+  }
+
+
+  private serverError(err: any) {
     // console.log('sever error:', err);  // debug
     if (err instanceof Response) {
       return throwError('backend server error');
@@ -89,20 +104,6 @@ export class ProductService {
       return throwError ({status: err.status, message: 'Your are not authorised', statusText: err.statusText});
     }
     return throwError(err);
-  }
-
-  deleteProduct(id){
-    return this.http.delete<{success: number, id: number}>('http://127.0.0.1:8000/api/products/' + id)
-      .pipe(catchError(this._serverError), tap((response: {success: number, id: number}) => {
-        if (response.success == 1){
-          const index = this.products.findIndex(x => x.id === id);
-          if (index !== -1) {
-            this.products.splice(index, 1);
-          }
-        }
-
-        this.productSubject.next([...this.products]); // here two user is used one is user and another user is subject of rxjs
-      }));  // this.handleError is a method created by me
   }
 
 }

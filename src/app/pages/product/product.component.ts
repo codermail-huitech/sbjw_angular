@@ -6,16 +6,13 @@ import {PriceCodeService} from '../../services/price-code.service';
 import {PriceCode} from '../../models/priceCode.model';
 import {ProductCategoryService} from '../../services/product-category.service';
 import {ProductCategory} from '../../models/productCategory.model';
-<<<<<<< HEAD
+
 import {Observable} from 'rxjs';
 import {UpdateSncakBarComponent} from '../customer/update-sncak-bar/update-sncak-bar.component';
 import {MatSnackBar} from '@angular/material/snack-bar';
-=======
-import {Customer} from "../../models/customer.model";
-import {UpdateSncakBarComponent} from "../customer/update-sncak-bar/update-sncak-bar.component";
-import {MatSnackBar} from "@angular/material/snack-bar";
-import {ConfirmationDialogService} from "../../common/confirmation-dialog/confirmation-dialog.service";
->>>>>>> origin/master
+
+import {ConfirmationDialogService} from '../../common/confirmation-dialog/confirmation-dialog.service';
+
 
 @Component({
   selector: 'app-product',
@@ -30,15 +27,12 @@ export class ProductComponent implements OnInit {
   priceCodes: PriceCode[] = [];
   productCategories: ProductCategory[] = [];
   productForm: FormGroup;
-<<<<<<< HEAD
+
 
 
   // tslint:disable-next-line:max-line-length
-  constructor(private productService: ProductService, private priceCodeService: PriceCodeService, private productCategoryService: ProductCategoryService, private snackBar: MatSnackBar) {
-=======
-  constructor(private productService: ProductService, private priceCodeService: PriceCodeService, private productCategoryService: ProductCategoryService,private _snackBar: MatSnackBar
-    ,private confirmationDialogService: ConfirmationDialogService) {
->>>>>>> origin/master
+  constructor(private productService: ProductService, private priceCodeService: PriceCodeService, private productCategoryService: ProductCategoryService, private  snackBar: MatSnackBar, private confirmationDialogService: ConfirmationDialogService) {
+
   }
 
   ngOnInit(): void {
@@ -96,8 +90,8 @@ export class ProductComponent implements OnInit {
         // deleting record if confirmed
         if (confirmed){
           this.productService.deleteProduct(product.id).subscribe((response) => {
-            if (response.success == 1){
-              this._snackBar.openFromComponent(UpdateSncakBarComponent, {
+            if (response.success === 1){
+              this.snackBar.openFromComponent(UpdateSncakBarComponent, {
                 duration: 4000, data: {message: 'Product Deleted'}
               });
             }
@@ -106,7 +100,7 @@ export class ProductComponent implements OnInit {
             console.log('error occured ');
             console.log(error);
             this.currentError = error;
-            this._snackBar.openFromComponent(UpdateSncakBarComponent, {
+            this.snackBar.openFromComponent(UpdateSncakBarComponent, {
               duration: 4000, data: {message: error.message}
             });
           });

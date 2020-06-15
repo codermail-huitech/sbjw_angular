@@ -1,5 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Customer} from '../models/customer.model';
+import {Agent} from '../models/agent.model';
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {catchError, tap} from 'rxjs/operators';
@@ -43,6 +44,7 @@ export class CustomerService {
         this.customerData = data;
         this.customerSub.next([...this.customerData]);
     });
+
 
     this.customerForm = new FormGroup({
       id : new FormControl(null),

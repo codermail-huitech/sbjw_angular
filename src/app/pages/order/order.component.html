@@ -1,8 +1,9 @@
 <div fxLayout.xs="column" fxLayout="row" fxLayoutAlign="space-between stretch" fxFlexFill id="order-div">
   <div fxLayout="column" fxFlex="40" class="mr-1">
-
-    <form [formGroup] = orderForm >
-      <mat-form-field>
+    <div class="form-container">
+      <form [formGroup] = orderForm >
+        <div class="container" fxLayout="column" fxLayout.xs="column" fxLayoutAlign="start" fxLayoutGap="10px" fxLayoutGap.xs="0">
+          <mat-form-field>
         <mat-label>Customer</mat-label>
         <mat-select  formControlName="customer_id">
           <mat-option *ngFor="let customer of customerList" [value]="customer.id">
@@ -10,8 +11,9 @@
           </mat-option>
         </mat-select>
       </mat-form-field>
-    </form>
-
+        </div>
+      </form>
+    </div>
   </div>
   <div fxLayout="column" fxFlex="60" class="mr-1">
 

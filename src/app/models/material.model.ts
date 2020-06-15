@@ -8,7 +8,7 @@ export class Material{
   silver: number;
   is_main_production_material: number;
 
-  constructor(public id: number, public material_name: string, public material_category_id: number, public gold: number,public silver: number,public is_main_production_material: number){}
+  constructor(public id: number){}
 }
 
 // export class CustomerModel {

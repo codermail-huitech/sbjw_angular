@@ -7,3 +7,19 @@
 //mat-form-field {
 //  margin-right: 12px;
 //}
+
+mat-card{
+  min-height: 100%;
+  background: linear-gradient(90deg, rgba(253, 253, 242, 1) 0%, rgba(255, 255, 255, 0.8) 35%, rgba(204, 232, 204, 0.9) 100%);
+}
+
+.form-container{
+  width: inherit;
+  padding: 5px;
+  border: 2px solid wheat;
+  border-radius: 5px;
+  -webkit-box-shadow: 10px 10px 5px -7px rgba(0,0,0,0.35);
+  -moz-box-shadow: 10px 10px 5px -7px rgba(0,0,0,0.35);
+  box-shadow: 10px 10px 5px -7px rgba(0,0,0,0.35);
+  background: linear-gradient(90deg, rgba(206, 232, 17, 0.9) 0%, rgba(232, 197, 14, 0.7) 35%, rgba(232, 221, 24, 0.6) 100%);
+}

@@ -1,5 +1,5 @@
-
-<mat-card>
+<div id="login-outer-div">
+  <mat-card>
   <mat-card-title>
 
   </mat-card-title>
@@ -38,33 +38,4 @@
     </form>
   </mat-card-content>
 </mat-card>
-
-<!--<div class="row">-->
-<!--  <div class="col-xs-12 col-md-6 offset-3">-->
-<!--    <div *ngIf="isLoading" style="text-align: center">-->
-<!--      <app-loading-spinner></app-loading-spinner>-->
-<!--    </div>-->
-
-
-<!--    <form #authForm="ngForm" (ngSubmit)="onSubmit(authForm)" *ngIf="!isLoading">-->
-<!--      <div class="form-group">-->
-<!--        <label for="email">Email</label>-->
-<!--        <input type="text" id="email"-->
-<!--               class="form-control"-->
-<!--               ngModel-->
-<!--               name="email"-->
-<!--               required-->
-<!--               minlength="6">-->
-<!--      </div>-->
-<!--      <div class="form-group">-->
-<!--        <label for="password">Password</label>-->
-<!--        <input type="text" id="password" class="form-control" ngModel name="password" required>-->
-<!--      </div>-->
-<!--      <div>-->
-<!--&lt;!&ndash;   [disabled]="authForm.invalid"     &ndash;&gt;-->
-<!--        <button class="btn btn-primary" type="submit" >{{isLoginMode ? 'Login' : 'Sign Up'}}</button> |-->
-<!--        <button class="btn btn-secondary" (click)="onSwitchMode()">Switch to {{isLoginMode ? 'Sign Up' : 'Login' }}</button>-->
-<!--      </div>-->
-<!--    </form>-->
-<!--  </div>-->
-<!--</div>-->
+</div>

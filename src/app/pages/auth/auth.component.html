@@ -1,9 +1,12 @@
 
 <mat-card>
   <mat-card-title>
-    <app-loading-spinner></app-loading-spinner>
+
   </mat-card-title>
   <mat-card-title *ngIf="!isLoading" style="text-align: center">Login</mat-card-title>
+  <mat-card-title *ngIf="isLoading" style="text-align: center">
+    <app-loading-spinner></app-loading-spinner>
+  </mat-card-title>
   <mat-card-content>
     <form #authForm="ngForm" (ngSubmit)="onSubmit(authForm)" *ngIf="!isLoading">
       <p>

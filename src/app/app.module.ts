@@ -33,6 +33,7 @@ import {NgxPaginationModule} from 'ngx-pagination';
 import { UpdateSncakBarComponent } from './pages/customer/update-sncak-bar/update-sncak-bar.component';
 import { ConfirmationDialogComponent } from './common/confirmation-dialog/confirmation-dialog.component';
 import { LoaidngRippleComponent } from './shared/loaidng-ripple/loaidng-ripple.component';
+import { LoaidngEllipsisComponent } from './shared/loaidng-ellipsis/loaidng-ellipsis.component';
 
 
 @NgModule({
@@ -49,7 +50,8 @@ import { LoaidngRippleComponent } from './shared/loaidng-ripple/loaidng-ripple.c
     OwnerComponent,
     UpdateSncakBarComponent,
     ConfirmationDialogComponent,
-    LoaidngRippleComponent
+    LoaidngRippleComponent,
+    LoaidngEllipsisComponent
 
   ],
   imports: [

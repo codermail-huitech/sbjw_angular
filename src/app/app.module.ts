@@ -36,6 +36,7 @@ import { LoaidngRippleComponent } from './shared/loaidng-ripple/loaidng-ripple.c
 import { LoaidngEllipsisComponent } from './shared/loaidng-ellipsis/loaidng-ellipsis.component';
 import { LoaidngHourglassComponent } from './shared/loaidng-hourglass/loaidng-hourglass.component';
 import { LoaidngRollerComponent } from './shared/loaidng-roller/loaidng-roller.component';
+import { OrderComponent } from './pages/order/order.component';
 
 
 @NgModule({
@@ -55,7 +56,8 @@ import { LoaidngRollerComponent } from './shared/loaidng-roller/loaidng-roller.c
     LoaidngRippleComponent,
     LoaidngEllipsisComponent,
     LoaidngHourglassComponent,
-    LoaidngRollerComponent
+    LoaidngRollerComponent,
+    OrderComponent
 
   ],
   imports: [

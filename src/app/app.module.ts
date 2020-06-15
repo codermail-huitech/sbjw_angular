@@ -32,6 +32,7 @@ import {Ng2SearchPipeModule} from 'ng2-search-filter';
 import {NgxPaginationModule} from 'ngx-pagination';
 import { UpdateSncakBarComponent } from './pages/customer/update-sncak-bar/update-sncak-bar.component';
 import { ConfirmationDialogComponent } from './common/confirmation-dialog/confirmation-dialog.component';
+import { LoaidngRippleComponent } from './shared/loaidng-ripple/loaidng-ripple.component';
 
 
 @NgModule({
@@ -47,7 +48,8 @@ import { ConfirmationDialogComponent } from './common/confirmation-dialog/confir
     LoadingSpinnerComponent,
     OwnerComponent,
     UpdateSncakBarComponent,
-    ConfirmationDialogComponent
+    ConfirmationDialogComponent,
+    LoaidngRippleComponent
 
   ],
   imports: [

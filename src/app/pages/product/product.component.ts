@@ -28,7 +28,7 @@ export class ProductComponent implements OnInit {
   productCategories: ProductCategory[] = [];
   productForm: FormGroup;
   page: number;
-  pageSize: number;
+  pageSize = 15;
   filter = new FormControl('');
   p = 1;
 

@@ -34,6 +34,8 @@ import { UpdateSncakBarComponent } from './pages/customer/update-sncak-bar/updat
 import { ConfirmationDialogComponent } from './common/confirmation-dialog/confirmation-dialog.component';
 import { LoaidngRippleComponent } from './shared/loaidng-ripple/loaidng-ripple.component';
 import { LoaidngEllipsisComponent } from './shared/loaidng-ellipsis/loaidng-ellipsis.component';
+import { LoaidngHourglassComponent } from './shared/loaidng-hourglass/loaidng-hourglass.component';
+import { LoaidngRollerComponent } from './shared/loaidng-roller/loaidng-roller.component';
 
 
 @NgModule({
@@ -51,7 +53,9 @@ import { LoaidngEllipsisComponent } from './shared/loaidng-ellipsis/loaidng-elli
     UpdateSncakBarComponent,
     ConfirmationDialogComponent,
     LoaidngRippleComponent,
-    LoaidngEllipsisComponent
+    LoaidngEllipsisComponent,
+    LoaidngHourglassComponent,
+    LoaidngRollerComponent
 
   ],
   imports: [

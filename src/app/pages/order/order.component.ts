@@ -7,6 +7,9 @@ import {OrderService} from '../../services/order.service';
 import {Agent} from '../../models/agent.model';
 import {Material} from '../../models/material.model';
 import alasql from 'alasql';
+import { DatePipe } from '@angular/common';
+import {ProductService} from "../../services/product.service";
+import {Product} from "../../models/product.model";
 
 
 @Component({
@@ -22,12 +25,23 @@ export class OrderComponent implements OnInit {
   customerList: Customer[];
   agentList: Agent[];
   materialList: Material[];
+  products: Product[];
   orderForm: FormGroup;
+<<<<<<< HEAD
   yourModelDate: string;
   minDate = new Date(2010, 11, 2)
   maxDate = new Date(2021, 3, 2)
   startDate = new Date(2020, 0, 2);
   constructor(private customerService: CustomerService, private orderService: OrderService) {
+=======
+  pipe = new DatePipe('en-US');
+
+  now = Date.now();
+
+
+
+  constructor(private customerService: CustomerService, private orderService: OrderService,private productService: ProductService) {
+>>>>>>> c4a6470965e28570b73f3cbd2f776835aa50af70
 
   }
   onlyOdds = (d: Date): boolean => {
@@ -52,11 +66,26 @@ export class OrderComponent implements OnInit {
     this.orderService.getMaterialUpdateListener()
       .subscribe((material: Material[]) => {
         this.materialList = material;
-        console.log(this.materialList);
         this.materialList =  alasql("select * from ? where material_name='90 Ginnie' or material_name='92 Ginnie'", [this.materialList]);
-        console.log(this.materialList);
-
       });
+
+    this.productService.getProductUpdateListener()
+      .subscribe((responseProducts: Product[]) => {
+      this.products = responseProducts;
+    });
+  }
+
+  onSubmit(){
+    console.log(this.orderForm.value);
+    // console.log(this.orderForm.value.order_date.transform("dd-MM-yyyy"));
+    // console.log(this.datePipe.transform("Date Thu Jun 25 2020 00:00:00 GMT+0530","dd-MM-yyyy"))
+
+    this.orderForm.value.order_date = this.pipe.transform(this.orderForm.value.order_date, 'yyyy/MM/dd');
+    this.orderForm.value.delivery_date = this.pipe.transform(this.orderForm.value.delivery_date, 'yyyy/MM/dd');
+    console.log(this.orderForm.value.order_date);
+    console.log(this.orderForm.value.delivery_date);
+
+
   }
 
 }

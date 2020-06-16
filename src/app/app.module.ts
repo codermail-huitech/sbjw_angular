@@ -38,6 +38,9 @@ import { LoaidngHourglassComponent } from './shared/loaidng-hourglass/loaidng-ho
 import { LoaidngRollerComponent } from './shared/loaidng-roller/loaidng-roller.component';
 import { OrderComponent } from './pages/order/order.component';
 
+import { DateAdapter } from '@angular/material/core';
+import { DateFormat } from './date-format';
+
 
 @NgModule({
   declarations: [
@@ -76,7 +79,12 @@ import { OrderComponent } from './pages/order/order.component';
     Ng2SearchPipeModule,
     NgxPaginationModule
   ],
-  providers: [{provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorInterceptor, multi: true}],
+  providers: [{provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorInterceptor, multi: true},
+              {provide: DateAdapter, useClass: DateFormat} ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+  constructor(private dateAdapter: DateAdapter<Date>) {
+    dateAdapter.setLocale('en-in'); // DD/MM/YYYY
+  }
+}

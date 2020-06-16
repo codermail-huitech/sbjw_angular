@@ -4,13 +4,23 @@
       <form [formGroup] = orderForm >
         <div class="container" fxLayout="column" fxLayout.xs="column" fxLayoutAlign="start" fxLayoutGap="10px" fxLayoutGap.xs="0">
           <mat-form-field>
-        <mat-label>Customer</mat-label>
-        <mat-select  formControlName="customer_id">
-          <mat-option *ngFor="let customer of customerList" [value]="customer.id">
-            {{customer.person_name}}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
+            <mat-placeholder>Customer  <mat-icon> account_box</mat-icon></mat-placeholder>
+            <mat-select  formControlName="customer_id">
+              <mat-option *ngFor="let customer of customerList" [value]="customer.id">
+                {{customer.person_name}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="container" fxLayout="column" fxLayout.xs="column" fxLayoutAlign="start" fxLayoutGap="10px" fxLayoutGap.xs="0">
+          <mat-form-field>
+            <mat-placeholder>Agent  <mat-icon> account_box</mat-icon></mat-placeholder>
+            <mat-select  formControlName="customer_id">
+              <mat-option *ngFor="let customer of customerList" [value]="customer.id">
+                {{customer.person_name}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
         </div>
       </form>
     </div>

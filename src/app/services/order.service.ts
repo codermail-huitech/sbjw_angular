@@ -15,7 +15,7 @@ export class OrderService {
   materialData: Material[] = [];
   agentData: Agent[] = [];
   private agentSub = new Subject<Agent[]>();
-  private materialSub=new Subject<Material[]>();
+  private materialSub = new Subject<Material[]>();
 
   getAgentUpdateListener(){
     console.log('customer listener called');

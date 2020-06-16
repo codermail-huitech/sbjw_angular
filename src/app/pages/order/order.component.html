@@ -3,8 +3,7 @@
     <mat-card class="ml-2 mt-2">
       <div class="form-container">
         <form [formGroup] = orderForm >
-          <div>
-            <div class="row">
+          <div class="container" fxLayout="column" fxLayout.xs="column" fxLayoutAlign="start" fxLayoutGap="10px" fxLayoutGap.xs="0">
               <mat-form-field>
                 <mat-label>Customer</mat-label>
                 <mat-select  formControlName="customer_id">
@@ -14,7 +13,7 @@
                 </mat-select>
               </mat-form-field>
             </div>
-            <div class="row">
+          <div class="container" fxLayout="column" fxLayout.xs="column" fxLayoutAlign="start" fxLayoutGap="10px" fxLayoutGap.xs="0">
               <mat-form-field>
                 <mat-label>Agent</mat-label>
                 <mat-select  formControlName="agent_id">
@@ -24,7 +23,7 @@
                 </mat-select>
               </mat-form-field>
             </div>
-            <div class="row">
+          <div class="container" fxLayout="column" fxLayout.xs="column" fxLayoutAlign="start" fxLayoutGap="10px" fxLayoutGap.xs="0">
               <mat-form-field>
                 <mat-label>Material</mat-label>
                 <mat-select  formControlName="material_id">
@@ -34,8 +33,6 @@
                 </mat-select>
               </mat-form-field>
             </div>
-
-          </div>
         </form>
       </div>
     </mat-card>

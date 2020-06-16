@@ -12,7 +12,7 @@
                   </mat-option>
                 </mat-select>
               </mat-form-field>
-            </div>
+          </div>
           <div class="container" fxLayout="column" fxLayout.xs="column" fxLayoutAlign="start" fxLayoutGap="10px" fxLayoutGap.xs="0">
               <mat-form-field>
                 <mat-label>Agent</mat-label>
@@ -33,13 +33,109 @@
                 </mat-select>
               </mat-form-field>
             </div>
+          <div class="d-flex col">
+            <div class="container col" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="start" fxLayoutGap="10px" fxLayoutGap.xs="0">
+              <mat-form-field class="example-full-width">
+                <mat-label>Choose order date</mat-label>
+                <input matInput [matDatepicker]="picker1" formControlName="order_date">
+                <mat-datepicker-toggle matSuffix [for]="picker1">
+                  <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
+                </mat-datepicker-toggle>
+                <mat-datepicker #picker1></mat-datepicker>
+              </mat-form-field>
+            </div>
+
+            <div class="container col" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="start" fxLayoutGap="10px" fxLayoutGap.xs="0">
+              <mat-form-field class="example-full-width">
+                <mat-label>Choose delivery date</mat-label>
+                <input matInput [matDatepicker]="picker2" formControlName="delivery_date">
+                <mat-datepicker-toggle matSuffix [for]="picker2">
+                  <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
+                </mat-datepicker-toggle>
+                <mat-datepicker #picker2></mat-datepicker>
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="container" fxLayout="column" fxLayout.xs="column" fxLayoutAlign="start" fxLayoutGap="10px" fxLayoutGap.xs="0">
+            <mat-form-field class="col-6 example-full-width">
+              <mat-label>Model number</mat-label>
+              <mat-select  formControlName="model_id">
+                <mat-option *ngFor="let product of products" [value]="product.id">
+                  {{product.model_number}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="d-flex col">
+            <div class="container col-4" fxLayout="column" fxLayout.xs="column" fxLayoutAlign="start" fxLayoutGap="10px" fxLayoutGap.xs="0">
+              <mat-form-field>
+                <mat-placeholder>PLoss</mat-placeholder>
+                <input matInput  formControlName="pLoss">
+              </mat-form-field>
+            </div>
+
+            <div class="container col-4" fxLayout="column" fxLayout.xs="column" fxLayoutAlign="start" fxLayoutGap="10px" fxLayoutGap.xs="0">
+              <mat-form-field>
+                <mat-placeholder>Price</mat-placeholder>
+                <input matInput  formControlName="price">
+              </mat-form-field>
+            </div>
+
+            <div class="container col-4" fxLayout="column" fxLayout.xs="column" fxLayoutAlign="start" fxLayoutGap="10px" fxLayoutGap.xs="0">
+              <mat-form-field>
+                <mat-placeholder>Price Code</mat-placeholder>
+                <input matInput  formControlName="price_code_id">
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="d-flex col">
+            <div class="container col" fxLayout="column" fxLayout.xs="column" fxLayoutAlign="start" fxLayoutGap="10px" fxLayoutGap.xs="0">
+              <mat-form-field>
+                <mat-placeholder>Approx Gold</mat-placeholder>
+                <input matInput  formControlName="approxGold">
+              </mat-form-field>
+            </div>
+
+            <div class="container col" fxLayout="column" fxLayout.xs="column" fxLayoutAlign="start" fxLayoutGap="10px" fxLayoutGap.xs="0">
+              <mat-form-field>
+                <mat-placeholder>Size</mat-placeholder>
+                <input matInput  formControlName="size">
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="d-flex col">
+            <div class="container col" fxLayout="column" fxLayout.xs="column" fxLayoutAlign="start" fxLayoutGap="10px" fxLayoutGap.xs="0">
+              <mat-form-field>
+                <mat-placeholder>Quantity</mat-placeholder>
+                <input matInput  formControlName="quantity">
+              </mat-form-field>
+            </div>
+
+            <div class="container col" fxLayout="column" fxLayout.xs="column" fxLayoutAlign="start" fxLayoutGap="10px" fxLayoutGap.xs="0">
+              <mat-form-field>
+                <mat-placeholder>Amount</mat-placeholder>
+                <input matInput  formControlName="amount">
+              </mat-form-field>
+            </div>
+          </div>
+
         </form>
+
+        <div class="container" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="end" fxLayoutGap="10px" fxLayoutGap.xs="0" >
+          <button mat-button (click)="onSubmit()" mat-stroked-button>Add Order</button>
+        </div>
+
       </div>
     </mat-card>
 
+
+
   </div>
   <div fxLayout="column" fxFlex="60" class="mr-1">
-
+    <pre>{{this.orderForm.value.order_date | date}}</pre>
   </div>
 </div>
 

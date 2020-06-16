@@ -7,6 +7,9 @@ import {OrderService} from "../../services/order.service";
 import {Agent} from "../../models/agent.model";
 import {Material} from "../../models/material.model";
 import alasql from 'alasql';
+import { DatePipe } from '@angular/common';
+import {ProductService} from "../../services/product.service";
+import {Product} from "../../models/product.model";
 
 @Component({
   selector: 'app-order',
@@ -21,8 +24,15 @@ export class OrderComponent implements OnInit {
   customerList: Customer[];
   agentList: Agent[];
   materialList: Material[];
+  products: Product[];
   orderForm: FormGroup;
-  constructor(private customerService: CustomerService, private orderService: OrderService) {
+  pipe = new DatePipe('en-US');
+
+  now = Date.now();
+
+
+
+  constructor(private customerService: CustomerService, private orderService: OrderService,private productService: ProductService) {
 
   }
 
@@ -41,11 +51,26 @@ export class OrderComponent implements OnInit {
     this.orderService.getMaterialUpdateListener()
       .subscribe((material: Material[]) => {
         this.materialList = material;
-        console.log(this.materialList);
         this.materialList =  alasql("select * from ? where material_name='90 Ginnie' or material_name='92 Ginnie'", [this.materialList]);
-        console.log(this.materialList);
-
       });
+
+    this.productService.getProductUpdateListener()
+      .subscribe((responseProducts: Product[]) => {
+      this.products = responseProducts;
+    });
+  }
+
+  onSubmit(){
+    console.log(this.orderForm.value);
+    // console.log(this.orderForm.value.order_date.transform("dd-MM-yyyy"));
+    // console.log(this.datePipe.transform("Date Thu Jun 25 2020 00:00:00 GMT+0530","dd-MM-yyyy"))
+
+    this.orderForm.value.order_date = this.pipe.transform(this.orderForm.value.order_date, 'yyyy/MM/dd');
+    this.orderForm.value.delivery_date = this.pipe.transform(this.orderForm.value.delivery_date, 'yyyy/MM/dd');
+    console.log(this.orderForm.value.order_date);
+    console.log(this.orderForm.value.delivery_date);
+
+
   }
 
 }

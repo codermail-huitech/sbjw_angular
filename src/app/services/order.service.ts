@@ -34,7 +34,16 @@ export class OrderService {
       id : new FormControl(null),
       customer_id : new FormControl(null, [Validators.required]),
       agent_id : new FormControl(null, [Validators.required]),
-      material_id : new FormControl(null, [Validators.required])
+      material_id : new FormControl(null, [Validators.required]),
+      order_date : new FormControl(null, [Validators.required]),
+      delivery_date : new FormControl(null, [Validators.required]),
+      model_id : new FormControl(null, [Validators.required]),
+      pLoss : new FormControl(null, [Validators.required]),
+      price : new FormControl(null, [Validators.required]),
+      price_code_id : new FormControl(null, [Validators.required]),
+      size : new FormControl(null, [Validators.required]),
+      quantity : new FormControl(null, [Validators.required]),
+      amount : new FormControl(null, [Validators.required])
     });
 
     this.http.get('http://127.0.0.1:8000/api/agents')

@@ -2,14 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import {Customer} from '../../models/customer.model';
 import {CustomerService} from '../../services/customer.service';
 // import {FormGroup} from "@angular/forms";
-import {FormControl, FormGroup} from '@angular/forms';
+import {FormGroup} from '@angular/forms';
 import {OrderService} from '../../services/order.service';
 import {Agent} from '../../models/agent.model';
 import {Material} from '../../models/material.model';
 import alasql from 'alasql';
 import { DatePipe } from '@angular/common';
-import {ProductService} from "../../services/product.service";
-import {Product} from "../../models/product.model";
+import {ProductService} from '../../services/product.service';
+import {Product} from '../../models/product.model';
 
 
 @Component({
@@ -27,28 +27,24 @@ export class OrderComponent implements OnInit {
   materialList: Material[];
   products: Product[];
   orderForm: FormGroup;
-<<<<<<< HEAD
   yourModelDate: string;
-  minDate = new Date(2010, 11, 2)
-  maxDate = new Date(2021, 3, 2)
+  minDate = new Date(2010, 11, 2);
+  maxDate = new Date(2021, 3, 2);
   startDate = new Date(2020, 0, 2);
-  constructor(private customerService: CustomerService, private orderService: OrderService) {
-=======
+
   pipe = new DatePipe('en-US');
 
   now = Date.now();
 
 
 
-  constructor(private customerService: CustomerService, private orderService: OrderService,private productService: ProductService) {
->>>>>>> c4a6470965e28570b73f3cbd2f776835aa50af70
-
+  constructor(private customerService: CustomerService, private orderService: OrderService, private productService: ProductService) {
   }
   onlyOdds = (d: Date): boolean => {
     const date = d.getDate();
     // Even dates are disabled.
     return true;
-    return date % 2 == 0;
+    return date % 2 === 0;
   }
 
   ngOnInit(): void {

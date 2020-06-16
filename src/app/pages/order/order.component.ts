@@ -62,7 +62,7 @@ export class OrderComponent implements OnInit {
     this.orderService.getMaterialUpdateListener()
       .subscribe((material: Material[]) => {
         this.materialList = material;
-        this.materialList =  alasql("select * from ? where material_name='90 Ginnie' or material_name='92 Ginnie'", [this.materialList]);
+        // this.materialList =  alasql("select * from ? where material_name='90 Ginnie' or material_name='92 Ginnie'", [this.materialList]);
       });
 
     this.productService.getProductUpdateListener()

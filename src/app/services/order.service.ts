@@ -37,7 +37,7 @@ export class OrderService {
       order_date : new FormControl('', [Validators.required]),
       material_id : new FormControl(null, [Validators.required]),
       delivery_date : new FormControl(null, [Validators.required]),
-      model_id : new FormControl(null, [Validators.required]),
+      model_number : new FormControl(null, [Validators.required]),
       pLoss : new FormControl(null, [Validators.required]),
       price : new FormControl(null, [Validators.required]),
       price_code_id : new FormControl(null, [Validators.required]),
@@ -55,12 +55,21 @@ export class OrderService {
         this.agentSub.next([...this.agentData]);
       });
 
-    this.http.get('http://127.0.0.1:8000/api/materials')
+    // this.http.get('http://127.0.0.1:8000/api/materials')
+    //   .subscribe((response: {success: number, data: Material[]}) => {
+    //     const {data} = response;
+    //     this.materialData = data;
+    //     this.materialSub.next([...this.materialData]);
+    //   });
+
+    this.http.get('http://127.0.0.1:8000/api/orderMaterials')
       .subscribe((response: {success: number, data: Material[]}) => {
         const {data} = response;
         this.materialData = data;
+        console.log(this.materialData);
         this.materialSub.next([...this.materialData]);
       });
+
 
   }
 }

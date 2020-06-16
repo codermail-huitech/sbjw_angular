@@ -34,6 +34,7 @@ export class OrderService {
       id : new FormControl(null),
       customer_id : new FormControl(null, [Validators.required]),
       agent_id : new FormControl(null, [Validators.required]),
+      order_date : new FormControl('', [Validators.required]),
       material_id : new FormControl(null, [Validators.required])
     });
 

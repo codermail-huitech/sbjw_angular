@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import {Customer} from "../../models/customer.model";
-import {CustomerService} from "../../services/customer.service";
+import {Customer} from '../../models/customer.model';
+import {CustomerService} from '../../services/customer.service';
 // import {FormGroup} from "@angular/forms";
 import {FormControl, FormGroup} from '@angular/forms';
-import {OrderService} from "../../services/order.service";
-import {Agent} from "../../models/agent.model";
-import {Material} from "../../models/material.model";
+import {OrderService} from '../../services/order.service';
+import {Agent} from '../../models/agent.model';
+import {Material} from '../../models/material.model';
 import alasql from 'alasql';
+
 
 @Component({
   selector: 'app-order',
@@ -22,8 +23,18 @@ export class OrderComponent implements OnInit {
   agentList: Agent[];
   materialList: Material[];
   orderForm: FormGroup;
+  yourModelDate: string;
+  minDate = new Date(2010, 11, 2)
+  maxDate = new Date(2021, 3, 2)
+  startDate = new Date(2020, 0, 2);
   constructor(private customerService: CustomerService, private orderService: OrderService) {
 
+  }
+  onlyOdds = (d: Date): boolean => {
+    const date = d.getDate();
+    // Even dates are disabled.
+    return true;
+    return date % 2 == 0;
   }
 
   ngOnInit(): void {

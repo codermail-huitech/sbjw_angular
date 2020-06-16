@@ -29,7 +29,7 @@ import {MatTableModule} from '@angular/material/table';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatTabsModule} from '@angular/material/tabs';
 import {MatTooltipModule} from '@angular/material/tooltip';
-import {MatRippleModule} from '@angular/material/core';
+import {MatNativeDateModule, MatRippleModule} from '@angular/material/core';
 
 
 
@@ -67,7 +67,8 @@ import {MatRippleModule} from '@angular/material/core';
     MatTableModule,
     MatSortModule,
     MatPaginatorModule,
-    MatRippleModule
+    MatRippleModule,
+    MatNativeDateModule
   ]
 })
 export class MaterialModule {

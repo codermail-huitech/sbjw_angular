@@ -31,6 +31,7 @@
     "@ng-bootstrap/ng-bootstrap": "^6.0.2",
     "@ngx-pwa/local-storage": "^9.0.3",
     "alasql": "^0.6.0",
+    "alasql-angular": "0.0.19",
     "bootstrap": "^4.4.1",
     "exceljs": "^1.12.0",
     "file-saver": "^2.0.2",

@@ -11,7 +11,8 @@ import {Material} from '../models/material.model';
   providedIn: 'root'
 })
 export class OrderService {
-  orderForm: FormGroup;
+  orderMasterForm: FormGroup;
+  orderDetailsForm: FormGroup;
   materialData: Material[] = [];
   agentData: Agent[] = [];
   private agentSub = new Subject<Agent[]>();
@@ -30,22 +31,24 @@ export class OrderService {
 
 
   constructor(private http: HttpClient) {
-    this.orderForm = new FormGroup({
+    this.orderMasterForm = new FormGroup({
       id : new FormControl(null),
       customer_id : new FormControl(null, [Validators.required]),
       agent_id : new FormControl(null, [Validators.required]),
       order_date : new FormControl('', [Validators.required]),
+      delivery_date : new FormControl(null, [Validators.required])
+    });
+
+    this.orderDetailsForm = new FormGroup({
       material_id : new FormControl(null, [Validators.required]),
-      delivery_date : new FormControl(null, [Validators.required]),
       model_number : new FormControl(null, [Validators.required]),
       pLoss : new FormControl(null, [Validators.required]),
       price : new FormControl(null, [Validators.required]),
-      price_code_id : new FormControl(null, [Validators.required]),
+      price_code : new FormControl(null, [Validators.required]),
       approx_gold : new FormControl(null, [Validators.required]),
       size : new FormControl(null, [Validators.required]),
       quantity : new FormControl(null, [Validators.required]),
       amount : new FormControl(null, [Validators.required])
-
     });
 
     this.http.get('http://127.0.0.1:8000/api/agents')
@@ -69,7 +72,6 @@ export class OrderService {
         console.log(this.materialData);
         this.materialSub.next([...this.materialData]);
       });
-
 
   }
 }

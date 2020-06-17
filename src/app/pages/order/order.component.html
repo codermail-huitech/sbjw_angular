@@ -2,7 +2,7 @@
   <div fxLayout="column" fxFlex="40" class="mr-1">
     <mat-card class="ml-2 mt-2">
       <div class="form-container">
-        <form [formGroup] = orderForm >
+        <form [formGroup] = orderMasterForm >
           <div class="container" fxLayout="column" fxLayout.xs="column" fxLayoutAlign="start" fxLayoutGap="10px" fxLayoutGap.xs="0">
               <mat-form-field>
                 <mat-label>Customer</mat-label>
@@ -23,36 +23,26 @@
                 </mat-select>
               </mat-form-field>
             </div>
-          <div class="container" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="start" fxLayoutGap="10px" fxLayoutGap.xs="0">
-            <mat-form-field class="example-full-width">
-              <mat-label>Order date</mat-label>
-              <input matInput
-                     [matDatepicker]="picker"
-                     formControlName="order_date"
-                     [matDatepickerFilter]="onlyOdds"
-                     [min]="minDate"
-                     [max]="maxDate">
-              <mat-datepicker-toggle matSuffix [for]="picker">
-                <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
-              </mat-datepicker-toggle>
-              <mat-datepicker #picker [startAt]="startDate"></mat-datepicker>
-            </mat-form-field>
-          </div>
-          <div class="container" fxLayout="column" fxLayout.xs="column" fxLayoutAlign="start" fxLayoutGap="10px" fxLayoutGap.xs="0">
-              <mat-form-field>
-                <mat-label>Material</mat-label>
-                <mat-select  formControlName="material_id">
-                  <mat-option *ngFor="let material of materialList" [value]="material.id">
-                    {{material.material_name}}
-                  </mat-option>
-                </mat-select>
-              </mat-form-field>
-            </div>
+<!--          <div class="container" fxLayout="column" fxLayout.xs="column" fxLayoutAlign="start" fxLayoutGap="10px" fxLayoutGap.xs="0">-->
+<!--              <mat-form-field>-->
+<!--                <mat-label>Material</mat-label>-->
+<!--                <mat-select  formControlName="material_id">-->
+<!--                  <mat-option *ngFor="let material of materialList" [value]="material.id">-->
+<!--                    {{material.material_name}}-->
+<!--                  </mat-option>-->
+<!--                </mat-select>-->
+<!--              </mat-form-field>-->
+<!--            </div>-->
           <div class="d-flex col">
             <div class="container col" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="start" fxLayoutGap="10px" fxLayoutGap.xs="0">
               <mat-form-field class="example-full-width">
                 <mat-label>Choose order date</mat-label>
-                <input matInput [matDatepicker]="picker1" formControlName="order_date">
+                <input matInput
+                       [matDatepicker]="picker1"
+                       formControlName="order_date"
+                       [matDatepickerFilter]="onlyOdds"
+                       [min]="minDate"
+                       [max]="maxDate">
                 <mat-datepicker-toggle matSuffix [for]="picker1">
                   <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
                 </mat-datepicker-toggle>
@@ -63,7 +53,11 @@
             <div class="container col" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="start" fxLayoutGap="10px" fxLayoutGap.xs="0">
               <mat-form-field class="example-full-width">
                 <mat-label>Choose delivery date</mat-label>
-                <input matInput [matDatepicker]="picker2" formControlName="delivery_date">
+                <input matInput [matDatepicker]="picker2"
+                       formControlName="delivery_date"
+                       [matDatepickerFilter]="onlyOdds"
+                       [min]="minDate"
+                       [max]="maxDate">
                 <mat-datepicker-toggle matSuffix [for]="picker2">
                   <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
                 </mat-datepicker-toggle>
@@ -71,15 +65,26 @@
               </mat-form-field>
             </div>
           </div>
+        </form>
 
-          <div class="container" fxLayout="column" fxLayout.xs="column" fxLayoutAlign="start" fxLayoutGap="10px" fxLayoutGap.xs="0">
-            <div class="container col-4" fxLayout="column" fxLayout.xs="column" fxLayoutAlign="start" fxLayoutGap="10px" fxLayoutGap.xs="0">
+        <form [formGroup] = orderDetailsForm >
+          <div class="d-flex col">
+            <div class="container col-6" fxLayout="column" fxLayout.xs="column" fxLayoutAlign="start" fxLayoutGap="10px" fxLayoutGap.xs="0">
+              <mat-form-field>
+                <mat-label>Material</mat-label>
+                <mat-select  formControlName="material_id">
+                  <mat-option *ngFor="let material of materialList" [value]="material.id">
+                    {{material.material_name}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="container col-6" fxLayout="column" fxLayout.xs="column" fxLayoutAlign="start" fxLayoutGap="10px" fxLayoutGap.xs="0">
               <mat-form-field>
                 <mat-placeholder>Model Number</mat-placeholder>
                 <input matInput  formControlName="model_number">
               </mat-form-field>
             </div>
-
           </div>
           <div class="d-flex col">
             <div class="container col-4" fxLayout="column" fxLayout.xs="column" fxLayoutAlign="start" fxLayoutGap="10px" fxLayoutGap.xs="0">
@@ -99,7 +104,7 @@
             <div class="container col-4" fxLayout="column" fxLayout.xs="column" fxLayoutAlign="start" fxLayoutGap="10px" fxLayoutGap.xs="0">
               <mat-form-field>
                 <mat-placeholder>Price Code</mat-placeholder>
-                <input matInput  formControlName="price_code_id">
+                <input matInput  formControlName="price_code">
               </mat-form-field>
             </div>
           </div>
@@ -124,14 +129,14 @@
             <div class="container col" fxLayout="column" fxLayout.xs="column" fxLayoutAlign="start" fxLayoutGap="10px" fxLayoutGap.xs="0">
               <mat-form-field>
                 <mat-placeholder>Quantity</mat-placeholder>
-                <input matInput  formControlName="quantity">
+                <input matInput  formControlName="quantity" (change)="this.orderDetailsForm.value.amount = this.orderDetailsForm.value.quantity * this.orderDetailsForm.value.price">
               </mat-form-field>
             </div>
 
             <div class="container col" fxLayout="column" fxLayout.xs="column" fxLayoutAlign="start" fxLayoutGap="10px" fxLayoutGap.xs="0">
-              <mat-form-field>
+              <mat-form-field >
                 <mat-placeholder>Amount</mat-placeholder>
-                <input matInput  formControlName="amount">
+                <input matInput  formControlName="amount" [value]="this.orderDetailsForm.value.amount">
               </mat-form-field>
             </div>
           </div>
@@ -139,7 +144,9 @@
         </form>
 
         <div class="container" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="end" fxLayoutGap="10px" fxLayoutGap.xs="0" >
-          <button mat-button (click)="onSubmit()" mat-stroked-button>Add Order</button>
+          <button mat-button (click)="addProduct()" mat-stroked-button>Add Order</button>
+          <button mat-button (click)="onSubmit()" mat-stroked-button>Save Order</button>
+          <button mat-button (click)="clearForm()" mat-stroked-button>clear</button>
         </div>
 
       </div>
@@ -148,8 +155,46 @@
 
 
   </div>
-  <div fxLayout="column" fxFlex="60" class="mr-1">
-    <pre>{{this.orderForm.value.order_date | date}}</pre>
+  <div id ="order-table-div" fxLayout="column" fxFlex="60" class="mr-1">
+    <table class="table" id="my-table">
+      <thead>
+      <tr>
+        <th>SL No.</th>
+        <th>Model Number</th>
+        <th>Price Code</th>
+        <th>Price</th>
+        <th>PLoss</th>
+        <th>Approx Gold</th>
+        <th>Quantity</th>
+        <th>Amount</th>
+        <th>Edit</th>
+        <th>Delete</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr  *ngFor="let details of orderDetails ; let indexOfelement = index;">
+        <td>{{indexOfelement+1}}</td>
+        <td >{{details.model_number}}</td>
+        <td >{{details.price_code}}</td>
+        <td>{{details.price}}</td>
+        <td>{{details.pLoss}}</td>
+        <td>{{details.approx_gold}}</td>
+        <td>{{details.quantity}}</td>
+        <td>{{details.amount}}</td>
+        <td>
+          <button mat-icon-button color="primary" aria-label="Edit Product" >
+            <mat-icon>edit</mat-icon>
+          </button>
+        </td>
+        <td>
+          <button mat-icon-button color="warn" aria-label="Edit Customer" >
+            <mat-icon>delete</mat-icon>
+          </button>
+        </td>
+
+      </tr>
+      </tbody>
+    </table>
   </div>
 </div>
 

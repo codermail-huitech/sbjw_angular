@@ -26,7 +26,9 @@ export class OrderComponent implements OnInit {
   agentList: Agent[];
   materialList: Material[];
   products: Product[];
-  orderForm: FormGroup;
+  orderDetails = [];
+  orderMasterForm: FormGroup;
+  orderDetailsForm: FormGroup;
   yourModelDate: string;
   minDate = new Date(2010, 11, 2);
   maxDate = new Date(2021, 3, 2);
@@ -48,7 +50,9 @@ export class OrderComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.orderForm = this.orderService.orderForm;
+    this.orderMasterForm = this.orderService.orderMasterForm;
+    this.orderDetailsForm = this.orderService.orderDetailsForm;
+    // this.orderDetailsForm.controls['amount'].disable();
     this.customerService.getCustomerUpdateListener()
       .subscribe((customers: Customer[]) => {
         this.customerList = customers;
@@ -71,17 +75,26 @@ export class OrderComponent implements OnInit {
     });
   }
 
+  addProduct(){
+    this.orderMasterForm.value.order_date = this.pipe.transform(this.orderMasterForm.value.order_date, 'yyyy/MM/dd');
+    this.orderMasterForm.value.delivery_date = this.pipe.transform(this.orderMasterForm.value.delivery_date, 'yyyy/MM/dd');
+    console.log(this.orderMasterForm.value.order_date);
+    console.log(this.orderMasterForm.value.delivery_date);
+    this.orderDetails.push(this.orderDetailsForm.value);
+    this.orderDetailsForm.reset();
+    // console.log(this.orderDetails);
+  }
+
+  clearForm(){
+    this.orderMasterForm.reset();
+    this.orderDetailsForm.reset();
+  }
+
   onSubmit(){
-    console.log(this.orderForm.value);
-    // console.log(this.orderForm.value.order_date.transform("dd-MM-yyyy"));
-    // console.log(this.datePipe.transform("Date Thu Jun 25 2020 00:00:00 GMT+0530","dd-MM-yyyy"))
-
-    this.orderForm.value.order_date = this.pipe.transform(this.orderForm.value.order_date, 'yyyy/MM/dd');
-    this.orderForm.value.delivery_date = this.pipe.transform(this.orderForm.value.delivery_date, 'yyyy/MM/dd');
-    console.log(this.orderForm.value.order_date);
-    console.log(this.orderForm.value.delivery_date);
-
-
+    console.log('Order Master');
+    console.log(this.orderMasterForm.value);
+    console.log('Order Details');
+    console.log(this.orderDetails);
   }
 
 }

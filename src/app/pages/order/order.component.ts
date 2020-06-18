@@ -10,6 +10,7 @@ import alasql from 'alasql';
 import { DatePipe } from '@angular/common';
 import {ProductService} from '../../services/product.service';
 import {Product} from '../../models/product.model';
+import {StorageMap} from '@ngx-pwa/local-storage';
 
 
 @Component({
@@ -40,7 +41,8 @@ export class OrderComponent implements OnInit {
 
 
 
-  constructor(private customerService: CustomerService, private orderService: OrderService, private productService: ProductService) {
+  // tslint:disable-next-line:max-line-length
+  constructor(private customerService: CustomerService, private orderService: OrderService, private storage: StorageMap, private productService: ProductService) {
   }
   onlyOdds = (d: Date): boolean => {
     const date = d.getDate();
@@ -97,4 +99,10 @@ export class OrderComponent implements OnInit {
     console.log(this.orderDetails);
   }
 
+  selectCustomerForOrder() {
+    this.storage.set('orderFormValue', this.orderMasterForm.value);
+    console.log(this.orderMasterForm.value);
+    const x = this.storage.get('orderFormValue');
+    console.log(x);
+  }
 }

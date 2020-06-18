@@ -75,7 +75,7 @@ export class OrderComponent implements OnInit {
     });
   }
 
-  addProduct(){
+  addOrder(){
     this.orderMasterForm.value.order_date = this.pipe.transform(this.orderMasterForm.value.order_date, 'yyyy/MM/dd');
     this.orderMasterForm.value.delivery_date = this.pipe.transform(this.orderMasterForm.value.delivery_date, 'yyyy/MM/dd');
     console.log(this.orderMasterForm.value.order_date);

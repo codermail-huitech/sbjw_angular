@@ -79,17 +79,24 @@ export class OrderComponent implements OnInit {
   }
 
   addOrder(){
-    this.orderMasterForm.value.order_date = this.pipe.transform(this.orderMasterForm.value.order_date, 'yyyy/MM/dd');
-    this.orderMasterForm.value.delivery_date = this.pipe.transform(this.orderMasterForm.value.delivery_date, 'yyyy/MM/dd');
-    // this.orderDetails.push(this.orderDetailsForm.value);
+    const index = this.products.findIndex(x => x.model_number === this.orderDetailsForm.value.model_number);
+    this.orderDetailsForm.value.product_id = this.products[index].id;
     this.orderService.setOrderDetails();
     this.orderDetailsForm.reset();
     this.orderDetails = this.orderService.orderDetails;
+  }
+  findModel(){
+    const index = this.products.findIndex(x => x.model_number === this.orderDetailsForm.value.model_number);
+    const x = this.products[index];
+    console.log(x);
+    this.orderDetailsForm.patchValue({pLoss : x.p_loss, price_code : x.price_code_name, price : x.price});
   }
 
   clearForm(){
     this.orderMasterForm.reset();
     this.orderDetailsForm.reset();
+    // this.orderDetailsForm.setValue();
+    // this.orderDetailsForm.patchValue({pLoss:'10'});
   }
 
   onSubmit(){
@@ -112,8 +119,8 @@ export class OrderComponent implements OnInit {
     // });
     const user = JSON.parse(localStorage.getItem('user'));
     this.orderMasterForm.value.employee_id = user.id;
-    this.orderMasterForm.value.order_date = this.pipe.transform(this.orderMasterForm.value.order_date, 'yyyy/MM/dd');
-    this.orderMasterForm.value.delivery_date = this.pipe.transform(this.orderMasterForm.value.delivery_date, 'yyyy/MM/dd');
+    this.orderMasterForm.value.order_date = this.pipe.transform(this.orderMasterForm.value.order_date, 'yyyy-MM-dd');
+    this.orderMasterForm.value.delivery_date = this.pipe.transform(this.orderMasterForm.value.delivery_date, 'yyyy-MM-dd');
     this.orderService.setOrderMasterData();
   }
 }

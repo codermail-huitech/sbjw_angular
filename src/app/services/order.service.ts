@@ -6,8 +6,13 @@ import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {Material} from '../models/material.model';
 import {OrderMaster} from '../models/orderMaster.model';
 import {OrderDetail} from '../models/orderDetail.model';
+import {Product} from '../models/product.model';
 
 
+export interface OrderResponseData {
+  success: number;
+  data: object;
+}
 
 @Injectable({
   providedIn: 'root'
@@ -22,6 +27,7 @@ export class OrderService {
   private agentSub = new Subject<Agent[]>();
   private materialSub = new Subject<Material[]>();
   private orderService = new Subject<OrderMaster>();
+  orderData: {};
 
   getAgentUpdateListener(){
     console.log('customer listener called');
@@ -87,7 +93,19 @@ export class OrderService {
   }
 
   saveOrder(){
-    console.log(this.orderMaster);
-    console.log(this.orderDetails);
-  }
+    // console.log(this.orderMaster);
+    // console.log(this.orderDetails);
+    // this.orderData.  ;
+    // this.orderData = this.orderMaster;
+    // this.orderData = this.orderDetails;
+    console.log(this.orderData);
+
+    return this.http.post<OrderResponseData>('http://127.0.0.1:8000/api/orders', {master: this.orderMaster, details: this.orderDetails})
+        .subscribe((response: {success: number, data: Product})  => {
+          // this.products.unshift(response.data);
+          //
+          // this.productSubject.next([...this.products]);
+          // console.log(this.products);
+        });
+    }
 }

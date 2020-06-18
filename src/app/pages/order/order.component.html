@@ -1,7 +1,7 @@
 <div fxLayout.xs="column" fxLayout="row" fxLayoutAlign="space-between stretch" fxFlexFill id="order-div">
   <div fxLayout="column" fxFlex="40" class="mr-1">
     <mat-card class="ml-2 mt-2">
-      <div class="form-container">
+      <div class="form-container-master">
         <form [formGroup] = orderMasterForm >
           <div class="container" fxLayout="column" fxLayout.xs="column" fxLayoutAlign="start" fxLayoutGap="10px" fxLayoutGap.xs="0">
               <mat-form-field>
@@ -66,7 +66,8 @@
             </div>
           </div>
         </form>
-
+      </div>
+      <div class="form-container-details">
         <form [formGroup] = orderDetailsForm >
           <div class="d-flex col">
             <div class="container col-6" fxLayout="column" fxLayout.xs="column" fxLayoutAlign="start" fxLayoutGap="10px" fxLayoutGap.xs="0">

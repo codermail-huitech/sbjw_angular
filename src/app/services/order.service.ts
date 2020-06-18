@@ -40,7 +40,7 @@ export class OrderService {
     });
 
     this.orderDetailsForm = new FormGroup({
-      material_id : new FormControl(null, [Validators.required]),
+      material_id : new FormControl(3, [Validators.required]),
       model_number : new FormControl(null, [Validators.required]),
       pLoss : new FormControl(null, [Validators.required]),
       price : new FormControl(null, [Validators.required]),

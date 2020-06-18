@@ -11,6 +11,7 @@ import { DatePipe } from '@angular/common';
 import {ProductService} from '../../services/product.service';
 import {Product} from '../../models/product.model';
 import {StorageMap} from '@ngx-pwa/local-storage';
+import {OrderDetail} from '../../models/orderDetail.model';
 
 
 @Component({
@@ -27,7 +28,7 @@ export class OrderComponent implements OnInit {
   agentList: Agent[];
   materialList: Material[];
   products: Product[];
-  orderDetails = [];
+  orderDetails: OrderDetail[] = [];
   orderMasterForm: FormGroup;
   orderDetailsForm: FormGroup;
   yourModelDate: string;
@@ -80,11 +81,10 @@ export class OrderComponent implements OnInit {
   addOrder(){
     this.orderMasterForm.value.order_date = this.pipe.transform(this.orderMasterForm.value.order_date, 'yyyy/MM/dd');
     this.orderMasterForm.value.delivery_date = this.pipe.transform(this.orderMasterForm.value.delivery_date, 'yyyy/MM/dd');
-    console.log(this.orderMasterForm.value.order_date);
-    console.log(this.orderMasterForm.value.delivery_date);
-    this.orderDetails.push(this.orderDetailsForm.value);
+    // this.orderDetails.push(this.orderDetailsForm.value);
+    this.orderService.setOrderDetails();
     this.orderDetailsForm.reset();
-    // console.log(this.orderDetails);
+    this.orderDetails = this.orderService.orderDetails;
   }
 
   clearForm(){
@@ -93,16 +93,27 @@ export class OrderComponent implements OnInit {
   }
 
   onSubmit(){
-    console.log('Order Master');
-    console.log(this.orderMasterForm.value);
-    console.log('Order Details');
-    console.log(this.orderDetails);
+    // console.log('Order Master');
+    // console.log(this.orderMasterForm.value);
+    // console.log('Order Details');
+    // // console.log(this.orderDetails);
+    this.orderService.saveOrder();
   }
 
   selectCustomerForOrder() {
-    this.storage.set('orderFormValue', this.orderMasterForm.value);
-    console.log(this.orderMasterForm.value);
-    const x = this.storage.get('orderFormValue');
-    console.log(x);
+
+    // this.storage.set('orderFormValue', this.orderMasterForm.value).subscribe(() => {});
+
+    // setting person to local storage
+    // this.storage.set('user', this.orderMasterForm.value)
+    //   .subscribe(() => {console.log('User set to local storage'); }, (error) => {console.log(error); });
+    // this.storage.get('user').subscribe((data) => {
+    //   console.log(data);
+    // });
+    const user = JSON.parse(localStorage.getItem('user'));
+    this.orderMasterForm.value.employee_id = user.id;
+    this.orderMasterForm.value.order_date = this.pipe.transform(this.orderMasterForm.value.order_date, 'yyyy/MM/dd');
+    this.orderMasterForm.value.delivery_date = this.pipe.transform(this.orderMasterForm.value.delivery_date, 'yyyy/MM/dd');
+    this.orderService.setOrderMasterData();
   }
 }

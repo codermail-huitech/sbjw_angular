@@ -4,6 +4,8 @@ import {Agent} from '../models/agent.model';
 import {Subject} from 'rxjs';
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {Material} from '../models/material.model';
+import {OrderMaster} from '../models/orderMaster.model';
+import {OrderDetail} from '../models/orderDetail.model';
 
 
 
@@ -15,8 +17,11 @@ export class OrderService {
   orderDetailsForm: FormGroup;
   materialData: Material[] = [];
   agentData: Agent[] = [];
+  orderMaster: OrderMaster;
+  orderDetails: OrderDetail[] = [];
   private agentSub = new Subject<Agent[]>();
   private materialSub = new Subject<Material[]>();
+  private orderService = new Subject<OrderMaster>();
 
   getAgentUpdateListener(){
     console.log('customer listener called');
@@ -27,8 +32,6 @@ export class OrderService {
     console.log('customer listener called');
     return this.materialSub.asObservable();
   }
-
-
 
   constructor(private http: HttpClient) {
     this.orderMasterForm = new FormGroup({
@@ -73,5 +76,18 @@ export class OrderService {
         this.materialSub.next([...this.materialData]);
       });
 
+  }
+
+  setOrderMasterData() {
+    this.orderMaster = this.orderMasterForm.value;
+  }
+
+  setOrderDetails(){
+    this.orderDetails.unshift(this.orderDetailsForm.value);
+  }
+
+  saveOrder(){
+    console.log(this.orderMaster);
+    console.log(this.orderDetails);
   }
 }

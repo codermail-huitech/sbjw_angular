@@ -82,13 +82,15 @@ export class OrderComponent implements OnInit {
   }
 
   addOrder(){
-    // const index = this.products.findIndex(x => x.model_number === this.orderDetailsForm.value.model_number);
-    // this.orderDetailsForm.value.product_id = this.products[index].id;
-    // this.orderService.setOrderDetails();
-    // this.orderDetailsForm.reset();
-    // this.orderDetails = this.orderService.orderDetails;
-    console.log(this.orderDetailsForm);
+    const index = this.products.findIndex(x => x.model_number === this.orderDetailsForm.value.model_number);
+    this.orderDetailsForm.value.product_id = this.products[index].id;
+    this.orderService.setOrderDetails();
+    this.orderDetailsForm.reset();
+    this.orderDetailsForm.value.amount = null;
+    this.orderDetails = this.orderService.orderDetails;
+    // console.log(this.orderDetailsForm);
   }
+
   findModel(){
     const index = this.products.findIndex(k => k.model_number === this.orderDetailsForm.value.model_number);
     if (index === -1){
@@ -100,29 +102,14 @@ export class OrderComponent implements OnInit {
       const x = this.products[index];
       this.orderDetailsForm.patchValue({pLoss : x.p_loss, price_code : x.price_code_name, price : x.price});
     }
-    // console.log('index');
-    // console.log(index);
-    // console.log(this.products.findIndex(k => k.model_number === this.orderDetailsForm.value.model_number));
-    // if (x){
-    //   alert('true');
-    // }
-    // if (x === undefined ){
-    //   console.log('undefined data');
-    // }
   }
 
   clearForm(){
     this.orderMasterForm.reset();
     this.orderDetailsForm.reset();
-    // this.orderDetailsForm.setValue();
-    // this.orderDetailsForm.patchValue({pLoss:'10'});
   }
 
   onSubmit(){
-    // console.log('Order Master');
-    // console.log(this.orderMasterForm.value);
-    // console.log('Order Details');
-    // // console.log(this.orderDetails);
     let saveObserable = new Observable<any>();
     saveObserable = this.orderService.saveOrder();
     saveObserable.subscribe((response) => {
@@ -141,19 +128,9 @@ export class OrderComponent implements OnInit {
         duration: 4000, data: {message: error.message}
       });
     });
-
   }
 
   selectCustomerForOrder() {
-
-    // this.storage.set('orderFormValue', this.orderMasterForm.value).subscribe(() => {});
-
-    // setting person to local storage
-    // this.storage.set('user', this.orderMasterForm.value)
-    //   .subscribe(() => {console.log('User set to local storage'); }, (error) => {console.log(error); });
-    // this.storage.get('user').subscribe((data) => {
-    //   console.log(data);
-    // });
     const user = JSON.parse(localStorage.getItem('user'));
     this.orderMasterForm.value.employee_id = user.id;
     this.orderMasterForm.value.order_date = this.pipe.transform(this.orderMasterForm.value.order_date, 'yyyy-MM-dd');

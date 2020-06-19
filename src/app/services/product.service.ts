@@ -71,7 +71,6 @@ export class ProductService {
   }
 
 
-
   deleteProduct(id){
     return this.http.delete<{success: number, id: number}>('http://127.0.0.1:8000/api/products/' + id)
       .pipe(catchError(this.serverError), tap((response: {success: number, id: number}) => {

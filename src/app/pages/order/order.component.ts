@@ -86,10 +86,10 @@ export class OrderComponent implements OnInit {
     this.orderDetails = this.orderService.orderDetails;
   }
   findModel(){
-    const index = this.products.findIndex(x => x.model_number === this.orderDetailsForm.value.model_number);
+    const index = this.products.findIndex(k => k.model_number === this.orderDetailsForm.value.model_number);
     const x = this.products[index];
     console.log(x);
-    this.orderDetailsForm.patchValue({pLoss : x.p_loss, price_code : x.price_code_name, price : x.price});
+    // this.orderDetailsForm.patchValue({pLoss : x.p_loss, price_code : x.price_code_name, price : x.price});
   }
 
   clearForm(){

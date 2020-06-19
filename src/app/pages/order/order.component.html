@@ -24,10 +24,10 @@
               </mat-form-field>
           </div>
           <!--Both dates-->
-          <div class="container" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="start" fxLayoutGap="20px" fxLayoutGap.xs="0">
+          <div class="container" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="start" fxLayoutGap="10px" fxLayoutGap.xs="0">
               <!--              Order date-->
-              <mat-form-field class="example-full-width">
-                <mat-label>Choose order date</mat-label>
+              <mat-form-field fxFlex="20">
+                <mat-label>Order Date</mat-label>
                 <input matInput
                        [matDatepicker]="picker1"
                        formControlName="order_date"
@@ -40,8 +40,8 @@
                 <mat-datepicker #picker1></mat-datepicker>
               </mat-form-field>
               <!--              Delivery date-->
-              <mat-form-field class="example-full-width">
-                <mat-label>Choose delivery date</mat-label>
+              <mat-form-field  fxFlex="20">
+                <mat-label>Delivery Date</mat-label>
                 <input matInput [matDatepicker]="picker2"
                        formControlName="delivery_date"
                        [matDatepickerFilter]="onlyOdds"
@@ -53,7 +53,7 @@
                 <mat-datepicker #picker2></mat-datepicker>
               </mat-form-field>
               <!--              Adding form to -->
-              <button mat-button (click)="selectCustomerForOrder()" mat-stroked-button>Save</button>
+              <button mat-button (click)="selectCustomerForOrder()" mat-stroked-button fxFlex="20">Save</button>
             </div>
         </form>
       </div>
@@ -118,14 +118,14 @@
 
           <div class="d-flex col">
             <div class="container col" fxLayout="column" fxLayout.xs="column" fxLayoutAlign="start" fxLayoutGap="10px" fxLayoutGap.xs="0">
-              <mat-form-field>
+              <mat-form-field fxFlex="30">
                 <mat-placeholder>Quantity</mat-placeholder>
                 <input matInput  formControlName="quantity" (change)="this.orderDetailsForm.value.amount = this.orderDetailsForm.value.quantity * this.orderDetailsForm.value.price">
               </mat-form-field>
             </div>
 
             <div class="container col" fxLayout="column" fxLayout.xs="column" fxLayoutAlign="start" fxLayoutGap="10px" fxLayoutGap.xs="0">
-              <mat-form-field >
+              <mat-form-field fxFlex="30">
                 <mat-placeholder>Amount</mat-placeholder>
                 <input matInput  formControlName="amount" [value]="this.orderDetailsForm.value.amount">
               </mat-form-field>

@@ -78,10 +78,10 @@
 
 
           </div>
-          <div class="container" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="start" fxLayoutGap="10px" fxLayoutGap.xs="0">
+          <div class="container" [hidden]="!this.orderDetailsForm.value.pLoss" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="start" fxLayoutGap="10px" fxLayoutGap.xs="0">
             <mat-form-field fxFlex="32">
               <mat-placeholder>PLoss</mat-placeholder>
-              <input matInput aria-disabled="true" formControlName="pLoss">
+              <input matInput formControlName="pLoss">
             </mat-form-field>
 
             <mat-form-field fxFlex="32">
@@ -131,7 +131,7 @@
         </form>
 
         <div class="container" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="end" fxLayoutGap="10px" fxLayoutGap.xs="0" >
-          <button mat-button (click)="addOrder()" mat-stroked-button>Add Order</button>
+          <button mat-button (click)="addOrder()" mat-stroked-button [disabled]="!orderDetailsForm.valid">Add Order</button>
           <button mat-button (click)="onSubmit()" mat-stroked-button>Save Order</button>
           <button mat-button (click)="clearForm()" mat-stroked-button>clear</button>
         </div>

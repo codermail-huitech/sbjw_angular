@@ -9,6 +9,8 @@ export class Product{
   price_code_id: number;
   price_code_name?: string;
   category_name?: string;
+  p_loss?: number;
+  price?: number;
   constructor(){
 
   }

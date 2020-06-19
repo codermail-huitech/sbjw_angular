@@ -3,10 +3,10 @@ import {MAT_SNACK_BAR_DATA} from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-update-sncak-bar',
-  templateUrl: './update-sncak-bar.component.html',
-  styleUrls: ['./update-sncak-bar.component.scss']
+  templateUrl: './sncak-bar.component.html',
+  styleUrls: ['./sncak-bar.component.scss']
 })
-export class UpdateSncakBarComponent implements OnInit {
+export class SncakBarComponent implements OnInit {
 
   constructor(@Inject(MAT_SNACK_BAR_DATA) public data: any) { }
 

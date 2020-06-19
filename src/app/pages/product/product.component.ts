@@ -8,7 +8,7 @@ import {ProductCategoryService} from '../../services/product-category.service';
 import {ProductCategory} from '../../models/productCategory.model';
 
 import {Observable} from 'rxjs';
-import {UpdateSncakBarComponent} from '../customer/update-sncak-bar/update-sncak-bar.component';
+import {SncakBarComponent} from '../../common/sncak-bar/sncak-bar.component';
 import {MatSnackBar} from '@angular/material/snack-bar';
 
 import {ConfirmationDialogService} from '../../common/confirmation-dialog/confirmation-dialog.service';
@@ -73,14 +73,14 @@ export class ProductComponent implements OnInit {
     updateObserable = this.productService.updateProduct(this.productForm.value);
     updateObserable.subscribe((response) => {
       if (response.success === 1){
-        this.snackBar.openFromComponent(UpdateSncakBarComponent, {
+        this.snackBar.openFromComponent(SncakBarComponent, {
           duration: 4000, data: {message: 'Product Updated!'}
         });
       }
     }, (error) => {
       console.log('error occured ');
       console.log(error);
-      this.snackBar.openFromComponent(UpdateSncakBarComponent, {
+      this.snackBar.openFromComponent(SncakBarComponent, {
         duration: 4000, data: {message: error.message}
       });
     });
@@ -94,7 +94,7 @@ export class ProductComponent implements OnInit {
         if (confirmed){
           this.productService.deleteProduct(product.id).subscribe((response) => {
             if (response.success === 1){
-              this.snackBar.openFromComponent(UpdateSncakBarComponent, {
+              this.snackBar.openFromComponent(SncakBarComponent, {
                 duration: 4000, data: {message: 'Product Deleted'}
               });
             }
@@ -103,7 +103,7 @@ export class ProductComponent implements OnInit {
             console.log('error occured ');
             console.log(error);
             this.currentError = error;
-            this.snackBar.openFromComponent(UpdateSncakBarComponent, {
+            this.snackBar.openFromComponent(SncakBarComponent, {
               duration: 4000, data: {message: error.message}
             });
           });

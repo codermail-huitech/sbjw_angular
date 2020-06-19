@@ -5,7 +5,7 @@ import {map} from 'rxjs/operators';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {Customer} from '../../models/customer.model';
 import {MatSnackBar} from '@angular/material/snack-bar';
-import {UpdateSncakBarComponent} from './update-sncak-bar/update-sncak-bar.component';
+import {SncakBarComponent} from '../../common/sncak-bar/sncak-bar.component';
 import {Observable} from 'rxjs';
 import {AuthResponseData} from '../../services/auth.service';
 
@@ -68,8 +68,8 @@ export class CustomerComponent implements OnInit {
 
 
     updateObserable.subscribe((response) => {
-      if (response.success == 1){
-        this._snackBar.openFromComponent(UpdateSncakBarComponent, {
+      if (response.success === 1){
+        this._snackBar.openFromComponent(SncakBarComponent, {
           duration: 4000, data: {message: 'Hello World!'}
         });
       }
@@ -78,12 +78,10 @@ export class CustomerComponent implements OnInit {
       console.log('error occured ');
       console.log(error);
       this.currentEerror = error;
-      this._snackBar.openFromComponent(UpdateSncakBarComponent, {
+      this._snackBar.openFromComponent(SncakBarComponent, {
         duration: 4000, data: {message: error.message}
       });
     });
-
-    // console.log(updateObserable);
 
   }
 }

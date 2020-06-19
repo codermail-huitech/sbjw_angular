@@ -11,7 +11,11 @@ import { DatePipe } from '@angular/common';
 import {ProductService} from '../../services/product.service';
 import {Product} from '../../models/product.model';
 import {StorageMap} from '@ngx-pwa/local-storage';
+import {MatSnackBar} from '@angular/material/snack-bar';
+import {SncakBarComponent} from '../../common/sncak-bar/sncak-bar.component';
 import {OrderDetail} from '../../models/orderDetail.model';
+import {HttpClient} from '@angular/common/http';
+import {Observable} from 'rxjs';
 
 
 @Component({
@@ -41,9 +45,8 @@ export class OrderComponent implements OnInit {
   now = Date.now();
 
 
-
   // tslint:disable-next-line:max-line-length
-  constructor(private customerService: CustomerService, private orderService: OrderService, private storage: StorageMap, private productService: ProductService) {
+  constructor(private customerService: CustomerService, private orderService: OrderService, private storage: StorageMap, private productService: ProductService, private _snackBar: MatSnackBar) {
   }
   onlyOdds = (d: Date): boolean => {
     const date = d.getDate();
@@ -87,9 +90,24 @@ export class OrderComponent implements OnInit {
   }
   findModel(){
     const index = this.products.findIndex(k => k.model_number === this.orderDetailsForm.value.model_number);
-    const x = this.products[index];
-    console.log(x);
-    this.orderDetailsForm.patchValue({pLoss : x.p_loss, price_code : x.price_code_name, price : x.price});
+    if (index === -1){
+      this._snackBar.openFromComponent(SncakBarComponent, {
+        duration: 4000, data: {message: 'No Model Number Found'}
+      });
+    }
+    if (index !== -1){
+      const x = this.products[index];
+      this.orderDetailsForm.patchValue({pLoss : x.p_loss, price_code : x.price_code_name, price : x.price});
+    }
+    // console.log('index');
+    // console.log(index);
+    // console.log(this.products.findIndex(k => k.model_number === this.orderDetailsForm.value.model_number));
+    // if (x){
+    //   alert('true');
+    // }
+    // if (x === undefined ){
+    //   console.log('undefined data');
+    // }
   }
 
   clearForm(){
@@ -104,7 +122,25 @@ export class OrderComponent implements OnInit {
     // console.log(this.orderMasterForm.value);
     // console.log('Order Details');
     // // console.log(this.orderDetails);
-    this.orderService.saveOrder();
+    let saveObserable = new Observable<any>();
+    saveObserable = this.orderService.saveOrder();
+    saveObserable.subscribe((response) => {
+      if (response.success === 1){
+        this.orderMasterForm.reset();
+        this.orderDetailsForm.reset();
+        this.orderDetails = [];
+        this._snackBar.openFromComponent(SncakBarComponent, {
+          duration: 4000, data: {message: 'Order Saved'}
+        });
+      }
+    }, (error) => {
+      console.log('error occured ');
+      console.log(error);
+      this._snackBar.openFromComponent(SncakBarComponent, {
+        duration: 4000, data: {message: error.message}
+      });
+    });
+
   }
 
   selectCustomerForOrder() {

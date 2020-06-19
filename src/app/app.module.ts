@@ -30,7 +30,7 @@ import { OwnerComponent } from './pages/owner/owner.component';
 import {NgxPrintModule} from 'ngx-print';
 import {Ng2SearchPipeModule} from 'ng2-search-filter';
 import {NgxPaginationModule} from 'ngx-pagination';
-import { UpdateSncakBarComponent } from './pages/customer/update-sncak-bar/update-sncak-bar.component';
+import { SncakBarComponent } from './common/sncak-bar/sncak-bar.component';
 import { ConfirmationDialogComponent } from './common/confirmation-dialog/confirmation-dialog.component';
 import { LoaidngRippleComponent } from './shared/loaidng-ripple/loaidng-ripple.component';
 import { LoaidngEllipsisComponent } from './shared/loaidng-ellipsis/loaidng-ellipsis.component';
@@ -54,7 +54,7 @@ import { DateFormat } from './date-format';
     AuthComponent,
     LoadingSpinnerComponent,
     OwnerComponent,
-    UpdateSncakBarComponent,
+    SncakBarComponent,
     ConfirmationDialogComponent,
     LoaidngRippleComponent,
     LoaidngEllipsisComponent,

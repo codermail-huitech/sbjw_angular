@@ -1,12 +1,14 @@
 import { Injectable } from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {Agent} from '../models/agent.model';
-import {Subject} from 'rxjs';
+import {Subject, throwError} from 'rxjs';
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {Material} from '../models/material.model';
 import {OrderMaster} from '../models/orderMaster.model';
 import {OrderDetail} from '../models/orderDetail.model';
 import {Product} from '../models/product.model';
+import {catchError, tap} from 'rxjs/operators';
+import {Customer} from '../models/customer.model';
 
 
 export interface OrderResponseData {
@@ -93,19 +95,28 @@ export class OrderService {
   }
 
   saveOrder(){
-    // console.log(this.orderMaster);
-    // console.log(this.orderDetails);
-    // this.orderData.  ;
-    // this.orderData = this.orderMaster;
-    // this.orderData = this.orderDetails;
-    console.log(this.orderData);
-
-    return this.http.post<OrderResponseData>('http://127.0.0.1:8000/api/orders', {master: this.orderMaster, details: this.orderDetails})
-        .subscribe((response: {success: number, data: Product})  => {
-          // this.products.unshift(response.data);
-          //
-          // this.productSubject.next([...this.products]);
-          // console.log(this.products);
-        });
+       return this.http.post<OrderResponseData>('http://127.0.0.1:8000/api/orders', {master: this.orderMaster, details: this.orderDetails})
+         .pipe(catchError(this._serverError), tap(((response: {success: number, data: object}) => {
+             console.log(response);
+           })));
     }
+
+  private _serverError(err: any) {
+    // console.log('sever error:', err);  // debug
+    if (err instanceof Response) {
+      return throwError('backend server error');
+      // if you're using lite-server, use the following line
+      // instead of the line above:
+      // return Observable.throw(err.text() || 'backend server error');
+    }
+    if (err.status === 0){
+      // tslint:disable-next-line:label-position
+      return throwError ({status: err.status, message: 'Backend Server is not Working', statusText: err.statusText});
+    }
+    if (err.status === 401){
+      // tslint:disable-next-line:label-position
+      return throwError ({status: err.status, message: 'Your are not authorised', statusText: err.statusText});
+    }
+    return throwError(err);
+  }
 }

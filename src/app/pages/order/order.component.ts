@@ -6,7 +6,6 @@ import {FormGroup} from '@angular/forms';
 import {OrderService} from '../../services/order.service';
 import {Agent} from '../../models/agent.model';
 import {Material} from '../../models/material.model';
-import alasql from 'alasql';
 import { DatePipe } from '@angular/common';
 import {ProductService} from '../../services/product.service';
 import {Product} from '../../models/product.model';
@@ -14,7 +13,6 @@ import {StorageMap} from '@ngx-pwa/local-storage';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {SncakBarComponent} from '../../common/sncak-bar/sncak-bar.component';
 import {OrderDetail} from '../../models/orderDetail.model';
-import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 
 
@@ -92,7 +90,7 @@ export class OrderComponent implements OnInit {
   }
 
   findModel(){
-    const index = this.products.findIndex(k => k.model_number === this.orderDetailsForm.value.model_number);
+    const index = this.products.findIndex(k => k.model_number === this.orderDetailsForm.value.model_number.toString().toUpperCase());
     if (index === -1){
       this._snackBar.openFromComponent(SncakBarComponent, {
         duration: 4000, data: {message: 'No Model Number Found'}

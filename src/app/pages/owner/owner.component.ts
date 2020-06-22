@@ -68,6 +68,13 @@ export class OwnerComponent implements OnInit {
 
     empire = pilots.filter((pilot) => [22, 30].includes(pilot.years));
     console.log(empire);
+
+    const objArray = [ { foo: 1, bar: 2, baz: 9}, { foo: 3, bar: 4, baz: 10}, { foo: 5, bar: 6, baz: 20} ];
+
+    const result2 = objArray.map(({ foo, baz }) => ({ foo, baz }));
+
+
+    console.log(result2);
   }
 
 }

@@ -33,7 +33,7 @@ export class OrderComponent implements OnInit {
   orderDetails: OrderDetail[] = [];
   orderMasterForm: FormGroup;
   orderDetailsForm: FormGroup;
-  orderData: [];
+  orderData: object;
   showProduct = true;
   yourModelDate: string;
   minDate = new Date(2010, 11, 2);

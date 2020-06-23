@@ -63,6 +63,7 @@ export class OrderService {
     });
 
     this.orderDetailsForm = new FormGroup({
+      id : new FormControl(null),
       material_id : new FormControl(3, [Validators.required]),
       model_number : new FormControl(null, [Validators.required]),
       p_loss : new FormControl(null, [Validators.required]),
@@ -122,16 +123,18 @@ export class OrderService {
     }
 
   fetchOrderDetails(order_master_id){
-    console.log(order_master_id);
-    // return this.http.post<OrderResponseData>('http://127.0.0.1:8000/api/orderDetails', {orderMasterId: order_master_id})
-    //   .pipe(catchError(this._serverError), tap(((response: {success: number, data: object}) => {
-    //     console.log(response);
-    //   })));
     this.http.post('http://127.0.0.1:8000/api/orderDetails', {orderMasterId: order_master_id})
       .subscribe((response: {success: number, data: object}) => {
         const {data} = response;
         this.orderDetailsSub.next([...data]);
-        // console.log(data);
+      });
+  }
+
+  updateOrder(){
+    this.http.patch('http://127.0.0.1:8000/api/orders', {master: this.orderMaster, details: this.orderDetails})
+      .subscribe((response: {success: number, data: object}) => {
+        // const {data} = response;
+        // this.orderDetailsSub.next([...data]);
       });
   }
 

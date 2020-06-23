@@ -107,11 +107,17 @@ export class OrderComponent implements OnInit {
       .subscribe((orderDetails: []) => {
         this.orderDetails = orderDetails;
       });
-    this.orderMasterForm.patchValue({customer_id : data.customer_id, agent_id: data.agent_id, order_date: data.date_of_order, delivery_date: data.date_of_delivery});
+    this.orderMasterForm.patchValue({id: data.id, customer_id : data.customer_id, agent_id: data.agent_id, order_date: data.date_of_order, delivery_date: data.date_of_delivery});
   }
   fillOrderDetailsForm(details){
-    // console.log(details);
-    this.orderDetailsForm.patchValue({model_number : details.model_number, p_loss: details.p_loss, price: details.price, price_code: details.price_code, quantity: details.quantity, amount: details.amount, approx_gold: details.approx_gold, size: details.size });
+    this.orderDetailsForm.patchValue({id: details.id, model_number : details.model_number, p_loss: details.p_loss, price: details.price, price_code: details.price_code, quantity: details.quantity, amount: details.amount, approx_gold: details.approx_gold, size: details.size });
+  }
+  updateOrder(){
+    this.orderMasterForm.value.order_date = this.pipe.transform(this.orderMasterForm.value.order_date, 'yyyy-MM-dd');
+    this.orderMasterForm.value.delivery_date = this.pipe.transform(this.orderMasterForm.value.delivery_date, 'yyyy-MM-dd');
+    this.orderService.setOrderMasterData();
+    this.orderService.setOrderDetails();
+    this.orderService.updateOrder();
   }
   findModel(){
     const index = this.products.findIndex(k => k.model_number === this.orderDetailsForm.value.model_number.toString().toUpperCase());

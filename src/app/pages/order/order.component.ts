@@ -33,6 +33,8 @@ export class OrderComponent implements OnInit {
   orderDetails: OrderDetail[] = [];
   orderMasterForm: FormGroup;
   orderDetailsForm: FormGroup;
+  orderData: object;
+  showProduct = true;
   yourModelDate: string;
   minDate = new Date(2010, 11, 2);
   maxDate = new Date(2021, 3, 2);
@@ -77,6 +79,13 @@ export class OrderComponent implements OnInit {
       .subscribe((responseProducts: Product[]) => {
       this.products = responseProducts;
     });
+
+    this.orderService.getOrderUpdateListener()
+      .subscribe((responseOrders: object) => {
+        this.orderData = responseOrders;
+        // console.log('order_data');
+        // console.log(this.orderData);
+      });
   }
 
   addOrder(){
@@ -87,6 +96,10 @@ export class OrderComponent implements OnInit {
     this.orderDetailsForm.value.amount = null;
     this.orderDetails = this.orderService.orderDetails;
     // console.log(this.orderDetailsForm);
+  }
+
+  productShow(){
+    this.showProduct = !this.showProduct;
   }
 
   findModel(){

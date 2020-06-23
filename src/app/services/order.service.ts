@@ -25,10 +25,11 @@ export class OrderService {
   materialData: Material[] = [];
   agentData: Agent[] = [];
   orderMaster: OrderMaster;
+  orderMasterData: object;
   orderDetails: OrderDetail[] = [];
   private agentSub = new Subject<Agent[]>();
   private materialSub = new Subject<Material[]>();
-  private orderService = new Subject<OrderMaster>();
+  private orderSub = new Subject<any>();
   orderData: {};
 
   getAgentUpdateListener(){
@@ -39,6 +40,11 @@ export class OrderService {
   getMaterialUpdateListener(){
     console.log('customer listener called');
     return this.materialSub.asObservable();
+  }
+
+  getOrderUpdateListener(){
+    console.log('customer listener called');
+    return this.orderSub.asObservable();
   }
 
   constructor(private http: HttpClient) {
@@ -61,7 +67,7 @@ export class OrderService {
       quantity : new FormControl(null, [Validators.required]),
       amount : new FormControl({value: null, disabled: true} , [Validators.required])
     });
-
+    // fetching agents
     this.http.get('http://127.0.0.1:8000/api/agents')
       .subscribe((response: {success: number, data: Agent[]}) => {
         const {data} = response;
@@ -84,6 +90,14 @@ export class OrderService {
         this.materialSub.next([...this.materialData]);
       });
 
+    // fetching order List
+    this.http.get('http://127.0.0.1:8000/api/orders')
+      .subscribe((response: {success: number, data: object}) => {
+        const {data} = response;
+        this.orderMasterData = data;
+        // @ts-ignore
+        this.orderSub.next([...this.orderMasterData]);
+      });
   }
 
   setOrderMasterData() {

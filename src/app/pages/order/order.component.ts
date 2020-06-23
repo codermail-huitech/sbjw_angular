@@ -83,8 +83,6 @@ export class OrderComponent implements OnInit {
     this.orderService.getOrderUpdateListener()
       .subscribe((responseOrders: object) => {
         this.orderData = responseOrders;
-        // console.log('order_data');
-        // console.log(this.orderData);
       });
   }
 
@@ -102,6 +100,19 @@ export class OrderComponent implements OnInit {
     this.showProduct = !this.showProduct;
   }
 
+  fetchDetails(data){
+    this.showProduct = true;
+    this.orderService.fetchOrderDetails(data.id);
+    this.orderService.getOrderDetailsListener()
+      .subscribe((orderDetails: []) => {
+        this.orderDetails = orderDetails;
+      });
+    this.orderMasterForm.patchValue({customer_id : data.customer_id, agent_id: data.agent_id, order_date: data.date_of_order, delivery_date: data.date_of_delivery});
+  }
+  fillOrderDetailsForm(details){
+    // console.log(details);
+    this.orderDetailsForm.patchValue({model_number : details.model_number, p_loss: details.p_loss, price: details.price, price_code: details.price_code, quantity: details.quantity, amount: details.amount, approx_gold: details.approx_gold, size: details.size });
+  }
   findModel(){
     const index = this.products.findIndex(k => k.model_number === this.orderDetailsForm.value.model_number.toString().toUpperCase());
     if (index === -1){

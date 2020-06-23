@@ -78,10 +78,10 @@
               <input matInput  formControlName="model_number" (change)="findModel()">
             </mat-form-field>
 
-            <div class="container" [hidden]="!this.orderDetailsForm.value.pLoss" fxLayout="row" fxFlex="50" fxLayout.xs="column" fxLayoutAlign="right" fxLayoutGap="10px" fxLayoutGap.xs="0">
+            <div class="container" fxLayout="row" fxFlex="50" fxLayout.xs="column" fxLayoutAlign="right" fxLayoutGap="10px" fxLayoutGap.xs="0">
               <mat-form-field fxFlex="20">
                 <mat-placeholder>PLoss</mat-placeholder>
-                <input matInput formControlName="pLoss" [readonly]="true" class="text-right">
+                <input matInput formControlName="p_loss" [readonly]="true" class="text-right">
               </mat-form-field>
 
               <mat-form-field fxFlex="20">
@@ -158,12 +158,12 @@
           <td >{{details.model_number}}</td>
           <td >{{details.price_code}}</td>
           <td>{{details.price}}</td>
-          <td>{{details.pLoss}}</td>
+          <td>{{details.p_loss}}</td>
           <td>{{details.approx_gold}}</td>
           <td>{{details.quantity}}</td>
           <td>{{details.amount}}</td>
           <td>
-            <button mat-icon-button color="primary" aria-label="Edit Product" >
+            <button mat-icon-button color="primary" aria-label="Edit Product" (click)="fillOrderDetailsForm(details)">
               <mat-icon>edit</mat-icon>
             </button>
           </td>
@@ -201,7 +201,7 @@
           <td >{{data.date_of_order}}</td>
           <td >{{data.date_of_delivery}}</td>
           <td>
-            <button mat-icon-button color="primary" aria-label="Edit Product" >
+            <button mat-icon-button color="primary" aria-label="Edit Product" (click)="fetchDetails(data)">
               <mat-icon>edit</mat-icon>
             </button>
           </td>

@@ -124,6 +124,14 @@ export class OrderComponent implements OnInit {
     this.orderMasterForm.value.delivery_date = this.pipe.transform(this.orderMasterForm.value.delivery_date, 'yyyy-MM-dd');
     this.orderService.setOrderMasterData();
     this.orderService.updateOrder();
+    // this.orderService.getOrderDetailsUpdateListener()
+    //   .subscribe((data: object) => {
+    //     console.log(data);
+    //   });
+  }
+  deleteDetails(details){
+    console.log(details);
+    this.orderService.deleteOrder(details.id);
   }
   findModel(){
     const index = this.products.findIndex(k => k.model_number === this.orderDetailsForm.value.model_number.toString().toUpperCase());

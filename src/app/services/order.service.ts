@@ -33,6 +33,7 @@ export class OrderService {
   private orderSub = new Subject<OrderMaster>();
   // why any ?
   private orderDetailsSub = new Subject<OrderDetail[]>();
+  private orderDetailsUpdateSub = new Subject<any>();
   orderData: object;
 
   getAgentUpdateListener(){
@@ -41,17 +42,18 @@ export class OrderService {
   }
 
   getOrderDetailsListener(){
-    console.log('customer listener called');
     return this.orderDetailsSub.asObservable();
   }
 
+  getOrderDetailsUpdateListener(){
+    return this.orderDetailsUpdateSub.asObservable();
+  }
+
   getMaterialUpdateListener(){
-    console.log('customer listener called');
     return this.materialSub.asObservable();
   }
 
   getOrderUpdateListener(){
-    console.log('customer listener called');
     return this.orderSub.asObservable();
   }
 
@@ -133,7 +135,6 @@ export class OrderService {
     this.http.post('http://127.0.0.1:8000/api/orderDetails', {orderMasterId: order_master_id})
       .subscribe((response: {success: number, data: OrderDetail[]}) => {
         const {data} = response;
-        // data is local variable, we should not send them
         this.orderDetails = data;
         this.orderDetailsSub.next([...this.orderDetails]);
       });
@@ -142,8 +143,21 @@ export class OrderService {
   updateOrder(){
     this.http.patch('http://127.0.0.1:8000/api/orders', {master: this.orderMaster, details: this.orderDetailsUpdate})
       .subscribe((response: {success: number, data: object}) => {
-        // const {data} = response;
-        // this.orderDetailsSub.next([...data]);
+        const {data} = response;
+        // this.orderDetailsUpdate = data;
+        // console.log(this.orderDetailsUpdate);
+        // this.orderDetailsUpdateSub.next([...orderDetailsUpdate]);
+      });
+  }
+
+  deleteOrder(id){
+    console.log(id);
+    // return this.http.delete<{success: number, data: string}>('http://127.0.0.1:8000/api/ordersDetailsDelete/' + id)
+    //   .pipe(catchError(this._serverError), tap((response: {success: number, data: string}) => {
+    //   }));  // this.handleError is a method created by me
+
+    this.http.delete('http://127.0.0.1:8000/api/ordersDetailsDelete/' + id )
+      .subscribe((response: {success: number, data: object}) => {
       });
   }
 

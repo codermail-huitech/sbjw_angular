@@ -126,6 +126,7 @@ export class OrderService {
     this.http.post('http://127.0.0.1:8000/api/orderDetails', {orderMasterId: order_master_id})
       .subscribe((response: {success: number, data: object}) => {
         const {data} = response;
+        // data is local variable, we should not send them
         this.orderDetailsSub.next([...data]);
       });
   }

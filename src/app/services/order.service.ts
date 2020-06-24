@@ -27,12 +27,13 @@ export class OrderService {
   orderMaster: OrderMaster;
   orderMasterData: object;
   orderDetails: OrderDetail[] = [];
+  orderDetailsUpdate: object;
   private agentSub = new Subject<Agent[]>();
   private materialSub = new Subject<Material[]>();
-  private orderSub = new Subject<any>();
+  private orderSub = new Subject<OrderMaster>();
   // why any ?
-  private orderDetailsSub = new Subject<any>();
-  orderData: {};
+  private orderDetailsSub = new Subject<OrderDetail[]>();
+  orderData: object;
 
   getAgentUpdateListener(){
     console.log('customer listener called');
@@ -116,6 +117,11 @@ export class OrderService {
     this.orderDetails.unshift(this.orderDetailsForm.value);
   }
 
+  setOrderDetailsForUpdate(){
+    this.orderDetailsUpdate = this.orderDetailsForm.value;
+  }
+
+
   saveOrder(){
        return this.http.post<OrderResponseData>('http://127.0.0.1:8000/api/orders', {master: this.orderMaster, details: this.orderDetails})
          .pipe(catchError(this._serverError), tap(((response: {success: number, data: object}) => {
@@ -125,15 +131,16 @@ export class OrderService {
 
   fetchOrderDetails(order_master_id){
     this.http.post('http://127.0.0.1:8000/api/orderDetails', {orderMasterId: order_master_id})
-      .subscribe((response: {success: number, data: object}) => {
+      .subscribe((response: {success: number, data: OrderDetail[]}) => {
         const {data} = response;
         // data is local variable, we should not send them
-        this.orderDetailsSub.next([...data]);
+        this.orderDetails = data;
+        this.orderDetailsSub.next([...this.orderDetails]);
       });
   }
 
   updateOrder(){
-    this.http.patch('http://127.0.0.1:8000/api/orders', {master: this.orderMaster, details: this.orderDetails})
+    this.http.patch('http://127.0.0.1:8000/api/orders', {master: this.orderMaster, details: this.orderDetailsUpdate})
       .subscribe((response: {success: number, data: object}) => {
         // const {data} = response;
         // this.orderDetailsSub.next([...data]);

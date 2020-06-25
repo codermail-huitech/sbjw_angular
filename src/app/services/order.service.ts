@@ -30,14 +30,14 @@ export class OrderService {
   orderDetailsUpdate: object;
   private agentSub = new Subject<Agent[]>();
   private materialSub = new Subject<Material[]>();
-  private orderSub = new Subject<OrderMaster>();
+  private orderSub = new Subject<OrderMaster[]>();
   // why any ?
   private orderDetailsSub = new Subject<OrderDetail[]>();
   private orderDetailsUpdateSub = new Subject<any>();
   orderData: object;
 
   getAgentUpdateListener(){
-    console.log('customer listener called');
+    // console.log('customer listener called');
     return this.agentSub.asObservable();
   }
 
@@ -97,7 +97,7 @@ export class OrderService {
       .subscribe((response: {success: number, data: Material[]}) => {
         const {data} = response;
         this.materialData = data;
-        console.log(this.materialData);
+        // console.log(this.materialData);
         this.materialSub.next([...this.materialData]);
       });
 
@@ -127,7 +127,7 @@ export class OrderService {
   saveOrder(){
        return this.http.post<OrderResponseData>('http://127.0.0.1:8000/api/orders', {master: this.orderMaster, details: this.orderDetails})
          .pipe(catchError(this._serverError), tap(((response: {success: number, data: object}) => {
-             console.log(response);
+             // console.log(response);
            })));
     }
 
@@ -142,23 +142,58 @@ export class OrderService {
 
   updateOrder(){
     this.http.patch('http://127.0.0.1:8000/api/orders', {master: this.orderMaster, details: this.orderDetailsUpdate})
-      .subscribe((response: {success: number, data: object}) => {
-        const {data} = response;
-        // this.orderDetailsUpdate = data;
-        // console.log(this.orderDetailsUpdate);
-        // this.orderDetailsUpdateSub.next([...orderDetailsUpdate]);
+      .subscribe((response: {success: number, orderDetail: object, orderMaster: object}) => {
+        // instant changing the order details after update
+        const {orderDetail} = response;
+        const detailIndex = this.orderDetails.findIndex(x => x.id === this.orderDetailsUpdate.id);
+        this.orderDetails[detailIndex] = response.orderDetail;
+        this.orderDetailsSub.next([...this.orderDetails]);
+        // instant changing the order master after update
+        const {orderMaster} = response;
+        const masterIndex = this.orderMasterData.findIndex(x => x.id === this.orderMaster.id);
+        this.orderMasterData[masterIndex] = response.orderMaster;
+        // @ts-ignore
+        this.orderSub.next([...this.orderMasterData]);
       });
   }
 
-  deleteOrder(id){
-    console.log(id);
-    // return this.http.delete<{success: number, data: string}>('http://127.0.0.1:8000/api/ordersDetailsDelete/' + id)
-    //   .pipe(catchError(this._serverError), tap((response: {success: number, data: string}) => {
-    //   }));  // this.handleError is a method created by me
+  masterUpdate(){
+    // console.log(id);
+    return this.http.patch<{success: number, data: object}>('http://127.0.0.1:8000/api/orderMaster', { master: this.orderMasterForm.value})
+      .pipe(catchError(this._serverError), tap((response: {success: number, data: object}) => {
+        const {data} = response;
+        const masterIndex = this.orderMasterData.findIndex(x => x.id === this.orderMasterForm.value.id);
+        this.orderMasterData[masterIndex] = response.data;
+        // @ts-ignore
+        this.orderSub.next([...this.orderMasterData]);
+      }));
 
-    this.http.delete('http://127.0.0.1:8000/api/ordersDetailsDelete/' + id )
-      .subscribe((response: {success: number, data: object}) => {
-      });
+    // this.http.delete('http://127.0.0.1:8000/api/ordersDetailsDelete/' + id )
+    //   .subscribe((response: {success: number, data: object}) => {
+    //   });
+  }
+
+  deleteOrderDetails(id){
+    // console.log(id);
+    return this.http.delete<{success: number, data: string}>('http://127.0.0.1:8000/api/ordersDetailsDelete/' + id)
+      .pipe(catchError(this._serverError), tap((response: {success: number, data: string}) => {
+        const index = this.orderDetails.findIndex(x => x.id === id);
+        this.orderDetails.splice(index , 1);
+        this.orderDetailsSub.next([...this.orderDetails]);
+      }));
+
+    // this.http.delete('http://127.0.0.1:8000/api/ordersDetailsDelete/' + id )
+    //   .subscribe((response: {success: number, data: object}) => {
+    //   });
+  }
+
+  deleteOrderMaster(id){
+    return this.http.delete<{success: number, data: string}>('http://127.0.0.1:8000/api/orderMasterDelete/' + id)
+      .pipe(catchError(this._serverError), tap((response: {success: number, data: string}) => {
+        const index = this.orderMasterData.findIndex(x => x.id === id);
+        this.orderMasterData.splice(index , 1);
+        this.orderSub.next([...this.orderMasterData]);
+      }));
   }
 
   private _serverError(err: any) {
@@ -175,7 +210,7 @@ export class OrderService {
     }
     if (err.status === 401){
       // tslint:disable-next-line:label-position
-      return throwError ({status: err.status, message: 'Your are not authorised', statusText: err.statusText});
+      return throwError ({status: err.status, message: 'You are not authorised', statusText: err.statusText});
     }
     return throwError(err);
   }

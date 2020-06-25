@@ -55,6 +55,7 @@
               </mat-form-field>
               <!--              Adding form to -->
               <button mat-button (click)="selectCustomerForOrder()" mat-stroked-button fxFlex="20">Save</button>
+              <button mat-button (click)="updateMaster()" mat-stroked-button fxFlex="20">Update</button>
             </div>
         </form>
       </div>
@@ -206,7 +207,7 @@
             </button>
           </td>
           <td>
-            <button mat-icon-button color="warn" aria-label="Edit Customer">
+            <button mat-icon-button color="warn" aria-label="Edit Customer" (click)="deleteOrderMaster(data)">
               <mat-icon>delete</mat-icon>
             </button>
           </td>

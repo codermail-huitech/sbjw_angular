@@ -34,6 +34,7 @@ export class OrderComponent implements OnInit {
   orderMasterForm: FormGroup;
   orderDetailsForm: FormGroup;
   orderData: object;
+  product_id: number;
   showProduct = true;
   yourModelDate: string;
   minDate = new Date(2010, 11, 2);
@@ -83,8 +84,6 @@ export class OrderComponent implements OnInit {
     this.orderService.getOrderUpdateListener()
       .subscribe((responseOrders: object) => {
         this.orderData = responseOrders;
-        // console.log('order_data');
-        // console.log(this.orderData);
       });
   }
 
@@ -102,6 +101,38 @@ export class OrderComponent implements OnInit {
     this.showProduct = !this.showProduct;
   }
 
+  fetchDetails(data){
+    this.showProduct = true;
+    this.orderService.fetchOrderDetails(data.id);
+    this.orderService.getOrderDetailsListener()
+      .subscribe((orderDetails: []) => {
+        this.orderDetails = orderDetails;
+      });
+    this.orderMasterForm.patchValue({id: data.id, customer_id : data.customer_id, agent_id: data.agent_id, order_date: data.date_of_order, delivery_date: data.date_of_delivery});
+  }
+  fillOrderDetailsForm(details){
+    // this.orderDetailsForm.setValue(details);
+    this.orderDetailsForm.patchValue({id: details.id, model_number : details.model_number, p_loss: details.p_loss, price: details.price, price_code: details.price_code, quantity: details.quantity, amount: details.amount, approx_gold: details.approx_gold, size: details.size });
+    this.product_id = details.product_id;
+  }
+  updateOrder(){
+    this.orderDetailsForm.value.product_id = this.product_id;
+    this.orderService.setOrderDetailsForUpdate();
+    const user = JSON.parse(localStorage.getItem('user'));
+    this.orderMasterForm.value.employee_id = user.id;
+    this.orderMasterForm.value.order_date = this.pipe.transform(this.orderMasterForm.value.order_date, 'yyyy-MM-dd');
+    this.orderMasterForm.value.delivery_date = this.pipe.transform(this.orderMasterForm.value.delivery_date, 'yyyy-MM-dd');
+    this.orderService.setOrderMasterData();
+    this.orderService.updateOrder();
+    // this.orderService.getOrderDetailsUpdateListener()
+    //   .subscribe((data: object) => {
+    //     console.log(data);
+    //   });
+  }
+  deleteDetails(details){
+    console.log(details);
+    this.orderService.deleteOrder(details.id);
+  }
   findModel(){
     const index = this.products.findIndex(k => k.model_number === this.orderDetailsForm.value.model_number.toString().toUpperCase());
     if (index === -1){

@@ -2,7 +2,9 @@
 
 
 export class OrderDetail{
+  id?: number;
   material_id: number;
+  product_id?: number;
   model_number: number;
   pLoss: number;
   price: number;

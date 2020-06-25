@@ -27,23 +27,33 @@ export class OrderService {
   orderMaster: OrderMaster;
   orderMasterData: object;
   orderDetails: OrderDetail[] = [];
+  orderDetailsUpdate: object;
   private agentSub = new Subject<Agent[]>();
   private materialSub = new Subject<Material[]>();
-  private orderSub = new Subject<any>();
-  orderData: {};
+  private orderSub = new Subject<OrderMaster>();
+  // why any ?
+  private orderDetailsSub = new Subject<OrderDetail[]>();
+  private orderDetailsUpdateSub = new Subject<any>();
+  orderData: object;
 
   getAgentUpdateListener(){
     console.log('customer listener called');
     return this.agentSub.asObservable();
   }
 
+  getOrderDetailsListener(){
+    return this.orderDetailsSub.asObservable();
+  }
+
+  getOrderDetailsUpdateListener(){
+    return this.orderDetailsUpdateSub.asObservable();
+  }
+
   getMaterialUpdateListener(){
-    console.log('customer listener called');
     return this.materialSub.asObservable();
   }
 
   getOrderUpdateListener(){
-    console.log('customer listener called');
     return this.orderSub.asObservable();
   }
 
@@ -57,9 +67,10 @@ export class OrderService {
     });
 
     this.orderDetailsForm = new FormGroup({
+      id : new FormControl(null),
       material_id : new FormControl(3, [Validators.required]),
       model_number : new FormControl(null, [Validators.required]),
-      pLoss : new FormControl(null, [Validators.required]),
+      p_loss : new FormControl(null, [Validators.required]),
       price : new FormControl(null, [Validators.required]),
       price_code : new FormControl(null, [Validators.required]),
       approx_gold : new FormControl(null, [Validators.required]),
@@ -108,12 +119,47 @@ export class OrderService {
     this.orderDetails.unshift(this.orderDetailsForm.value);
   }
 
+  setOrderDetailsForUpdate(){
+    this.orderDetailsUpdate = this.orderDetailsForm.value;
+  }
+
+
   saveOrder(){
        return this.http.post<OrderResponseData>('http://127.0.0.1:8000/api/orders', {master: this.orderMaster, details: this.orderDetails})
          .pipe(catchError(this._serverError), tap(((response: {success: number, data: object}) => {
              console.log(response);
            })));
     }
+
+  fetchOrderDetails(order_master_id){
+    this.http.post('http://127.0.0.1:8000/api/orderDetails', {orderMasterId: order_master_id})
+      .subscribe((response: {success: number, data: OrderDetail[]}) => {
+        const {data} = response;
+        this.orderDetails = data;
+        this.orderDetailsSub.next([...this.orderDetails]);
+      });
+  }
+
+  updateOrder(){
+    this.http.patch('http://127.0.0.1:8000/api/orders', {master: this.orderMaster, details: this.orderDetailsUpdate})
+      .subscribe((response: {success: number, data: object}) => {
+        const {data} = response;
+        // this.orderDetailsUpdate = data;
+        // console.log(this.orderDetailsUpdate);
+        // this.orderDetailsUpdateSub.next([...orderDetailsUpdate]);
+      });
+  }
+
+  deleteOrder(id){
+    console.log(id);
+    // return this.http.delete<{success: number, data: string}>('http://127.0.0.1:8000/api/ordersDetailsDelete/' + id)
+    //   .pipe(catchError(this._serverError), tap((response: {success: number, data: string}) => {
+    //   }));  // this.handleError is a method created by me
+
+    this.http.delete('http://127.0.0.1:8000/api/ordersDetailsDelete/' + id )
+      .subscribe((response: {success: number, data: object}) => {
+      });
+  }
 
   private _serverError(err: any) {
     // console.log('sever error:', err);  // debug

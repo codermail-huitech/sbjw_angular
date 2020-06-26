@@ -207,7 +207,7 @@ export class OrderComponent implements OnInit {
     }
     if (index !== -1){
       const x = this.products[index];
-      this.orderDetailsForm.patchValue({pLoss : x.p_loss, price_code : x.price_code_name, price : x.price});
+      this.orderDetailsForm.patchValue({p_loss : x.p_loss, price_code : x.price_code_name, price : x.price});
     }
   }
 

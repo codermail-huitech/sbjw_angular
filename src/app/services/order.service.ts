@@ -30,7 +30,7 @@ export class OrderService {
   orderMaster: OrderMaster;
   // orderMasterData used to store the orderList
   orderMasterData: object;
-  // orderDetails used to store all the deatils in this array
+  // orderDetails used to store all the details in this array
   orderDetails: OrderDetail[] = [];
   // orderDetailUpdate is for updating a single odder details
   orderDetailUpdate: object;
@@ -40,7 +40,6 @@ export class OrderService {
   private orderDetailsSub = new Subject<OrderDetail[]>();
 
   getAgentUpdateListener(){
-    // console.log('customer listener called');
     return this.agentSub.asObservable();
   }
 
@@ -105,7 +104,7 @@ export class OrderService {
   setOrderMasterData() {
     this.orderMaster = this.orderMasterForm.value;
   }
-  // this funtion is to unshift the details while pressing in add product
+  // this function is to unshift the details while pressing in add product
   setOrderDetails(){
     this.orderDetails.unshift(this.orderDetailsForm.value);
   }

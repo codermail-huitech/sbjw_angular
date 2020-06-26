@@ -9,6 +9,8 @@ import {OrderDetail} from '../models/orderDetail.model';
 import {Product} from '../models/product.model';
 import {catchError, tap} from 'rxjs/operators';
 import {Customer} from '../models/customer.model';
+// this globat.ts file is created to store all global variables
+import {GlobalVariable} from '../shared/global';
 
 
 export interface OrderResponseData {

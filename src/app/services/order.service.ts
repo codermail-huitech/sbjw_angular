@@ -9,7 +9,7 @@ import {OrderDetail} from '../models/orderDetail.model';
 import {Product} from '../models/product.model';
 import {catchError, tap} from 'rxjs/operators';
 import {Customer} from '../models/customer.model';
-// this globat.ts file is created to store all global variables
+// this global.ts file is created to store all global variables
 import {GlobalVariable} from '../shared/global';
 
 
@@ -78,14 +78,14 @@ export class OrderService {
       amount : new FormControl({value: null, disabled: true} , [Validators.required])
     });
     // fetching agents
-    this.http.get('http://127.0.0.1:8000/api/agents')
+    this.http.get(GlobalVariable.BASE_API_URL + '/agents')
       .subscribe((response: {success: number, data: Agent[]}) => {
         const {data} = response;
         this.agentData = data;
         this.agentSub.next([...this.agentData]);
       });
 
-    this.http.get('http://127.0.0.1:8000/api/orderMaterials')
+    this.http.get(GlobalVariable.BASE_API_URL + '/orderMaterials')
       .subscribe((response: {success: number, data: Material[]}) => {
         const {data} = response;
         this.materialData = data;
@@ -94,7 +94,7 @@ export class OrderService {
       });
 
     // fetching order List
-    this.http.get('http://127.0.0.1:8000/api/orders')
+    this.http.get(GlobalVariable.BASE_API_URL + '/orders')
       .subscribe((response: {success: number, data: object}) => {
         const {data} = response;
         this.orderMasterData = data;
@@ -117,13 +117,14 @@ export class OrderService {
 
 
   saveOrder(){
-       return this.http.post<OrderResponseData>('http://127.0.0.1:8000/api/orders', {master: this.orderMaster, details: this.orderDetails})
+    // tslint:disable-next-line:max-line-length
+       return this.http.post<OrderResponseData>( GlobalVariable.BASE_API_URL + '/orders', {master: this.orderMaster, details: this.orderDetails})
          .pipe(catchError(this._serverError), tap(((response: {success: number, data: object}) => {
            })));
     }
 
   fetchOrderDetails(order_master_id){
-    this.http.post('http://127.0.0.1:8000/api/orderDetails', {orderMasterId: order_master_id})
+    this.http.post(GlobalVariable.BASE_API_URL + '/orderDetails', {orderMasterId: order_master_id})
       .subscribe((response: {success: number, data: OrderDetail[]}) => {
         const {data} = response;
         this.orderDetails = data;
@@ -132,7 +133,7 @@ export class OrderService {
   }
 
   updateOrder(){
-    this.http.patch('http://127.0.0.1:8000/api/orders', {master: this.orderMaster, details: this.orderDetailUpdate})
+    this.http.patch(GlobalVariable.BASE_API_URL + '/orders', {master: this.orderMaster, details: this.orderDetailUpdate})
       .subscribe((response: {success: number, orderDetail: object, orderMaster: object}) => {
 
         // instant changing the order details after update
@@ -156,7 +157,8 @@ export class OrderService {
 
   masterUpdate(){
     // console.log(id);
-    return this.http.patch<{success: number, data: object}>('http://127.0.0.1:8000/api/orderMaster', { master: this.orderMasterForm.value})
+    // tslint:disable-next-line:max-line-length
+    return this.http.patch<{success: number, data: object}>(GlobalVariable.BASE_API_URL + '/orderMaster', { master: this.orderMasterForm.value})
       .pipe(catchError(this._serverError), tap((response: {success: number, data: object}) => {
         const {data} = response;
         // @ts-ignore
@@ -168,7 +170,7 @@ export class OrderService {
   }
 
   deleteOrderDetails(id){
-    return this.http.delete<{success: number, data: string}>('http://127.0.0.1:8000/api/ordersDetailsDelete/' + id)
+    return this.http.delete<{success: number, data: string}>(GlobalVariable.BASE_API_URL + '/ordersDetailsDelete/' + id)
       .pipe(catchError(this._serverError), tap((response: {success: number, data: string}) => {
         const index = this.orderDetails.findIndex(x => x.id === id);
         this.orderDetails.splice(index , 1);
@@ -177,7 +179,7 @@ export class OrderService {
   }
 
   deleteOrderMaster(id){
-    return this.http.delete<{success: number, data: string}>('http://127.0.0.1:8000/api/orderMasterDelete/' + id)
+    return this.http.delete<{success: number, data: string}>(+ '/orderMasterDelete/' + id)
       .pipe(catchError(this._serverError), tap((response: {success: number, data: string}) => {
         // @ts-ignore
         const index = this.orderMasterData.findIndex(x => x.id === id);

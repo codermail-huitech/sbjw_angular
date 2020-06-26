@@ -22,33 +22,30 @@ export interface OrderResponseData {
 export class OrderService {
   orderMasterForm: FormGroup;
   orderDetailsForm: FormGroup;
+  // storing material
   materialData: Material[] = [];
+  // storing agent
   agentData: Agent[] = [];
+  // orderMaster is used to store the form orderMasterForm.value
   orderMaster: OrderMaster;
+  // orderMasterData used to store the orderList
   orderMasterData: object;
+  // orderDetails used to store all the details in this array
   orderDetails: OrderDetail[] = [];
-  orderDetailsUpdate: object;
+  // orderDetailUpdate is for updating a single odder details
+  orderDetailUpdate: object;
   private agentSub = new Subject<Agent[]>();
   private materialSub = new Subject<Material[]>();
-  private orderSub = new Subject<OrderMaster>();
-  // why any ?
+  private orderSub = new Subject<OrderMaster[]>();
   private orderDetailsSub = new Subject<OrderDetail[]>();
-  private orderDetailsUpdateSub = new Subject<any>();
-  orderData: object;
 
   getAgentUpdateListener(){
-    console.log('customer listener called');
     return this.agentSub.asObservable();
   }
 
   getOrderDetailsListener(){
     return this.orderDetailsSub.asObservable();
   }
-
-  getOrderDetailsUpdateListener(){
-    return this.orderDetailsUpdateSub.asObservable();
-  }
-
   getMaterialUpdateListener(){
     return this.materialSub.asObservable();
   }
@@ -86,18 +83,11 @@ export class OrderService {
         this.agentSub.next([...this.agentData]);
       });
 
-    // this.http.get('http://127.0.0.1:8000/api/materials')
-    //   .subscribe((response: {success: number, data: Material[]}) => {
-    //     const {data} = response;
-    //     this.materialData = data;
-    //     this.materialSub.next([...this.materialData]);
-    //   });
-
     this.http.get('http://127.0.0.1:8000/api/orderMaterials')
       .subscribe((response: {success: number, data: Material[]}) => {
         const {data} = response;
         this.materialData = data;
-        console.log(this.materialData);
+        // console.log(this.materialData);
         this.materialSub.next([...this.materialData]);
       });
 
@@ -110,24 +100,23 @@ export class OrderService {
         this.orderSub.next([...this.orderMasterData]);
       });
   }
-
+  // this function is to save the orderMasterForm value while pressing in save
   setOrderMasterData() {
     this.orderMaster = this.orderMasterForm.value;
   }
-
+  // this function is to unshift the details while pressing in add product
   setOrderDetails(){
     this.orderDetails.unshift(this.orderDetailsForm.value);
   }
-
+  // this function sets the data for order details update for single product
   setOrderDetailsForUpdate(){
-    this.orderDetailsUpdate = this.orderDetailsForm.value;
+    this.orderDetailUpdate = this.orderDetailsForm.value;
   }
 
 
   saveOrder(){
        return this.http.post<OrderResponseData>('http://127.0.0.1:8000/api/orders', {master: this.orderMaster, details: this.orderDetails})
          .pipe(catchError(this._serverError), tap(((response: {success: number, data: object}) => {
-             console.log(response);
            })));
     }
 
@@ -141,24 +130,60 @@ export class OrderService {
   }
 
   updateOrder(){
-    this.http.patch('http://127.0.0.1:8000/api/orders', {master: this.orderMaster, details: this.orderDetailsUpdate})
-      .subscribe((response: {success: number, data: object}) => {
-        const {data} = response;
-        // this.orderDetailsUpdate = data;
-        // console.log(this.orderDetailsUpdate);
-        // this.orderDetailsUpdateSub.next([...orderDetailsUpdate]);
+    this.http.patch('http://127.0.0.1:8000/api/orders', {master: this.orderMaster, details: this.orderDetailUpdate})
+      .subscribe((response: {success: number, orderDetail: object, orderMaster: object}) => {
+
+        // instant changing the order details after update
+        const {orderDetail} = response;
+        // @ts-ignore
+        const detailIndex = this.orderDetails.findIndex(x => x.id === this.orderDetailUpdate.id);
+        if (response.orderDetail instanceof OrderDetail) {
+          this.orderDetails[detailIndex] = response.orderDetail;
+        }
+        this.orderDetailsSub.next([...this.orderDetails]);
+
+        // instant changing the order master after update
+        const {orderMaster} = response;
+        // @ts-ignore
+        const masterIndex = this.orderMasterData.findIndex(x => x.id === this.orderMaster.id);
+        this.orderMasterData[masterIndex] = response.orderMaster;
+        // @ts-ignore
+        this.orderSub.next([...this.orderMasterData]);
       });
   }
 
-  deleteOrder(id){
-    console.log(id);
-    // return this.http.delete<{success: number, data: string}>('http://127.0.0.1:8000/api/ordersDetailsDelete/' + id)
-    //   .pipe(catchError(this._serverError), tap((response: {success: number, data: string}) => {
-    //   }));  // this.handleError is a method created by me
+  masterUpdate(){
+    // console.log(id);
+    return this.http.patch<{success: number, data: object}>('http://127.0.0.1:8000/api/orderMaster', { master: this.orderMasterForm.value})
+      .pipe(catchError(this._serverError), tap((response: {success: number, data: object}) => {
+        const {data} = response;
+        // @ts-ignore
+        const masterIndex = this.orderMasterData.findIndex(x => x.id === this.orderMasterForm.value.id);
+        this.orderMasterData[masterIndex] = response.data;
+        // @ts-ignore
+        this.orderSub.next([...this.orderMasterData]);
+      }));
+  }
 
-    this.http.delete('http://127.0.0.1:8000/api/ordersDetailsDelete/' + id )
-      .subscribe((response: {success: number, data: object}) => {
-      });
+  deleteOrderDetails(id){
+    return this.http.delete<{success: number, data: string}>('http://127.0.0.1:8000/api/ordersDetailsDelete/' + id)
+      .pipe(catchError(this._serverError), tap((response: {success: number, data: string}) => {
+        const index = this.orderDetails.findIndex(x => x.id === id);
+        this.orderDetails.splice(index , 1);
+        this.orderDetailsSub.next([...this.orderDetails]);
+      }));
+  }
+
+  deleteOrderMaster(id){
+    return this.http.delete<{success: number, data: string}>('http://127.0.0.1:8000/api/orderMasterDelete/' + id)
+      .pipe(catchError(this._serverError), tap((response: {success: number, data: string}) => {
+        // @ts-ignore
+        const index = this.orderMasterData.findIndex(x => x.id === id);
+        // @ts-ignore
+        this.orderMasterData.splice(index , 1);
+        // @ts-ignore
+        this.orderSub.next([...this.orderMasterData]);
+      }));
   }
 
   private _serverError(err: any) {
@@ -175,7 +200,7 @@ export class OrderService {
     }
     if (err.status === 401){
       // tslint:disable-next-line:label-position
-      return throwError ({status: err.status, message: 'Your are not authorised', statusText: err.statusText});
+      return throwError ({status: err.status, message: 'You are not authorised', statusText: err.statusText});
     }
     return throwError(err);
   }

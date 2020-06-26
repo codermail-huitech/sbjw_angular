@@ -14,6 +14,7 @@ import {MatSnackBar} from '@angular/material/snack-bar';
 import {SncakBarComponent} from '../../common/sncak-bar/sncak-bar.component';
 import {OrderDetail} from '../../models/orderDetail.model';
 import {Observable} from 'rxjs';
+import {ConfirmationDialogService} from '../../common/confirmation-dialog/confirmation-dialog.service';
 
 
 @Component({
@@ -40,6 +41,7 @@ export class OrderComponent implements OnInit {
   minDate = new Date(2010, 11, 2);
   maxDate = new Date(2021, 3, 2);
   startDate = new Date(2020, 0, 2);
+  public currentError: any;
 
   pipe = new DatePipe('en-US');
 
@@ -47,7 +49,7 @@ export class OrderComponent implements OnInit {
 
 
   // tslint:disable-next-line:max-line-length
-  constructor(private customerService: CustomerService, private orderService: OrderService, private storage: StorageMap, private productService: ProductService, private _snackBar: MatSnackBar) {
+  constructor(private confirmationDialogService: ConfirmationDialogService, private customerService: CustomerService, private orderService: OrderService, private storage: StorageMap, private productService: ProductService, private _snackBar: MatSnackBar) {
   }
   onlyOdds = (d: Date): boolean => {
     const date = d.getDate();
@@ -85,6 +87,16 @@ export class OrderComponent implements OnInit {
       .subscribe((responseOrders: object) => {
         this.orderData = responseOrders;
       });
+  }
+
+  updateMaster(){
+    const user = JSON.parse(localStorage.getItem('user'));
+    this.orderMasterForm.value.employee_id = user.id;
+    this.orderMasterForm.value.order_date = this.pipe.transform(this.orderMasterForm.value.order_date, 'yyyy-MM-dd');
+    this.orderMasterForm.value.delivery_date = this.pipe.transform(this.orderMasterForm.value.delivery_date, 'yyyy-MM-dd');
+    this.orderService.masterUpdate().subscribe((response)=>{
+      console.log(response);
+    });
   }
 
   addOrder(){
@@ -129,9 +141,62 @@ export class OrderComponent implements OnInit {
     //     console.log(data);
     //   });
   }
+
+  deleteOrderMaster(masterData){
+    this.confirmationDialogService.confirm('Please confirm..', 'Do you really want to delete order master ?')
+      .then((confirmed) => {
+        // deleting record if confirmed
+        if (confirmed){
+          this.orderService.deleteOrderMaster(masterData.id).subscribe((response) => {
+            if (response.success === 1){
+              this._snackBar.openFromComponent(SncakBarComponent, {
+                duration: 4000, data: {message: 'Order Deleted'}
+              });
+            }
+            this.currentError = null;
+          }, (error) => {
+            console.log('error occured ');
+            console.log(error);
+            this.currentError = error;
+            this._snackBar.openFromComponent(SncakBarComponent, {
+              duration: 4000, data: {message: error.message}
+            });
+          });
+        }
+
+      })
+      .catch(() => {
+        console.log('User dismissed the dialog (e.g., by using ESC, clicking the cross icon, or clicking outside the dialog)');
+      });
+    console.log(masterData);
+  }
   deleteDetails(details){
-    console.log(details);
-    this.orderService.deleteOrder(details.id);
+    // console.log(details);
+    this.confirmationDialogService.confirm('Please confirm..', 'Do you really want to delete order detail ?')
+      .then((confirmed) => {
+        // deleting record if confirmed
+        if (confirmed){
+          this.orderService.deleteOrderDetails(details.id).subscribe((response) => {
+            if (response.success === 1){
+              this._snackBar.openFromComponent(SncakBarComponent, {
+                duration: 4000, data: {message: 'Order Deleted'}
+              });
+            }
+            this.currentError = null;
+          }, (error) => {
+            console.log('error occured ');
+            console.log(error);
+            this.currentError = error;
+            this._snackBar.openFromComponent(SncakBarComponent, {
+              duration: 4000, data: {message: error.message}
+            });
+          });
+        }
+
+      })
+      .catch(() => {
+        console.log('User dismissed the dialog (e.g., by using ESC, clicking the cross icon, or clicking outside the dialog)');
+      });
   }
   findModel(){
     const index = this.products.findIndex(k => k.model_number === this.orderDetailsForm.value.model_number.toString().toUpperCase());

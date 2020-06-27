@@ -31,10 +31,12 @@ export class OrderService {
   // orderMaster is used to store the form orderMasterForm.value
   orderMaster: OrderMaster;
   // orderMasterData used to store the orderList
-  orderMasterData: object;
+  // orderMasterData: object;
   // orderDetails used to store all the details in this array
   orderDetails: OrderDetail[] = [];
   // orderDetailUpdate is for updating a single odder details
+ 
+  orderMasterData : OrderMaster[] = [];
   orderDetailUpdate: object;
   private agentSub = new Subject<Agent[]>();
   private materialSub = new Subject<Material[]>();
@@ -95,7 +97,7 @@ export class OrderService {
 
     // fetching order List
     this.http.get(GlobalVariable.BASE_API_URL + '/orders')
-      .subscribe((response: {success: number, data: object}) => {
+      .subscribe((response: {success: number, data: OrderMaster[]}) => {
         const {data} = response;
         this.orderMasterData = data;
         // @ts-ignore
@@ -119,8 +121,11 @@ export class OrderService {
   saveOrder(){
     // tslint:disable-next-line:max-line-length
        return this.http.post<OrderResponseData>( GlobalVariable.BASE_API_URL + '/orders', {master: this.orderMaster, details: this.orderDetails})
-         .pipe(catchError(this._serverError), tap(((response: {success: number, data: object}) => {
-           })));
+         .pipe(catchError(this._serverError), tap(((response: {success: number, data: OrderMaster}) => {
+          this.orderMasterData.unshift(response.data);
+          this.orderSub.next([...this.orderMasterData]);
+          // console.log(response.data);
+        })));
     }
 
   fetchOrderDetails(order_master_id){
@@ -134,7 +139,7 @@ export class OrderService {
 
   updateOrder(){
     this.http.patch(GlobalVariable.BASE_API_URL + '/orders', {master: this.orderMaster, details: this.orderDetailUpdate})
-      .subscribe((response: {success: number, orderDetail: object, orderMaster: object}) => {
+      .subscribe((response: {success: number, orderDetail: object, orderMaster: OrderMaster}) => {
 
         // instant changing the order details after update
         const {orderDetail} = response;
@@ -159,7 +164,7 @@ export class OrderService {
     // console.log(id);
     // tslint:disable-next-line:max-line-length
     return this.http.patch<{success: number, data: object}>(GlobalVariable.BASE_API_URL + '/orderMaster', { master: this.orderMasterForm.value})
-      .pipe(catchError(this._serverError), tap((response: {success: number, data: object}) => {
+      .pipe(catchError(this._serverError), tap((response: {success: number, data: OrderMaster}) => {
         const {data} = response;
         // @ts-ignore
         const masterIndex = this.orderMasterData.findIndex(x => x.id === this.orderMasterForm.value.id);

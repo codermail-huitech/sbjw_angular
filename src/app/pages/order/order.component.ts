@@ -13,6 +13,7 @@ import {StorageMap} from '@ngx-pwa/local-storage';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {SncakBarComponent} from '../../common/sncak-bar/sncak-bar.component';
 import {OrderDetail} from '../../models/orderDetail.model';
+import {OrderMaster} from '../../models/orderMaster.model';
 import {Observable} from 'rxjs';
 import {ConfirmationDialogService} from '../../common/confirmation-dialog/confirmation-dialog.service';
 
@@ -34,7 +35,8 @@ export class OrderComponent implements OnInit {
   orderDetails: OrderDetail[] = [];
   orderMasterForm: FormGroup;
   orderDetailsForm: FormGroup;
-  orderData: object;
+  // orderData: object;
+  orderData : OrderMaster[] = [];
   product_id: number;
   showProduct = true;
   yourModelDate: string;
@@ -84,7 +86,7 @@ export class OrderComponent implements OnInit {
     });
 
     this.orderService.getOrderUpdateListener()
-      .subscribe((responseOrders: object) => {
+      .subscribe((responseOrders: OrderMaster[]) => {
         this.orderData = responseOrders;
       });
   }

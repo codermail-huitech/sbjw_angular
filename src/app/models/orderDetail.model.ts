@@ -3,6 +3,7 @@
 
 export class OrderDetail{
   id?: number;
+  order_master_id ? : number;
   material_id: number;
   product_id?: number;
   model_number: number;
@@ -13,6 +14,7 @@ export class OrderDetail{
   size: number;
   quantity: number;
   amount: number;
+  job_status? : number;
   constructor() {
   }
 }

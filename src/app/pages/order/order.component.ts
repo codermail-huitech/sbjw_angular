@@ -97,9 +97,26 @@ export class OrderComponent implements OnInit {
     this.orderMasterForm.value.order_date = this.pipe.transform(this.orderMasterForm.value.order_date, 'yyyy-MM-dd');
     this.orderMasterForm.value.delivery_date = this.pipe.transform(this.orderMasterForm.value.delivery_date, 'yyyy-MM-dd');
     this.orderService.masterUpdate().subscribe((response)=>{
-      console.log(response);
+
+      if (response.success === 1){
+        this._snackBar.openFromComponent(SncakBarComponent, {
+          duration: 4000, data: {message: 'Order Master Updated'}
+        });
+      }
+      this.currentError = null;
+
+    },(error) => {
+      console.log('error occured ');
+      console.log(error);
+      this.currentError = error;
+      this._snackBar.openFromComponent(SncakBarComponent, {
+        duration: 4000, data: {message: error.message}
+      });
     });
-  }
+
+      
+}
+  
 
   addOrder(){
     const index = this.products.findIndex(x => x.model_number === this.orderDetailsForm.value.model_number);

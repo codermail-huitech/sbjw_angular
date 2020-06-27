@@ -57,6 +57,10 @@ export class OrderService {
   getOrderUpdateListener(){
     return this.orderSub.asObservable();
   }
+  // getOrderDetailsUpdateListener(){
+  //   return this.orderDetailsSub.asObservable();
+  // }
+
 
   constructor(private http: HttpClient) {
     this.orderMasterForm = new FormGroup({
@@ -133,21 +137,30 @@ export class OrderService {
       .subscribe((response: {success: number, data: OrderDetail[]}) => {
         const {data} = response;
         this.orderDetails = data;
+       
         this.orderDetailsSub.next([...this.orderDetails]);
       });
   }
 
   updateOrder(){
     this.http.patch(GlobalVariable.BASE_API_URL + '/orders', {master: this.orderMaster, details: this.orderDetailUpdate})
-      .subscribe((response: {success: number, orderDetail: object, orderMaster: OrderMaster}) => {
+      .subscribe((response: {success: number, orderDetail: OrderDetail, orderMaster: OrderMaster}) => {
+
+      
 
         // instant changing the order details after update
         const {orderDetail} = response;
         // @ts-ignore
         const detailIndex = this.orderDetails.findIndex(x => x.id === this.orderDetailUpdate.id);
-        if (response.orderDetail instanceof OrderDetail) {
-          this.orderDetails[detailIndex] = response.orderDetail;
-        }
+
+        this.orderDetails[detailIndex]=response.orderDetail;
+      
+        
+        // if (response.orderDetail instanceof OrderDetail) {
+        //   this.orderDetails[detailIndex] = response.orderDetail;
+        //   console.log(this.orderDetails);
+       
+        // }
         this.orderDetailsSub.next([...this.orderDetails]);
 
         // instant changing the order master after update

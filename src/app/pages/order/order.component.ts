@@ -157,7 +157,25 @@ export class OrderComponent implements OnInit {
     this.orderMasterForm.value.order_date = this.pipe.transform(this.orderMasterForm.value.order_date, 'yyyy-MM-dd');
     this.orderMasterForm.value.delivery_date = this.pipe.transform(this.orderMasterForm.value.delivery_date, 'yyyy-MM-dd');
     this.orderService.setOrderMasterData();
-    this.orderService.updateOrder();
+    this.orderService.updateOrder().subscribe((response) => {
+
+      if(response.success===1){
+        this._snackBar.openFromComponent(SncakBarComponent, {
+          duration: 4000, data: {message: 'Details Updated'}
+        });
+      }
+      this.currentError=null;
+
+    },(error) => {
+      console.log('error occured');
+      console.log(error);
+      this.currentError=error;
+
+      this._snackBar.openFromComponent(SncakBarComponent, {
+        duration: 4000, data: {message: error.message}
+      });
+
+    });
     // this.orderService.getOrderDetailsUpdateListener()
     //   .subscribe((data: object) => {
     //     console.log(data);
@@ -165,10 +183,13 @@ export class OrderComponent implements OnInit {
   }
 
   deleteOrderMaster(masterData){
+    
     this.confirmationDialogService.confirm('Please confirm..', 'Do you really want to delete order master ?')
       .then((confirmed) => {
         // deleting record if confirmed
         if (confirmed){
+         
+         
           this.orderService.deleteOrderMaster(masterData.id).subscribe((response) => {
             if (response.success === 1){
               this._snackBar.openFromComponent(SncakBarComponent, {
@@ -185,13 +206,16 @@ export class OrderComponent implements OnInit {
             });
           });
         }
-
       })
+
+    
       .catch(() => {
         console.log('User dismissed the dialog (e.g., by using ESC, clicking the cross icon, or clicking outside the dialog)');
       });
     console.log(masterData);
   }
+
+
   deleteDetails(details){
     // console.log(details);
     this.confirmationDialogService.confirm('Please confirm..', 'Do you really want to delete order detail ?')

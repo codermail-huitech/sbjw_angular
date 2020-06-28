@@ -143,9 +143,11 @@ export class OrderService {
   }
 
   updateOrder(){
-    this.http.patch(GlobalVariable.BASE_API_URL + '/orders', {master: this.orderMaster, details: this.orderDetailUpdate})
-      .subscribe((response: {success: number, orderDetail: OrderDetail, orderMaster: OrderMaster}) => {
+    // this.http.patch(GlobalVariable.BASE_API_URL + '/orders', {master: this.orderMaster, details: this.orderDetailUpdate})
+    //   .subscribe((response: {success: number, orderDetail: OrderDetail, orderMaster: OrderMaster}) => {
 
+      return this.http.patch(GlobalVariable.BASE_API_URL + '/orders',{master: this.orderMaster, details: this.orderDetailUpdate})
+      .pipe(catchError(this._serverError), tap((response: {success: number, orderDetail: OrderDetail, orderMaster: OrderMaster}) => {
       
 
         // instant changing the order details after update
@@ -164,13 +166,13 @@ export class OrderService {
         this.orderDetailsSub.next([...this.orderDetails]);
 
         // instant changing the order master after update
-        const {orderMaster} = response;
+        // const {orderMaster} = response;
         // @ts-ignore
-        const masterIndex = this.orderMasterData.findIndex(x => x.id === this.orderMaster.id);
-        this.orderMasterData[masterIndex] = response.orderMaster;
+        // const masterIndex = this.orderMasterData.findIndex(x => x.id === this.orderMaster.id);
+        // this.orderMasterData[masterIndex] = response.orderMaster;
         // @ts-ignore
-        this.orderSub.next([...this.orderMasterData]);
-      });
+        // this.orderSub.next([...this.orderMasterData]);
+      }));
   }
 
   masterUpdate(){
@@ -197,7 +199,8 @@ export class OrderService {
   }
 
   deleteOrderMaster(id){
-    return this.http.delete<{success: number, data: string}>(+ '/orderMasterDelete/' + id)
+    // console.log('deleteOrderMaster')
+    return this.http.delete<{success: number, data: string}>(GlobalVariable.BASE_API_URL + '/orderMasterDelete/' + id)
       .pipe(catchError(this._serverError), tap((response: {success: number, data: string}) => {
         // @ts-ignore
         const index = this.orderMasterData.findIndex(x => x.id === id);

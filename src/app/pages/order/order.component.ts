@@ -39,6 +39,7 @@ export class OrderComponent implements OnInit {
   orderData : OrderMaster[] = [];
   product_id: number;
   showProduct = true;
+  isSaveEnabled = true;
   yourModelDate: string;
   minDate = new Date(2010, 11, 2);
   maxDate = new Date(2021, 3, 2);
@@ -143,10 +144,12 @@ export class OrderComponent implements OnInit {
   }
   fillOrderDetailsForm(details){
     // this.orderDetailsForm.setValue(details);
+    this.isSaveEnabled=false;
     this.orderDetailsForm.patchValue({id: details.id, model_number : details.model_number, p_loss: details.p_loss, price: details.price, price_code: details.price_code, quantity: details.quantity, amount: details.amount, approx_gold: details.approx_gold, size: details.size });
     this.product_id = details.product_id;
   }
   updateOrder(){
+    
     this.orderDetailsForm.value.product_id = this.product_id;
     this.orderService.setOrderDetailsForUpdate();
     const user = JSON.parse(localStorage.getItem('user'));

@@ -8,7 +8,6 @@ import {ExcelService} from '../../../services/excel.service';
 import * as jsPDF from 'jspdf';
 import 'jspdf-autotable';
 import html2canvas from 'html2canvas';
-import alasql from 'alasql';
 import {Observable} from 'rxjs';
 import {SncakBarComponent} from '../../../common/sncak-bar/sncak-bar.component';
 import {MatSnackBar} from '@angular/material/snack-bar';
@@ -35,10 +34,10 @@ export class CustomerListComponent implements OnInit {
   p = 1;
 
   @ViewChild('htmlData') htmlData: ElementRef;
-  constructor(public customerService: CustomerService
-              ,private excelService: ExcelService
-              ,private _snackBar: MatSnackBar
-              ,private confirmationDialogService: ConfirmationDialogService
+  constructor(public customerService: CustomerService,
+              private excelService: ExcelService,
+              private _snackBar: MatSnackBar,
+              private confirmationDialogService: ConfirmationDialogService
   ) {
     this.page = 1;
     this.pageSize = 15;
@@ -63,7 +62,6 @@ export class CustomerListComponent implements OnInit {
       .subscribe((customers: Customer[]) => {
         console.log('observable returned, now CustomerData will not be blank');
         this.customerData = customers;
-        console.log(this.customerData);
       });
   }
   customerDataToExcel(){
@@ -80,16 +78,16 @@ export class CustomerListComponent implements OnInit {
       const imgHeight = canvas.height * imgWidth / canvas.width;
       const heightLeft = imgHeight;
 
-      const contentDataURL = canvas.toDataURL('image/png')
+      const contentDataURL = canvas.toDataURL('image/png');
       const pdf = new jsPDF('p', 'mm', 'a4'); // A4 size page of PDF
       const position = 0;
-      pdf.addImage(contentDataURL, 'PNG', 0, position, imgWidth, imgHeight)
+      pdf.addImage(contentDataURL, 'PNG', 0, position, imgWidth, imgHeight);
       pdf.save('MYPdf.pdf'); // Generated PDF
     });
   }
 
   convert(){
-    var doc = new jsPDF();
+    const doc = new jsPDF();
 
     doc.setFontSize(18);
     doc.text('My PDF Table', 20, 8);
@@ -97,8 +95,12 @@ export class CustomerListComponent implements OnInit {
     doc.setTextColor(100);
 
     const headers = ['person_name', 'email', 'mobile1'];
-    const selectedCustomer = alasql('select person_name, email, mobile1 from ?', [this.customerData]);
+    // you can use this following code instead of alasql, customerData has morefield but you can select some of them
+    const selectedCustomer = this.customerData.map(({ person_name, email, mobile1 }) => ({ person_name, email, mobile1 }));
+    // we can filter the array
+    // selectedCustomer = selectedCustomer.filter((pilot) => pilot.email === 'feeney.anastasia@konopelski.com');
 
+    console.log(selectedCustomer);
     (doc as any).autoTable({
     //  head: headers,
       body: selectedCustomer,
@@ -106,10 +108,10 @@ export class CustomerListComponent implements OnInit {
       didDrawCell: data => {
         console.log(data.column.index);
       }
-    })
+    });
 
     // Open PDF document in new tab
-    doc.output('dataurlnewwindow')
+    doc.output('dataurlnewwindow');
 
     // Download PDF document
     doc.save('table.pdf');
@@ -120,7 +122,7 @@ export class CustomerListComponent implements OnInit {
     let head = [
       {header: 'Customer', key: 'person_name', width: 80},
       {header: 'Email', key: 'email', width: 32},
-      {header: 'Contact', key: 'mobile1', width: 15,}
+      {header: 'Contact', key: 'mobile1', width: 15}
     ];
     this.excelService.exportToExcelSpecial(this.customerData, 'Customers', head);
   }
@@ -128,7 +130,12 @@ export class CustomerListComponent implements OnInit {
   exporttoExcel(){
     // tslint:disable-next-line:prefer-const
     let headers = {person_name : 'Customer Name', email: 'Email', mobile1: 'contact'};
-    const selectedCustomer = alasql('select person_name as Customer, email, mobile1 as Contact from ?', [this.customerData]);
+    // const selectedCustomer = alasql('select person_name as Customer, email, mobile1 as Contact from ?', [this.customerData]);
+    // tslint:disable-next-line:max-line-length
+    // const selectedCustomer = this.customerData.map(({person_name as Customer, email, mobile1}) = > ({person_name as Customer, email, mobile1}));
+
+
+    const selectedCustomer = this.customerData.map(({ person_name, email, mobile1 }) => ({ person_name, email, mobile1 }));
     this.excelService.exportAsExcelFile(selectedCustomer, 'testing');
   }
   // this function will fill the form using current customer record, update will be done from customerComponent's Update function

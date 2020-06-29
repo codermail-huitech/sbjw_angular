@@ -125,8 +125,8 @@
         </form>
 
         <div class="container" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="end" fxLayoutGap="10px" fxLayoutGap.xs="0" >
-          <button mat-button (click)="addOrder()" mat-stroked-button [disabled]="!orderDetailsForm.valid">Add Order</button>
-          <button mat-button (click)="onSubmit()" mat-stroked-button>Save Order</button>
+          <button mat-button (click)="addOrder()" mat-stroked-button [disabled]="!orderDetailsForm.valid  || !isSaveEnabled" >Add Order</button>
+          <button mat-button (click)="onSubmit()" mat-stroked-button [disabled]="!isSaveEnabled">Save Order</button>
           <button mat-button (click)="updateOrder()" mat-stroked-button [disabled]="!orderDetailsForm.dirty">Update Order</button>
           <button mat-button (click)="clearForm()" mat-stroked-button>clear</button>
         </div>
@@ -135,7 +135,7 @@
   </div>
   <div id ="order-table-div" fxLayout="column" fxFlex="65" class="mr-1">
     <div class="row" style="align-content: center; text-align: center">
-      <div class="col"><button style="background-color: green" mat-button class="col-12" mat-stroked-button (click)="productShow()">{{showProduct==true? 'Show Order List':'Show Product'}}</button></div>
+      <div class="col"><button style="background-color: green" mat-button class="col-12" mat-stroked-button (click)="productShow()">{{showProduct==true? 'Show Order Master List':'Show Order Details List'}}</button></div>
     </div>
     <div [hidden]="!showProduct">
       <table class="table" id="my-table">

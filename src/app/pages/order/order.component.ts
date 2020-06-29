@@ -13,6 +13,7 @@ import {StorageMap} from '@ngx-pwa/local-storage';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {SncakBarComponent} from '../../common/sncak-bar/sncak-bar.component';
 import {OrderDetail} from '../../models/orderDetail.model';
+import {OrderMaster} from '../../models/orderMaster.model';
 import {Observable} from 'rxjs';
 import {ConfirmationDialogService} from '../../common/confirmation-dialog/confirmation-dialog.service';
 
@@ -34,9 +35,11 @@ export class OrderComponent implements OnInit {
   orderDetails: OrderDetail[] = [];
   orderMasterForm: FormGroup;
   orderDetailsForm: FormGroup;
-  orderData: object;
+  // orderData: object;
+  orderData : OrderMaster[] = [];
   product_id: number;
   showProduct = true;
+  isSaveEnabled = true;
   yourModelDate: string;
   minDate = new Date(2010, 11, 2);
   maxDate = new Date(2021, 3, 2);
@@ -84,7 +87,7 @@ export class OrderComponent implements OnInit {
     });
 
     this.orderService.getOrderUpdateListener()
-      .subscribe((responseOrders: object) => {
+      .subscribe((responseOrders: OrderMaster[]) => {
         this.orderData = responseOrders;
       });
   }
@@ -95,9 +98,26 @@ export class OrderComponent implements OnInit {
     this.orderMasterForm.value.order_date = this.pipe.transform(this.orderMasterForm.value.order_date, 'yyyy-MM-dd');
     this.orderMasterForm.value.delivery_date = this.pipe.transform(this.orderMasterForm.value.delivery_date, 'yyyy-MM-dd');
     this.orderService.masterUpdate().subscribe((response)=>{
-      console.log(response);
+
+      if (response.success === 1){
+        this._snackBar.openFromComponent(SncakBarComponent, {
+          duration: 4000, data: {message: 'Order Master Updated'}
+        });
+      }
+      this.currentError = null;
+
+    },(error) => {
+      console.log('error occured ');
+      console.log(error);
+      this.currentError = error;
+      this._snackBar.openFromComponent(SncakBarComponent, {
+        duration: 4000, data: {message: error.message}
+      });
     });
-  }
+
+      
+}
+  
 
   addOrder(){
     const index = this.products.findIndex(x => x.model_number === this.orderDetailsForm.value.model_number);
@@ -124,10 +144,12 @@ export class OrderComponent implements OnInit {
   }
   fillOrderDetailsForm(details){
     // this.orderDetailsForm.setValue(details);
+    this.isSaveEnabled=false;
     this.orderDetailsForm.patchValue({id: details.id, model_number : details.model_number, p_loss: details.p_loss, price: details.price, price_code: details.price_code, quantity: details.quantity, amount: details.amount, approx_gold: details.approx_gold, size: details.size });
     this.product_id = details.product_id;
   }
   updateOrder(){
+    
     this.orderDetailsForm.value.product_id = this.product_id;
     this.orderService.setOrderDetailsForUpdate();
     const user = JSON.parse(localStorage.getItem('user'));
@@ -135,7 +157,25 @@ export class OrderComponent implements OnInit {
     this.orderMasterForm.value.order_date = this.pipe.transform(this.orderMasterForm.value.order_date, 'yyyy-MM-dd');
     this.orderMasterForm.value.delivery_date = this.pipe.transform(this.orderMasterForm.value.delivery_date, 'yyyy-MM-dd');
     this.orderService.setOrderMasterData();
-    this.orderService.updateOrder();
+    this.orderService.updateOrder().subscribe((response) => {
+
+      if(response.success===1){
+        this._snackBar.openFromComponent(SncakBarComponent, {
+          duration: 4000, data: {message: 'Details Updated'}
+        });
+      }
+      this.currentError=null;
+
+    },(error) => {
+      console.log('error occured');
+      console.log(error);
+      this.currentError=error;
+
+      this._snackBar.openFromComponent(SncakBarComponent, {
+        duration: 4000, data: {message: error.message}
+      });
+
+    });
     // this.orderService.getOrderDetailsUpdateListener()
     //   .subscribe((data: object) => {
     //     console.log(data);
@@ -143,10 +183,13 @@ export class OrderComponent implements OnInit {
   }
 
   deleteOrderMaster(masterData){
+    
     this.confirmationDialogService.confirm('Please confirm..', 'Do you really want to delete order master ?')
       .then((confirmed) => {
         // deleting record if confirmed
         if (confirmed){
+         
+         
           this.orderService.deleteOrderMaster(masterData.id).subscribe((response) => {
             if (response.success === 1){
               this._snackBar.openFromComponent(SncakBarComponent, {
@@ -163,13 +206,16 @@ export class OrderComponent implements OnInit {
             });
           });
         }
-
       })
+
+    
       .catch(() => {
         console.log('User dismissed the dialog (e.g., by using ESC, clicking the cross icon, or clicking outside the dialog)');
       });
     console.log(masterData);
   }
+
+
   deleteDetails(details){
     // console.log(details);
     this.confirmationDialogService.confirm('Please confirm..', 'Do you really want to delete order detail ?')
@@ -207,7 +253,7 @@ export class OrderComponent implements OnInit {
     }
     if (index !== -1){
       const x = this.products[index];
-      this.orderDetailsForm.patchValue({pLoss : x.p_loss, price_code : x.price_code_name, price : x.price});
+      this.orderDetailsForm.patchValue({p_loss : x.p_loss, price_code : x.price_code_name, price : x.price});
     }
   }
 

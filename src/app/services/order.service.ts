@@ -152,8 +152,11 @@ export class OrderService {
         const {orderDetail} = response;
         // @ts-ignore
         const detailIndex = this.orderDetails.findIndex(x => x.id === this.orderDetailUpdate.id);
-
-        this.orderDetails[detailIndex]=response.orderDetail;
+        if (detailIndex === -1){
+          this.orderDetails.unshift(orderDetail);
+        }else {
+          this.orderDetails[detailIndex]=response.orderDetail;
+        }
         // if (response.orderDetail instanceof OrderDetail) {
         //   this.orderDetails[detailIndex] = response.orderDetail;
         //   console.log(this.orderDetails);

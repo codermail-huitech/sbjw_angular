@@ -135,6 +135,7 @@ export class OrderComponent implements OnInit {
   }
 
   fetchDetails(data){
+    this.isSaveEnabled=false;
     this.showProduct = true;
     this.orderService.fetchOrderDetails(data.id);
     this.orderService.getOrderDetailsListener()
@@ -150,8 +151,11 @@ export class OrderComponent implements OnInit {
     this.product_id = details.product_id;
   }
   updateOrder(){
-
     this.orderDetailsForm.value.product_id = this.product_id;
+    if (this.orderDetailsForm.value.product_id === undefined){
+      const index = this.products.findIndex(x => x.model_number === this.orderDetailsForm.value.model_number);
+      this.orderDetailsForm.value.product_id = this.products[index].id;
+    }
     this.orderService.setOrderDetailsForUpdate();
     const user = JSON.parse(localStorage.getItem('user'));
     this.orderMasterForm.value.employee_id = user.id;
@@ -161,6 +165,7 @@ export class OrderComponent implements OnInit {
     this.orderService.updateOrder().subscribe((response) => {
 
       if(response.success===1){
+        this.orderDetailsForm.reset();
         this._snackBar.openFromComponent(SncakBarComponent, {
           duration: 4000, data: {message: 'Details Updated'}
         });

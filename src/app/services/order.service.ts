@@ -35,7 +35,7 @@ export class OrderService {
   // orderDetails used to store all the details in this array
   orderDetails: OrderDetail[] = [];
   // orderDetailUpdate is for updating a single odder details
- 
+
   orderMasterData : OrderMaster[] = [];
   orderDetailUpdate: object;
   private agentSub = new Subject<Agent[]>();
@@ -137,7 +137,7 @@ export class OrderService {
       .subscribe((response: {success: number, data: OrderDetail[]}) => {
         const {data} = response;
         this.orderDetails = data;
-       
+
         this.orderDetailsSub.next([...this.orderDetails]);
       });
   }
@@ -148,20 +148,15 @@ export class OrderService {
 
       return this.http.patch(GlobalVariable.BASE_API_URL + '/orders',{master: this.orderMaster, details: this.orderDetailUpdate})
       .pipe(catchError(this._serverError), tap((response: {success: number, orderDetail: OrderDetail, orderMaster: OrderMaster}) => {
-      
-
         // instant changing the order details after update
         const {orderDetail} = response;
         // @ts-ignore
         const detailIndex = this.orderDetails.findIndex(x => x.id === this.orderDetailUpdate.id);
 
         this.orderDetails[detailIndex]=response.orderDetail;
-      
-        
         // if (response.orderDetail instanceof OrderDetail) {
         //   this.orderDetails[detailIndex] = response.orderDetail;
         //   console.log(this.orderDetails);
-       
         // }
         this.orderDetailsSub.next([...this.orderDetails]);
 
@@ -178,7 +173,7 @@ export class OrderService {
   masterUpdate(){
     // console.log(id);
     // tslint:disable-next-line:max-line-length
-    return this.http.patch<{success: number, data: object}>(GlobalVariable.BASE_API_URL + '/orderMaster', { master: this.orderMasterForm.value})
+    return this.http.patch(GlobalVariable.BASE_API_URL + '/orderMaster', { master: this.orderMasterForm.value})
       .pipe(catchError(this._serverError), tap((response: {success: number, data: OrderMaster}) => {
         const {data} = response;
         // @ts-ignore
@@ -190,7 +185,7 @@ export class OrderService {
   }
 
   deleteOrderDetails(id){
-    return this.http.delete<{success: number, data: string}>(GlobalVariable.BASE_API_URL + '/ordersDetailsDelete/' + id)
+    return this.http.delete(GlobalVariable.BASE_API_URL + '/ordersDetailsDelete/' + id)
       .pipe(catchError(this._serverError), tap((response: {success: number, data: string}) => {
         const index = this.orderDetails.findIndex(x => x.id === id);
         this.orderDetails.splice(index , 1);
@@ -200,7 +195,7 @@ export class OrderService {
 
   deleteOrderMaster(id){
     // console.log('deleteOrderMaster')
-    return this.http.delete<{success: number, data: string}>(GlobalVariable.BASE_API_URL + '/orderMasterDelete/' + id)
+    return this.http.delete(GlobalVariable.BASE_API_URL + '/orderMasterDelete/' + id)
       .pipe(catchError(this._serverError), tap((response: {success: number, data: string}) => {
         // @ts-ignore
         const index = this.orderMasterData.findIndex(x => x.id === id);

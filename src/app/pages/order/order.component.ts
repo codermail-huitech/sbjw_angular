@@ -36,10 +36,10 @@ export class OrderComponent implements OnInit {
   orderMasterForm: FormGroup;
   orderDetailsForm: FormGroup;
   // orderData: object;
+  isSaveEnabled = true;
   orderData : OrderMaster[] = [];
   product_id: number;
   showProduct = true;
-  isSaveEnabled = true;
   yourModelDate: string;
   minDate = new Date(2010, 11, 2);
   maxDate = new Date(2021, 3, 2);
@@ -62,6 +62,7 @@ export class OrderComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.isSaveEnabled = true;
     this.orderMasterForm = this.orderService.orderMasterForm;
     this.orderDetailsForm = this.orderService.orderDetailsForm;
     // this.orderDetailsForm.controls['amount'].disable();
@@ -115,9 +116,9 @@ export class OrderComponent implements OnInit {
       });
     });
 
-      
+
 }
-  
+
 
   addOrder(){
     const index = this.products.findIndex(x => x.model_number === this.orderDetailsForm.value.model_number);
@@ -149,7 +150,7 @@ export class OrderComponent implements OnInit {
     this.product_id = details.product_id;
   }
   updateOrder(){
-    
+
     this.orderDetailsForm.value.product_id = this.product_id;
     this.orderService.setOrderDetailsForUpdate();
     const user = JSON.parse(localStorage.getItem('user'));
@@ -183,13 +184,13 @@ export class OrderComponent implements OnInit {
   }
 
   deleteOrderMaster(masterData){
-    
+
     this.confirmationDialogService.confirm('Please confirm..', 'Do you really want to delete order master ?')
       .then((confirmed) => {
         // deleting record if confirmed
         if (confirmed){
-         
-         
+
+
           this.orderService.deleteOrderMaster(masterData.id).subscribe((response) => {
             if (response.success === 1){
               this._snackBar.openFromComponent(SncakBarComponent, {
@@ -208,7 +209,7 @@ export class OrderComponent implements OnInit {
         }
       })
 
-    
+
       .catch(() => {
         console.log('User dismissed the dialog (e.g., by using ESC, clicking the cross icon, or clicking outside the dialog)');
       });

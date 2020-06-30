@@ -27,7 +27,7 @@
           <!--Both dates-->
           <div class="container" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="start" fxLayoutGap="10px" fxLayoutGap.xs="0">
               <!--              Order date-->
-              <mat-form-field fxFlex="33">
+              <mat-form-field fxFlex="30">
                 <mat-label>Order Date</mat-label>
                 <input matInput
                        [matDatepicker]="picker1"
@@ -41,7 +41,7 @@
                 <mat-datepicker #picker1></mat-datepicker>
               </mat-form-field>
               <!--              Delivery date-->
-              <mat-form-field  fxFlex="33">
+              <mat-form-field  fxFlex="30">
                 <mat-label>Delivery Date</mat-label>
                 <input matInput [matDatepicker]="picker2"
                        formControlName="delivery_date"

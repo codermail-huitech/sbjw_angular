@@ -7,6 +7,7 @@ import {OrderComponent} from './pages/order/order.component';
 import {AuthComponent} from './pages/auth/auth.component';
 import {AuthGuardService} from './services/auth-guard.service';
 import {OwnerComponent} from './pages/owner/owner.component';
+import {JobComponent} from './pages/job/job.component';
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -14,7 +15,8 @@ const routes: Routes = [
   {path: 'product', canActivate:  [AuthGuardService], component: ProductComponent},
   {path: 'auth', component: AuthComponent},
   {path: 'owner', canActivate:  [AuthGuardService], component: OwnerComponent},
-  {path: 'order', canActivate:  [AuthGuardService], component: OrderComponent}
+  {path: 'order', canActivate:  [AuthGuardService], component: OrderComponent},
+  {path: 'job', canActivate:  [AuthGuardService], component: JobComponent}
 ];
 
 @NgModule({

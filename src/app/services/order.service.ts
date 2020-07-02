@@ -81,7 +81,7 @@ export class OrderService {
       approx_gold : new FormControl(null, [Validators.required]),
       size : new FormControl(null, [Validators.required]),
       quantity : new FormControl(null, [Validators.required]),
-      amount : new FormControl({value: null, disabled: true} , [Validators.required])
+      amount : new FormControl({value: 0, disabled: true} , [Validators.required])
     });
     // fetching agents
     this.http.get(GlobalVariable.BASE_API_URL + '/agents')
@@ -155,21 +155,9 @@ export class OrderService {
         if (detailIndex === -1){
           this.orderDetails.unshift(orderDetail);
         }else {
-          this.orderDetails[detailIndex]=response.orderDetail;
+          this.orderDetails[detailIndex] = response.orderDetail;
         }
-        // if (response.orderDetail instanceof OrderDetail) {
-        //   this.orderDetails[detailIndex] = response.orderDetail;
-        //   console.log(this.orderDetails);
-        // }
         this.orderDetailsSub.next([...this.orderDetails]);
-
-        // instant changing the order master after update
-        // const {orderMaster} = response;
-        // @ts-ignore
-        // const masterIndex = this.orderMasterData.findIndex(x => x.id === this.orderMaster.id);
-        // this.orderMasterData[masterIndex] = response.orderMaster;
-        // @ts-ignore
-        // this.orderSub.next([...this.orderMasterData]);
       }));
   }
 

@@ -151,7 +151,7 @@ export class OrderComponent implements OnInit {
     this.product_id = details.product_id;
   }
   updateOrder(){
-    this.orderDetailsForm.value.product_id = this.product_id;
+    // this.orderDetailsForm.value.product_id = this.product_id;
     if (this.orderDetailsForm.value.product_id === undefined){
       const index = this.products.findIndex(x => x.model_number === this.orderDetailsForm.value.model_number);
       this.orderDetailsForm.value.product_id = this.products[index].id;

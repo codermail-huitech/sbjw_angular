@@ -40,6 +40,7 @@ import { OrderComponent } from './pages/order/order.component';
 
 import { DateAdapter } from '@angular/material/core';
 import { DateFormat } from './date-format';
+import { JobComponent } from './pages/job/job.component';
 
 
 @NgModule({
@@ -60,7 +61,8 @@ import { DateFormat } from './date-format';
     LoaidngEllipsisComponent,
     LoaidngHourglassComponent,
     LoaidngRollerComponent,
-    OrderComponent
+    OrderComponent,
+    JobComponent
 
   ],
   imports: [

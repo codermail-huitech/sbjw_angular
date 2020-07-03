@@ -7,28 +7,22 @@
 <!--                  <mat-form-field class="col-5">-->
 <!--                    <input matInput placeholder="Model Number" formControlName="model_number">-->
 <!--                  </mat-form-field>-->
-                  <mat-form-field class="col-5">
-                    <mat-placeholder>Gross weight</mat-placeholder>
-                    <input matInput formControlName="gross_weight">
-                  </mat-form-field>
-                  <div class="container" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="start" fxLayoutGap="10px" fxLayoutGap.xs="0">
-                    <mat-form-field>
-                      <mat-label>Karigarh</mat-label>
-                      <mat-select  formControlName="karigarh_id">
-                        <mat-option *ngFor="let karigarh of karigarhData" [value]="karigarh.id">
-                          {{karigarh.person_name}}
-                        </mat-option>
-                      </mat-select>
-                    </mat-form-field>
-<!--                    <mat-form-field>-->
-<!--                      <mat-label>Product Category</mat-label>-->
-<!--                      <mat-select formControlName="order_details_id">-->
-<!--                        <mat-option *ngFor="let productCategory of productCategories" [value]="productCategory.id">-->
-<!--                          {{productCategory.category_name}}-->
-<!--                        </mat-option>-->
-<!--                      </mat-select>-->
-<!--                    </mat-form-field>-->
-                  </div>
+                 <mat-form-field class="col-5">
+                   <input matInput placeholder="Model number" formControlName="model_number">
+                 </mat-form-field>
+                 <div class="container" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="start" fxLayoutGap="10px" fxLayoutGap.xs="0">
+                   <mat-form-field>
+                     <mat-label>Karigarh</mat-label>
+                     <mat-select  formControlName="karigarh_id">
+                       <mat-option *ngFor="let karigarh of karigarhData" [value]="karigarh.id">
+                         {{karigarh.person_name}}
+                       </mat-option>
+                     </mat-select>
+                   </mat-form-field>
+                   <mat-form-field class="col-6">
+                     <input matInput placeholder="Gross Weight" formControlName="gross_weight">
+                   </mat-form-field>
+                 </div>
                   <div class="container" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="start" fxLayoutGap="10px" fxLayoutGap.xs="0">
                     <mat-form-field fxFlex="30">
                       <mat-label>Order Date</mat-label>
@@ -42,12 +36,17 @@
                       </mat-datepicker-toggle>
                       <mat-datepicker #picker1></mat-datepicker>
                     </mat-form-field>
+                    <mat-form-field class="col-5">
+                      <input matInput placeholder="Material Name" formControlName="material_name">
+                    </mat-form-field>
                   </div>
-                 <mat-form-field class="col-5">
-                   <input matInput placeholder="Model number" formControlName="model_number">
-                 </mat-form-field>
                </div>
              </form>
+            <form [formGroup] = jobDetailsForm>
+              <mat-form-field class="col-5">
+                <input matInput placeholder="Material Quantity" formControlName="material_quantity">
+              </mat-form-field>
+            </form>
 
     <div class="container" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="end" fxLayoutGap="10px" fxLayoutGap.xs="0" >
       <button mat-button (click)="onSubmit()" mat-stroked-button>Save</button>

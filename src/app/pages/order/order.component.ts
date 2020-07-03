@@ -127,7 +127,6 @@ export class OrderComponent implements OnInit {
     this.orderDetailsForm.reset();
     this.orderDetailsForm.value.amount = null;
     this.orderDetails = this.orderService.orderDetails;
-    // console.log(this.orderDetailsForm);
   }
 
   productShow(){

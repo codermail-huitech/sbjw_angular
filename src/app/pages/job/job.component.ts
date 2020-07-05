@@ -31,6 +31,7 @@ export class JobComponent implements OnInit {
   minDate = new Date(2010, 11, 2);
   maxDate = new Date(2021, 3, 2);
   pipe = new DatePipe('en-US');
+  isEditEnabled = true;
 
   constructor(private productService: ProductService , private _snackBar: MatSnackBar, private confirmationDialogService: ConfirmationDialogService, private jobService: JobService, private orderService: OrderService) { }
 
@@ -67,32 +68,48 @@ export class JobComponent implements OnInit {
     console.log(details);
     const index = this.materialList.findIndex(x => x.id === details.material_id);
     this.jobMasterForm.patchValue({model_number: details.model_number, order_details_id: details.id, material_name: this.materialList[index].material_name});
-    this.jobDetailsForm.patchValue({material_id: details.material_id});
+    this.jobDetailsForm.patchValue({material_id: details.material_id, id:details.id});
   }
   onSubmit(){
-    this.jobMasterForm.value.date = this.pipe.transform(this.jobMasterForm.value.date, 'yyyy-MM-dd');
-    // console.log(this.jobMasterForm.value);
-    // console.log(this.products);
-    // console.log(this.jobMasterForm.value);
-    const user = JSON.parse(localStorage.getItem('user'));
-    this.jobDetailsForm.value.employee_id = user.id;
-    // console.log(this.jobDetailsForm.value);
-    let saveObserable = new Observable<any>();
-    saveObserable = this.jobService.saveJob();
-    saveObserable.subscribe((response) => {
-      if (response.success === 1){
-        this.jobMasterForm.reset();
-        this.jobDetailsForm.reset();
-        this._snackBar.openFromComponent(SncakBarComponent, {
-          duration: 4000, data: {message: 'Job Saved'}
-        });
-      }
-    }, (error) => {
-      console.log('error occured ');
-      console.log(error);
-      this._snackBar.openFromComponent(SncakBarComponent, {
-        duration: 4000, data: {message: error.message}
-      });
+
+    this.confirmationDialogService.confirm('Please confirm..', 'Do you really want to send order to job ?')
+    .then((confirmed) => {
+
+        if (confirmed){
+
+            this.jobMasterForm.value.date = this.pipe.transform(this.jobMasterForm.value.date, 'yyyy-MM-dd');
+            const user = JSON.parse(localStorage.getItem('user'));
+            this.jobDetailsForm.value.employee_id = user.id;
+            // console.log(this.jobDetailsForm.value);
+            let saveObserable = new Observable<any>();
+            saveObserable = this.jobService.saveJob();
+             saveObserable.subscribe((response) => {
+                  if (response.success === 1){
+                      const index = this.orderDetails.findIndex(x => x.id === this.jobDetailsForm.value.id);
+                       this.orderDetails[index].job_status=1;
+                      // this.isEditEnabled = false;
+                        this.jobMasterForm.reset();
+                        this.jobDetailsForm.reset();
+                        this._snackBar.openFromComponent(SncakBarComponent, {
+                               duration: 4000, data: {message: 'Job Saved'}
+                        });
+                  }
+            }, (error) => {
+                  console.log('error occured ');
+                  console.log(error);
+                  this._snackBar.openFromComponent(SncakBarComponent, {
+                      duration: 4000, data: {message: error.message}
+                   });
+            });
+        }
+
+
+      
+
+
+    })
+
+    .catch(() => {
+        console.log('User dismissed the dialog (e.g., by using ESC, clicking the cross icon, or clicking outside the dialog)');
     });
-  }
 }

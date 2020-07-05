@@ -59,7 +59,7 @@
   </div>
   <div fxLayout="column" fxFlex="60" class="mr-1">
     <div class="row" style="align-content: center; text-align: center" [hidden]="showProduct">
-      <div class="col"><button style="background-color: green" mat-button class="col-12" mat-stroked-button (click)="productShow()">{{showProduct==true? 'Show Order Master List':'Show Order Details List'}}</button></div>
+      <div class="col-3"><button style="background-color: green" mat-button class="col-12" mat-stroked-button (click)="productShow()">{{showProduct==true? 'Show Order Master List':'Back'}}</button></div>
     </div>
     <div id="job-table-div" [hidden]="!showProduct">
       <table class="table" id="my-table">
@@ -85,7 +85,7 @@
           <td >{{data.date_of_delivery}}</td>
           <td>
             <button mat-icon-button color="primary" aria-label="Open Master" (click)="viewDetails(data)">
-              <mat-icon>edit</mat-icon>
+              <mat-icon>forward</mat-icon>
             </button>
           </td>
           <td>
@@ -110,7 +110,7 @@
           <th>Approx Gold</th>
           <th>Quantity</th>
           <th>Amount</th>
-          <th>Edit</th>
+          <th>Send to Job</th>
           <th>Delete</th>
         </tr>
         </thead>
@@ -125,12 +125,13 @@
           <td>{{details.quantity}}</td>
           <td>{{details.amount}}</td>
           <td>
-            <button mat-icon-button color="primary" aria-label="Edit Product" (click)="placeJob(details)">
-              <mat-icon>edit</mat-icon>
+            <button mat-icon-button color="primary" [disabled]="details.job_status==1" aria-label="Edit Product" (click)="placeJob(details)">
+              <mat-icon>done</mat-icon>
+              
             </button>
           </td>
           <td>
-            <button mat-icon-button color="warn" aria-label="Edit Customer">
+            <button mat-icon-button color="warn" [disabled]="details.job_status==1" aria-label="Edit Customer">
               <mat-icon>delete</mat-icon>
             </button>
           </td>

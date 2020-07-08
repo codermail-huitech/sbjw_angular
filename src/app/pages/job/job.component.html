@@ -22,7 +22,7 @@
                      </mat-select>
                    </mat-form-field>
                    <mat-form-field class="col-6">
-                     <input matInput placeholder="Gross Weight" formControlName="gross_weight">
+                     <input  style ="text-align: right;" matInput placeholder="Gross Weight" formControlName="gross_weight">
                    </mat-form-field>
                  </div>
                   <div class="container" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="start" fxLayoutGap="10px" fxLayoutGap.xs="0">
@@ -44,7 +44,7 @@
             <form [formGroup] = jobDetailsForm>
                 <div class="container" fxLayout="column" fxLayout.xs="column" fxLayoutAlign="start">
                   <mat-form-field class="col-6 pl-4">
-                    <input matInput placeholder="Material Quantity" formControlName="material_quantity">
+                    <input style="text-align: right;" matInput placeholder="Material Quantity" formControlName="material_quantity">
                   </mat-form-field>
                 </div>
             </form>
@@ -70,7 +70,7 @@
           <th>Agent</th>
           <th>Order Date</th>
           <th>Delivery Date</th>
-          <th>Open</th>
+          <th>View Details</th>
           <th>Delete</th>
         </tr>
         </thead>
@@ -118,7 +118,7 @@
           <td>{{indexOfelement+1}}</td>
           <td >{{details.model_number}}</td>
           <td >{{details.price_code}}</td>
-          <td>{{details.price}}</td>
+          <td >{{details.price}}</td>
           <td>{{details.p_loss}}</td>
           <td>{{details.approx_gold}}</td>
           <td>{{details.quantity}}</td>

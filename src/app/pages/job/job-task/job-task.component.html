@@ -1,0 +1,122 @@
+<div fxLayout.xs="column" fxLayout="row" fxLayoutAlign="space-between stretch" fxFlexFill id="job-div">
+  <div fxLayout="column" fxFlex="40" class="mr-1"> 
+      <mat-card class="ml-2 mt-2">
+          <div class="form-container"> 
+              <form [formGroup] = jobTaskForm>
+                 <div class="container" fxLayout="column" fxLayout.xs="column" fxLayoutAlign="start" fxLayoutGap="10px" fxLayoutGap.xs="0">
+                    <div class="container" fxLayout="row">
+                       <mat-form-field class="col-6">
+                          <input matInput placeholder="Approx Gold" formControlName="approx_gold">
+                       </mat-form-field>
+                       <mat-form-field class="col-6">
+                          <input matInput placeholder="P Loss" formControlName="p_loss">
+                       </mat-form-field>
+                    </div>
+                    <div class="container" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="start">
+                      <mat-form-field class="col-4">
+                          <input matInput placeholder="Size" formControlName="size">
+                      </mat-form-field>
+                      <mat-form-field class="col-4">
+                          <input  style ="text-align: right;" matInput placeholder="Price" formControlName="Price">
+                      </mat-form-field>
+                      <mat-form-field class="col-4">
+                        <input  style ="text-align: right;" matInput placeholder="Quantity" formControlName="quantity">
+                    </mat-form-field>
+                    </div>
+                 
+                  </div>
+             </form>
+           
+            <!-- <div class="container" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="end" fxLayoutGap="10px" fxLayoutGap.xs="0" >
+              <button mat-button (click)="onSubmit()" mat-stroked-button>Save</button>
+            </div> -->
+
+          </div> -
+      </mat-card>
+  </div> 
+  <div fxLayout="column" fxFlex="60" class="mr-1">
+    <div class="row" style="align-content: center; text-align: center" >
+      <div class="col-3"><button style="background-color: green" mat-button class="col-12" mat-stroked-button ></button></div>
+    </div>
+    <div id="jobTask-table-div" >
+      <table class="table" id="my-table">
+        <thead>
+        <tr>
+          <th>SL No.</th>
+          <th>Order Number</th>
+          <th>Approx Gold</th>
+          <th>P Loss</th>
+          <th>Price</th>
+          <th>Quantity</th>
+          <th>Size</th>
+          <th>Send to Task</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr  *ngFor="let data of savedJobsData ; let indexOfelement = index;">
+          <td>{{indexOfelement+1}}</td>
+          <td >{{data.order_number}}</td>
+          <td >{{data.approx_gold}}</td>
+          <td >{{(data.p_loss).toFixed(3)}}</td>
+          <td >{{data.price}}</td>
+          <td >{{data.quantity}}</td>
+          <td >{{data.size}}</td>
+          <td>
+            <button mat-icon-button color="primary" aria-label="Open Master" >
+              <mat-icon>forward</mat-icon>
+            </button>
+          </td>
+          <td>
+            <!-- <button mat-icon-button color="warn" aria-label="Edit Customer">
+              <mat-icon>delete</mat-icon>
+            </button> -->
+          </td>
+
+        </tr>
+        </tbody>
+      </table>
+    </div>
+    <!-- <div id="job-table-div" [hidden]="showProduct"> -->
+      <!-- <table class="table" id="my-table">
+        <thead>
+        <tr>
+          <th>SL No.</th>
+          <th>Model Number</th>
+          <th>Price Code</th>
+          <th>Price</th>
+          <th>PLoss</th>
+          <th>Approx Gold</th>
+          <th>Quantity</th>
+          <th>Amount</th>
+          <th>Send to Job</th>
+          <th>Delete</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr  *ngFor="let details of orderDetails ; let indexOfelement = index;">
+          <td>{{indexOfelement+1}}</td>
+          <td >{{details.model_number}}</td>
+          <td >{{details.price_code}}</td>
+          <td style="text-align: right;">{{details.price}}</td>
+          <td style="text-align: right;">{{details.p_loss}}</td>
+          <td style="text-align: right;">{{details.approx_gold}}</td>
+          <td style="text-align: right;">{{details.quantity}}</td>
+          <td style="text-align: right;">{{details.amount}}</td>
+          <td>
+            <button mat-icon-button color="primary" [disabled]="details.job_status==1" aria-label="Edit Product" (click)="placeJob(details)">
+              <mat-icon>done</mat-icon>
+
+            </button>
+          </td>
+          <td>
+            <button mat-icon-button color="warn" [disabled]="details.job_status==1" aria-label="Edit Customer">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </td>
+
+        </tr>
+        </tbody>
+      </table> -->
+    <!-- </div> -->
+  </div>
+</div>

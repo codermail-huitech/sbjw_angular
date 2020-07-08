@@ -52,6 +52,7 @@ export class JobComponent implements OnInit {
     this.orderService.getMaterialUpdateListener()
       .subscribe((material: Material[]) => {
         this.materialList = material;
+        console.log(this.materialList);
       });
   }
 

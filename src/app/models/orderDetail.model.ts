@@ -15,6 +15,7 @@ export class OrderDetail{
   quantity: number;
   amount: number;
   job_status? : number;
+  order_number?: string;
   constructor() {
   }
 }

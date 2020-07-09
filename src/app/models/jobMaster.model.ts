@@ -7,6 +7,11 @@ export class JobMaster{
   date: string;
   gross_weight: number;
   karigarh_id: number;
+  approx_gold?: number;
+  p_loss?: number;
+  size?: string;
+  price?: number;
+  return_quantity?: number;
   constructor() {
   }
 }

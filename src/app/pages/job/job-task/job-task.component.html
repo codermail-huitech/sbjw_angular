@@ -17,19 +17,19 @@
                           <input matInput placeholder="Size" formControlName="size">
                       </mat-form-field>
                       <mat-form-field class="col-4">
-                          <input  style ="text-align: right;" matInput placeholder="Price" formControlName="Price">
+                          <input  style ="text-align: right;" matInput placeholder="Price" formControlName="price">
                       </mat-form-field>
                       <mat-form-field class="col-4">
-                        <input  style ="text-align: right;" matInput placeholder="Quantity" formControlName="quantity">
+                        <input  style ="text-align: right;" matInput placeholder="Quantity" formControlName="return_quantity">
                     </mat-form-field>
                     </div>
                  
                   </div>
              </form>
            
-            <!-- <div class="container" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="end" fxLayoutGap="10px" fxLayoutGap.xs="0" >
-              <button mat-button (click)="onSubmit()" mat-stroked-button>Save</button>
-            </div> -->
+            <div class="container" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="end" fxLayoutGap="10px" fxLayoutGap.xs="0" >
+              <button mat-button  mat-stroked-button (click)="onSubmit()">Gold Return</button>
+            </div>
 
           </div> -
       </mat-card>
@@ -62,7 +62,7 @@
           <td >{{data.quantity}}</td>
           <td >{{data.size}}</td>
           <td>
-            <button mat-icon-button color="primary" aria-label="Open Master" >
+            <button mat-icon-button color="primary" aria-label="Open Master" (click)="placeDetails(data)">
               <mat-icon>forward</mat-icon>
             </button>
           </td>

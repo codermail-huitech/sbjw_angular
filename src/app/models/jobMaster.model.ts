@@ -12,6 +12,8 @@ export class JobMaster{
   size?: string;
   price?: number;
   return_quantity?: number;
+  material_name?: string;
+  material_id?: number;
   constructor() {
   }
 }

@@ -128,7 +128,6 @@ export class OrderService {
          .pipe(catchError(this._serverError), tap(((response: {success: number, data: OrderMaster}) => {
           this.orderMasterData.unshift(response.data);
           this.orderSub.next([...this.orderMasterData]);
-          // console.log(response.data);
         })));
     }
 

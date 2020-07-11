@@ -31,7 +31,9 @@ export class JobTaskService {
       p_loss : new FormControl(null, [Validators.required]),
       size : new FormControl(null, [Validators.required]),
       price : new FormControl(null, [Validators.required]),
-      return_quantity : new FormControl(null, [Validators.required])
+      return_quantity : new FormControl(null, [Validators.required]),
+      material_name : new FormControl({value: null, disabled: true}, [Validators.required]),
+      material_id : new FormControl(null, [Validators.required])
 
     });
 
@@ -46,9 +48,9 @@ export class JobTaskService {
       });
   }
 
-  goldReturn(Formdata){
+  goldReturn(){
     
-    this.http.post(GlobalVariable.BASE_API_URL + '/goldReturn',{data : Formdata})
+    this.http.post(GlobalVariable.BASE_API_URL + '/saveReturn',{data : this.jobTaskForm.value})
       .subscribe( (response)=> {
         
       });

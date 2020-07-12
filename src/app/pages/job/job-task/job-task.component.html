@@ -1,40 +1,51 @@
 <div fxLayout.xs="column" fxLayout="row" fxLayoutAlign="space-between stretch" fxFlexFill id="job-div">
   <div fxLayout="column" fxFlex="40" class="mr-1"> 
-      <mat-card class="ml-2 mt-2">
+    <mat-card class="ml-2 mt-2">
+          
+         <label>{{jobNumber}}</label>
           <div class="form-container"> 
-              <form [formGroup] = jobTaskForm>
-                 <div class="container" fxLayout="column" fxLayout.xs="column" fxLayoutAlign="start" fxLayoutGap="10px" fxLayoutGap.xs="0">
-                    <div class="container" fxLayout="row">
-                       <mat-form-field class="col-4">
-                          <input matInput placeholder="Approx Gold" formControlName="approx_gold">
-                       </mat-form-field>
-                       <mat-form-field class="col-4">
-                          <input matInput placeholder="P Loss" formControlName="p_loss">
-                       </mat-form-field>
-                       <mat-form-field class="col-4">
-                        <input matInput placeholder="Material Name" formControlName="material_name">
-                     </mat-form-field>
-                    </div>
-                    <div class="container" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="start">
-                      <mat-form-field class="col-4">
-                          <input matInput placeholder="Size" formControlName="size">
-                      </mat-form-field>
-                      <mat-form-field class="col-4">
-                          <input  style ="text-align: right;" matInput placeholder="Price" formControlName="price">
-                      </mat-form-field>
-                      <mat-form-field class="col-4">
-                        <input  style ="text-align: right;" matInput placeholder="Quantity" formControlName="return_quantity">
-                    </mat-form-field>
-                    </div>
-                 
-                  </div>
-             </form>
-           
-            <div class="container" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="end" fxLayoutGap="10px" fxLayoutGap.xs="0" >
-              <button mat-button  mat-stroked-button (click)="onSubmit()">Gold Return</button>
+
+            <div class="container m-3" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="start">
+              <div class="col-4">
+                  
+                <button style="background-color:green"  mat-button class="col-12" mat-stroked-button  [disabled]="!isSendToTask" (click)="selectJobTask(2) ; selectCategory(-1)">Gold Return</button>  
+              </div>
+              <div class="col-4">
+                  
+                <button style="background-color: green" mat-button class="col-12" mat-stroked-button [disabled]="!isSendToTask" (click)="selectJobTask(3) ; selectCategory(1)">Dal Submit</button>
+              </div>
             </div>
 
-          </div> -
+            <div class="container m-3" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="start">
+              <div class="col-4">
+                  
+                <button style="background-color: green" mat-button class="col-12" mat-stroked-button [disabled]="!isSendToTask" (click)="selectJobTask(4) ; selectCategory(-1)">Dal Return</button>
+              </div>
+              <div class="col-4">
+                  
+                <button style="background-color: green" mat-button class="col-12" mat-stroked-button [disabled]="!isSendToTask" (click)="selectJobTask(5) ; selectCategory(1)">Pan Submit</button>
+              </div>
+            </div>
+
+
+            
+            <div class="container m-3" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="start">
+              <div class="col-4">
+                  
+                <button style="background-color: green" mat-button class="col-12" mat-stroked-button [disabled]="!isSendToTask" (click)="selectJobTask(6) ; selectCategory(-1)">Pan Return</button>
+              </div>
+              <div class="col-4">
+                  
+                <button style="background-color: green" mat-button class="col-12" mat-stroked-button [disabled]="!isSendToTask" (click)="selectJobTask(7) ; selectCategory(-1)">Nitric Return</button>
+              </div>
+            </div>
+             
+           
+           
+      
+            
+
+          </div> 
       </mat-card>
   </div> 
   <div fxLayout="column" fxFlex="60" class="mr-1">
@@ -46,10 +57,7 @@
         <thead>
         <tr>
           <th>SL No.</th>
-          <th>Order Number</th>
-          <th>Approx Gold</th>
-          <th>P Loss</th>
-          <th>Price</th>
+          <th>Job Number</th>
           <th>Quantity</th>
           <th>Size</th>
           <th>Send to Task</th>
@@ -58,10 +66,7 @@
         <tbody>
         <tr  *ngFor="let data of savedJobsData ; let indexOfelement = index;">
           <td>{{indexOfelement+1}}</td>
-          <td >{{data.order_number}}</td>
-          <td >{{data.approx_gold}}</td>
-          <td >{{(data.p_loss).toFixed(3)}}</td>
-          <td >{{data.price}}</td>
+          <td >{{data.job_number}}</td>
           <td >{{data.quantity}}</td>
           <td >{{data.size}}</td>
           <td>

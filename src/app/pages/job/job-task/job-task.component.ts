@@ -19,12 +19,16 @@ export class JobTaskComponent implements OnInit {
   jobTaskForm: FormGroup;
   savedJobsData: JobMaster[];
   materialList: Material[];
-
+  flag : number;
+  isSendToTask=false;
+  jobNumber : string;
   constructor(private jobTaskService: JobTaskService, private _snackBar: MatSnackBar, private confirmationDialogService: ConfirmationDialogService, private orderService: OrderService ) { }
 
   ngOnInit(): void {
+    this.isSendToTask=false;
 
     this.jobTaskForm = this.jobTaskService.jobTaskForm;
+    
 
     this.jobTaskService.getSavedJobsUpdateListener().subscribe((jobData: JobMaster[]) => {
       this.savedJobsData=jobData;
@@ -40,13 +44,29 @@ export class JobTaskComponent implements OnInit {
   onSubmit(){
     const user = JSON.parse(localStorage.getItem('user'));
     this.jobTaskForm.value.employee_id = user.id;
-
+    console.log(this.jobTaskForm.value );
     this.jobTaskService.jobReturn();
 
   }
 
   placeDetails(data){
+    this.isSendToTask=true;
     const index = this.materialList.findIndex(x => x.id === data.material_id);
-    this.jobTaskForm.patchValue({id : data.id, approx_gold : data.approx_gold, material_id : data.material_id , p_loss : data.p_loss, size: data.size, price : data.price, material_name : this.materialList[index].material_name});
+   
+    this.jobTaskForm.patchValue({id : data.id, material_id : data.material_id , p_loss : data.p_loss, size: data.size, price : data.price, material_name : this.materialList[index].material_name});
+   
+    this.jobNumber=data.job_number;
+    
+  }
+
+  selectJobTask(data){
+
+     this.jobTaskForm.value.job_Task_id=data;
+     
+
+  }
+  selectCategory(data){
+    this.jobTaskForm.value.flag=data;
+
   }
 }

@@ -19,19 +19,33 @@ export class JobTaskComponent implements OnInit {
   jobTaskForm: FormGroup;
   savedJobsData: JobMaster[];
   materialList: Material[];
-  flag : number;
-  isSendToTask=false;
-  jobNumber : string;
+  flag: number;
+  isSendToTask = false;
+  jobNumber: string;
+  formTaskDiv = false;
+  goldReturn = true;
+  dalSubmit = true;
+  dalReturn = true;
+  panSubmit = true;
+  panReturn = true;
+  nitricReturn = true;
   constructor(private jobTaskService: JobTaskService, private _snackBar: MatSnackBar, private confirmationDialogService: ConfirmationDialogService, private orderService: OrderService ) { }
 
   ngOnInit(): void {
-    this.isSendToTask=false;
+    this.isSendToTask = false;
+    this.formTaskDiv = false;
+    this.goldReturn = true;
+    this.dalSubmit = true;
+    this.dalReturn = true;
+    this.panSubmit = true;
+    this.panReturn = true;
+    this.nitricReturn = true;
 
     this.jobTaskForm = this.jobTaskService.jobTaskForm;
-    
+
 
     this.jobTaskService.getSavedJobsUpdateListener().subscribe((jobData: JobMaster[]) => {
-      this.savedJobsData=jobData;
+      this.savedJobsData = jobData;
     });
 
     this.orderService.getMaterialUpdateListener()
@@ -44,29 +58,49 @@ export class JobTaskComponent implements OnInit {
   onSubmit(){
     const user = JSON.parse(localStorage.getItem('user'));
     this.jobTaskForm.value.employee_id = user.id;
-    console.log(this.jobTaskForm.value );
-    this.jobTaskService.jobReturn();
+    // console.log(this.jobTaskForm.value );
+    const x = this.jobTaskService.jobReturn();
+    console.log(x);
+  }
+
+  backFunction(){
+    this.formTaskDiv = false;
+    this.goldReturn = true;
+    this.dalSubmit = true;
+    this.dalReturn = true;
+    this.panSubmit = true;
+    this.panReturn = true;
+    this.nitricReturn = true;
+  }
+
+  setTabData(task_id){
+    this.formTaskDiv = true;
+    this.jobTaskForm.patchValue({job_Task_id: task_id});
+    if (task_id === 2){
+      this.goldReturn = false;
+    }
+    if (task_id === 3){
+      this.dalSubmit = false;
+    }
+    if (task_id === 4){
+      this.dalReturn = false;
+    }
+    if (task_id === 5){
+      this.panSubmit = false;
+    }
+    if (task_id === 6){
+      this.panReturn = false;
+    }
+    if (task_id === 7){
+      this.nitricReturn = false;
+    }
 
   }
 
   placeDetails(data){
-    this.isSendToTask=true;
+    this.isSendToTask= true;
     const index = this.materialList.findIndex(x => x.id === data.material_id);
-   
     this.jobTaskForm.patchValue({id : data.id, material_id : data.material_id , p_loss : data.p_loss, size: data.size, price : data.price, material_name : this.materialList[index].material_name});
-   
-    this.jobNumber=data.job_number;
-    
-  }
-
-  selectJobTask(data){
-
-     this.jobTaskForm.value.job_Task_id=data;
-     
-
-  }
-  selectCategory(data){
-    this.jobTaskForm.value.flag=data;
-
+    this.jobNumber = data.job_number;
   }
 }

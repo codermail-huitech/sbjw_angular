@@ -35,9 +35,7 @@ export class JobTaskService {
       return_quantity : new FormControl(null, [Validators.required]),
       material_name : new FormControl({value: null, disabled: true}, [Validators.required]),
       material_id : new FormControl(null, [Validators.required]),
-      job_Task_id : new FormControl("2", [Validators.required]),
-      flag : new FormControl("-1", [Validators.required])
-
+      job_Task_id : new FormControl(null, [Validators.required])
     });
 
     //fetching the orders which are sent to job
@@ -57,6 +55,7 @@ export class JobTaskService {
         if (data){
           this.jobTaskForm.reset();
         }
+        return data;
       });
   }
 }

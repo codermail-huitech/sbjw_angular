@@ -1,53 +1,49 @@
-<div fxLayout.xs="column" fxLayout="row" fxLayoutAlign="space-between stretch" fxFlexFill id="job-div">
-  <div fxLayout="column" fxFlex="40" class="mr-1"> 
+<div fxLayout.xs="column" [hidden]="formTaskDiv" fxLayout="row" fxLayoutAlign="space-between stretch" fxFlexFill id="job-div">
+  <div fxLayout="column" fxFlex="40" class="mr-1">
     <mat-card class="ml-2 mt-2">
-          
+
          <label>{{jobNumber}}</label>
-          <div class="form-container"> 
+          <div class="form-container">
 
             <div class="container m-3" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="start">
               <div class="col-4">
-                  
-                <button style="background-color:green"  mat-button class="col-12" mat-stroked-button  [disabled]="!isSendToTask" (click)="selectJobTask(2) ; selectCategory(-1)">Gold Return</button>  
+
+<!--                <button style="background-color:green"  mat-button class="col-12" mat-stroked-button  [disabled]="!isSendToTask" (click)="selectJobTask(2) ; selectCategory(-1)">Gold Return</button>-->
+                <button style="background-color:green"  mat-button class="col-12" mat-stroked-button  [disabled]="!isSendToTask" (click)="setTabData(2)">Gold Return</button>
               </div>
               <div class="col-4">
-                  
-                <button style="background-color: green" mat-button class="col-12" mat-stroked-button [disabled]="!isSendToTask" (click)="selectJobTask(3) ; selectCategory(1)">Dal Submit</button>
+
+                <button style="background-color: green" mat-button class="col-12" mat-stroked-button [disabled]="!isSendToTask" (click)="setTabData(3)">Dal Submit</button>
               </div>
             </div>
 
             <div class="container m-3" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="start">
               <div class="col-4">
-                  
-                <button style="background-color: green" mat-button class="col-12" mat-stroked-button [disabled]="!isSendToTask" (click)="selectJobTask(4) ; selectCategory(-1)">Dal Return</button>
+
+                <button style="background-color: green" mat-button class="col-12" mat-stroked-button [disabled]="!isSendToTask" (click)="setTabData(4)">Dal Return</button>
               </div>
               <div class="col-4">
-                  
-                <button style="background-color: green" mat-button class="col-12" mat-stroked-button [disabled]="!isSendToTask" (click)="selectJobTask(5) ; selectCategory(1)">Pan Submit</button>
+
+                <button style="background-color: green" mat-button class="col-12" mat-stroked-button [disabled]="!isSendToTask" (click)="setTabData(5)">Pan Submit</button>
               </div>
             </div>
 
 
-            
+
             <div class="container m-3" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="start">
               <div class="col-4">
-                  
-                <button style="background-color: green" mat-button class="col-12" mat-stroked-button [disabled]="!isSendToTask" (click)="selectJobTask(6) ; selectCategory(-1)">Pan Return</button>
+
+                <button style="background-color: green" mat-button class="col-12" mat-stroked-button [disabled]="!isSendToTask" (click)="setTabData(6)">Pan Return</button>
               </div>
               <div class="col-4">
-                  
-                <button style="background-color: green" mat-button class="col-12" mat-stroked-button [disabled]="!isSendToTask" (click)="selectJobTask(7) ; selectCategory(-1)">Nitric Return</button>
+
+                <button style="background-color: green" mat-button class="col-12" mat-stroked-button [disabled]="!isSendToTask" (click)="setTabData(7)">Nitric Return</button>
               </div>
             </div>
-             
-           
-           
-      
-            
 
-          </div> 
+          </div>
       </mat-card>
-  </div> 
+  </div>
   <div fxLayout="column" fxFlex="60" class="mr-1">
     <div class="row" style="align-content: center; text-align: center" >
       <div class="col-3"><button style="background-color: green" mat-button class="col-12" mat-stroked-button ></button></div>
@@ -74,57 +70,60 @@
               <mat-icon>forward</mat-icon>
             </button>
           </td>
-          <td>
-            <!-- <button mat-icon-button color="warn" aria-label="Edit Customer">
-              <mat-icon>delete</mat-icon>
-            </button> -->
-          </td>
 
         </tr>
         </tbody>
       </table>
     </div>
-    <!-- <div id="job-table-div" [hidden]="showProduct"> -->
-      <!-- <table class="table" id="my-table">
-        <thead>
-        <tr>
-          <th>SL No.</th>
-          <th>Model Number</th>
-          <th>Price Code</th>
-          <th>Price</th>
-          <th>PLoss</th>
-          <th>Approx Gold</th>
-          <th>Quantity</th>
-          <th>Amount</th>
-          <th>Send to Job</th>
-          <th>Delete</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr  *ngFor="let details of orderDetails ; let indexOfelement = index;">
-          <td>{{indexOfelement+1}}</td>
-          <td >{{details.model_number}}</td>
-          <td >{{details.price_code}}</td>
-          <td style="text-align: right;">{{details.price}}</td>
-          <td style="text-align: right;">{{details.p_loss}}</td>
-          <td style="text-align: right;">{{details.approx_gold}}</td>
-          <td style="text-align: right;">{{details.quantity}}</td>
-          <td style="text-align: right;">{{details.amount}}</td>
-          <td>
-            <button mat-icon-button color="primary" [disabled]="details.job_status==1" aria-label="Edit Product" (click)="placeJob(details)">
-              <mat-icon>done</mat-icon>
+  </div>
+</div>
+<div fxLayout.xs="column" [hidden]="!formTaskDiv" fxLayout="row" fxLayoutAlign="space-between stretch" fxFlexFill id="job-div">
+  <div fxLayout="column" fxFlex="40" class="mr-1">
+    <div class="form-container">
+      <button (click)="backFunction()">Back</button>
+      <form [formGroup] = jobTaskForm>
+        <div class="container" fxLayout="column" fxLayout.xs="column" fxLayoutAlign="start" fxLayoutGap="10px" fxLayoutGap.xs="0">
+          <label class="m-2">Job Number: {{jobNumber}}</label>
+          <div class="container" fxLayout="row">
+            <mat-form-field class="col-4">
+              <input matInput placeholder="Material Name" formControlName="material_name">
+            </mat-form-field>
+            <mat-form-field class="col-4">
+              <input matInput placeholder="Size" formControlName="size">
+            </mat-form-field>
+          </div>
+          <mat-form-field class="col-4">
+            <input  style ="text-align: right;" matInput placeholder="Quantity" formControlName="return_quantity">
+          </mat-form-field>
+        </div>
+      </form>
+      <div class="container" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="end" fxLayoutGap="10px" fxLayoutGap.xs="0" >
+        <button mat-button  mat-stroked-button (click)="onSubmit()">save</button>
+      </div>
+    </div>
 
-            </button>
-          </td>
-          <td>
-            <button mat-icon-button color="warn" [disabled]="details.job_status==1" aria-label="Edit Customer">
-              <mat-icon>delete</mat-icon>
-            </button>
-          </td>
-
-        </tr>
-        </tbody>
-      </table> -->
-    <!-- </div> -->
+  </div>
+  <div fxLayout="column" style="background-color: white" [hidden]="goldReturn" fxFlex="60" class="mr-1">
+<!--    delete the style from div it's for testing -->
+    <h1>goldReturn</h1>
+  </div>
+  <div fxLayout="column" style="background-color: white" [hidden]="dalSubmit" fxFlex="60" class="mr-1">
+    <!--    delete the style from div it's for testing -->
+    <h1>dalSubmit</h1>
+  </div>
+  <div fxLayout="column" style="background-color: white" [hidden]="dalReturn" fxFlex="60" class="mr-1">
+    <!--    delete the style from div it's for testing -->
+    <h1>dalReturn</h1>
+  </div>
+  <div fxLayout="column" style="background-color: white" [hidden]="panSubmit" fxFlex="60" class="mr-1">
+    <h1>panSubmit</h1>
+  </div>
+  <div fxLayout="column"  style="background-color: white"[hidden]="panReturn" fxFlex="60" class="mr-1">
+    <!--    delete the style from div it's for testing -->
+    <h1>panReturn</h1>
+  </div>
+  <div fxLayout="column" style="background-color: white" [hidden]="nitricReturn" fxFlex="60" class="mr-1">
+    <!--    delete the style from div it's for testing -->
+    <h1>nitricReturn</h1>
   </div>
 </div>

@@ -58,9 +58,10 @@ export class JobTaskComponent implements OnInit {
   onSubmit(){
     const user = JSON.parse(localStorage.getItem('user'));
     this.jobTaskForm.value.employee_id = user.id;
-    // console.log(this.jobTaskForm.value );
-    const x = this.jobTaskService.jobReturn();
-    console.log(x);
+    if (this.jobTaskForm.value.job_Task_id === 2 || this.jobTaskForm.value.job_Task_id === 4 || this.jobTaskForm.value.job_Task_id === 6 || this.jobTaskForm.value.job_Task_id === 7){
+      this.jobTaskForm.value.return_quantity = -this.jobTaskForm.value.return_quantity;
+    }
+    this.jobTaskService.jobReturn();
   }
 
   backFunction(){
@@ -78,27 +79,31 @@ export class JobTaskComponent implements OnInit {
     this.jobTaskForm.patchValue({job_Task_id: task_id});
     if (task_id === 2){
       this.goldReturn = false;
+      // this.jobTaskForm.patchValue({return_quantity: -(this.jobTaskForm.value.return_quantity)});
     }
     if (task_id === 3){
       this.dalSubmit = false;
     }
     if (task_id === 4){
       this.dalReturn = false;
+      // this.jobTaskForm.patchValue({return_quantity: -(this.jobTaskForm.value.return_quantity)});
     }
     if (task_id === 5){
       this.panSubmit = false;
     }
     if (task_id === 6){
       this.panReturn = false;
+      // this.jobTaskForm.patchValue({return_quantity: -(this.jobTaskForm.value.return_quantity)});
     }
     if (task_id === 7){
       this.nitricReturn = false;
+      // this.jobTaskForm.patchValue({return_quantity: -(this.jobTaskForm.value.return_quantity)});
     }
 
   }
 
   placeDetails(data){
-    this.isSendToTask= true;
+    this.isSendToTask = true;
     const index = this.materialList.findIndex(x => x.id === data.material_id);
     this.jobTaskForm.patchValue({id : data.id, material_id : data.material_id , p_loss : data.p_loss, size: data.size, price : data.price, material_name : this.materialList[index].material_name});
     this.jobNumber = data.job_number;

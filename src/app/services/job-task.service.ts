@@ -51,11 +51,10 @@ export class JobTaskService {
   jobReturn(){
     this.http.post(GlobalVariable.BASE_API_URL + '/saveReturn', { data : this.jobTaskForm.value})
       .subscribe((response: {success: number, data: JobMaster}) => {
-        const {data} = response;
-        if (data){
-          this.jobTaskForm.reset();
-        }
-        return data;
+        // const {data} = response;
+        // if (data){
+        //   this.jobTaskForm.reset();
+        // }
       });
   }
 }

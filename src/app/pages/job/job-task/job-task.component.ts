@@ -8,6 +8,8 @@ import { OrderDetail } from 'src/app/models/orderDetail.model';
 import {JobMaster} from 'src/app/models/jobMaster.model';
 import { OrderService } from 'src/app/services/order.service';
 import { Material } from 'src/app/models/material.model';
+import {JobDetail} from 'src/app/models/jobDetail.model';
+import {Observable} from 'rxjs';
 
 @Component({
   selector: 'app-job-task',
@@ -19,6 +21,7 @@ export class JobTaskComponent implements OnInit {
   jobTaskForm: FormGroup;
   savedJobsData: JobMaster[];
   materialList: Material[];
+  jobDetailsData: JobDetail[] = [];
   flag: number;
   isSendToTask = false;
   jobNumber: string;
@@ -29,6 +32,8 @@ export class JobTaskComponent implements OnInit {
   panSubmit = true;
   panReturn = true;
   nitricReturn = true;
+  sum: number;
+  saveBtnName: string;
   constructor(private jobTaskService: JobTaskService, private _snackBar: MatSnackBar, private confirmationDialogService: ConfirmationDialogService, private orderService: OrderService ) { }
 
   ngOnInit(): void {
@@ -40,7 +45,7 @@ export class JobTaskComponent implements OnInit {
     this.panSubmit = true;
     this.panReturn = true;
     this.nitricReturn = true;
-
+    this.sum = 0;
     this.jobTaskForm = this.jobTaskService.jobTaskForm;
 
 
@@ -72,38 +77,82 @@ export class JobTaskComponent implements OnInit {
     this.panSubmit = true;
     this.panReturn = true;
     this.nitricReturn = true;
+    // this.jobTaskService.ngOnDestroy();
   }
 
   setTabData(task_id){
-    this.formTaskDiv = true;
+    this.sum = 0;
     this.jobTaskForm.patchValue({job_Task_id: task_id});
+    let saveObserable = new Observable<any>();
+    saveObserable = this.jobTaskService.jobTaskData(task_id);
+    saveObserable.subscribe((response) => {
+      this.jobDetailsData = response.data;
+      for (let i = 0; i < this.jobDetailsData.length; i++) {
+        console.log (this.jobDetailsData[i].material_quantity);
+        this.jobDetailsData[i].material_quantity = Math.abs(this.jobDetailsData[i].material_quantity);
+        this.sum = this.sum + this.jobDetailsData[i].material_quantity;
+      }
+    });
     if (task_id === 2){
       this.goldReturn = false;
-      // this.jobTaskForm.patchValue({return_quantity: -(this.jobTaskForm.value.return_quantity)});
+      this.dalSubmit = true;
+      this.dalReturn = true;
+      this.panSubmit = true;
+      this.panReturn = true;
+      this.nitricReturn = true;
+      this.saveBtnName = 'Save Gold Return';
     }
     if (task_id === 3){
+      this.goldReturn = true;
       this.dalSubmit = false;
+      this.dalReturn = true;
+      this.panSubmit = true;
+      this.panReturn = true;
+      this.nitricReturn = true;
+      this.saveBtnName = 'Save Dal Submit';
     }
     if (task_id === 4){
+      this.goldReturn = true;
+      this.dalSubmit = true;
       this.dalReturn = false;
-      // this.jobTaskForm.patchValue({return_quantity: -(this.jobTaskForm.value.return_quantity)});
+      this.panSubmit = true;
+      this.panReturn = true;
+      this.nitricReturn = true;
+      this.saveBtnName = 'Save Dal Return';
     }
     if (task_id === 5){
+      this.goldReturn = true;
+      this.dalSubmit = true;
+      this.dalReturn = true;
       this.panSubmit = false;
+      this.panReturn = true;
+      this.nitricReturn = true;
+      this.saveBtnName = 'Save Pan Submit';
     }
     if (task_id === 6){
+      this.goldReturn = true;
+      this.dalSubmit = true;
+      this.dalReturn = true;
+      this.panSubmit = true;
       this.panReturn = false;
-      // this.jobTaskForm.patchValue({return_quantity: -(this.jobTaskForm.value.return_quantity)});
+      this.nitricReturn = true;
+      this.saveBtnName = 'Save Pan Return';
     }
     if (task_id === 7){
+      this.goldReturn = true;
+      this.dalSubmit = true;
+      this.dalReturn = true;
+      this.panSubmit = true;
+      this.panReturn = true;
       this.nitricReturn = false;
-      // this.jobTaskForm.patchValue({return_quantity: -(this.jobTaskForm.value.return_quantity)});
+      this.saveBtnName = 'Save Nitric Return';
     }
 
   }
 
   placeDetails(data){
     this.isSendToTask = true;
+    this.setTabData(2);
     const index = this.materialList.findIndex(x => x.id === data.material_id);
     this.jobTaskForm.patchValue({id : data.id, material_id : data.material_id , p_loss : data.p_loss, size: data.size, price : data.price, material_name : this.materialList[index].material_name});
     this.jobNumber = data.job_number;

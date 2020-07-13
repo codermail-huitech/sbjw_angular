@@ -1,25 +1,33 @@
-import { Injectable } from '@angular/core';
+import {Injectable, OnDestroy} from '@angular/core';
 import {GlobalVariable} from '../shared/global';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {OrderDetail} from '../models/orderDetail.model';
 import {Subject, throwError} from 'rxjs';
 import {catchError, tap} from 'rxjs/operators';
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
-import{JobMaster} from '../models/jobMaster.model' ;
+import {JobMaster} from '../models/jobMaster.model' ;
+import {JobDetail} from 'src/app/models/jobDetail.model';
+import {OrderMaster} from '../models/orderMaster.model';
+import {OrderResponseData} from './order.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class JobTaskService {
+export class JobTaskService implements OnDestroy{
 
   jobTaskForm: FormGroup;
 
   savedJobsList: JobMaster[];
   jobMasterData: JobMaster;
+  jobDetailData: JobDetail[];
   private savedJobsSub = new Subject<JobMaster[]>();
+  private getJobTaskDataSub = new Subject<JobDetail[]>();
 
   getSavedJobsUpdateListener(){
     return this.savedJobsSub.asObservable();
+  }
+  getJobTaskDataUpdateListener(){
+    return this.getJobTaskDataSub.asObservable();
   }
 
 
@@ -48,6 +56,11 @@ export class JobTaskService {
       });
   }
 
+  ngOnDestroy(): void {
+    this.getJobTaskDataSub.complete();
+
+  }
+
   jobReturn(){
     this.http.post(GlobalVariable.BASE_API_URL + '/saveReturn', { data : this.jobTaskForm.value})
       .subscribe((response: {success: number, data: JobMaster}) => {
@@ -56,5 +69,41 @@ export class JobTaskService {
         //   this.jobTaskForm.reset();
         // }
       });
+  }
+
+  // jobTaskData(task_id) {
+  //   this.http.get(GlobalVariable.BASE_API_URL + '/getJobTaskData/' + task_id)
+  //     .subscribe((response: {success: number, data: JobDetail[]}) => {
+  //       const {data} = response;
+  //       this.jobDetailData = data;
+  //       this.getJobTaskDataSub.next([...this.jobDetailData]);
+  //     });
+  // }
+  jobTaskData(task_id) {
+    return this.http.get<OrderResponseData>( GlobalVariable.BASE_API_URL + '/getJobTaskData/' + task_id)
+      .pipe(catchError(this._serverError), tap(((response: {success: number, data: JobDetail[]}) => {
+        const {data} = response;
+        this.jobDetailData = data;
+        this.getJobTaskDataSub.next([...this.jobDetailData]);
+      })));
+  }
+
+  private _serverError(err: any) {
+    // console.log('sever error:', err);  // debug
+    if (err instanceof Response) {
+      return throwError('backend server error');
+      // if you're using lite-server, use the following line
+      // instead of the line above:
+      // return Observable.throw(err.text() || 'backend server error');
+    }
+    if (err.status === 0){
+      // tslint:disable-next-line:label-position
+      return throwError ({status: err.status, message: 'Backend Server is not Working', statusText: err.statusText});
+    }
+    if (err.status === 401){
+      // tslint:disable-next-line:label-position
+      return throwError ({status: err.status, message: 'You are not authorised', statusText: err.statusText});
+    }
+    return throwError(err);
   }
 }

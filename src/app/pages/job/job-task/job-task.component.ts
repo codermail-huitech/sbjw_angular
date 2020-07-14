@@ -70,13 +70,15 @@ export class JobTaskComponent implements OnInit {
   }
 
   backFunction(){
-    this.formTaskDiv = false;
+    // this.formTaskDiv = false;
     this.goldReturn = true;
     this.dalSubmit = true;
     this.dalReturn = true;
     this.panSubmit = true;
     this.panReturn = true;
     this.nitricReturn = true;
+    this.jobTaskForm.reset();
+    this.jobNumber = null;
     // this.jobTaskService.ngOnDestroy();
   }
 

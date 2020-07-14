@@ -2,7 +2,7 @@
   <div fxLayout="column" fxFlex="40" class="mr-1">
     <mat-card class="ml-2 mt-2">
 
-         <label>{{jobNumber}}</label>
+<!--         <label>{{jobNumber}}</label>-->
           <div class="form-container">
 
             <div class="container" fxLayout="row" fxLayoutAlign="start">
@@ -42,10 +42,10 @@
   </div>
   <div fxLayout="column" fxFlex="60" class="mr-1">
     <div class="row" style="align-content: center; text-align: center" >
-      <div class="col-3"><button style="background-color: green" mat-button class="col-12" mat-stroked-button >Back</button></div>
+      <div class="col-3" [hidden]="!(!goldReturn || !dalSubmit || !dalReturn || !panSubmit || !panReturn || !nitricReturn)"><button style="background-color: green" mat-button class="col-12" mat-stroked-button (click)="backFunction()" >Back</button></div>
     </div>
-    <div id="jobTask-table-div" [hidden]="!goldReturn || !dalSubmit || !dalReturn || !panSubmit || !panReturn || !nitricReturn">
-      <table class="table" id="my-table">
+    <div class="jobTask-table-div" [hidden]="!goldReturn || !dalSubmit || !dalReturn || !panSubmit || !panReturn || !nitricReturn">
+      <table class="table">
         <thead>
         <tr>
           <th>SL No.</th>
@@ -76,8 +76,8 @@
       <!--    delete the style from div it's for testing -->
       <h1>goldReturn</h1>
 
-      <div id="jobTask-table-div" >
-        <table class="table" id="my-table">
+      <div class="jobTask-table-div" >
+        <table class="table">
           <thead>
           <tr>
             <th>SL No.</th>
@@ -108,191 +108,189 @@
         </table>
       </div>
 
-      <div fxLayout="column" style="background-color: white" [hidden]="dalSubmit" fxFlex="60" class="mr-1">
-        <!--    delete the style from div it's for testing -->
-        <h1>dalSubmit</h1>
+    </div>
+    <div fxLayout="column" style="background-color: white" [hidden]="dalSubmit" fxFlex="60" class="mr-1">
+      <!--    delete the style from div it's for testing -->
+      <h1>dalSubmit</h1>
 
-        <div id="jobTask-table-div" >
-          <table class="table" id="my-table">
-            <thead>
-            <tr>
-              <th>SL No.</th>
-              <!-- <th>Job Number</th> -->
-              <th>Quantity</th>
-              <th>Date</th>
-              <!-- <th>Send to Task</th> -->
-            </tr>
-            </thead>
-            <tbody>
-            <tr  *ngFor="let data of jobDetailsData ; let indexOfelement = index;">
-              <td>{{indexOfelement+1}}</td>
-              <!-- <td >{{data.job_number}}</td> -->
-              <td>{{data.material_quantity}}</td>
-              <td>{{data.created_at | date:"dd/MM/yyyy"}}</td>
-              <!-- <td>
-                <button mat-icon-button color="primary" aria-label="Open Master" (click)="placeDetails(data)">
-                  <mat-icon>forward</mat-icon>
-                </button>
-              </td> -->
+      <div class="jobTask-table-div" >
+        <table class="table">
+          <thead>
+          <tr>
+            <th>SL No.</th>
+            <!-- <th>Job Number</th> -->
+            <th>Quantity</th>
+            <th>Date</th>
+            <!-- <th>Send to Task</th> -->
+          </tr>
+          </thead>
+          <tbody>
+          <tr  *ngFor="let data of jobDetailsData ; let indexOfelement = index;">
+            <td>{{indexOfelement+1}}</td>
+            <!-- <td >{{data.job_number}}</td> -->
+            <td>{{data.material_quantity}}</td>
+            <td>{{data.created_at | date:"dd/MM/yyyy"}}</td>
+            <!-- <td>
+              <button mat-icon-button color="primary" aria-label="Open Master" (click)="placeDetails(data)">
+                <mat-icon>forward</mat-icon>
+              </button>
+            </td> -->
 
-            </tr>
-            <tr>
-              <td><b>Total</b></td>
-              <td>{{sum}}</td>
-            </tr>
-            </tbody>
-          </table>
-        </div>
-
-      </div>
-      <div fxLayout="column" style="background-color: white" [hidden]="dalReturn" fxFlex="60" class="mr-1">
-        <!--    delete the style from div it's for testing -->
-        <h1>dalReturn</h1>
-
-        <div id="jobTask-table-div" >
-          <table class="table" id="my-table">
-            <thead>
-            <tr>
-              <th>SL No.</th>
-              <!-- <th>Job Number</th> -->
-              <th>Quantity</th>
-              <th>Date</th>
-              <!-- <th>Send to Task</th> -->
-            </tr>
-            </thead>
-            <tbody>
-            <tr  *ngFor="let data of jobDetailsData ; let indexOfelement = index;">
-              <td>{{indexOfelement+1}}</td>
-              <!-- <td >{{data.job_number}}</td> -->
-              <td>{{data.material_quantity}}</td>
-              <td>{{data.created_at | date:"dd/MM/yyyy"}}</td>
-              <!-- <td>
-                <button mat-icon-button color="primary" aria-label="Open Master" (click)="placeDetails(data)">
-                  <mat-icon>forward</mat-icon>
-                </button>
-              </td> -->
-
-            </tr>
-            <tr>
-              <td><b>Total</b></td>
-              <td>{{sum}}</td>
-            </tr>
-            </tbody>
-          </table>
-        </div>
-
-      </div>
-      <div fxLayout="column" style="background-color: white" [hidden]="panSubmit" fxFlex="60" class="mr-1">
-        <h1>panSubmit</h1>
-
-        <div id="jobTask-table-div" >
-          <table class="table" id="my-table">
-            <thead>
-            <tr>
-              <th>SL No.</th>
-              <!-- <th>Job Number</th> -->
-              <th>Quantity</th>
-              <th>Date</th>
-              <!-- <th>Send to Task</th> -->
-            </tr>
-            </thead>
-            <tbody>
-            <tr  *ngFor="let data of jobDetailsData ; let indexOfelement = index;">
-              <td>{{indexOfelement+1}}</td>
-              <!-- <td >{{data.job_number}}</td> -->
-              <td>{{data.material_quantity}}</td>
-              <td>{{data.created_at | date:"dd/MM/yyyy"}}</td>
-              <!-- <td>
-                <button mat-icon-button color="primary" aria-label="Open Master" (click)="placeDetails(data)">
-                  <mat-icon>forward</mat-icon>
-                </button>
-              </td> -->
-
-            </tr>
-            <tr>
-              <td><b>Total</b></td>
-              <td>{{sum}}</td>
-            </tr>
-            </tbody>
-          </table>
-        </div>
-
-      </div>
-      <div fxLayout="column"  style="background-color: white"[hidden]="panReturn" fxFlex="60" class="mr-1">
-        <!--    delete the style from div it's for testing -->
-        <h1>panReturn</h1>
-
-        <div id="jobTask-table-div" >
-          <table class="table" id="my-table">
-            <thead>
-            <tr>
-              <th>SL No.</th>
-              <!-- <th>Job Number</th> -->
-              <th>Quantity</th>
-              <th>Date</th>
-              <!-- <th>Send to Task</th> -->
-            </tr>
-            </thead>
-            <tbody>
-            <tr  *ngFor="let data of jobDetailsData ; let indexOfelement = index;">
-              <td>{{indexOfelement+1}}</td>
-              <!-- <td >{{data.job_number}}</td> -->
-              <td>{{data.material_quantity}}</td>
-              <td>{{data.created_at | date:"dd/MM/yyyy"}}</td>
-              <!-- <td>
-                <button mat-icon-button color="primary" aria-label="Open Master" (click)="placeDetails(data)">
-                  <mat-icon>forward</mat-icon>
-                </button>
-              </td> -->
-
-            </tr>
-            <tr>
-              <td><b>Total</b></td>
-              <td>{{sum}}</td>
-            </tr>
-            </tbody>
-          </table>
-        </div>
-
-      </div>
-      <div fxLayout="column" style="background-color: white" [hidden]="nitricReturn" fxFlex="60" class="mr-1">
-        <!--    delete the style from div it's for testing -->
-        <h1>nitricReturn</h1>
-
-        <div id="jobTask-table-div" >
-          <table class="table" id="my-table">
-            <thead>
-            <tr>
-              <th>SL No.</th>
-              <!-- <th>Job Number</th> -->
-              <th>Quantity</th>
-              <th>Date</th>
-              <!-- <th>Send to Task</th> -->
-            </tr>
-            </thead>
-            <tbody>
-            <tr  *ngFor="let data of jobDetailsData ; let indexOfelement = index;">
-              <td>{{indexOfelement+1}}</td>
-              <!-- <td >{{data.job_number}}</td> -->
-              <td>{{data.material_quantity}}</td>
-              <td>{{data.created_at | date:"dd/MM/yyyy"}}</td>
-              <!-- <td>
-                <button mat-icon-button color="primary" aria-label="Open Master" (click)="placeDetails(data)">
-                  <mat-icon>forward</mat-icon>
-                </button>
-              </td> -->
-
-            </tr>
-            <tr>
-              <td><b>Total</b></td>
-              <td>{{sum}}</td>
-            </tr>
-            </tbody>
-          </table>
-        </div>
-
+          </tr>
+          <tr>
+            <td><b>Total</b></td>
+            <td>{{sum}}</td>
+          </tr>
+          </tbody>
+        </table>
       </div>
 
+    </div>
+    <div fxLayout="column" style="background-color: white" [hidden]="dalReturn" fxFlex="60" class="mr-1">
+      <!--    delete the style from div it's for testing -->
+      <h1>dalReturn</h1>
+
+      <div class="jobTask-table-div" >
+        <table class="table">
+          <thead>
+          <tr>
+            <th>SL No.</th>
+            <!-- <th>Job Number</th> -->
+            <th>Quantity</th>
+            <th>Date</th>
+            <!-- <th>Send to Task</th> -->
+          </tr>
+          </thead>
+          <tbody>
+          <tr  *ngFor="let data of jobDetailsData ; let indexOfelement = index;">
+            <td>{{indexOfelement+1}}</td>
+            <!-- <td >{{data.job_number}}</td> -->
+            <td>{{data.material_quantity}}</td>
+            <td>{{data.created_at | date:"dd/MM/yyyy"}}</td>
+            <!-- <td>
+              <button mat-icon-button color="primary" aria-label="Open Master" (click)="placeDetails(data)">
+                <mat-icon>forward</mat-icon>
+              </button>
+            </td> -->
+
+          </tr>
+          <tr>
+            <td><b>Total</b></td>
+            <td>{{sum}}</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+    <div fxLayout="column" style="background-color: white" [hidden]="panSubmit" fxFlex="60" class="mr-1">
+      <h1>panSubmit</h1>
+
+      <div class="jobTask-table-div" >
+        <table class="table">
+          <thead>
+          <tr>
+            <th>SL No.</th>
+            <!-- <th>Job Number</th> -->
+            <th>Quantity</th>
+            <th>Date</th>
+            <!-- <th>Send to Task</th> -->
+          </tr>
+          </thead>
+          <tbody>
+          <tr  *ngFor="let data of jobDetailsData ; let indexOfelement = index;">
+            <td>{{indexOfelement+1}}</td>
+            <!-- <td >{{data.job_number}}</td> -->
+            <td>{{data.material_quantity}}</td>
+            <td>{{data.created_at | date:"dd/MM/yyyy"}}</td>
+            <!-- <td>
+              <button mat-icon-button color="primary" aria-label="Open Master" (click)="placeDetails(data)">
+                <mat-icon>forward</mat-icon>
+              </button>
+            </td> -->
+
+          </tr>
+          <tr>
+            <td><b>Total</b></td>
+            <td>{{sum}}</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+    <div fxLayout="column"  style="background-color: white"[hidden]="panReturn" fxFlex="60" class="mr-1">
+      <!--    delete the style from div it's for testing -->
+      <h1>panReturn</h1>
+
+      <div class="jobTask-table-div" >
+        <table class="table">
+          <thead>
+          <tr>
+            <th>SL No.</th>
+            <!-- <th>Job Number</th> -->
+            <th>Quantity</th>
+            <th>Date</th>
+            <!-- <th>Send to Task</th> -->
+          </tr>
+          </thead>
+          <tbody>
+          <tr  *ngFor="let data of jobDetailsData ; let indexOfelement = index;">
+            <td>{{indexOfelement+1}}</td>
+            <!-- <td >{{data.job_number}}</td> -->
+            <td>{{data.material_quantity}}</td>
+            <td>{{data.created_at | date:"dd/MM/yyyy"}}</td>
+            <!-- <td>
+              <button mat-icon-button color="primary" aria-label="Open Master" (click)="placeDetails(data)">
+                <mat-icon>forward</mat-icon>
+              </button>
+            </td> -->
+
+          </tr>
+          <tr>
+            <td><b>Total</b></td>
+            <td>{{sum}}</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+    <div fxLayout="column" style="background-color: white" [hidden]="nitricReturn" fxFlex="60" class="mr-1">
+      <!--    delete the style from div it's for testing -->
+      <h1>nitricReturn</h1>
+
+      <div class="jobTask-table-div" >
+        <table class="table" id="my-table">
+          <thead>
+          <tr>
+            <th>SL No.</th>
+            <!-- <th>Job Number</th> -->
+            <th>Quantity</th>
+            <th>Date</th>
+            <!-- <th>Send to Task</th> -->
+          </tr>
+          </thead>
+          <tbody>
+          <tr  *ngFor="let data of jobDetailsData ; let indexOfelement = index;">
+            <td>{{indexOfelement+1}}</td>
+            <!-- <td >{{data.job_number}}</td> -->
+            <td>{{data.material_quantity}}</td>
+            <td>{{data.created_at | date:"dd/MM/yyyy"}}</td>
+            <!-- <td>
+              <button mat-icon-button color="primary" aria-label="Open Master" (click)="placeDetails(data)">
+                <mat-icon>forward</mat-icon>
+              </button>
+            </td> -->
+
+          </tr>
+          <tr>
+            <td><b>Total</b></td>
+            <td>{{sum}}</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
 
     </div>
 </div>

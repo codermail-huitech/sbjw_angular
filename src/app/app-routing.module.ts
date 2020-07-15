@@ -9,6 +9,7 @@ import {AuthGuardService} from './services/auth-guard.service';
 import {OwnerComponent} from './pages/owner/owner.component';
 import {JobComponent} from './pages/job/job.component';
 import { JobTaskComponent } from './pages/job/job-task/job-task.component';
+import { JobDetailComponent } from './pages/job/job-detail/job-detail.component';
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -18,7 +19,9 @@ const routes: Routes = [
   {path: 'owner', canActivate:  [AuthGuardService], component: OwnerComponent},
   {path: 'order', canActivate:  [AuthGuardService], component: OrderComponent},
   {path: 'job', canActivate:  [AuthGuardService], component: JobComponent},
-  {path: 'job_task',canActivate : [AuthGuardService], component: JobTaskComponent}
+  {path: 'job_task',canActivate : [AuthGuardService], component: JobTaskComponent},
+  {path: 'job_detail',canActivate : [AuthGuardService], component: JobDetailComponent},
+  
 ];
 
 @NgModule({

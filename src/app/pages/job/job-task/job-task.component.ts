@@ -34,6 +34,7 @@ export class JobTaskComponent implements OnInit {
   nitricReturn = true;
   sum: number;
   saveBtnName: string;
+  isShowJobMasterList = true;
   constructor(private jobTaskService: JobTaskService, private _snackBar: MatSnackBar, private confirmationDialogService: ConfirmationDialogService, private orderService: OrderService ) { }
 
   ngOnInit(): void {
@@ -66,9 +67,9 @@ export class JobTaskComponent implements OnInit {
     if (this.jobTaskForm.value.job_Task_id === 2 || this.jobTaskForm.value.job_Task_id === 4 || this.jobTaskForm.value.job_Task_id === 6 || this.jobTaskForm.value.job_Task_id === 7){
       this.jobTaskForm.value.return_quantity = -this.jobTaskForm.value.return_quantity;
     }
+    console.log(this.jobTaskForm.value);
     this.jobTaskService.jobReturn();
   }
-
   backFunction(){
     // this.formTaskDiv = false;
     this.goldReturn = true;
@@ -85,8 +86,10 @@ export class JobTaskComponent implements OnInit {
   setTabData(task_id){
     this.sum = 0;
     this.jobTaskForm.patchValue({job_Task_id: task_id});
+    console.log('test');
+    console.log(this.jobTaskForm.value);
     let saveObserable = new Observable<any>();
-    saveObserable = this.jobTaskService.jobTaskData(task_id);
+    saveObserable = this.jobTaskService.jobTaskData();
     saveObserable.subscribe((response) => {
       this.jobDetailsData = response.data;
       for (let i = 0; i < this.jobDetailsData.length; i++) {
@@ -154,9 +157,12 @@ export class JobTaskComponent implements OnInit {
 
   placeDetails(data){
     this.isSendToTask = true;
-    this.setTabData(2);
+    this.isShowJobMasterList = false;
+   
     const index = this.materialList.findIndex(x => x.id === data.material_id);
     this.jobTaskForm.patchValue({id : data.id, material_id : data.material_id , p_loss : data.p_loss, size: data.size, price : data.price, material_name : this.materialList[index].material_name});
     this.jobNumber = data.job_number;
+    this.setTabData(2);
+    
   }
 }

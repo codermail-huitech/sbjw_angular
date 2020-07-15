@@ -1,5 +1,5 @@
 <div fxLayout.xs="column" [hidden]="formTaskDiv" fxLayout="row" fxLayoutAlign="space-between stretch" fxFlexFill id="job-div">
-  <div fxLayout="column" fxFlex="40" class="mr-1">
+  <div fxLayout="column" fxFlex="40" class="mr-1" [hidden]="isShowJobMasterList">
     <mat-card class="ml-2 mt-2">
 
 <!--         <label>{{jobNumber}}</label>-->
@@ -40,7 +40,7 @@
       </div>
       </mat-card>
   </div>
-  <div fxLayout="column" fxFlex="60" class="mr-1">
+  <div fxLayout="column" fxFlex="100" class="mr-1">
     <div class="row" style="align-content: center; text-align: center" >
       <div class="col-3" [hidden]="!(!goldReturn || !dalSubmit || !dalReturn || !panSubmit || !panReturn || !nitricReturn)"><button style="background-color: green" mat-button class="col-12" mat-stroked-button (click)="backFunction()" >Back</button></div>
     </div>
@@ -63,6 +63,8 @@
           <td >{{data.size}}</td>
           <td>
             <button mat-icon-button color="primary" aria-label="Open Master" (click)="placeDetails(data)">
+            <!-- <button mat-icon-button color="primary" aria-label="Open Master" [routerLink]="['/job_detail']" (click)="placeDetails(data)"> -->
+              
               <mat-icon>forward</mat-icon>
             </button>
           </td>

@@ -62,12 +62,15 @@ export class JobTaskService implements OnDestroy{
   }
 
   jobReturn(){
+   
     this.http.post(GlobalVariable.BASE_API_URL + '/saveReturn', { data : this.jobTaskForm.value})
-      .subscribe((response: {success: number, data: JobMaster}) => {
+      .subscribe((response: {success: number, data: JobDetail}) => {
         // const {data} = response;
         // if (data){
         //   this.jobTaskForm.reset();
         // }
+        // this.jobDetailData.unshift(response.data);
+        
       });
   }
 
@@ -79,8 +82,9 @@ export class JobTaskService implements OnDestroy{
   //       this.getJobTaskDataSub.next([...this.jobDetailData]);
   //     });
   // }
-  jobTaskData(task_id) {
-    return this.http.get<OrderResponseData>( GlobalVariable.BASE_API_URL + '/getJobTaskData/' + task_id)
+  jobTaskData() {
+  
+    return this.http.post( GlobalVariable.BASE_API_URL + '/getJobTaskData', { data : this.jobTaskForm.value})
       .pipe(catchError(this._serverError), tap(((response: {success: number, data: JobDetail[]}) => {
         const {data} = response;
         this.jobDetailData = data;

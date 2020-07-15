@@ -42,6 +42,7 @@ import { DateAdapter } from '@angular/material/core';
 import { DateFormat } from './date-format';
 import { JobComponent } from './pages/job/job.component';
 import { JobTaskComponent } from './pages/job/job-task/job-task.component';
+import { JobDetailComponent } from './pages/job/job-detail/job-detail.component';
 
 
 @NgModule({
@@ -64,7 +65,8 @@ import { JobTaskComponent } from './pages/job/job-task/job-task.component';
     LoaidngRollerComponent,
     OrderComponent,
     JobComponent,
-    JobTaskComponent
+    JobTaskComponent,
+    JobDetailComponent
 
   ],
   imports: [

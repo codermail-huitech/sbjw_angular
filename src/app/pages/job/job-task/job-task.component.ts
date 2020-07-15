@@ -67,7 +67,6 @@ export class JobTaskComponent implements OnInit {
     if (this.jobTaskForm.value.job_Task_id === 2 || this.jobTaskForm.value.job_Task_id === 4 || this.jobTaskForm.value.job_Task_id === 6 || this.jobTaskForm.value.job_Task_id === 7){
       this.jobTaskForm.value.return_quantity = -this.jobTaskForm.value.return_quantity;
     }
-    console.log(this.jobTaskForm.value);
     this.jobTaskService.jobReturn();
   }
   backFunction(){
@@ -86,8 +85,6 @@ export class JobTaskComponent implements OnInit {
   setTabData(task_id){
     this.sum = 0;
     this.jobTaskForm.patchValue({job_Task_id: task_id});
-    console.log('test');
-    console.log(this.jobTaskForm.value);
     let saveObserable = new Observable<any>();
     saveObserable = this.jobTaskService.jobTaskData();
     saveObserable.subscribe((response) => {
@@ -162,6 +159,7 @@ export class JobTaskComponent implements OnInit {
     const index = this.materialList.findIndex(x => x.id === data.material_id);
     this.jobTaskForm.patchValue({id : data.id, material_id : data.material_id , p_loss : data.p_loss, size: data.size, price : data.price, material_name : this.materialList[index].material_name});
     this.jobNumber = data.job_number;
+    
     this.setTabData(2);
     
   }

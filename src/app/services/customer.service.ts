@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {Injectable, OnDestroy} from '@angular/core';
 import {Customer} from '../models/customer.model';
 import {Agent} from '../models/agent.model';
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
@@ -15,7 +15,7 @@ export interface CustomerResponseData {
 @Injectable({
   providedIn: 'root'
 })
-export class CustomerService {
+export class CustomerService implements OnDestroy{
   customerData: Customer[] = [];
   private customerSub = new Subject<Customer[]>();
   customerForm: FormGroup;
@@ -125,4 +125,9 @@ export class CustomerService {
     }
     return throwError(err);
   }
+
+  ngOnDestroy(): void {
+    this.customerSub.unsubscribe();
+  }
+
 }

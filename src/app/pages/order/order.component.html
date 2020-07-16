@@ -73,6 +73,21 @@
                 </mat-select>
               </mat-form-field>
           </div>
+
+          <mat-form-field class="example-full-width">
+            <input type="text"
+                   placeholder="Model"
+                   aria-label="Number"
+                   matInput
+                   [formControl]="modelNumberControl"
+                   [matAutocomplete]="auto">
+            <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+              <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                {{option}}
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+
           <div class="container" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="start" fxLayoutGap="10px" fxLayoutGap.xs="0">
             <mat-form-field fxFlex="33">
               <mat-placeholder>Model Number</mat-placeholder>

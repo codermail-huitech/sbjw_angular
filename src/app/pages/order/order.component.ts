@@ -134,6 +134,7 @@ export class OrderComponent implements OnInit {
 
 
   addOrder(){
+    this.isSaveEnabled=false;
     const index = this.products.findIndex(x => x.model_number === this.orderDetailsForm.value.model_number);
     this.orderDetailsForm.value.product_id = this.products[index].id;
     this.orderService.setOrderDetails();

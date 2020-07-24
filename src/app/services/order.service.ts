@@ -124,11 +124,13 @@ export class OrderService {
 
   saveOrder(){
     // tslint:disable-next-line:max-line-length
+       console.log(this.orderMaster);
        return this.http.post<OrderResponseData>( GlobalVariable.BASE_API_URL + '/orders', {master: this.orderMaster, details: this.orderDetails})
          .pipe(catchError(this._serverError), tap(((response: {success: number, data: OrderMaster}) => {
-          if(this.orderMaster.id==null) {
+          if(this.orderMaster.id===null) {
             this.orderMasterData.unshift(response.data);
           }
+          // console.log(this.orderMaster);
           
           this.orderSub.next([...this.orderMasterData]);
         })));

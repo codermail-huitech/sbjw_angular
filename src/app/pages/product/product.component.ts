@@ -31,7 +31,7 @@ export class ProductComponent implements OnInit {
   pageSize = 15;
   filter = new FormControl('');
   p = 1;
-
+  //testing purpose......
 
   // tslint:disable-next-line:max-line-length
   constructor(private productService: ProductService, private priceCodeService: PriceCodeService, private productCategoryService: ProductCategoryService, private  snackBar: MatSnackBar, private confirmationDialogService: ConfirmationDialogService) {

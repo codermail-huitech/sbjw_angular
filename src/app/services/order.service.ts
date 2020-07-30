@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {Agent} from '../models/agent.model';
+
 import {Subject, throwError} from 'rxjs';
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {Material} from '../models/material.model';
@@ -37,11 +38,14 @@ export class OrderService {
   // orderDetailUpdate is for updating a single odder details
 
   orderMasterData : OrderMaster[] = [];
+  productData =  Product ;
   orderDetailUpdate: object;
   private agentSub = new Subject<Agent[]>();
   private materialSub = new Subject<Material[]>();
   private orderSub = new Subject<OrderMaster[]>();
   private orderDetailsSub = new Subject<OrderDetail[]>();
+
+  private productDataSub = new Subject<Product[]>();
 
   getAgentUpdateListener(){
     return this.agentSub.asObservable();
@@ -131,7 +135,7 @@ export class OrderService {
             this.orderMasterData.unshift(response.data);
           }
           // console.log(this.orderMaster);
-          
+
           this.orderSub.next([...this.orderMasterData]);
         })));
     }
@@ -219,4 +223,19 @@ export class OrderService {
     }
     return throwError(err);
   }
+
+  getProductData(model_number,customer_category_id){
+
+    this.http.post(GlobalVariable.BASE_API_URL + '/getProductData',{'model_number' : model_number, 'customer_category_id'  :customer_category_id})
+      .subscribe((response: {success: number, data: Product }) => {
+        const {data} = response;
+        // this.productData = data;
+        //
+        // this.productDataSub.next([...this.productData]);
+      });
+
+  }
+
+
+
 }

@@ -72,6 +72,7 @@ export class OrderComponent implements OnInit {
     this.orderMasterForm = this.orderService.orderMasterForm;
     this.orderDetailsForm = this.orderService.orderDetailsForm;
     // this.orderDetailsForm.controls['amount'].disable();
+
     this.customerService.getCustomerUpdateListener()
       .subscribe((customers: Customer[]) => {
         this.customerList = customers;
@@ -90,12 +91,17 @@ export class OrderComponent implements OnInit {
     this.productService.getProductUpdateListener()
       .subscribe((responseProducts: Product[]) => {
       this.products = responseProducts;
+
+      console.log('from order');
+      console.log(this.products);
     });
 
     this.orderService.getOrderUpdateListener()
       .subscribe((responseOrders: OrderMaster[]) => {
         this.orderData = responseOrders;
+
       });
+
     this.modelNumberFilteredOptions = this.modelNumberControl.valueChanges.pipe(
       startWith(''),
       map(value => this._filter(value))
@@ -155,6 +161,7 @@ export class OrderComponent implements OnInit {
     this.orderService.getOrderDetailsListener()
       .subscribe((orderDetails: []) => {
         this.orderDetails = orderDetails;
+
       });
     this.orderMasterForm.patchValue({id: data.id, customer_id : data.customer_id, agent_id: data.agent_id, order_date: data.date_of_order, delivery_date: data.date_of_delivery});
   }
@@ -266,16 +273,22 @@ export class OrderComponent implements OnInit {
   }
   findModel(event){
     console.log(this.orderDetailsForm.value.model_number);
-    const index = this.products.findIndex(k => k.model_number === this.orderDetailsForm.value.model_number.toString().toUpperCase());
-    if (index === -1){
+    console.log(this.orderMasterForm.value.customer_id);
+
+    // const index = this.products.findIndex(k => k.model_number === this.orderDetailsForm.value.model_number.toString().toUpperCase() );
+    const index = this.customerList.findIndex(k => k.id === this.orderMasterForm.value.customer_id );
+    this.orderService.getProductData(this.orderDetailsForm.value.model_number,this.customerList[index].customer_category_id);
+    // console.log('index');
+    // console.log(this.customerList[index]);
+;    if (index === -1){
       this._snackBar.openFromComponent(SncakBarComponent, {
         duration: 4000, data: {message: 'No Model Number Found'}
       });
     }
-    if (index !== -1){
-      const x = this.products[index];
-      this.orderDetailsForm.patchValue({p_loss : x.p_loss, price_code : x.price_code_name, price : x.price});
-    }
+    // if (index !== -1){
+    //   const x = this.products[index];
+    //   this.orderDetailsForm.patchValue({p_loss : x.p_loss, price_code : x.price_code_name, price : x.price});
+    // }
   }
 
   clearForm(){

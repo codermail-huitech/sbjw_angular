@@ -38,6 +38,8 @@ export class OrderComponent implements OnInit {
   agentList: Agent[];
   materialList: Material[];
   products: Product[];
+
+  productData : Product[] ;
   orderDetails: OrderDetail[] = [];
   orderMasterForm: FormGroup;
   orderDetailsForm: FormGroup;
@@ -92,8 +94,8 @@ export class OrderComponent implements OnInit {
       .subscribe((responseProducts: Product[]) => {
       this.products = responseProducts;
 
-      console.log('from order');
-      console.log(this.products);
+      // console.log('from order');
+      // console.log(this.products);
     });
 
     this.orderService.getOrderUpdateListener()
@@ -280,16 +282,27 @@ export class OrderComponent implements OnInit {
     this.orderService.getProductData(this.orderDetailsForm.value.model_number,this.customerList[index].customer_category_id);
     // console.log('index');
     // console.log(this.customerList[index]);
-;    if (index === -1){
-      this._snackBar.openFromComponent(SncakBarComponent, {
-        duration: 4000, data: {message: 'No Model Number Found'}
-      });
-    }
+// ;    if (index === -1){
+//       this._snackBar.openFromComponent(SncakBarComponent, {
+//         duration: 4000, data: {message: 'No Model Number Found'}
+//       });
+//     }
     // if (index !== -1){
     //   const x = this.products[index];
     //   this.orderDetailsForm.patchValue({p_loss : x.p_loss, price_code : x.price_code_name, price : x.price});
     // }
+    this.orderService.getProductDataUpdateListener()
+      .subscribe((responseProducts : Product[]) => {
+      this.productData = responseProducts;
+      // console.log('from component');
+      // console.log(this.productData);
+      this.orderDetailsForm.patchValue({ p_loss: this.productData[0].p_loss, price: this.productData[0].price});
+  
+    });
   }
+
+    
+   
 
   clearForm(){
     this.orderMasterForm.reset();

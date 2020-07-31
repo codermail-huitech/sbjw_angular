@@ -38,14 +38,14 @@ export class OrderService {
   // orderDetailUpdate is for updating a single odder details
 
   orderMasterData : OrderMaster[] = [];
-  productData =  Product ;
+  productData :  Product[] ;
   orderDetailUpdate: object;
   private agentSub = new Subject<Agent[]>();
   private materialSub = new Subject<Material[]>();
   private orderSub = new Subject<OrderMaster[]>();
   private orderDetailsSub = new Subject<OrderDetail[]>();
 
-  private productDataSub = new Subject<Product[]>();
+  private productDataSub = new Subject<Product[] >();
 
   getAgentUpdateListener(){
     return this.agentSub.asObservable();
@@ -61,9 +61,11 @@ export class OrderService {
   getOrderUpdateListener(){
     return this.orderSub.asObservable();
   }
-  // getOrderDetailsUpdateListener(){
-  //   return this.orderDetailsSub.asObservable();
-  // }
+
+
+  getProductDataUpdateListener(){
+    return this.productDataSub.asObservable();
+  }
 
 
   constructor(private http: HttpClient) {
@@ -227,11 +229,12 @@ export class OrderService {
   getProductData(model_number,customer_category_id){
 
     this.http.post(GlobalVariable.BASE_API_URL + '/getProductData',{'model_number' : model_number, 'customer_category_id'  :customer_category_id})
-      .subscribe((response: {success: number, data: Product }) => {
+      .subscribe((response: {success: number, data: Product[]}) => {
         const {data} = response;
-        // this.productData = data;
-        //
-        // this.productDataSub.next([...this.productData]);
+        this.productData = data;
+        console.log(this.productData);
+        
+        this.productDataSub.next([...this.productData]);
       });
 
   }

@@ -274,19 +274,18 @@ export class OrderComponent implements OnInit {
       });
   }
   findModel(event){
-    console.log(this.orderDetailsForm.value.model_number);
-    console.log(this.orderMasterForm.value.customer_id);
+    
 
     // const index = this.products.findIndex(k => k.model_number === this.orderDetailsForm.value.model_number.toString().toUpperCase() );
+
     const index = this.customerList.findIndex(k => k.id === this.orderMasterForm.value.customer_id );
     this.orderService.getProductData(this.orderDetailsForm.value.model_number,this.customerList[index].customer_category_id);
-    // console.log('index');
-    // console.log(this.customerList[index]);
-// ;    if (index === -1){
-//       this._snackBar.openFromComponent(SncakBarComponent, {
-//         duration: 4000, data: {message: 'No Model Number Found'}
-//       });
-//     }
+   
+    //    if (index === -1){
+    //       this._snackBar.openFromComponent(SncakBarComponent, {
+    //         duration: 4000, data: {message: 'No Model Number Found'}
+    //       });
+    //     }
     // if (index !== -1){
     //   const x = this.products[index];
     //   this.orderDetailsForm.patchValue({p_loss : x.p_loss, price_code : x.price_code_name, price : x.price});
@@ -294,9 +293,8 @@ export class OrderComponent implements OnInit {
     this.orderService.getProductDataUpdateListener()
       .subscribe((responseProducts : Product[]) => {
       this.productData = responseProducts;
-      // console.log('from component');
-      // console.log(this.productData);
-      this.orderDetailsForm.patchValue({ p_loss: this.productData[0].p_loss, price: this.productData[0].price});
+     
+      this.orderDetailsForm.patchValue({ p_loss: this.productData[0].p_loss, price: this.productData[0].price,price_code : this.productData[0].price_code_name});
   
     });
   }

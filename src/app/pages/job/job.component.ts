@@ -35,7 +35,6 @@ export class JobComponent implements OnInit {
 
   constructor(private productService: ProductService, private _snackBar: MatSnackBar, private confirmationDialogService: ConfirmationDialogService, private jobService: JobService, private orderService: OrderService) {
     this.products = this.productService.getProducts();
-    console.log(this.products);
   }
 
   ngOnInit(): void {

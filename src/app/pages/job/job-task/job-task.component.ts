@@ -35,9 +35,14 @@ export class JobTaskComponent implements OnInit {
   sum: number;
   saveBtnName: string;
   isShowJobMasterList = true;
-  constructor(private jobTaskService: JobTaskService, private _snackBar: MatSnackBar, private confirmationDialogService: ConfirmationDialogService, private orderService: OrderService ) { }
+  constructor(private jobTaskService: JobTaskService, private _snackBar: MatSnackBar, private confirmationDialogService: ConfirmationDialogService, private orderService: OrderService ) {
+    // this.savedJobsData = this.jobTaskService.getAllJobList();
+    // console.log(this.jobTaskService.getAllJobList());
+    console.log('i am constructor');
+  }
 
   ngOnInit(): void {
+    console.log('i am initializer');
     this.isSendToTask = false;
     this.formTaskDiv = false;
     this.goldReturn = true;
@@ -49,10 +54,11 @@ export class JobTaskComponent implements OnInit {
     this.sum = 0;
     this.jobTaskForm = this.jobTaskService.jobTaskForm;
 
-
+    // console.log(this.jobTaskService.getAllJobList());
     this.jobTaskService.getSavedJobsUpdateListener().subscribe((jobData: JobMaster[]) => {
       this.savedJobsData = jobData;
     });
+    this.savedJobsData = this.jobTaskService.getAllJobList();
 
     this.orderService.getMaterialUpdateListener()
       .subscribe((material: Material[]) => {
@@ -153,6 +159,7 @@ export class JobTaskComponent implements OnInit {
   }
 
   placeDetails(data){
+    this.materialList = this.orderService.getMaterials();
     this.isSendToTask = true;
     this.isShowJobMasterList = false;
 

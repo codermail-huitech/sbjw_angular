@@ -52,17 +52,22 @@ export class JobTaskService implements OnDestroy{
       .subscribe((response: {success: number, data: JobMaster[]}) => {
         const {data} = response;
         this.savedJobsList = data;
+        console.log('service job task');
         this.savedJobsSub.next([...this.savedJobsList]);
       });
   }
 
+  getAllJobList(){
+    // console.log('from getAllJobList');
+    return [...this.savedJobsList];
+  }
+
   ngOnDestroy(): void {
     this.getJobTaskDataSub.complete();
-
   }
 
   jobReturn(){
-   
+
     this.http.post(GlobalVariable.BASE_API_URL + '/saveReturn', { data : this.jobTaskForm.value})
       .subscribe((response: {success: number, data: JobDetail}) => {
         // const {data} = response;
@@ -70,7 +75,7 @@ export class JobTaskService implements OnDestroy{
         //   this.jobTaskForm.reset();
         // }
         // this.jobDetailData.unshift(response.data);
-        
+
       });
   }
 
@@ -83,7 +88,7 @@ export class JobTaskService implements OnDestroy{
   //     });
   // }
   jobTaskData() {
-  
+
     return this.http.post( GlobalVariable.BASE_API_URL + '/getJobTaskData', { data : this.jobTaskForm.value})
       .pipe(catchError(this._serverError), tap(((response: {success: number, data: JobDetail[]}) => {
         const {data} = response;

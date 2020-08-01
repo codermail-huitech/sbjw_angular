@@ -20,8 +20,8 @@ const routes: Routes = [
   {path: 'order', canActivate:  [AuthGuardService], component: OrderComponent},
   {path: 'job', canActivate:  [AuthGuardService], component: JobComponent},
   {path: 'job_task',canActivate : [AuthGuardService], component: JobTaskComponent},
-  {path: 'job_detail',canActivate : [AuthGuardService], component: JobDetailComponent},
-  
+  {path: 'job_detail/:p',canActivate : [AuthGuardService], component: JobDetailComponent},
+
 ];
 
 @NgModule({

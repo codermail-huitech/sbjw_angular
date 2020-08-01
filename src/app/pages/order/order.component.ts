@@ -48,6 +48,7 @@ export class OrderComponent implements OnInit {
   orderData: OrderMaster[] = [];
   product_id: number;
   showProduct = true;
+  showUpdate = false;
   yourModelDate: string;
   minDate = new Date(2010, 11, 2);
   maxDate = new Date(2021, 3, 2);
@@ -61,6 +62,7 @@ export class OrderComponent implements OnInit {
 
   // tslint:disable-next-line:max-line-length
   constructor(private confirmationDialogService: ConfirmationDialogService, private customerService: CustomerService, private orderService: OrderService, private storage: StorageMap, private productService: ProductService, private _snackBar: MatSnackBar) {
+    this.orderService.getOrderMaster();
   }
   onlyOdds = (d: Date): boolean => {
     const date = d.getDate();
@@ -74,7 +76,8 @@ export class OrderComponent implements OnInit {
     this.orderMasterForm = this.orderService.orderMasterForm;
     this.orderDetailsForm = this.orderService.orderDetailsForm;
     // this.orderDetailsForm.controls['amount'].disable();
-
+    this.showUpdate = false;
+    this.orderData = this.orderService.getOrderMaster();
     this.customerService.getCustomerUpdateListener()
       .subscribe((customers: Customer[]) => {
         this.customerList = customers;
@@ -157,21 +160,24 @@ export class OrderComponent implements OnInit {
   }
 
   fetchDetails(data){
+    console.log(data);
     this.isSaveEnabled=false;
     this.showProduct = true;
+    this.showUpdate = true;
     this.orderService.fetchOrderDetails(data.id);
     this.orderService.getOrderDetailsListener()
       .subscribe((orderDetails: []) => {
         this.orderDetails = orderDetails;
 
       });
-    this.orderMasterForm.patchValue({id: data.id, customer_id : data.customer_id, agent_id: data.agent_id, order_date: data.date_of_order, delivery_date: data.date_of_delivery});
+    this.orderMasterForm.patchValue({id: data.id, customer_id : data.person_id, agent_id: data.agent_id, order_date: data.date_of_order, delivery_date: data.date_of_delivery});
   }
   fillOrderDetailsForm(details){
     // this.orderDetailsForm.setValue(details);
     this.isSaveEnabled=false;
     this.orderDetailsForm.patchValue({id: details.id, model_number : details.model_number, p_loss: details.p_loss, price: details.price, price_code: details.price_code, quantity: details.quantity, amount: details.amount, approx_gold: details.approx_gold, size: details.size });
     this.product_id = details.product_id;
+
   }
   updateOrder(){
     // this.orderDetailsForm.value.product_id = this.product_id;
@@ -274,13 +280,13 @@ export class OrderComponent implements OnInit {
       });
   }
   findModel(event){
-    
+
 
     // const index = this.products.findIndex(k => k.model_number === this.orderDetailsForm.value.model_number.toString().toUpperCase() );
 
     const index = this.customerList.findIndex(k => k.id === this.orderMasterForm.value.customer_id );
     this.orderService.getProductData(this.orderDetailsForm.value.model_number,this.customerList[index].customer_category_id);
-   
+
     //    if (index === -1){
     //       this._snackBar.openFromComponent(SncakBarComponent, {
     //         duration: 4000, data: {message: 'No Model Number Found'}
@@ -293,14 +299,14 @@ export class OrderComponent implements OnInit {
     this.orderService.getProductDataUpdateListener()
       .subscribe((responseProducts : Product[]) => {
       this.productData = responseProducts;
-     
+
       this.orderDetailsForm.patchValue({ p_loss: this.productData[0].p_loss, price: this.productData[0].price,price_code : this.productData[0].price_code_name});
-  
+
     });
   }
 
-    
-   
+
+
 
   clearForm(){
     this.orderMasterForm.reset();
@@ -308,6 +314,11 @@ export class OrderComponent implements OnInit {
   }
 
   onSubmit(){
+    const user = JSON.parse(localStorage.getItem('user'));
+    this.orderMasterForm.value.employee_id = user.id;
+    this.orderMasterForm.value.order_date = this.pipe.transform(this.orderMasterForm.value.order_date, 'yyyy-MM-dd');
+    this.orderMasterForm.value.delivery_date = this.pipe.transform(this.orderMasterForm.value.delivery_date, 'yyyy-MM-dd');
+    this.orderService.setOrderMasterData();
     let saveObserable = new Observable<any>();
     saveObserable = this.orderService.saveOrder();
     saveObserable.subscribe((response) => {
@@ -318,6 +329,7 @@ export class OrderComponent implements OnInit {
         this._snackBar.openFromComponent(SncakBarComponent, {
           duration: 4000, data: {message: 'Order Saved'}
         });
+        this.orderDetailsForm.value.amount=0;
       }
     }, (error) => {
       console.log('error occured ');
@@ -328,11 +340,11 @@ export class OrderComponent implements OnInit {
     });
   }
 
-  selectCustomerForOrder() {
-    const user = JSON.parse(localStorage.getItem('user'));
-    this.orderMasterForm.value.employee_id = user.id;
-    this.orderMasterForm.value.order_date = this.pipe.transform(this.orderMasterForm.value.order_date, 'yyyy-MM-dd');
-    this.orderMasterForm.value.delivery_date = this.pipe.transform(this.orderMasterForm.value.delivery_date, 'yyyy-MM-dd');
-    this.orderService.setOrderMasterData();
-  }
+  // selectCustomerForOrder() {
+  //   const user = JSON.parse(localStorage.getItem('user'));
+  //   this.orderMasterForm.value.employee_id = user.id;
+  //   this.orderMasterForm.value.order_date = this.pipe.transform(this.orderMasterForm.value.order_date, 'yyyy-MM-dd');
+  //   this.orderMasterForm.value.delivery_date = this.pipe.transform(this.orderMasterForm.value.delivery_date, 'yyyy-MM-dd');
+  //   this.orderService.setOrderMasterData();
+  // }
 }

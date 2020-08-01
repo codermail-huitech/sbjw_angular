@@ -34,16 +34,21 @@ export class JobComponent implements OnInit {
   isEditEnabled = true;
 
   constructor(private productService: ProductService, private _snackBar: MatSnackBar, private confirmationDialogService: ConfirmationDialogService, private jobService: JobService, private orderService: OrderService) {
+    this.products = this.productService.getProducts();
+    console.log(this.products);
   }
 
   ngOnInit(): void {
     this.jobMasterForm = this.jobService.jobMasterForm;
     this.jobDetailsForm = this.jobService.jobDetailsForm;
+    this.products = this.productService.getProducts();
+    this.orderMasterData = this.orderService.getOrderMaster();
     this.jobService.getKarigarhUpdateListener().subscribe((responseProducts: Karigarh[]) => {
       this.karigarhData = responseProducts;
     });
     this.orderService.getOrderUpdateListener().subscribe((responseProducts: OrderMaster[]) => {
       this.orderMasterData = responseProducts;
+      console.log (this.orderMasterData);
     });
     this.productService.getProductUpdateListener()
       .subscribe((responseProducts: Product[]) => {
@@ -120,4 +125,6 @@ export class JobComponent implements OnInit {
         console.log('User dismissed the dialog (e.g., by using ESC, clicking the cross icon, or clicking outside the dialog)');
       });
   }
+
+
 }

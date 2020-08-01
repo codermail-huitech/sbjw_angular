@@ -155,12 +155,13 @@ export class JobTaskComponent implements OnInit {
   placeDetails(data){
     this.isSendToTask = true;
     this.isShowJobMasterList = false;
-   
+
     const index = this.materialList.findIndex(x => x.id === data.material_id);
     this.jobTaskForm.patchValue({id : data.id, material_id : data.material_id , p_loss : data.p_loss, size: data.size, price : data.price, material_name : this.materialList[index].material_name});
     this.jobNumber = data.job_number;
-    
+
     this.setTabData(2);
-    
+
   }
+
 }

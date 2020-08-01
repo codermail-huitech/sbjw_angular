@@ -62,7 +62,8 @@
           <td >{{data.quantity}}</td>
           <td >{{data.size}}</td>
           <td>
-           <button mat-icon-button color="primary" aria-label="Open Master" [routerLink]="['/job_detail']" (click)="placeDetails(data)">
+           <button mat-icon-button color="primary" aria-label="Open Master" [routerLink]="['/job_detail',data.id]"   (click)="placeDetails(data)">
+
               <mat-icon>forward</mat-icon>
             </button>
           </td>

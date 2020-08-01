@@ -114,6 +114,9 @@ export class OrderService {
         this.orderSub.next([...this.orderMasterData]);
       });
   }
+  getOrderMaster(){
+    return([...this.orderMasterData]);
+  }
   // this function is to save the orderMasterForm value while pressing in save
   setOrderMasterData() {
     this.orderMaster = this.orderMasterForm.value;
@@ -233,7 +236,7 @@ export class OrderService {
         const {data} = response;
         this.productData = data;
         console.log(this.productData);
-        
+
         this.productDataSub.next([...this.productData]);
       });
 

@@ -54,8 +54,8 @@
                 <mat-datepicker #picker2></mat-datepicker>
               </mat-form-field>
               <!--              Adding form to -->
-              <button mat-button (click)="selectCustomerForOrder()" mat-stroked-button fxFlex="20">Save</button>
-              <button mat-button (click)="updateMaster()" mat-stroked-button fxFlex="20">Update</button>
+<!--              <button mat-button (click)="selectCustomerForOrder()" mat-stroked-button fxFlex="20">Save</button>-->
+              <button mat-button (click)="updateMaster()" mat-stroked-button fxFlex="20" [hidden]="!showUpdate" >Update</button>
             </div>
         </form>
       </div>
@@ -74,27 +74,42 @@
               </mat-form-field>
           </div>
 
-          <mat-form-field class="example-full-width">
-            <input type="text"
-                   placeholder="Model"
-                   aria-label="Number"
-                   matInput
+<!--          <mat-form-field class="example-full-width">-->
+<!--            <input type="text"-->
+<!--                   placeholder="Model"-->
+<!--                   aria-label="Number"-->
+<!--                   matInput-->
 
-                   [matAutocomplete]="auto"
-                   formControlName="model_number"
-            >
-            <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" (optionSelected)="findModel($event)">
-              <mat-option *ngFor="let option of modelNumberFilteredOptions | async" [value]="option">
-                {{option}}
-              </mat-option>
-            </mat-autocomplete>
-          </mat-form-field>
+<!--                   [matAutocomplete]="auto"-->
+<!--                   formControlName="model_number"-->
+<!--            >-->
+<!--            <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" (optionSelected)="findModel($event)">-->
+<!--              <mat-option *ngFor="let option of modelNumberFilteredOptions | async" [value]="option">-->
+<!--                {{option}}-->
+<!--              </mat-option>-->
+<!--            </mat-autocomplete>-->
+<!--          </mat-form-field>-->
 
           <div class="container" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="start" fxLayoutGap="10px" fxLayoutGap.xs="0">
 <!--            <mat-form-field fxFlex="33">-->
 <!--              <mat-placeholder>Model Number</mat-placeholder>-->
 <!--              <input matInput  formControlName="model_number" (change)="findModel()">-->
 <!--            </mat-form-field>-->
+            <mat-form-field class="example-full-width">
+              <input type="text"
+                     placeholder="Model"
+                     aria-label="Number"
+                     matInput
+
+                     [matAutocomplete]="auto"
+                     formControlName="model_number"
+              >
+              <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" (optionSelected)="findModel($event)">
+                <mat-option *ngFor="let option of modelNumberFilteredOptions | async" [value]="option">
+                  {{option}}
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
 
             <div class="container" fxLayout="row" fxFlex="50" fxLayout.xs="column" fxLayoutAlign="right" fxLayoutGap="10px" fxLayoutGap.xs="0">
               <mat-form-field fxFlex="20">
@@ -235,9 +250,9 @@
     </div>
 
   </div>
-  <div style="background-color : white">
-    <pre>{{orderMasterForm.value | json }}</pre>
-  </div>
+<!--  <div style="background-color : white">-->
+<!--    <pre>{{orderMasterForm.value | json }}</pre>-->
+<!--  </div>-->
 </div>
 
 

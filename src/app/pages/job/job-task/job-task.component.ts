@@ -58,13 +58,12 @@ export class JobTaskComponent implements OnInit {
     this.jobTaskService.getSavedJobsUpdateListener().subscribe((jobData: JobMaster[]) => {
       this.savedJobsData = jobData;
     });
-    this.savedJobsData = this.jobTaskService.getAllJobList();
 
+    this.savedJobsData = this.jobTaskService.getAllJobList();
     this.orderService.getMaterialUpdateListener()
       .subscribe((material: Material[]) => {
         this.materialList = material;
       });
-
   }
 
   onSubmit(){

@@ -24,28 +24,32 @@ export class JobDetailComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // this.materialList = this.orderService.getMaterials();
     this.sub = this.route.params.subscribe(params => {
       this.id = params['id'];
-      this.savedJobsData = this.jobTaskService.getAllJobList();
-      const index = this.savedJobsData.findIndex(x => x.id == this.id);
-      this.oneJobData = this.savedJobsData[index];
-      this.job_number = this.oneJobData.job_number;
+      // this.savedJobsData = this.jobTaskService.getAllJobList();
+      // const index = this.savedJobsData.findIndex(x => x.id == this.id);
+      // this.oneJobData = this.savedJobsData[index];
+      // this.job_number = this.oneJobData.job_number;
     });
 
     this.jobTaskForm = this.jobTaskService.jobTaskForm;
 
     this.jobTaskService.getSavedJobsUpdateListener().subscribe((jobData: JobMaster[]) => {
       this.savedJobsData = jobData;
-      console.log(this.savedJobsData);
+      // console.log(this.savedJobsData);
       const index = this.savedJobsData.findIndex(x => x.id == this.id);
       this.oneJobData = this.savedJobsData[index];
       this.job_number = this.oneJobData.job_number;
     });
 
+    this.orderService.getMaterialUpdateListener()
+      .subscribe((material: Material[]) => {
+        this.materialList = material;
+        const index = this.materialList.findIndex(x => x.id === this.oneJobData.material_id);
+        const f = this.materialList[index];
+        this.jobTaskForm.patchValue({material_name : f.material_name, size: this.oneJobData.size});
+      });
+    // this.materialList = this.orderService.getMaterials();
 
   }
-
-
-
 }

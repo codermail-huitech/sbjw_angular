@@ -1,36 +1,150 @@
+
 <!--<div style="background-color: white">-->
 <!--  <h1>JOb </h1>-->
 <!--  <pre>{{id}}</pre>-->
 <!--  <pre>{{oneJobData | json}}</pre>-->
 <!--</div>-->
 <div fxLayout.xs="column" fxLayout="row" fxLayoutAlign="space-between stretch" fxFlexFill id="jobDetail-div">
-  <div fxLayout="column" fxFlex="40" class="mr-1" >
+
+  <div fxLayout="row" fxFlex="40" class="mr-1" id ="jobBill-div">
+    <div fxLayout="column" fxFlex="20" cl></div>
+    <div fxLayout="column" fxFlex="60" style="background-color: white">
+      <!--      <h2 style="text-align: center ">Job ID</h2>-->
+      <mat-card class="ml-2 mt-2">
+        <div class="form-container">
+
+          <div class="container" fxLayout="column" fxLayout.xs="column" fxLayoutAlign="start" fxLayoutGap="10px" fxLayoutGap.xs="0">
+            <!--              <h2 class="m-2" style="text-align: center ">Job ID: {{job_number}}</h2>-->
+            <!--              <h2 class="m-2" style="text-align: center ">Challan No: {{job_number}}</h2>-->
+            <!--              <div>-->
+            <!--                <div fxFlex="50">Date :</div>-->
+            <!--                <div fxFlex="50">DD :</div>-->
+            <!--              </div>-->
+            <table style=" border: none; width: 100%" class="table1">
+
+
+              <tbody>
+              <tr>
+                <th colspan="6" style="text-align: center ; padding-left: 2px;padding-right: 2px;">Job ID : {{job_number}}</th>
+              </tr>
+              <tr>
+                <td>Challan No:</td>
+                <td colspan="2"></td>
+                <td></td>
+                <td colspan="2"></td>
+                <td></td>
+                <td colspan="2"></td>
+              </tr>
+              <tr>
+                <td>Date :</td>
+                <td colspan="2"></td>
+                <td>DD :</td>
+                <td colspan="2"></td>
+                <td></td>
+                <td colspan="2"></td>
+              </tr>
+              <tr>
+                <td>Model</td>
+                <td colspan="2"></td>
+                <td>Pcs</td>
+                <td colspan="2"><b>{{oneJobData.quantity}}</b></td>
+                <td>Size</td>
+                <td colspan="2"><b>{{oneJobData.size}}</b></td>
+              </tr>
+              </tbody>
+            </table>
+
+
+
+
+
+            <table style="width : 100%;"  >
+              <tbody>
+              <tr>
+                <td colspan="2">Thokai :</td>
+                <td colspan="2">Tonch :</td>
+              </tr>
+              <tr>
+                <td colspan="2">Ring W. :</td>
+                <td colspan="2">A Wt. :</td>
+              </tr>
+              <tr>
+                <td colspan="2">Mina :</td>
+                <td colspan="2">Forming :</td>
+              </tr>
+              <tr>
+                <td colspan="2">M.C. :</td>
+                <td colspan="2">Gold :</td>
+              </tr>
+              <tr>
+                <td colspan="2">H.M.C :</td>
+                <td colspan="2">RGW- :</td>
+              </tr>
+              <tr>
+                <td colspan="2">H.C. :</td>
+                <td colspan="2">PWt. :</td>
+              </tr>
+              <tr>
+                <td colspan="2">Polish :</td>
+                <td colspan="2">NGR- :</td>
+              </tr>
+              <tr>
+                <td colspan="2">Dal:</td>
+                <td colspan="2">Pan+ :</td>
+              </tr>
+              <tr>
+                <td colspan="2">Bnz :</td>
+                <td colspan="2">PLoss+ :</td>
+              </tr>
+              <tr>
+                <td colspan="2">Bati No :</td>
+                <td colspan="2">FG Wt. =</td>
+              </tr>
+              <tr>
+                <td colspan="2"></td>
+                <td colspan="2">B. Wt. :</td>
+              </tr>
+              </tbody>
+            </table>
+            <label>Karigarh :</label>
+            <label>User :</label>
+            <label>POS :</label>
+            <label>Time :</label>
+          </div>
+
+        </div>
+      </mat-card>
+    </div>
+    <div fxLayout="column" fxFlex="20"></div>
+
+
+  </div>
+
+  <div fxLayout="column" fxFlex="60" class="mr-1" id ="jobTask-div" style="background-color: #e8af0a" >
     <mat-card class="ml-2 mt-2">
-    <div class="form-container">
-      <!--      <button (click)="backFunction()">Back</button>-->
-      <form [formGroup] = jobTaskForm>
-        <div class="container" fxLayout="column" fxLayout.xs="column" fxLayoutAlign="start" fxLayoutGap="10px" fxLayoutGap.xs="0">
-          <label class="m-2">Job Number: {{job_number}}</label>
-          <div class="container" fxLayout="row">
+      <div class="form-container">
+        <!--      <button (click)="backFunction()">Back</button>-->
+        <form [formGroup] = jobTaskForm>
+          <div class="container" fxLayout="column" fxLayout.xs="column" fxLayoutAlign="start" fxLayoutGap="10px" fxLayoutGap.xs="0">
+            <label class="m-2">Job Number: {{job_number}}</label>
+            <div class="container" fxLayout="row">
+              <mat-form-field class="col-4">
+                <input matInput placeholder="Material Name" formControlName="material_name">
+              </mat-form-field>
+              <mat-form-field class="col-4">
+                <input matInput placeholder="Size" [readonly]="true" formControlName="size">
+              </mat-form-field>
+            </div>
             <mat-form-field class="col-4">
-              <input matInput placeholder="Material Name" formControlName="material_name">
-            </mat-form-field>
-            <mat-form-field class="col-4">
-              <input matInput placeholder="Size" [readonly]="true" formControlName="size">
+              <input  style ="text-align: right;" matInput placeholder="Quantity" formControlName="return_quantity">
             </mat-form-field>
           </div>
-          <mat-form-field class="col-4">
-            <input  style ="text-align: right;" matInput placeholder="Quantity" formControlName="return_quantity">
-          </mat-form-field>
+        </form>
+        <div class="container" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="end" fxLayoutGap="10px" fxLayoutGap.xs="0" >
+          <button mat-button  mat-stroked-button >save</button>
         </div>
-      </form>
-      <div class="container" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="end" fxLayoutGap="10px" fxLayoutGap.xs="0" >
-        <button mat-button  mat-stroked-button >save</button>
       </div>
-    </div>
     </mat-card>
   </div>
-  <div fxLayout="column" fxFlex="60" class="mr-1" style="background-color: white">
-    <pre>{{oneJobData | json}}</pre>
-  </div>
+
 </div>

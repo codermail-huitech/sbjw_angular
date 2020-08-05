@@ -1,10 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 import {JobTaskService} from "../../../services/job-task.service";
+import {AuthService} from "../../../services/auth.service";
+import {JobService} from "../../../services/job.service";
 import {JobMaster} from "../../../models/jobMaster.model";
 import {FormGroup} from "@angular/forms";
 import {OrderService} from "../../../services/order.service";
 import {Material} from "../../../models/material.model";
+import {Karigarh} from "../../../models/karigarh.model";
+import {User} from "../../../models/user.model";
 
 @Component({
   selector: 'app-job-detail',
@@ -19,16 +23,21 @@ export class JobDetailComponent implements OnInit {
   savedJobsData : JobMaster[];
   oneJobData : JobMaster;
   materialList: Material[];
+  karigarhData : Karigarh[];
+  userData : User;
+  karigarhName : string;
 
-  constructor(private route: ActivatedRoute, private jobTaskService: JobTaskService, private orderService: OrderService) {
+  constructor(private route: ActivatedRoute, private jobTaskService: JobTaskService, private orderService: OrderService, private authService: AuthService,private jobService: JobService) {
   }
 
   ngOnInit(): void {
     this.sub = this.route.params.subscribe(params => {
       this.id = params['id'];
-      // this.savedJobsData = this.jobTaskService.getAllJobList();
-      // const index = this.savedJobsData.findIndex(x => x.id == this.id);
-      // this.oneJobData = this.savedJobsData[index];
+      this.savedJobsData = this.jobTaskService.getAllJobList();
+      const index = this.savedJobsData.findIndex(x => x.id == this.id);
+      this.oneJobData = this.savedJobsData[index];
+      console.log('from init');
+      console.log(this.oneJobData);
       // this.job_number = this.oneJobData.job_number;
     });
 
@@ -39,6 +48,7 @@ export class JobDetailComponent implements OnInit {
       // console.log(this.savedJobsData);
       const index = this.savedJobsData.findIndex(x => x.id == this.id);
       this.oneJobData = this.savedJobsData[index];
+      // console.log(this.oneJobData);
       this.job_number = this.oneJobData.job_number;
     });
 
@@ -50,6 +60,17 @@ export class JobDetailComponent implements OnInit {
         this.jobTaskForm.patchValue({material_name : f.material_name, size: this.oneJobData.size});
       });
     // this.materialList = this.orderService.getMaterials();
+
+    this.karigarhData=this.jobService.getAllKarigarhs();
+    const karigarhIndex= this.karigarhData.findIndex(k=> k.id === this.oneJobData.karigarh_id);
+    this.karigarhName = this.karigarhData[karigarhIndex].person_name;
+    console.log(this.karigarhData[karigarhIndex]);
+    // console.log(this.karigarhData[karigarhIndex].person_name);
+
+   console.log('user1');
+   this.userData = JSON.parse(localStorage.getItem('user'));
+   console.log( this.userData.personName);
+   
 
   }
 }

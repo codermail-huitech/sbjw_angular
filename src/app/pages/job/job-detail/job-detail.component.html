@@ -8,7 +8,7 @@
 
   <div fxLayout="row" fxFlex="40" class="mr-1" id ="jobBill-div">
     <div fxLayout="column" fxFlex="20" cl></div>
-    <div fxLayout="column" fxFlex="60" style="background-color: white">
+    <div fxLayout="column" fxFlex="60" style="background-color: white" id="bill-div">
       <!--      <h2 style="text-align: center ">Job ID</h2>-->
       <mat-card class="ml-2 mt-2">
         <div class="form-container">
@@ -25,15 +25,15 @@
 
               <tbody>
               <tr>
-                <th colspan="6" style="text-align: center ; padding-left: 2px;padding-right: 2px;">Job ID : {{job_number}}</th>
+                <th colspan="8" style="text-align: center ; padding-left: 2px;padding-right: 2px;">Job ID : {{oneJobData.job_number}}</th>
               </tr>
               <tr>
-                <td>Challan No:</td>
+                <td>Challan No :</td>
+                <td colspan="6">{{oneJobData.order_number}}</td>
+                <!-- <td></td>
                 <td colspan="2"></td>
                 <td></td>
-                <td colspan="2"></td>
-                <td></td>
-                <td colspan="2"></td>
+                <td colspan="2"></td> -->
               </tr>
               <tr>
                 <td>Date :</td>
@@ -44,11 +44,11 @@
                 <td colspan="2"></td>
               </tr>
               <tr>
-                <td>Model</td>
+                <td>Model :</td>
                 <td colspan="2"></td>
-                <td>Pcs</td>
+                <td>Pcs :</td>
                 <td colspan="2"><b>{{oneJobData.quantity}}</b></td>
-                <td>Size</td>
+                <td>Size :</td>
                 <td colspan="2"><b>{{oneJobData.size}}</b></td>
               </tr>
               </tbody>
@@ -106,8 +106,8 @@
               </tr>
               </tbody>
             </table>
-            <label>Karigarh :</label>
-            <label>User :</label>
+            <label>Karigarh : {{karigarhName}}</label>
+            <label>User : {{userData.personName}}</label>
             <label>POS :</label>
             <label>Time :</label>
           </div>

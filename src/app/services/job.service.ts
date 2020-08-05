@@ -61,6 +61,10 @@ export class JobService {
       });
 
   }
+
+  getAllKarigarhs(){
+    return [...this.karigarhData];
+  }
   saveJob(){
     // tslint:disable-next-line:max-line-length
     return this.http.post<JobResponseData>( GlobalVariable.BASE_API_URL + '/jobs', {master: this.jobMasterForm.value, details: this.jobDetailsForm.value})

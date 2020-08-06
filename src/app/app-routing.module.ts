@@ -12,6 +12,11 @@ import { JobTaskComponent } from './pages/job/job-task/job-task.component';
 import { JobDetailComponent } from './pages/job/job-detail/job-detail.component';
 import {GoldSubmitComponent} from "./pages/job/job-detail/gold-submit/gold-submit.component";
 import {GoldReturnComponent} from "./pages/job/job-detail/gold-return/gold-return.component";
+import {DalSubmitComponent} from "./pages/job/job-detail/dal-submit/dal-submit.component";
+import {DalReturnComponent} from "./pages/job/job-detail/dal-return/dal-return.component";
+import {PanSubmitComponent} from "./pages/job/job-detail/pan-submit/pan-submit.component";
+import {PanReturnComponent} from "./pages/job/job-detail/pan-return/pan-return.component";
+import {NitricReturnComponent} from "./pages/job/job-detail/nitric-return/nitric-return.component";
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -26,6 +31,11 @@ const routes: Routes = [
     children: [
       {path: 'goldSubmit', component: GoldSubmitComponent},
       {path: 'goldReturn', component: GoldReturnComponent},
+      {path: 'dalSubmit', component: DalSubmitComponent},
+      {path: 'dalReturn', component: DalReturnComponent},
+      {path: 'panSubmit', component: PanSubmitComponent},
+      {path: 'panReturn', component: PanReturnComponent},
+      {path: 'nitricReturn', component: NitricReturnComponent},
       // {path: 'albums', component: ArtistAlbumListComponent},
     ]
   },

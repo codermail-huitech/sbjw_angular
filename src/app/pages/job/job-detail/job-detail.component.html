@@ -122,9 +122,14 @@
 
   <div fxLayout="column" fxFlex="60" class="mr-1" id ="jobTask-div" style="background-color: #e8af0a" >
     <div class="m-2">
-      <button [routerLink]="['./goldSubmit']">Gold Return</button>
-      <button [routerLink]="['./goldReturn']">Gold Submit</button>
-      <button>poiiuu</button>
+      <button type="button"  class="btn btn-warning" [routerLink]="['./goldSubmit']">Gold Submit</button>
+      <button type="button"  class="btn btn-primary" [routerLink]="['./goldReturn']">Gold Return</button>
+      <button type="button" class="btn btn-warning" [routerLink]="['./dalSubmit']">Dal Submit</button>
+      <button type="button" class="btn btn-primary" [routerLink]="['./dalReturn']">Dal Return</button>
+      <button type="button" class="btn btn-warning" [routerLink]="['./panSubmit']">Pan Submit</button>
+      <button type="button" class="btn btn-primary" [routerLink]="['./panReturn']">Pan Return</button>
+      <button type="button" class="btn btn-warning" [routerLink]="['./nitricReturn']">Nitric Return</button>
+
 <!--      <a [routerLink]="['./tracks']">Tracks</a> |-->
     </div>
     <div>

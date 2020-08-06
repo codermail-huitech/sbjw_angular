@@ -67,14 +67,14 @@ export class JobTaskComponent implements OnInit {
       });
   }
 
-  onSubmit(){
-    const user = JSON.parse(localStorage.getItem('user'));
-    this.jobTaskForm.value.employee_id = user.id;
-    if (this.jobTaskForm.value.job_Task_id === 2 || this.jobTaskForm.value.job_Task_id === 4 || this.jobTaskForm.value.job_Task_id === 6 || this.jobTaskForm.value.job_Task_id === 7){
-      this.jobTaskForm.value.return_quantity = -this.jobTaskForm.value.return_quantity;
-    }
-    this.jobTaskService.jobReturn();
-  }
+  // onSubmit(){
+  //   const user = JSON.parse(localStorage.getItem('user'));
+  //   this.jobTaskForm.value.employee_id = user.id;
+  //   if (this.jobTaskForm.value.job_Task_id === 2 || this.jobTaskForm.value.job_Task_id === 4 || this.jobTaskForm.value.job_Task_id === 6 || this.jobTaskForm.value.job_Task_id === 7){
+  //     this.jobTaskForm.value.return_quantity = -this.jobTaskForm.value.return_quantity;
+  //   }
+  //   this.jobTaskService.jobReturn();
+  // }
   backFunction(){
     // this.formTaskDiv = false;
     this.goldReturn = true;
@@ -159,6 +159,8 @@ export class JobTaskComponent implements OnInit {
   }
 
   placeDetails(data){
+    console.log('data');
+    console.log(data);
     this.materialList = this.orderService.getMaterials();
     this.isSendToTask = true;
     this.isShowJobMasterList = false;

@@ -49,7 +49,6 @@ import { PanSubmitComponent } from './pages/job/job-detail/pan-submit/pan-submit
 import { PanReturnComponent } from './pages/job/job-detail/pan-return/pan-return.component';
 import { DalReturnComponent } from './pages/job/job-detail/dal-return/dal-return.component';
 import { DalSubmitComponent } from './pages/job/job-detail/dal-submit/dal-submit.component';
-import { NitricSubmitComponent } from './pages/job/job-detail/nitric-submit/nitric-submit.component';
 import { NitricReturnComponent } from './pages/job/job-detail/nitric-return/nitric-return.component';
 
 
@@ -81,7 +80,6 @@ import { NitricReturnComponent } from './pages/job/job-detail/nitric-return/nitr
     PanReturnComponent,
     DalReturnComponent,
     DalSubmitComponent,
-    NitricSubmitComponent,
     NitricReturnComponent
 
   ],

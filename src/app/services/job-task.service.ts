@@ -36,10 +36,10 @@ export class JobTaskService implements OnDestroy{
     this.jobTaskForm = new FormGroup({
       id : new FormControl(null),
       // job_number : new FormControl(null, [Validators.required]),
-      approx_gold : new FormControl(null, [Validators.required]),
-      p_loss : new FormControl(null, [Validators.required]),
+      // approx_gold : new FormControl(null, [Validators.required]),
+      // p_loss : new FormControl(null, [Validators.required]),
       size : new FormControl(null, [Validators.required]),
-      price : new FormControl(null, [Validators.required]),
+      // price : new FormControl(null, [Validators.required]),
       return_quantity : new FormControl(null, [Validators.required]),
       material_name : new FormControl({value: null, disabled: true}, [Validators.required]),
       material_id : new FormControl(null, [Validators.required]),

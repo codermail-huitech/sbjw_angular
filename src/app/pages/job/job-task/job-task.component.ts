@@ -10,6 +10,7 @@ import { OrderService } from 'src/app/services/order.service';
 import { Material } from 'src/app/models/material.model';
 import {JobDetail} from 'src/app/models/jobDetail.model';
 import {Observable} from 'rxjs';
+import {JobService} from "../../../services/job.service";
 
 @Component({
   selector: 'app-job-task',
@@ -35,7 +36,7 @@ export class JobTaskComponent implements OnInit {
   sum: number;
   saveBtnName: string;
   isShowJobMasterList = true;
-  constructor(private jobTaskService: JobTaskService, private _snackBar: MatSnackBar, private confirmationDialogService: ConfirmationDialogService, private orderService: OrderService ) {
+  constructor(private jobTaskService: JobTaskService ,private _snackBar: MatSnackBar, private confirmationDialogService: ConfirmationDialogService, private orderService: OrderService ) {
     // this.savedJobsData = this.jobTaskService.getAllJobList();
     // console.log(this.jobTaskService.getAllJobList());
     console.log('i am constructor');

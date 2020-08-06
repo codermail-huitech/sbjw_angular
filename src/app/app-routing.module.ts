@@ -10,6 +10,8 @@ import {OwnerComponent} from './pages/owner/owner.component';
 import {JobComponent} from './pages/job/job.component';
 import { JobTaskComponent } from './pages/job/job-task/job-task.component';
 import { JobDetailComponent } from './pages/job/job-detail/job-detail.component';
+import {GoldSubmitComponent} from "./pages/job/job-detail/gold-submit/gold-submit.component";
+import {GoldReturnComponent} from "./pages/job/job-detail/gold-return/gold-return.component";
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -20,7 +22,13 @@ const routes: Routes = [
   {path: 'order', canActivate:  [AuthGuardService], component: OrderComponent},
   {path: 'job', canActivate:  [AuthGuardService], component: JobComponent},
   {path: 'job_task',canActivate : [AuthGuardService], component: JobTaskComponent},
-  {path: 'job_detail/:id',canActivate : [AuthGuardService], component: JobDetailComponent},
+  {path: 'job_detail/:id',canActivate : [AuthGuardService], component: JobDetailComponent,
+    children: [
+      {path: 'goldSubmit', component: GoldSubmitComponent},
+      {path: 'goldReturn', component: GoldReturnComponent},
+      // {path: 'albums', component: ArtistAlbumListComponent},
+    ]
+  },
 
 ];
 

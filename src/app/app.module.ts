@@ -43,6 +43,14 @@ import { DateFormat } from './date-format';
 import { JobComponent } from './pages/job/job.component';
 import { JobTaskComponent } from './pages/job/job-task/job-task.component';
 import { JobDetailComponent } from './pages/job/job-detail/job-detail.component';
+import { GoldSubmitComponent } from './pages/job/job-detail/gold-submit/gold-submit.component';
+import { GoldReturnComponent } from './pages/job/job-detail/gold-return/gold-return.component';
+import { PanSubmitComponent } from './pages/job/job-detail/pan-submit/pan-submit.component';
+import { PanReturnComponent } from './pages/job/job-detail/pan-return/pan-return.component';
+import { DalReturnComponent } from './pages/job/job-detail/dal-return/dal-return.component';
+import { DalSubmitComponent } from './pages/job/job-detail/dal-submit/dal-submit.component';
+import { NitricSubmitComponent } from './pages/job/job-detail/nitric-submit/nitric-submit.component';
+import { NitricReturnComponent } from './pages/job/job-detail/nitric-return/nitric-return.component';
 
 
 @NgModule({
@@ -66,7 +74,15 @@ import { JobDetailComponent } from './pages/job/job-detail/job-detail.component'
     OrderComponent,
     JobComponent,
     JobTaskComponent,
-    JobDetailComponent
+    JobDetailComponent,
+    GoldSubmitComponent,
+    GoldReturnComponent,
+    PanSubmitComponent,
+    PanReturnComponent,
+    DalReturnComponent,
+    DalSubmitComponent,
+    NitricSubmitComponent,
+    NitricReturnComponent
 
   ],
   imports: [

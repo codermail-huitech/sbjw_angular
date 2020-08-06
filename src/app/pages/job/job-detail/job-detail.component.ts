@@ -36,9 +36,12 @@ export class JobDetailComponent implements OnInit {
       this.savedJobsData = this.jobTaskService.getAllJobList();
       const index = this.savedJobsData.findIndex(x => x.id == this.id);
       this.oneJobData = this.savedJobsData[index];
-      console.log('from init');
       console.log(this.oneJobData);
-      // this.job_number = this.oneJobData.job_number;
+
+      this.karigarhData=this.jobService.getAllKarigarhs();
+      const karigarhIndex = this.karigarhData.findIndex(x => x.id === this.oneJobData.karigarh_id);
+      this.karigarhName = this.karigarhData[karigarhIndex].person_name;
+      console.log(this.karigarhData);
     });
 
     this.jobTaskForm = this.jobTaskService.jobTaskForm;
@@ -59,18 +62,36 @@ export class JobDetailComponent implements OnInit {
         const f = this.materialList[index];
         this.jobTaskForm.patchValue({material_name : f.material_name, size: this.oneJobData.size});
       });
+
+    this.jobService.getKarigarhUpdateListener().subscribe((karigarhData: Karigarh[]) => {
+      this.karigarhData = karigarhData;
+      const karigarhIndex = this.karigarhData.findIndex(x => x.id === this.oneJobData.karigarh_id);
+      this.karigarhName = this.karigarhData[karigarhIndex].person_name;
+      // console.log(this.oneJobData);
+
+    });
+
+
+
     // this.materialList = this.orderService.getMaterials();
 
-    this.karigarhData=this.jobService.getAllKarigarhs();
-    const karigarhIndex= this.karigarhData.findIndex(k=> k.id === this.oneJobData.karigarh_id);
-    this.karigarhName = this.karigarhData[karigarhIndex].person_name;
-    console.log(this.karigarhData[karigarhIndex]);
+    // this.karigarhData=this.jobService.getAllKarigarhs();
+    // console.log("karigarh data");
+    // console.log(this.karigarhData);
+    // const karigarhIndex= this.karigarhData.findIndex(k=> k.id === this.oneJobData.karigarh_id);
+    // console.log("sdfs");
+    console.log(this.oneJobData);
+    // this.karigarhName = this.karigarhData[karigarhIndex].person_name;
+    // console.log(this.karigarhData[karigarhIndex]);
     // console.log(this.karigarhData[karigarhIndex].person_name);
 
    console.log('user1');
    this.userData = JSON.parse(localStorage.getItem('user'));
    console.log( this.userData.personName);
-   
-
+  }
+  testing(){
+    // this.karigarhData=this.jobService.getAllKarigarhs();
+    // console.log("karigarh data");
+    // console.log(this.karigarhData);
   }
 }

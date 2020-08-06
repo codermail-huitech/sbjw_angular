@@ -5,6 +5,7 @@ export class JobMaster{
   id?: number;
   order_details_id: number;
   date: string;
+  date_of_delivery?: string;
   gross_weight: number;
   karigarh_id: number;
   approx_gold?: number;
@@ -17,6 +18,7 @@ export class JobMaster{
   job_number: string;
   quantity?: number;
   order_number?: string;
+  model_number?: string;
   constructor() {
   }
 }

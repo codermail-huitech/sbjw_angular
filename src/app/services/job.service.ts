@@ -57,12 +57,15 @@ export class JobService {
       .subscribe((response: {success: number, data: Karigarh[]}) => {
         const {data} = response;
         this.karigarhData = data;
+        // console.log(this.karigarhData);
         this.karigarhSub.next([...this.karigarhData]);
       });
 
   }
 
   getAllKarigarhs(){
+    // console.log('getAllKarigarhs');
+    // console.log(this.karigarhData);
     return [...this.karigarhData];
   }
   saveJob(){

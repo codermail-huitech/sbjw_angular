@@ -7,6 +7,7 @@ export class Material{
   gold: number;
   silver: number;
   is_main_production_material: number;
+  main_material_id: number;
 
   constructor(public id: number){}
 }

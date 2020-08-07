@@ -13,7 +13,7 @@
       <mat-card class="ml-2 mt-2">
         <div class="form-container">
 
-          <div class="container" fxLayout="column" fxLayout.xs="column" fxLayoutAlign="start" fxLayoutGap="10px" fxLayoutGap.xs="0">
+          <div class="container" *ngIf="oneJobData" fxLayout="column" fxLayout.xs="column" fxLayoutAlign="start" fxLayoutGap="10px" fxLayoutGap.xs="0">
             <!--              <h2 class="m-2" style="text-align: center ">Job ID: {{job_number}}</h2>-->
             <!--              <h2 class="m-2" style="text-align: center ">Challan No: {{job_number}}</h2>-->
             <!--              <div>-->
@@ -25,7 +25,7 @@
 
               <tbody>
               <tr>
-                <th colspan="8" style="text-align: center ; padding-left: 2px;padding-right: 2px;">Job ID : {{oneJobData.job_number}}</th>
+                <th colspan="8" style="text-align: center ; padding-left: 2px;padding-right: 2px;">Job ID : {{job_number}}</th>
               </tr>
               <tr>
                 <td>Challan No :</td>

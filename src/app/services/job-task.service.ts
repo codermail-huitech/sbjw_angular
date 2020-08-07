@@ -9,6 +9,7 @@ import {JobMaster} from '../models/jobMaster.model' ;
 import {JobDetail} from 'src/app/models/jobDetail.model';
 import {OrderMaster} from '../models/orderMaster.model';
 import {OrderResponseData} from './order.service';
+import {Material} from "../models/material.model";
 
 @Injectable({
   providedIn: 'root'
@@ -16,11 +17,13 @@ import {OrderResponseData} from './order.service';
 export class JobTaskService implements OnDestroy{
 
   jobTaskForm: FormGroup;
+  materialData : Material[];
 
   savedJobsList: JobMaster[];
   jobMasterData: JobMaster;
   jobDetailData: JobDetail[];
   private savedJobsSub = new Subject<JobMaster[]>();
+  private materialDataSub = new Subject<Material[]>();
   private getJobTaskDataSub = new Subject<JobDetail[]>();
 
   getSavedJobsUpdateListener(){
@@ -43,7 +46,8 @@ export class JobTaskService implements OnDestroy{
       return_quantity : new FormControl(null, [Validators.required]),
       material_name : new FormControl({value: null, disabled: true}, [Validators.required]),
       material_id : new FormControl(null, [Validators.required]),
-      job_Task_id : new FormControl(null, [Validators.required])
+      job_Task_id : new FormControl(null, [Validators.required]),
+      employee_id : new FormControl(null, [Validators.required])
     });
 
     //fetching the orders which are sent to job
@@ -55,11 +59,23 @@ export class JobTaskService implements OnDestroy{
         console.log('service job task');
         this.savedJobsSub.next([...this.savedJobsList]);
       });
+
+    this.http.get(GlobalVariable.BASE_API_URL + '/materials')
+      .subscribe((response: {success: number, data: Material[]}) => {
+        const {data} = response;
+        this.materialData = data;
+        console.log('service job task');
+        this.materialDataSub.next([...this.materialData]);
+      });
   }
 
   getAllJobList(){
     // console.log('from getAllJobList');
     return [...this.savedJobsList];
+  }
+
+  getMaterials(){
+    return[...this.materialData];
   }
 
   ngOnDestroy(): void {

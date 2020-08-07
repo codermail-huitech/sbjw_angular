@@ -42,9 +42,9 @@
   </div>
   <div fxLayout="column" fxFlex="100" class="mr-1">
     <div class="row" style="align-content: center; text-align: center" >
-      <div class="col-3" [hidden]="!(!goldReturn || !dalSubmit || !dalReturn || !panSubmit || !panReturn || !nitricReturn)"><button style="background-color: green" mat-button class="col-12" mat-stroked-button (click)="backFunction()" >Back</button></div>
+      <div class="col-3" ><button style="background-color: green" mat-button class="col-12" mat-stroked-button (click)="backFunction()" >Back</button></div>
     </div>
-    <div class="jobTask-table-div" [hidden]="!goldReturn || !dalSubmit || !dalReturn || !panSubmit || !panReturn || !nitricReturn">
+    <div class="jobTask-table-div" *ngIf="savedJobsData">
       <table class="table">
         <thead>
         <tr>

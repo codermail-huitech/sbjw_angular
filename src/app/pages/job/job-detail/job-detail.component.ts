@@ -36,7 +36,6 @@ export class JobDetailComponent implements OnInit {
       this.savedJobsData = this.jobTaskService.getAllJobList();
       const index = this.savedJobsData.findIndex(x => x.id == this.id);
       this.oneJobData = this.savedJobsData[index];
-      console.log(this.oneJobData);
 
       this.karigarhData=this.jobService.getAllKarigarhs();
       const karigarhIndex = this.karigarhData.findIndex(x => x.id === this.oneJobData.karigarh_id);

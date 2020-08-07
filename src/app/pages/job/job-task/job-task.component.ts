@@ -60,21 +60,13 @@ export class JobTaskComponent implements OnInit {
       this.savedJobsData = jobData;
     });
 
-    this.savedJobsData = this.jobTaskService.getAllJobList();
+    // this.savedJobsData = this.jobTaskService.getAllJobList();
     this.orderService.getMaterialUpdateListener()
       .subscribe((material: Material[]) => {
         this.materialList = material;
       });
   }
 
-  // onSubmit(){
-  //   const user = JSON.parse(localStorage.getItem('user'));
-  //   this.jobTaskForm.value.employee_id = user.id;
-  //   if (this.jobTaskForm.value.job_Task_id === 2 || this.jobTaskForm.value.job_Task_id === 4 || this.jobTaskForm.value.job_Task_id === 6 || this.jobTaskForm.value.job_Task_id === 7){
-  //     this.jobTaskForm.value.return_quantity = -this.jobTaskForm.value.return_quantity;
-  //   }
-  //   this.jobTaskService.jobReturn();
-  // }
   backFunction(){
     // this.formTaskDiv = false;
     this.goldReturn = true;

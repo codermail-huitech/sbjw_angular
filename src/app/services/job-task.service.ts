@@ -22,15 +22,20 @@ export class JobTaskService implements OnDestroy{
   savedJobsList: JobMaster[];
   jobMasterData: JobMaster;
   jobDetailData: JobDetail[];
+  jobReturnData : JobDetail[];
   private savedJobsSub = new Subject<JobMaster[]>();
   private materialDataSub = new Subject<Material[]>();
   private getJobTaskDataSub = new Subject<JobDetail[]>();
+  private jobReturnDataSub = new Subject<JobDetail[]>();
 
   getSavedJobsUpdateListener(){
     return this.savedJobsSub.asObservable();
   }
   getJobTaskDataUpdateListener(){
     return this.getJobTaskDataSub.asObservable();
+  }
+  getJobReturnDataUpdateListener(){
+    return this.jobReturnDataSub.asObservable();
   }
 
 
@@ -84,16 +89,29 @@ export class JobTaskService implements OnDestroy{
 
   jobReturn(){
 
-    this.http.post(GlobalVariable.BASE_API_URL + '/saveReturn', { data : this.jobTaskForm.value})
-      .subscribe((response: {success: number, data: JobDetail}) => {
-        // const {data} = response;
-        // if (data){
-        //   this.jobTaskForm.reset();
-        // }
-        // this.jobDetailData.unshift(response.data);
 
-      });
+      return this.http.post(GlobalVariable.BASE_API_URL + '/saveReturn', { data: this.jobTaskForm.value})
+       .pipe(catchError(this._serverError), tap(((response: {success: number, data: JobDetail[]}) => {
+             const {data} = response;
+             this.jobReturnData = data;
+             console.log(this.jobReturnData);
+             // this.jobReturnDataSub.next([...this.jobReturnData]);
+
+      })));
+
+
+    // this.http.post(GlobalVariable.BASE_API_URL + '/saveReturn', { data : this.jobTaskForm.value})
+    //   .subscribe((response: {success: number, data: JobDetail}) => {
+    //     // const {data} = response;
+    //     // if (data){
+    //     //   this.jobTaskForm.reset();
+    //     // }
+    //     // this.jobDetailData.unshift(response.data);
+    //
+    //   });
   }
+
+
 
   // jobTaskData(task_id) {
   //   this.http.get(GlobalVariable.BASE_API_URL + '/getJobTaskData/' + task_id)

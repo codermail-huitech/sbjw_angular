@@ -18,14 +18,14 @@ export class GoldReturnComponent implements OnInit {
   jobTaskForm: FormGroup;
   savedJobsData : JobMaster[];
   oneJobData : JobMaster;
-
+  materialData : Material[];
 
   constructor(private jobTaskService: JobTaskService,private router: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.jobTaskForm = this.jobTaskService.jobTaskForm;
-    this.jobTaskForm.patchValue({return_quantity: ""});
-
+    // this.jobTaskForm.patchValue({return_quantity: ""});
+    this.jobTaskForm.controls['return_quantity'].reset();
   }
 
   onSubmit(){

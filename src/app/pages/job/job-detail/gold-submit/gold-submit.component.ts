@@ -5,6 +5,8 @@ import {ActivatedRoute} from "@angular/router";
 import {JobMaster} from "../../../../models/jobMaster.model";
 import {OrderService} from "../../../../services/order.service";
 import {Material} from "../../../../models/material.model";
+import {OrderMaster} from "../../../../models/orderMaster.model";
+import {JobDetail} from "../../../../models/jobDetail.model";
 
 @Component({
   selector: 'app-gold-submit',
@@ -17,13 +19,20 @@ export class GoldSubmitComponent implements OnInit {
   jobTaskForm: FormGroup;
   savedJobsData : JobMaster[];
   oneJobData : JobMaster;
+  jobReturnData : JobDetail[];
   // materialData : Material[];
   constructor(private jobTaskService: JobTaskService, private  router : ActivatedRoute) { }
 
   ngOnInit(): void {
     this.jobTaskForm = this.jobTaskService.jobTaskForm;
-    this.jobTaskForm.patchValue({return_quantity: ""});
 
+    this.jobTaskService.getJobReturnDataUpdateListener()
+      .subscribe((data: JobDetail[]) => {
+        this.jobReturnData = data;
+
+      });
+    // this.jobTaskForm.patchValue({return_quantity: ""});
+    this.jobTaskForm.controls['return_quantity'].reset();
   }
   onSubmit(){
     this.jobMasterId=this.router.parent.params._value.id;
@@ -34,7 +43,10 @@ export class GoldSubmitComponent implements OnInit {
     this.jobTaskForm.patchValue({ job_Task_id:1, material_name: this.oneJobData.material_name, material_id: this.oneJobData.material_id,id:this.jobMasterId, size:this.oneJobData.size,employee_id: user.id });
     this.jobTaskForm.value.return_quantity= parseFloat(this.jobTaskForm.value.return_quantity);
     console.log(this.jobTaskForm.value);
-    this.jobTaskService.jobReturn();
+    this.jobTaskService.jobReturn().subscribe((response )=>{
+       console.log('data');
+       console.log(response);
+    });
   }
 
 }

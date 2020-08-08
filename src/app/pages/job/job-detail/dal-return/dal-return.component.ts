@@ -3,6 +3,7 @@ import {JobTaskService} from "../../../../services/job-task.service";
 import {FormGroup} from "@angular/forms";
 import {JobMaster} from "../../../../models/jobMaster.model";
 import {ActivatedRoute} from "@angular/router";
+import {Material} from "../../../../models/material.model";
 
 @Component({
   selector: 'app-dal-return',
@@ -15,12 +16,14 @@ export class DalReturnComponent implements OnInit {
   jobTaskForm: FormGroup;
   savedJobsData : JobMaster[];
   oneJobData : JobMaster;
+  materialData : Material[] ;
+
   constructor(private jobTaskService: JobTaskService,private router: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.jobTaskForm = this.jobTaskService.jobTaskForm;
-    this.jobTaskForm.patchValue({return_quantity: ""});
-
+    // this.jobTaskForm.patchValue({return_quantity: ""});
+    this.jobTaskForm.controls['return_quantity'].reset();
   }
 
   onSubmit(){

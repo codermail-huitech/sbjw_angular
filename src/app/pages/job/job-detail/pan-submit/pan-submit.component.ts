@@ -19,7 +19,8 @@ export class PanSubmitComponent implements OnInit {
 
   ngOnInit(): void {
     this.jobTaskForm = this.jobTaskService.jobTaskForm;
-    this.jobTaskForm.patchValue({return_quantity: ""});
+    // this.jobTaskForm.patchValue({return_quantity: ""});
+    this.jobTaskForm.controls['return_quantity'].reset();
   }
   onSubmit(){
     this.jobMasterId=this.router.parent.params._value.id;

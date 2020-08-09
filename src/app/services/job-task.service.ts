@@ -22,11 +22,11 @@ export class JobTaskService implements OnDestroy{
   savedJobsList: JobMaster[];
   jobMasterData: JobMaster;
   jobDetailData: JobDetail[];
-  jobReturnData : JobDetail[];
+  jobReturnData : JobDetail;
   private savedJobsSub = new Subject<JobMaster[]>();
   private materialDataSub = new Subject<Material[]>();
   private getJobTaskDataSub = new Subject<JobDetail[]>();
-  private jobReturnDataSub = new Subject<JobDetail[]>();
+  private jobReturnDataSub = new Subject<JobDetail>();
 
   getSavedJobsUpdateListener(){
     return this.savedJobsSub.asObservable();
@@ -34,9 +34,9 @@ export class JobTaskService implements OnDestroy{
   getJobTaskDataUpdateListener(){
     return this.getJobTaskDataSub.asObservable();
   }
-  getJobReturnDataUpdateListener(){
-    return this.jobReturnDataSub.asObservable();
-  }
+  // getJobReturnDataUpdateListener(){
+  //   return this.jobReturnDataSub.asObservable();
+  // }
 
 
   constructor(private http: HttpClient) {
@@ -91,11 +91,11 @@ export class JobTaskService implements OnDestroy{
 
 
       return this.http.post(GlobalVariable.BASE_API_URL + '/saveReturn', { data: this.jobTaskForm.value})
-       .pipe(catchError(this._serverError), tap(((response: {success: number, data: JobDetail[]}) => {
+       .pipe(catchError(this._serverError), tap(((response: {success: number, data: JobDetail}) => {
              const {data} = response;
              this.jobReturnData = data;
              console.log(this.jobReturnData);
-             // this.jobReturnDataSub.next([...this.jobReturnData]);
+            //  this.jobReturnDataSub.next([...this.jobReturnData]);
 
       })));
 

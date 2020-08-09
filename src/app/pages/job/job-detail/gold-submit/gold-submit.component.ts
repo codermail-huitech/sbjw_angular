@@ -7,6 +7,8 @@ import {OrderService} from "../../../../services/order.service";
 import {Material} from "../../../../models/material.model";
 import {OrderMaster} from "../../../../models/orderMaster.model";
 import {JobDetail} from "../../../../models/jobDetail.model";
+import { MatSnackBar } from '@angular/material/snack-bar';
+import {SncakBarComponent} from "../../../../common/sncak-bar/sncak-bar.component";
 
 @Component({
   selector: 'app-gold-submit',
@@ -19,20 +21,15 @@ export class GoldSubmitComponent implements OnInit {
   jobTaskForm: FormGroup;
   savedJobsData : JobMaster[];
   oneJobData : JobMaster;
-  jobReturnData : JobDetail[];
-  // materialData : Material[];
-  constructor(private jobTaskService: JobTaskService, private  router : ActivatedRoute) { }
+  public currentError: any;
+
+  constructor(private jobTaskService: JobTaskService,private router: ActivatedRoute,private _snackBar: MatSnackBar) {
+  }
 
   ngOnInit(): void {
     this.jobTaskForm = this.jobTaskService.jobTaskForm;
-
-    this.jobTaskService.getJobReturnDataUpdateListener()
-      .subscribe((data: JobDetail[]) => {
-        this.jobReturnData = data;
-
-      });
     // this.jobTaskForm.patchValue({return_quantity: ""});
-    this.jobTaskForm.controls['return_quantity'].reset();
+  //   this.jobTaskForm.controls['return_quantity'].reset();
   }
   onSubmit(){
     this.jobMasterId=this.router.parent.params._value.id;
@@ -44,9 +41,26 @@ export class GoldSubmitComponent implements OnInit {
     this.jobTaskForm.value.return_quantity= parseFloat(this.jobTaskForm.value.return_quantity);
     console.log(this.jobTaskForm.value);
     this.jobTaskService.jobReturn().subscribe((response )=>{
-       console.log('data');
-       console.log(response);
+      
+      if(response.success ===1){
+        this.jobTaskForm.controls['return_quantity'].reset();
+        
+      
+        this._snackBar.openFromComponent(SncakBarComponent, {
+          duration: 4000, data: {message: 'Gold Submitted'}
+        });
+      }
+      this.currentError = null;
+
+    },(error) => {
+      console.log('error occured ');
+      console.log(error);
+      this.currentError = error;
+      this._snackBar.openFromComponent(SncakBarComponent, {
+        duration: 4000, data: {message: error.message}
+      });
     });
+
   }
 
-}
+}  

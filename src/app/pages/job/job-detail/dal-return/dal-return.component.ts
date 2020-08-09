@@ -4,6 +4,9 @@ import {FormGroup} from "@angular/forms";
 import {JobMaster} from "../../../../models/jobMaster.model";
 import {ActivatedRoute} from "@angular/router";
 import {Material} from "../../../../models/material.model";
+import { MatSnackBar } from '@angular/material/snack-bar';
+import {SncakBarComponent} from "../../../../common/sncak-bar/sncak-bar.component";
+
 
 @Component({
   selector: 'app-dal-return',
@@ -17,8 +20,9 @@ export class DalReturnComponent implements OnInit {
   savedJobsData : JobMaster[];
   oneJobData : JobMaster;
   materialData : Material[] ;
+  public currentError: any;
 
-  constructor(private jobTaskService: JobTaskService,private router: ActivatedRoute) { }
+  constructor(private jobTaskService: JobTaskService,private router: ActivatedRoute,private _snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
     this.jobTaskForm = this.jobTaskService.jobTaskForm;
@@ -40,7 +44,24 @@ export class DalReturnComponent implements OnInit {
     this.jobTaskForm.patchValue({ job_Task_id:4, material_name: this.materialData[matIndex].material_name, material_id: this.materialData[matIndex].id,id:this.jobMasterId, size:this.oneJobData.size,employee_id: user.id });
     this.jobTaskForm.value.return_quantity= -this.jobTaskForm.value.return_quantity;
     console.log(this.jobTaskForm.value);
-    this.jobTaskService.jobReturn();
+    this.jobTaskService.jobReturn().subscribe((response )=>{
+      if(response.success ===1){
+        this._snackBar.openFromComponent(SncakBarComponent, {
+          duration: 4000, data: {message: 'Dal Returned'}
+        });
+      }
+    this.currentError = null;
+
+    },(error) => {
+      console.log('error occured ');
+      console.log(error);
+      this.currentError = error;
+      this._snackBar.openFromComponent(SncakBarComponent, {
+         duration: 4000, data: {message: error.message}
+      });
+    });
+
   }
+  
 
 }

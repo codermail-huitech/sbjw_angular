@@ -3,6 +3,9 @@ import {JobTaskService} from "../../../../services/job-task.service";
 import {FormGroup} from "@angular/forms";
 import {JobMaster} from "../../../../models/jobMaster.model";
 import {ActivatedRoute} from "@angular/router";
+import { MatSnackBar } from '@angular/material/snack-bar';
+import {SncakBarComponent} from "../../../../common/sncak-bar/sncak-bar.component";
+
 
 @Component({
   selector: 'app-dal-submit',
@@ -15,7 +18,8 @@ export class DalSubmitComponent implements OnInit {
   jobTaskForm: FormGroup;
   savedJobsData : JobMaster[];
   oneJobData : JobMaster;
-  constructor(private jobTaskService: JobTaskService,private router: ActivatedRoute) {
+  public currentError: any;
+  constructor(private jobTaskService: JobTaskService,private router: ActivatedRoute,private _snackBar: MatSnackBar) {
   }
 
   ngOnInit(): void {
@@ -32,6 +36,23 @@ export class DalSubmitComponent implements OnInit {
     this.jobTaskForm.patchValue({ job_Task_id:3, material_name: this.oneJobData.material_name, material_id: this.oneJobData.material_id,id:this.jobMasterId, size:this.oneJobData.size,employee_id: user.id });
     this.jobTaskForm.value.return_quantity= parseFloat(this.jobTaskForm.value.return_quantity);
     console.log(this.jobTaskForm.value);
-    this.jobTaskService.jobReturn();
+    this.jobTaskService.jobReturn().subscribe((response )=>{
+      
+      if(response.success ===1){
+        this._snackBar.openFromComponent(SncakBarComponent, {
+          duration: 4000, data: {message: 'Dal Submitted'}
+        });
+      }
+      this.currentError = null;
+
+    },(error) => {
+      console.log('error occured ');
+      console.log(error);
+      this.currentError = error;
+      this._snackBar.openFromComponent(SncakBarComponent, {
+        duration: 4000, data: {message: error.message}
+      });
+    });
+
   }
 }

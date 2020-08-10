@@ -9,6 +9,7 @@ import {OrderMaster} from "../../../../models/orderMaster.model";
 import {JobDetail} from "../../../../models/jobDetail.model";
 import { MatSnackBar } from '@angular/material/snack-bar';
 import {SncakBarComponent} from "../../../../common/sncak-bar/sncak-bar.component";
+import { __values } from 'tslib';
 
 @Component({
   selector: 'app-gold-submit',
@@ -20,7 +21,7 @@ export class GoldSubmitComponent implements OnInit {
   jobMasterId : number;
   jobTaskForm: FormGroup;
   savedJobsData : JobMaster[];
-  oneJobData : JobMaster;
+  oneJobData : JobMaster
   public currentError: any;
 
   constructor(private jobTaskService: JobTaskService,private router: ActivatedRoute,private _snackBar: MatSnackBar) {
@@ -32,7 +33,13 @@ export class GoldSubmitComponent implements OnInit {
   //   this.jobTaskForm.controls['return_quantity'].reset();
   }
   onSubmit(){
-    this.jobMasterId=this.router.parent.params._value.id;
+    // this.jobMasterId=this.router.parent.params._value.id;
+   
+    this.router.parent.params.subscribe(params =>{
+        
+         this.jobMasterId=params.id;
+        
+    });
     this.savedJobsData = this.jobTaskService.getAllJobList();
     const index = this.savedJobsData.findIndex(x => x.id == this.jobMasterId);
     this.oneJobData = this.savedJobsData[index];

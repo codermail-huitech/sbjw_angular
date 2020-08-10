@@ -33,7 +33,12 @@ export class NitricReturnComponent implements OnInit {
   }
 
   onSubmit(){
-    this.jobMasterId=this.router.parent.params._value.id;
+    // this.jobMasterId=this.router.parent.params._value.id;
+    this.router.parent.params.subscribe(params =>{
+        
+      this.jobMasterId=params.id;
+     
+    });
     this.savedJobsData = this.jobTaskService.getAllJobList();
     const index = this.savedJobsData.findIndex(x => x.id == this.jobMasterId);
     this.oneJobData = this.savedJobsData[index];

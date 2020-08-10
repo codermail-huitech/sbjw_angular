@@ -25,7 +25,7 @@ export class DalSubmitComponent implements OnInit {
   ngOnInit(): void {
     this.jobTaskForm = this.jobTaskService.jobTaskForm;
     // this.jobTaskForm.patchValue({return_quantity: ""});
-    this.jobTaskForm.controls['return_quantity'].reset();
+  
   }
   onSubmit(){
     // this.jobMasterId=this.router.parent.params._value.id;
@@ -47,6 +47,7 @@ export class DalSubmitComponent implements OnInit {
         this._snackBar.openFromComponent(SncakBarComponent, {
           duration: 4000, data: {message: 'Dal Submitted'}
         });
+        this.jobTaskForm.controls['return_quantity'].reset();
       }
       this.currentError = null;
 

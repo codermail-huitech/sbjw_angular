@@ -30,7 +30,7 @@ export class GoldSubmitComponent implements OnInit {
   ngOnInit(): void {
     this.jobTaskForm = this.jobTaskService.jobTaskForm;
     // this.jobTaskForm.patchValue({return_quantity: ""});
-  //   this.jobTaskForm.controls['return_quantity'].reset();
+ 
   }
   onSubmit(){
     // this.jobMasterId=this.router.parent.params._value.id;
@@ -50,12 +50,10 @@ export class GoldSubmitComponent implements OnInit {
     this.jobTaskService.jobReturn().subscribe((response )=>{
       
       if(response.success ===1){
-        this.jobTaskForm.controls['return_quantity'].reset();
-        
-      
         this._snackBar.openFromComponent(SncakBarComponent, {
           duration: 4000, data: {message: 'Gold Submitted'}
         });
+        this.jobTaskForm.controls['return_quantity'].reset();
       }
       this.currentError = null;
 

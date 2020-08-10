@@ -26,7 +26,7 @@ export class PanReturnComponent implements OnInit {
   ngOnInit(): void {
     this.jobTaskForm = this.jobTaskService.jobTaskForm;
     // this.jobTaskForm.patchValue({return_quantity: ""});
-    this.jobTaskForm.controls['return_quantity'].reset();
+    
   }
 
   onSubmit(){
@@ -53,6 +53,7 @@ export class PanReturnComponent implements OnInit {
         this._snackBar.openFromComponent(SncakBarComponent, {
           duration: 4000, data: {message: 'Pan Returned'}
         });
+        this.jobTaskForm.controls['return_quantity'].reset();
       }
     this.currentError = null;
 

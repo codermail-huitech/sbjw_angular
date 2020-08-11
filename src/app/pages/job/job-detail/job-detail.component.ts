@@ -57,6 +57,7 @@ export class JobDetailComponent implements OnInit {
     this.orderService.getMaterialUpdateListener()
       .subscribe((material: Material[]) => {
         this.materialList = material;
+        // const index = this.materialList.findIndex(x => x.id === this.oneJobData.material_id);
         const index = this.materialList.findIndex(x => x.id === this.oneJobData.material_id);
         const f = this.materialList[index];
         this.jobTaskForm.patchValue({material_name : f.material_name, size: this.oneJobData.size});

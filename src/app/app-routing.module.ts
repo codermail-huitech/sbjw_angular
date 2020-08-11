@@ -29,6 +29,7 @@ const routes: Routes = [
   {path: 'job_task',canActivate : [AuthGuardService], component: JobTaskComponent},
   {path: 'job_detail/:id',canActivate : [AuthGuardService], component: JobDetailComponent,
     children: [
+      {path: '', component: GoldSubmitComponent},
       {path: 'goldSubmit', component: GoldSubmitComponent},
       {path: 'goldReturn', component: GoldReturnComponent},
       {path: 'dalSubmit', component: DalSubmitComponent},

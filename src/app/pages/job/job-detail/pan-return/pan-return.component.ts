@@ -25,16 +25,24 @@ export class PanReturnComponent implements OnInit {
 
   ngOnInit(): void {
     this.jobTaskForm = this.jobTaskService.jobTaskForm;
-    // this.jobTaskForm.patchValue({return_quantity: ""});
-    
+    this.savedJobsData = this.jobTaskService.getAllJobList();
+    this.router.parent.params.subscribe(params =>{
+      this.jobMasterId=params.id;
+    });
+    const index = this.savedJobsData.findIndex(x => x.id == this.jobMasterId);
+    this.oneJobData = this.savedJobsData[index];
+    this.materialData=this.jobTaskService.getMaterials();
+    const matIndex=this.materialData.findIndex(x =>x.main_material_id == this.oneJobData.material_id);
+    this.jobTaskForm.patchValue({material_name: this.materialData[matIndex].material_name});
+
   }
 
   onSubmit(){
     // this.jobMasterId=this.router.parent.params._value.id;
     this.router.parent.params.subscribe(params =>{
-        
+
       this.jobMasterId=params.id;
-     
+
     });
     this.savedJobsData = this.jobTaskService.getAllJobList();
     const index = this.savedJobsData.findIndex(x => x.id == this.jobMasterId);
@@ -45,7 +53,7 @@ export class PanReturnComponent implements OnInit {
     const matIndex=this.materialData.findIndex(x =>x.main_material_id == this.oneJobData.material_id);
 
     const user = JSON.parse(localStorage.getItem('user'));
-    this.jobTaskForm.patchValue({ job_Task_id:6, material_name: this.materialData[matIndex].material_name, material_id: this.materialData[matIndex].id,id:this.jobMasterId, size:this.oneJobData.size,employee_id: user.id });
+    this.jobTaskForm.patchValue({ job_Task_id:6, material_name: this.materialData[matIndex].material_name, material_id: this.materialData[matIndex].id,id:this.jobMasterId, size:this.oneJobData.size,employee_id: this.oneJobData.karigarh_id});
     this.jobTaskForm.value.return_quantity= -this.jobTaskForm.value.return_quantity;
     console.log(this.jobTaskForm.value);
     this.jobTaskService.jobReturn().subscribe((response )=>{

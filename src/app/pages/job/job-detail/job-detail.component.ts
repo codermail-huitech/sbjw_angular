@@ -31,7 +31,7 @@ export class JobDetailComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.sub = this.route.params.subscribe(params => {
+    this.route.params.subscribe(params => {
       this.id = params['id'];
       this.savedJobsData = this.jobTaskService.getAllJobList();
       const index = this.savedJobsData.findIndex(x => x.id == this.id);
@@ -39,15 +39,16 @@ export class JobDetailComponent implements OnInit {
 
       this.karigarhData=this.jobService.getAllKarigarhs();
       const karigarhIndex = this.karigarhData.findIndex(x => x.id === this.oneJobData.karigarh_id);
-      this.karigarhName = this.karigarhData[karigarhIndex].person_name;
-      console.log(this.karigarhData);
+      // this.karigarhName = this.karigarhData[karigarhIndex].person_name;
+      if(this.karigarhData[karigarhIndex].person_name){
+        this.karigarhName = this.karigarhData[karigarhIndex].person_name;
+      }
     });
 
     this.jobTaskForm = this.jobTaskService.jobTaskForm;
 
     this.jobTaskService.getSavedJobsUpdateListener().subscribe((jobData: JobMaster[]) => {
       this.savedJobsData = jobData;
-      // console.log(this.savedJobsData);
       const index = this.savedJobsData.findIndex(x => x.id == this.id);
       this.oneJobData = this.savedJobsData[index];
       // console.log(this.oneJobData);
@@ -66,9 +67,9 @@ export class JobDetailComponent implements OnInit {
     this.jobService.getKarigarhUpdateListener().subscribe((karigarhData: Karigarh[]) => {
       this.karigarhData = karigarhData;
       const karigarhIndex = this.karigarhData.findIndex(x => x.id === this.oneJobData.karigarh_id);
-      this.karigarhName = this.karigarhData[karigarhIndex].person_name;
-      // console.log(this.oneJobData);
-
+      if(this.karigarhData[karigarhIndex].person_name){
+        this.karigarhName = this.karigarhData[karigarhIndex].person_name;
+      }
     });
 
 

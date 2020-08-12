@@ -22,7 +22,28 @@
       <div class="container" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="end" fxLayoutGap="10px" fxLayoutGap.xs="0" >
         <!--          <button mat-button  mat-stroked-button (click)="testing()">show</button>-->
         <button mat-button  mat-stroked-button class="btn btn-primary" (click)="onSubmit()" >Save</button>
+        <button mat-button  mat-stroked-button class="btn btn-primary" (click)="getTotal()" >Get Total</button>
       </div>
+    </div>
+    <div  class="col-12" [hidden]="!showJobTaskData">
+      <table class="jobTaskData-table-div col-12">
+        <thead>
+        <th colspan="3" style="text-align: center">SL No.</th>
+        <th colspan="3" style="text-align: center">Quantity</th>
+        <th colspan="3" style="text-align: center">Date</th>
+        </thead>
+        <tbody>
+        <tr  *ngFor="let data of jobTaskData ; let indexOfelement = index;">
+          <td colspan="3" style="text-align: center">{{indexOfelement+1}}</td>
+          <td colspan="3" style="text-align: center">{{data.material_quantity}}</td>
+          <td colspan="3" style="text-align: center">{{data.created_at | date}}</td>
+        </tr>
+        <tr>
+          <td colspan="3"  style="text-align: center ; background-color: yellow">Total</td>
+          <td colspan="3"  style="text-align: center ; background-color: yellow">{{total}}</td>
+        </tr>
+        </tbody>
+      </table>
     </div>
   </mat-card>
 </div>

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, Output} from '@angular/core';
 import {FormGroup} from "@angular/forms";
 import {JobTaskService} from "../../../../services/job-task.service";
 import {ActivatedRoute} from "@angular/router";
@@ -10,6 +10,9 @@ import {JobDetail} from "../../../../models/jobDetail.model";
 import { MatSnackBar } from '@angular/material/snack-bar';
 import {SncakBarComponent} from "../../../../common/sncak-bar/sncak-bar.component";
 import { __values } from 'tslib';
+import {JobDetailComponent} from "../job-detail.component";
+import {AuthService} from "../../../../services/auth.service";
+import {JobService} from "../../../../services/job.service";
 
 @Component({
   selector: 'app-gold-submit',
@@ -17,12 +20,14 @@ import { __values } from 'tslib';
   styleUrls: ['./gold-submit.component.scss']
 })
 export class GoldSubmitComponent implements OnInit {
-
   jobMasterId : number;
   jobTaskForm: FormGroup;
   savedJobsData : JobMaster[];
   oneJobData : JobMaster
   public currentError: any;
+  showJobTaskData = false;
+  jobTaskData : JobDetail[];
+  total : number;
 
   constructor(private jobTaskService: JobTaskService,private router: ActivatedRoute,private _snackBar: MatSnackBar) {
   }
@@ -65,6 +70,28 @@ export class GoldSubmitComponent implements OnInit {
       this._snackBar.openFromComponent(SncakBarComponent, {
         duration: 4000, data: {message: error.message}
       });
+    });
+
+  }
+
+  getTotal(){
+    this.total=0;
+    this.showJobTaskData = true;
+    this.router.parent.params.subscribe(params =>{
+      this.jobMasterId=params.id;
+    });
+    this.savedJobsData = this.jobTaskService.getAllJobList();
+    const index = this.savedJobsData.findIndex(x => x.id == this.jobMasterId);
+    this.oneJobData = this.savedJobsData[index];
+    const user = JSON.parse(localStorage.getItem('user'));
+    // this.jobTaskForm.patchValue({ job_Task_id:1, material_name: this.oneJobData.material_name, material_id: this.oneJobData.material_id,id:this.jobMasterId, size:this.oneJobData.size,employee_id: user.id });
+    this.jobTaskForm.patchValue({ job_Task_id:1, material_id: this.oneJobData.material_id,id:this.jobMasterId, size:this.oneJobData.size,employee_id: user.id });
+    this.jobTaskService.jobTaskData().subscribe((response) => {
+      this.jobTaskData = response.data;
+      for(let i=0;i<this.jobTaskData.length;i++){
+        this.total=this.total+this.jobTaskData[i].material_quantity;
+        console.log(this.total);
+      }
     });
 
   }

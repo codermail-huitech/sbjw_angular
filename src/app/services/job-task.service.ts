@@ -120,7 +120,6 @@ export class JobTaskService implements OnDestroy{
   //     });
   // }
   jobTaskData() {
-
     return this.http.post( GlobalVariable.BASE_API_URL + '/getJobTaskData', { data : this.jobTaskForm.value})
       .pipe(catchError(this._serverError), tap(((response: {success: number, data: JobDetail[]}) => {
         const {data} = response;

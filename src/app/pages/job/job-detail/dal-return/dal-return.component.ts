@@ -76,6 +76,20 @@ export class DalReturnComponent implements OnInit {
     });
 
   }
+  getTotal(){
+    this.router.parent.params.subscribe(params =>{
+      this.jobMasterId=params.id;
+    });
+    this.savedJobsData = this.jobTaskService.getAllJobList();
+    const index = this.savedJobsData.findIndex(x => x.id == this.jobMasterId);
+    this.oneJobData = this.savedJobsData[index];
+    const user = JSON.parse(localStorage.getItem('user'));
+    // this.jobTaskForm.patchValue({ job_Task_id:1, material_name: this.oneJobData.material_name, material_id: this.oneJobData.material_id,id:this.jobMasterId, size:this.oneJobData.size,employee_id: user.id });
+    this.jobTaskForm.patchValue({ job_Task_id:4, material_id: this.oneJobData.material_id,id:this.jobMasterId, size:this.oneJobData.size,employee_id: user.id });
+    this.jobTaskService.jobTaskData().subscribe((response) => {
+      console.log(response.data);
+    });
+  }
 
 
 }

@@ -17,6 +17,7 @@ import {DalReturnComponent} from "./pages/job/job-detail/dal-return/dal-return.c
 import {PanSubmitComponent} from "./pages/job/job-detail/pan-submit/pan-submit.component";
 import {PanReturnComponent} from "./pages/job/job-detail/pan-return/pan-return.component";
 import {NitricReturnComponent} from "./pages/job/job-detail/nitric-return/nitric-return.component";
+import {BronzeSubmitComponent} from "./pages/job/job-detail/bronze-submit/bronze-submit.component";
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -37,6 +38,7 @@ const routes: Routes = [
       {path: 'panSubmit', component: PanSubmitComponent},
       {path: 'panReturn', component: PanReturnComponent},
       {path: 'nitricReturn', component: NitricReturnComponent},
+      {path: 'bronzeSubmit', component: BronzeSubmitComponent},
       // {path: 'albums', component: ArtistAlbumListComponent},
     ]
   },

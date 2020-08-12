@@ -50,6 +50,7 @@ import { PanReturnComponent } from './pages/job/job-detail/pan-return/pan-return
 import { DalReturnComponent } from './pages/job/job-detail/dal-return/dal-return.component';
 import { DalSubmitComponent } from './pages/job/job-detail/dal-submit/dal-submit.component';
 import { NitricReturnComponent } from './pages/job/job-detail/nitric-return/nitric-return.component';
+import { BronzeSubmitComponent } from './pages/job/job-detail/bronze-submit/bronze-submit.component';
 
 
 @NgModule({
@@ -80,7 +81,8 @@ import { NitricReturnComponent } from './pages/job/job-detail/nitric-return/nitr
     PanReturnComponent,
     DalReturnComponent,
     DalSubmitComponent,
-    NitricReturnComponent
+    NitricReturnComponent,
+    BronzeSubmitComponent
 
   ],
   imports: [

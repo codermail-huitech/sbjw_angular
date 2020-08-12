@@ -23,22 +23,22 @@ export class JobTaskComponent implements OnInit {
   savedJobsData: JobMaster[];
   materialList: Material[];
   jobDetailsData: JobDetail[] = [];
- 
+
   isSendToTask = false;
   jobNumber: string;
   formTaskDiv = false;
- 
+
 
   saveBtnName: string;
   isShowJobMasterList = true;
   constructor(private jobTaskService: JobTaskService ,private _snackBar: MatSnackBar, private confirmationDialogService: ConfirmationDialogService, private orderService: OrderService ) {
-  
+
     console.log('i am constructor');
   }
 
   ngOnInit(): void {
     console.log('i am initializer');
-    
+
     this.jobTaskForm = this.jobTaskService.jobTaskForm;
 
     // console.log(this.jobTaskService.getAllJobList());
@@ -53,7 +53,7 @@ export class JobTaskComponent implements OnInit {
       });
   }
 
- 
+
 
   // setTabData(task_id){
   //   this.sum = 0;
@@ -68,16 +68,15 @@ export class JobTaskComponent implements OnInit {
   //       this.sum = this.sum + this.jobDetailsData[i].material_quantity;
   //     }
     // });
-   
-  
-   
-    
-    
-  
+
+
+
+
+
+
 
   placeDetails(data){
-    // console.log('data');
-    // console.log(data);
+    console.log(data);
     this.materialList = this.orderService.getMaterials();
     this.isSendToTask = true;
     this.isShowJobMasterList = false;
@@ -86,7 +85,7 @@ export class JobTaskComponent implements OnInit {
     this.jobTaskForm.patchValue({id : data.id, material_id : data.material_id , p_loss : data.p_loss, size: data.size, price : data.price, material_name : this.materialList[index].material_name});
     this.jobNumber = data.job_number;
 
-    
+
 
   }
 

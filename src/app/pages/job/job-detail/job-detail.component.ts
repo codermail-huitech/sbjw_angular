@@ -94,5 +94,6 @@ export class JobDetailComponent implements OnInit {
     // this.karigarhData=this.jobService.getAllKarigarhs();
     // console.log("karigarh data");
     // console.log(this.karigarhData);
+    alert("abcd");
   }
 }

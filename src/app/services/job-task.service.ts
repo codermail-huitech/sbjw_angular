@@ -23,10 +23,12 @@ export class JobTaskService implements OnDestroy{
   jobMasterData: JobMaster;
   jobDetailData: JobDetail[];
   jobReturnData : JobDetail;
+  totalData : JobDetail[];
   private savedJobsSub = new Subject<JobMaster[]>();
   private materialDataSub = new Subject<Material[]>();
   private getJobTaskDataSub = new Subject<JobDetail[]>();
   private jobReturnDataSub = new Subject<JobDetail>();
+  private totalDataSub = new Subject<JobDetail[]>();
 
   getSavedJobsUpdateListener(){
     return this.savedJobsSub.asObservable();
@@ -126,6 +128,17 @@ export class JobTaskService implements OnDestroy{
         this.jobDetailData = data;
         this.getJobTaskDataSub.next([...this.jobDetailData]);
       })));
+  }
+
+  getTotal(){
+
+    return this.http.post( GlobalVariable.BASE_API_URL + '/getTotal', { data : this.jobTaskForm.value})
+      .pipe(catchError(this._serverError), tap(((response: {success: number, data: JobDetail[]}) => {
+        const {data} = response;
+        this.totalData = data;
+        this.totalDataSub.next([...this.totalData]);
+      })));
+
   }
 
   private _serverError(err: any) {

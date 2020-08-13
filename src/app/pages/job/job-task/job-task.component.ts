@@ -23,6 +23,7 @@ export class JobTaskComponent implements OnInit {
   savedJobsData: JobMaster[];
   materialList: Material[];
   jobDetailsData: JobDetail[] = [];
+  totalData : JobDetail[];
 
   isSendToTask = false;
   jobNumber: string;
@@ -41,10 +42,13 @@ export class JobTaskComponent implements OnInit {
 
     this.jobTaskForm = this.jobTaskService.jobTaskForm;
 
+    // this.savedJobsData = this.jobTaskService.getAllJobList();
+
     // console.log(this.jobTaskService.getAllJobList());
     this.jobTaskService.getSavedJobsUpdateListener().subscribe((jobData: JobMaster[]) => {
       this.savedJobsData = jobData;
     });
+    this.savedJobsData = this.jobTaskService.getAllJobList();
 
     // this.savedJobsData = this.jobTaskService.getAllJobList();
     this.orderService.getMaterialUpdateListener()
@@ -76,14 +80,20 @@ export class JobTaskComponent implements OnInit {
 
 
   placeDetails(data){
-    console.log(data);
     this.materialList = this.orderService.getMaterials();
+
     this.isSendToTask = true;
     this.isShowJobMasterList = false;
 
     const index = this.materialList.findIndex(x => x.id === data.material_id);
     this.jobTaskForm.patchValue({id : data.id, material_id : data.material_id , p_loss : data.p_loss, size: data.size, price : data.price, material_name : this.materialList[index].material_name});
+
     this.jobNumber = data.job_number;
+    // this.jobTaskService.getTotal().subscribe((response)=>{
+    //    this.totalData = response.data;
+    //
+    // });
+
 
 
 

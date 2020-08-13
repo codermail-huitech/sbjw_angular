@@ -9,6 +9,7 @@ import {OrderService} from "../../../services/order.service";
 import {Material} from "../../../models/material.model";
 import {Karigarh} from "../../../models/karigarh.model";
 import {User} from "../../../models/user.model";
+import {JobDetail} from "../../../models/jobDetail.model";
 
 @Component({
   selector: 'app-job-detail',
@@ -26,6 +27,7 @@ export class JobDetailComponent implements OnInit {
   karigarhData : Karigarh[];
   userData : User;
   karigarhName : string;
+  totalData : JobDetail[];
 
   constructor(private route: ActivatedRoute, private jobTaskService: JobTaskService, private orderService: OrderService, private authService: AuthService,private jobService: JobService) {
   }
@@ -88,7 +90,13 @@ export class JobDetailComponent implements OnInit {
 
    console.log('user1');
    this.userData = JSON.parse(localStorage.getItem('user'));
-   console.log( this.userData.personName);
+   // console.log( this.userData.personName);
+    this.jobTaskService.getTotal().subscribe((response)=>{
+      this.totalData = response.data;
+      // if(this.totalData[8]){
+      //   alert('adas')
+      // }
+    });
   }
   testing(){
     // this.karigarhData=this.jobService.getAllKarigarhs();

@@ -58,7 +58,7 @@
 
 
 
-            <table style="width : 100%;"  >
+            <table style="width : 100%;"  *ngIf="totalData">
               <tbody>
               <tr>
                 <td colspan="2" class="col-6">Thokai :</td>
@@ -74,7 +74,7 @@
               </tr>
               <tr>
                 <td colspan="2" class="col-6">M.C. :</td>
-                <td colspan="2" class="col-6">Gold :</td>
+                <td colspan="2" class="col-6">Gold : {{totalData[0]? totalData[0].total : 0}} </td>
               </tr>
               <tr>
                 <td colspan="2" class="col-6">H.M.C :</td>
@@ -89,11 +89,11 @@
                 <td colspan="2" class="col-6">NGR- :</td>
               </tr>
               <tr>
-                <td colspan="2" class="col-6">Dal:</td>
-                <td colspan="2" class="col-6">Pan+ :</td>
+                <td colspan="2" class="col-6">Dal: {{totalData[2]? totalData[2].total : 0}}</td>
+                <td colspan="2" class="col-6">Pan+ : {{totalData[4]? totalData[4].total : 0}}</td>
               </tr>
               <tr>
-                <td colspan="2" class="col-6">Bnz :</td>
+                <td colspan="2" class="col-6">Bnz : {{totalData[8]? totalData[8].total : 0}}</td>
                 <td colspan="2" class="col-6">PLoss+ :{{oneJobData.p_loss}}</td>
               </tr>
               <tr>

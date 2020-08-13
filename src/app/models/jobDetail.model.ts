@@ -7,6 +7,7 @@ export class JobDetail{
   job_task_id: number;
   material_quantity: number;
   created_at ?: string;
+  total?: number;
 
   constructor() {
   }

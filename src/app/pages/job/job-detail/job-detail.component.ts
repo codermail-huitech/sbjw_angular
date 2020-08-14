@@ -33,8 +33,11 @@ export class JobDetailComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.jobTaskForm = this.jobTaskService.jobTaskForm;
     this.route.params.subscribe(params => {
+      // this.jobTaskForm = this.jobTaskService.jobTaskForm;
       this.id = params['id'];
+      this.jobTaskForm.patchValue({id :params['id'] });
       this.savedJobsData = this.jobTaskService.getAllJobList();
       const index = this.savedJobsData.findIndex(x => x.id == this.id);
       this.oneJobData = this.savedJobsData[index];
@@ -45,6 +48,7 @@ export class JobDetailComponent implements OnInit {
       if(this.karigarhData[karigarhIndex].person_name){
         this.karigarhName = this.karigarhData[karigarhIndex].person_name;
       }
+
     });
 
     this.jobTaskForm = this.jobTaskService.jobTaskForm;
@@ -53,7 +57,10 @@ export class JobDetailComponent implements OnInit {
       this.savedJobsData = jobData;
       const index = this.savedJobsData.findIndex(x => x.id == this.id);
       this.oneJobData = this.savedJobsData[index];
-      // console.log(this.oneJobData);
+
+      this.jobTaskForm.patchValue({id : this.id});
+      this.jobTaskForm.value.id = this.oneJobData.id;
+      console.log(this.jobTaskForm.value);
       this.job_number = this.oneJobData.job_number;
     });
 
@@ -75,27 +82,14 @@ export class JobDetailComponent implements OnInit {
     });
 
 
-
-    // this.materialList = this.orderService.getMaterials();
-
-    // this.karigarhData=this.jobService.getAllKarigarhs();
-    // console.log("karigarh data");
-    // console.log(this.karigarhData);
-    // const karigarhIndex= this.karigarhData.findIndex(k=> k.id === this.oneJobData.karigarh_id);
-    // console.log("sdfs");
-    console.log(this.oneJobData);
-    // this.karigarhName = this.karigarhData[karigarhIndex].person_name;
-    // console.log(this.karigarhData[karigarhIndex]);
-    // console.log(this.karigarhData[karigarhIndex].person_name);
-
    console.log('user1');
    this.userData = JSON.parse(localStorage.getItem('user'));
    // console.log( this.userData.personName);
     this.jobTaskService.getTotal().subscribe((response)=>{
       this.totalData = response.data;
-      // if(this.totalData[8]){
-      //   alert('adas')
-      // }
+    });
+    this.jobTaskService.getTotalDataUpdateListener().subscribe((response) => {
+      this.totalData = response;
     });
   }
   testing(){

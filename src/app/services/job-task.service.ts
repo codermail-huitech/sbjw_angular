@@ -36,6 +36,10 @@ export class JobTaskService implements OnDestroy{
   getJobTaskDataUpdateListener(){
     return this.getJobTaskDataSub.asObservable();
   }
+
+  getTotalDataUpdateListener(){
+    return this.totalDataSub.asObservable();
+  }
   // getJobReturnDataUpdateListener(){
   //   return this.jobReturnDataSub.asObservable();
   // }
@@ -94,7 +98,6 @@ export class JobTaskService implements OnDestroy{
        .pipe(catchError(this._serverError), tap(((response: {success: number, data: JobDetail}) => {
              const {data} = response;
              this.jobReturnData = data;
-             console.log(this.jobReturnData);
             //  this.jobReturnDataSub.next([...this.jobReturnData]);
 
       })));
@@ -131,14 +134,12 @@ export class JobTaskService implements OnDestroy{
   }
 
   getTotal(){
-
     return this.http.post( GlobalVariable.BASE_API_URL + '/getTotal', { data : this.jobTaskForm.value})
       .pipe(catchError(this._serverError), tap(((response: {success: number, data: JobDetail[]}) => {
         const {data} = response;
         this.totalData = data;
         this.totalDataSub.next([...this.totalData]);
       })));
-
   }
 
   private _serverError(err: any) {

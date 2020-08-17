@@ -71,7 +71,10 @@ export class PanSubmitComponent implements OnInit {
           });
           this.total = this.total + parseFloat(this.jobTaskForm.value.return_quantity);
           this.jobTaskService.getTotal().subscribe();
-          this.jobTaskService.jobTaskData().subscribe();
+          this.jobTaskService.jobTaskData().subscribe((response) => {
+            this.jobTaskData = response.data;
+
+          });
           this.jobTaskForm.controls['return_quantity'].reset();
         }
         this.currentError = null;

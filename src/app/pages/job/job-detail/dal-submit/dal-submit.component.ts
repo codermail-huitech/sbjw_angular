@@ -69,7 +69,9 @@ export class DalSubmitComponent implements OnInit {
           });
           this.total = this.total + parseFloat(this.jobTaskForm.value.return_quantity);
           this.jobTaskService.getTotal().subscribe();
-          this.jobTaskService.jobTaskData().subscribe();
+          this.jobTaskService.jobTaskData().subscribe((response) => {
+            this.jobTaskData = response.data;
+          });
           this.jobTaskForm.controls['return_quantity'].reset();
         }
         this.currentError = null;
@@ -97,6 +99,7 @@ export class DalSubmitComponent implements OnInit {
     const user = JSON.parse(localStorage.getItem('user'));
     // this.jobTaskForm.patchValue({ job_Task_id:1, material_name: this.oneJobData.material_name, material_id: this.oneJobData.material_id,id:this.jobMasterId, size:this.oneJobData.size,employee_id: user.id });
     this.jobTaskForm.patchValue({ job_Task_id:3, material_id: this.oneJobData.material_id,id:this.jobMasterId, size:this.oneJobData.size,employee_id: user.id });
+    // this.jobTaskForm.patchValue({id:this.jobMasterId});
     this.jobTaskService.jobTaskData().subscribe((response) => {
       this.jobTaskData = response.data;
       for(let i=0;i<this.jobTaskData.length;i++){

@@ -8,6 +8,8 @@ export class JobDetail{
   material_quantity: number;
   created_at ?: string;
   total?: number;
+  person_name ?: string;
+  task_name ?: string;
 
   constructor() {
   }

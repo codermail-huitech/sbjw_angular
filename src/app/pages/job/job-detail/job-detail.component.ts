@@ -42,6 +42,8 @@ export class JobDetailComponent implements OnInit {
       const index = this.savedJobsData.findIndex(x => x.id == this.id);
       this.oneJobData = this.savedJobsData[index];
 
+
+
       this.karigarhData=this.jobService.getAllKarigarhs();
       const karigarhIndex = this.karigarhData.findIndex(x => x.id === this.oneJobData.karigarh_id);
       // this.karigarhName = this.karigarhData[karigarhIndex].person_name;
@@ -87,9 +89,11 @@ export class JobDetailComponent implements OnInit {
    // console.log( this.userData.personName);
     this.jobTaskService.getTotal().subscribe((response)=>{
       this.totalData = response.data;
+      console.log(this.totalData);
     });
     this.jobTaskService.getTotalDataUpdateListener().subscribe((response) => {
       this.totalData = response;
+      console.log(this.totalData);
     });
   }
   testing(){

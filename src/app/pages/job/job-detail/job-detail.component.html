@@ -25,7 +25,7 @@
 
               <tbody>
               <tr>
-                <th colspan="8" style="text-align: center ; padding-left: 2px;padding-right: 2px;">Job ID : {{job_number}}</th>
+                <th colspan="8" style="text-align: center ; padding-left: 2px;padding-right: 2px;">Job ID : {{oneJobData.job_number}}</th>
               </tr>
               <tr>
                 <td>Challan No :</td>
@@ -78,7 +78,7 @@
               </tr>
               <tr>
                 <td colspan="2" class="col-6">H.M.C :</td>
-                <td colspan="2" class="col-6">RGW- :</td>
+                <td colspan="2" class="col-6">RGW- :{{totalData[1] ? totalData[1].total : 0}}</td>
               </tr>
               <tr>
                 <td colspan="2" class="col-6">H.C. :</td>
@@ -86,7 +86,7 @@
               </tr>
               <tr>
                 <td colspan="2" class="col-6">Polish :</td>
-                <td colspan="2" class="col-6">NGR- :</td>
+                <td colspan="2" class="col-6">NGR- : {{totalData[6] ? totalData[6].total : 0}}</td>
               </tr>
               <tr>
                 <td colspan="2" class="col-6">Dal: {{totalData[2] ? totalData[2].total : 0}}</td>
@@ -130,6 +130,7 @@
       <button type="button" class="btn btn-primary" [routerLink]="['./panReturn']">Pan Return</button>
       <button type="button" class="btn btn-warning" [routerLink]="['./nitricReturn']">Nitric Return</button>
       <button type="button" class="btn btn-primary" [routerLink]="['./bronzeSubmit']">Bronze Submit</button>
+      <button type="button" class="btn btn-primary"><a href="job_transaction/{{oneJobData.id}}">gfdgfdgfdg</a></button>
 
 <!--      <a [routerLink]="['./tracks']">Tracks</a> |-->
     </div>

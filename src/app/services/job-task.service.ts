@@ -142,6 +142,13 @@ export class JobTaskService implements OnDestroy{
       })));
   }
 
+  getAllTransactions(data){
+      return this.http.post(GlobalVariable.BASE_API_URL + '/getAllTransactions',{data :data})
+      .subscribe((response: {success: number, data: JobDetail[]}) => {
+
+       });
+  }
+
   private _serverError(err: any) {
     // console.log('sever error:', err);  // debug
     if (err instanceof Response) {

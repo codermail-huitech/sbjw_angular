@@ -42,9 +42,11 @@ export class GoldSubmitComponent implements OnInit {
     this.oneJobData = this.savedJobsData[index];
     this.jobTaskForm.patchValue({material_name: this.oneJobData.material_name});
 
-    this.jobTaskService.getJobTaskDataUpdateListener().subscribe((response) => {
-      this.jobTaskData = response;
-    });
+    // this.jobTaskService.getJobTaskDataUpdateListener().subscribe((response) => {
+    //   this.jobTaskData = response;
+    //   console.log('task data update');
+    //   console.log(this.jobTaskData);
+    // });
   }
 
   onSubmit(){
@@ -70,7 +72,10 @@ export class GoldSubmitComponent implements OnInit {
           });
           this.total = this.total +  parseFloat(this.jobTaskForm.value.return_quantity);
           this.jobTaskService.getTotal().subscribe();
-          this.jobTaskService.jobTaskData().subscribe();
+          // this.jobTaskService.jobTaskData().subscribe();
+          this.jobTaskService.jobTaskData().subscribe((response) => {
+            this.jobTaskData = response.data;
+          });
           this.jobTaskForm.controls['return_quantity'].reset();
         }
         this.currentError = null;

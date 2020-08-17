@@ -18,6 +18,7 @@ import {PanSubmitComponent} from "./pages/job/job-detail/pan-submit/pan-submit.c
 import {PanReturnComponent} from "./pages/job/job-detail/pan-return/pan-return.component";
 import {NitricReturnComponent} from "./pages/job/job-detail/nitric-return/nitric-return.component";
 import {BronzeSubmitComponent} from "./pages/job/job-detail/bronze-submit/bronze-submit.component";
+import {JobTransactionComponent} from "./pages/job/job-transaction/job-transaction.component";
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -28,6 +29,7 @@ const routes: Routes = [
   {path: 'order', canActivate:  [AuthGuardService], component: OrderComponent},
   {path: 'job', canActivate:  [AuthGuardService], component: JobComponent},
   {path: 'job_task',canActivate : [AuthGuardService], component: JobTaskComponent},
+  {path: 'job_transaction/:id',canActivate : [AuthGuardService], component: JobTransactionComponent},
   {path: 'job_detail/:id',canActivate : [AuthGuardService], component: JobDetailComponent,
     children: [
       {path: '', component: GoldSubmitComponent},

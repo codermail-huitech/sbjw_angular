@@ -81,9 +81,12 @@ export class NitricReturnComponent implements OnInit {
           this._snackBar.openFromComponent(SncakBarComponent, {
             duration: 4000, data: {message: 'Nitric Returned'}
           });
-          this.total = this.total + parseFloat(this.jobTaskForm.value.return_quantity);
+          this.total = this.total + Math.abs(parseFloat(this.jobTaskForm.value.return_quantity));
           this.jobTaskService.getTotal().subscribe();
-          this.jobTaskService.jobTaskData().subscribe();
+          this.jobTaskService.jobTaskData().subscribe((response) => {
+            this.jobTaskData = response.data;
+
+          });
           this.jobTaskForm.controls['return_quantity'].reset();
         }
         this.currentError = null;

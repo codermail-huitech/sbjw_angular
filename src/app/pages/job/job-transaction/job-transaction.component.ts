@@ -22,11 +22,14 @@ export class JobTransactionComponent implements OnInit {
     this.router.params.subscribe((params)=>{
       this.jobMasterId = params.id;
   })
-  // this.jobTaskService.getJobTransactionDataUpdateListener().subscribe((TransactionData : JobDetail[])=>{{
-  //   this.jobTransactionData =  TransactionData;
-  // }})
+  this.jobTaskService.getJobTransactionDataUpdateListener().subscribe((TransactionData : JobDetail[])=>{{
+    this.jobTransactionData =  TransactionData;
+  }})
 
-  this.jobTaskService.getAllTransactions(this.jobMasterId);
+  this.jobTaskService.getAllTransactions(this.jobMasterId).subscribe((response )=>{
+    this.jobTransactionData =  response.data;
+
+   });
   }
 
 }

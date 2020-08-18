@@ -46,9 +46,9 @@ export class JobTaskService implements OnDestroy{
   // getJobReturnDataUpdateListener(){
   //   return this.jobReturnDataSub.asObservable();
   // }
-  // getJobTransactionDataUpdateListener(){
-  //   return this.jobTransactionSub.asObservable();
-  // }
+  getJobTransactionDataUpdateListener(){
+    return this.jobTransactionSub.asObservable();
+  }
 
 
   constructor(private http: HttpClient) {
@@ -150,11 +150,11 @@ export class JobTaskService implements OnDestroy{
 
   getAllTransactions(data){
       return this.http.get(GlobalVariable.BASE_API_URL + '/getAllTransactions/' + data)
-      .subscribe((response: {success: number, data: JobDetail[]}) => {
+      .pipe(catchError(this._serverError), tap(((response: {success: number, data: JobDetail[]}) => {
           this.jobTransactionData = response.data;
-          // this.jobTransactionSub.next([...this.jobTransactionData]);
+          this.jobTransactionSub.next([...this.jobTransactionData]);
 
-       });
+       })));
   }
 
   private _serverError(err: any) {

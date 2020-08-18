@@ -10,6 +10,8 @@ export class JobDetail{
   total?: number;
   person_name ?: string;
   task_name ?: string;
+  date?: string;
+  time?: string;
 
   constructor() {
   }

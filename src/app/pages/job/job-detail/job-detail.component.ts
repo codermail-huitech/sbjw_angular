@@ -28,6 +28,8 @@ export class JobDetailComponent implements OnInit {
   userData : User;
   karigarhName : string;
   totalData : JobDetail[];
+  bill = true;
+  buttons = true;
 
   constructor(private route: ActivatedRoute, private jobTaskService: JobTaskService, private orderService: OrderService, private authService: AuthService,private jobService: JobService) {
   }

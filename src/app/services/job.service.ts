@@ -64,8 +64,6 @@ export class JobService {
   }
 
   getAllKarigarhs(){
-    // console.log('getAllKarigarhs');
-    // console.log(this.karigarhData);
     return [...this.karigarhData];
   }
   saveJob(){

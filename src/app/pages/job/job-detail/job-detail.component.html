@@ -8,7 +8,7 @@
 
   <div fxLayout="row" fxFlex="40" class="mr-1" id ="jobBill-div">
     <div fxLayout="column" fxFlex="20" ></div>
-    <div fxLayout="column" fxFlex="60" style="background-color: white" id="bill-div">
+    <div fxLayout="column" fxFlex="60" style="background-color: white" id="bill-div" *ngIf="bill">
       <!--      <h2 style="text-align: center ">Job ID</h2>-->
       <mat-card class="ml-2 mt-2">
         <div class="form-container">
@@ -120,7 +120,7 @@
 
   </div>
 
-  <div fxLayout="column" fxFlex="60" class="mr-1" id ="jobTask-div" style="background-color: #e8af0a" >
+  <div fxLayout="column" fxFlex="60" class="mr-1" id ="jobTask-div" style="background-color: #e8af0a">
     <div class="m-2">
       <button type="button"  class="btn btn-warning" [routerLink]="['./goldSubmit']">Gold Submit</button>
       <button type="button"  class="btn btn-primary" [routerLink]="['./goldReturn']">Gold Return</button>
@@ -130,12 +130,16 @@
       <button type="button" class="btn btn-primary" [routerLink]="['./panReturn']">Pan Return</button>
       <button type="button" class="btn btn-warning" [routerLink]="['./nitricReturn']">Nitric Return</button>
       <button type="button" class="btn btn-primary" [routerLink]="['./bronzeSubmit']">Bronze Submit</button>
-      <button type="button" class="btn btn-primary"><a href="job_transaction/{{oneJobData.id}}">gfdgfdgfdg</a></button>
+<!--      <button type="button" class="btn btn-primary"><a href="job_transaction/{{oneJobData.id}}">Transaction Details</a></button>-->
+      <button type="button" class="btn btn-primary" [routerLink]="['./job_transaction']">Transaction Details</button>
 
 <!--      <a [routerLink]="['./tracks']">Tracks</a> |-->
     </div>
     <div>
       <router-outlet></router-outlet>
+    </div>
+    <div>
+
     </div>
   </div>
 

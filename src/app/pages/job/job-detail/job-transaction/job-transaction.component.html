@@ -1,0 +1,30 @@
+<div id ="job-transaction-table-div" *ngIf="jobTransactionData" >
+  <table class="table" id="my-table">
+    <thead>
+    <tr>
+<!--      <th>SL No.</th>-->
+<!--      <th>Task Name</th>-->
+<!--      <th>Material quantity</th>-->
+<!--      <th>User name</th>-->
+<!--      <th>Date</th>-->
+      <th>SL. NO</th>
+      <th>Statement For Transaction</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let item of jobTransactionData ; let indexOfelement = index;">
+      <td>{{indexOfelement+1}}</td>
+<!--      <td>{{item.task_name}}</td>-->
+<!--      <td style="text-align: right">{{item.material_quantity.toFixed(3)}}</td>-->
+<!--      <td>{{item.person_name}}</td>-->
+<!--      <td>{{item.created_at}}</td>-->
+      <td>{{item.material_quantity.toFixed(3)}}gm {{item.task_name}}ed by {{item.person_name}} on {{item.date}} at {{item.time}} &nbsp;&nbsp;&nbsp;{{((indexOfelement+1)==1)? "[JOB STARTED]": " "}}</td>
+    </tr>
+
+    </tbody>
+
+  </table>
+  <div >
+    <app-job-detail ></app-job-detail>
+</div>
+</div>

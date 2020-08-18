@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
+import {Observable} from 'rxjs';
+import {JobDetail} from 'src/app/models/jobDetail.model';
 import {JobTaskService} from "../../../services/job-task.service";
 
 @Component({
@@ -12,14 +14,19 @@ import {JobTaskService} from "../../../services/job-task.service";
 export class JobTransactionComponent implements OnInit {
 
   jobMasterId : number;
+  jobTransactionData : JobDetail[];
 
   constructor(private router : ActivatedRoute, private  jobTaskService : JobTaskService) { }
 
   ngOnInit(): void {
-   this.router.params.subscribe((params)=>{
-       this.jobMasterId = params.id;
-   })
-   this.jobTaskService.getAllTransactions(this.jobMasterId);
+    this.router.params.subscribe((params)=>{
+      this.jobMasterId = params.id;
+  })
+  // this.jobTaskService.getJobTransactionDataUpdateListener().subscribe((TransactionData : JobDetail[])=>{{
+  //   this.jobTransactionData =  TransactionData;
+  // }})
+
+  this.jobTaskService.getAllTransactions(this.jobMasterId);
   }
 
 }

@@ -28,24 +28,30 @@ export class JobDetailComponent implements OnInit {
   userData : User;
   karigarhName : string;
   totalData : JobDetail[];
-  bill = true;
-  buttons = true;
+  showTransactionDiv = false;
+
 
   constructor(private route: ActivatedRoute, private jobTaskService: JobTaskService, private orderService: OrderService, private authService: AuthService,private jobService: JobService) {
   }
 
+  printDivStyle = {
+    table: {'border-collapse': 'collapse'},
+    h1 : {color: 'red'},
+    h2 : {border: 'solid 1px'},
+    td: {border: '1px solid red', margin: '0px', padding: '3px'}
+  };
+
   ngOnInit(): void {
+    this.showTransactionDiv = false;
     this.jobTaskForm = this.jobTaskService.jobTaskForm;
     this.route.params.subscribe(params => {
+      this.showTransactionDiv = false;
       // this.jobTaskForm = this.jobTaskService.jobTaskForm;
       this.id = params['id'];
       this.jobTaskForm.patchValue({id :params['id'] });
       this.savedJobsData = this.jobTaskService.getAllJobList();
       const index = this.savedJobsData.findIndex(x => x.id == this.id);
       this.oneJobData = this.savedJobsData[index];
-
-
-
       this.karigarhData=this.jobService.getAllKarigarhs();
       const karigarhIndex = this.karigarhData.findIndex(x => x.id === this.oneJobData.karigarh_id);
       // this.karigarhName = this.karigarhData[karigarhIndex].person_name;
@@ -97,6 +103,9 @@ export class JobDetailComponent implements OnInit {
       this.totalData = response;
       console.log(this.totalData);
     });
+  }
+  changeVisibility(){
+    this.showTransactionDiv = true;
   }
   testing(){
     // this.karigarhData=this.jobService.getAllKarigarhs();

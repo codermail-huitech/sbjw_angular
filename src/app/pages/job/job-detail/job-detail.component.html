@@ -16,20 +16,18 @@
     <div fxLayout="column" fxFlex="20" ></div>
     <div fxLayout="column" fxFlex="60" style="background-color: white" id="bill-div" >
       <!--      <h2 style="text-align: center ">Job ID</h2>-->
-<!--      <button-->
-<!--        mat-stroked-button-->
-<!--        [printStyle]="printDivStyle"-->
-<!--        printSectionId="bill-div"-->
-<!--        ngxPrint><mat-icon>print</mat-icon></button>-->
-      <button (click)="changeVisibility()"></button>
-      <div>
+      <button
+        mat-stroked-button
+        [printStyle]="printDivStyle"
+        printSectionId="printDiv"
+        ngxPrint ><mat-icon>print</mat-icon></button>
+<!--      <button (click)="changeVisibility()">Just Test</button>-->
+    <div id="printDiv">
       <mat-card class="ml-2 mt-2">
         <div class="form-container">
 
           <div class="container" *ngIf="oneJobData" fxLayout="column" fxLayout.xs="column" fxLayoutAlign="start" fxLayoutGap="10px" fxLayoutGap.xs="0">
             <table style=" border: none; width: 100%" class="table1">
-
-
               <tbody>
               <tr>
                 <th colspan="8" style="text-align: center ; padding-left: 2px;padding-right: 2px;">Job ID : {{oneJobData.job_number}}</th>
@@ -116,12 +114,39 @@
           </div>
         </div>
       </mat-card>
-      </div>
-      <div [hidden]="!showTransactionDiv">
-        <router-outlet></router-outlet>
+<!--      <div [hidden]="!showTransactionDiv">-->
+      <div  class="col-12">
+<!--        <router-outlet ></router-outlet>-->
+<!--        <pre>{{jobTransactionData | json}}</pre>-->
+        <div id ="job-transaction-table-div">
+          <table class="table" style="width: 100%" id="my-table">
+            <thead>
+            <tr>
+              <th colspan="2">SL. NO</th>
+              <th colspan="6">Statement For Transaction</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let item of jobTransactionData ; let indexOfelement = index;" [hidden]="jobTransactionData.length === 0">
+              <td colspan="2">{{indexOfelement+1}}</td>
+              <td colspan="6">{{item.material_quantity.toFixed(3)}}gm {{item.task_name}}ed by {{item.person_name}} on {{item.date}} at {{item.time}} &nbsp;&nbsp;&nbsp;{{((indexOfelement+1)==1)? "[JOB STARTED]": " "}}</td>
+            </tr>
+            <tr [hidden]="!(jobTransactionData.length === 0)">
+              <td colspan="2"> </td>
+              <td colspan="6">NO TRANSACTION TO SHOW</td>
+            </tr>
+
+            </tbody>
+
+          </table>
+
+        </div>
+
+
       </div>
     </div>
-    <div fxLayout="column" fxFlex="20"></div>
+<!--    <div fxLayout="column" fxFlex="20"></div>-->
+    </div>
 
   </div>
 

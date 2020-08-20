@@ -29,6 +29,7 @@ export class JobDetailComponent implements OnInit {
   karigarhName : string;
   totalData : JobDetail[];
   showTransactionDiv = false;
+  jobTransactionData : JobDetail[];
 
 
   constructor(private route: ActivatedRoute, private jobTaskService: JobTaskService, private orderService: OrderService, private authService: AuthService,private jobService: JobService) {
@@ -42,7 +43,7 @@ export class JobDetailComponent implements OnInit {
   };
 
   ngOnInit(): void {
-    this.showTransactionDiv = false;
+    this.showTransactionDiv = true;
     this.jobTaskForm = this.jobTaskService.jobTaskForm;
     this.route.params.subscribe(params => {
       this.showTransactionDiv = false;
@@ -57,6 +58,7 @@ export class JobDetailComponent implements OnInit {
       // this.karigarhName = this.karigarhData[karigarhIndex].person_name;
       if(this.karigarhData[karigarhIndex].person_name){
         this.karigarhName = this.karigarhData[karigarhIndex].person_name;
+        console.log(window.location.href);
       }
 
     });
@@ -103,10 +105,19 @@ export class JobDetailComponent implements OnInit {
       this.totalData = response;
       console.log(this.totalData);
     });
+
+    this.jobTaskService.getJobTransactionDataUpdateListener().subscribe((TransactionData : JobDetail[])=>{{
+      this.jobTransactionData =  TransactionData;
+    }})
+    this.jobTaskService.getAllTransactions(this.id).subscribe((response )=>{
+      this.jobTransactionData =  response.data;
+    });
   }
-  changeVisibility(){
-    this.showTransactionDiv = true;
-  }
+  // changeVisibility(){
+  //   // window.location.href = window.location.href;
+  //   // console.log( window.location.href );
+  //   this.showTransactionDiv = true;
+  // }
   testing(){
     // this.karigarhData=this.jobService.getAllKarigarhs();
     // console.log("karigarh data");

@@ -21,8 +21,7 @@ export class JobTransactionComponent implements OnInit {
   ngOnInit(): void {
     this.router.parent.params.subscribe(params => {
       this.jobMasterId = params.id;
-      console.log("component");
-      console.log(params);
+
     });
     this.jobTaskService.getJobTransactionDataUpdateListener().subscribe((TransactionData : JobDetail[])=>{{
       this.jobTransactionData =  TransactionData;

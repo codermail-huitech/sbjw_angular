@@ -33,12 +33,18 @@ table,td{
   border: 1px solid royalblue;
   border-collapse: collapse;
   color : royalblue;
+
+}
+table{
+  width: 100%;
 }
 .table1 td{
   border : none;
   color : royalblue;
 
+
 }
+
 #job-transaction-table-div{
   padding: 5px;
   border: 2px solid wheat;

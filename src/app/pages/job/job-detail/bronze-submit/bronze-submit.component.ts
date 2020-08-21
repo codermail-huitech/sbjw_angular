@@ -29,6 +29,7 @@ export class BronzeSubmitComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.total = 0;
     this.jobTaskForm = this.jobTaskService.jobTaskForm;
     this.router.parent.params.subscribe(params =>{
       this.jobMasterId=params.id;

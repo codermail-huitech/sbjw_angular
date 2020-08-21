@@ -30,20 +30,25 @@
       <table class="jobTaskData-table-div col-12">
         <thead>
         <th colspan="3" style="text-align: center">SL No.</th>
+        <th colspan="3" style="text-align: center">Task Name </th>
         <th colspan="3" style="text-align: center">Quantity</th>
         <th colspan="3" style="text-align: center">User Name</th>
+        <th colspan="3" style="text-align: center">Time</th>
         <th colspan="3" style="text-align: center">Date</th>
         </thead>
         <tbody>
         <tr  *ngFor="let data of jobTaskData ; let indexOfelement = index;">
           <td colspan="3" style="text-align: center">{{indexOfelement+1}}</td>
-          <td colspan="3" style="text-align: center">{{data.material_quantity}}</td>
+          <td colspan="3" style="text-align: center">Dal Submit</td>
+          <td colspan="3" style="text-align: right">{{data.material_quantity.toFixed(3)}}</td>
           <td colspan="3" style="text-align: center">{{data.person_name}}</td>
-          <td colspan="3" style="text-align: center">{{data.created_at | date}}</td>
+          <td colspan="3" style="text-align: center">{{data.time}}</td>
+          <td colspan="3" style="text-align: center">{{data.date}}</td>
         </tr>
         <tr>
-          <td colspan="3"  style="text-align: center ; background-color: yellow">Total</td>
-          <td colspan="3"  style="text-align: center ; background-color: yellow">{{total}}</td>
+          <td colspan="3"  style="text-align: center ; background-color: yellow; font-weight: bolder">Total</td>
+          <td colspan="3"  style="text-align: center ; background-color: yellow; font-weight: bolder">Dal Submit</td>
+          <td colspan="3"  style="text-align: right ; background-color: yellow; font-weight: bolder">{{total.toFixed(3)}}</td>
         </tr>
         </tbody>
       </table>

@@ -33,6 +33,7 @@ export class GoldSubmitComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.total = 0;
     this.jobTaskForm = this.jobTaskService.jobTaskForm;
     this.router.parent.params.subscribe(params =>{
       this.jobMasterId=params.id;
@@ -41,12 +42,6 @@ export class GoldSubmitComponent implements OnInit {
     const index = this.savedJobsData.findIndex(x => x.id == this.jobMasterId);
     this.oneJobData = this.savedJobsData[index];
     this.jobTaskForm.patchValue({material_name: this.oneJobData.material_name});
-
-    // this.jobTaskService.getJobTaskDataUpdateListener().subscribe((response) => {
-    //   this.jobTaskData = response;
-    //   console.log('task data update');
-    //   console.log(this.jobTaskData);
-    // });
   }
 
   onSubmit(){

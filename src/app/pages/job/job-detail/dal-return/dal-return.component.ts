@@ -29,6 +29,7 @@ export class DalReturnComponent implements OnInit {
   constructor(private jobTaskService: JobTaskService,private router: ActivatedRoute,private _snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
+    this.total = 0;
     this.jobTaskForm = this.jobTaskService.jobTaskForm;
     this.savedJobsData = this.jobTaskService.getAllJobList();
     this.router.parent.params.subscribe(params =>{
@@ -36,6 +37,9 @@ export class DalReturnComponent implements OnInit {
     });
     const index = this.savedJobsData.findIndex(x => x.id == this.jobMasterId);
     this.oneJobData = this.savedJobsData[index];
+    this.jobTaskService.getMaterialDataUpdateListener().subscribe((response) => {
+      this.materialData = response;
+    });
     this.materialData=this.jobTaskService.getMaterials();
     const matIndex=this.materialData.findIndex(x =>x.main_material_id == this.oneJobData.material_id);
     this.jobTaskForm.patchValue({material_name: this.materialData[matIndex].material_name});
@@ -61,7 +65,9 @@ export class DalReturnComponent implements OnInit {
       this.oneJobData = this.savedJobsData[index];
 
 
-      this.materialData = this.jobTaskService.getMaterials();
+      this.jobTaskService.getMaterialDataUpdateListener().subscribe((response) => {
+        this.materialData = response;
+      });
       const matIndex = this.materialData.findIndex(x => x.main_material_id == this.oneJobData.material_id);
 
       const user = JSON.parse(localStorage.getItem('user'));

@@ -27,39 +27,40 @@
         <div class="form-container">
 
           <div class="container" *ngIf="oneJobData" fxLayout="column" fxLayout.xs="column" fxLayoutAlign="start" fxLayoutGap="10px" fxLayoutGap.xs="0">
-            <table style=" border: none; width: 100%" class="table1">
-              <tbody>
-              <tr>
-                <th colspan="8" style="text-align: center ; padding-left: 2px;padding-right: 2px;">Job ID : {{oneJobData.job_number}}</th>
-              </tr>
-              <tr>
-                <td>Challan No :</td>
-                <td colspan="6">{{oneJobData.order_number}}</td>
-                <!-- <td></td>
-                <td colspan="2"></td>
-                <td></td>
-                <td colspan="2"></td> -->
-              </tr>
-              <tr>
-                <td>Date :</td>
-                <td colspan="2">{{oneJobData.date}}</td>
-                <td>DD :</td>
-                <td colspan="2">{{oneJobData.date_of_delivery}}</td>
-                <td></td>
-                <td colspan="2"></td>
-              </tr>
-              <tr>
-                <td>Model :</td>
-                <td colspan="2"><b>{{oneJobData.model_number}}</b></td>
-                <td>Pcs :</td>
-                <td colspan="2"><b>{{oneJobData.quantity}}</b></td>
-                <td>Size :</td>
-                <td colspan="2"><b>{{oneJobData.size}}</b></td>
-              </tr>
-              </tbody>
-            </table>
+<!--            <table style=" border: none;" class="table1">-->
+<!--              <tbody>-->
+<!--              <tr>-->
+<!--                <th colspan="8" style="text-align: center ; padding-left: 2px;padding-right: 2px;">Job ID : {{oneJobData.job_number}}</th>-->
+<!--              </tr>-->
+<!--              <tr>-->
+<!--                <td>Challan No :</td>-->
+<!--                <td colspan="8">{{oneJobData.order_number}}</td>-->
 
-            <table style="width : 100%;"  *ngIf="totalData">
+<!--              </tr>-->
+<!--              <tr>-->
+<!--                <td>Date :</td>-->
+<!--                <td colspan="2">{{oneJobData.date}}</td>-->
+<!--                <td>DD :</td>-->
+<!--                <td colspan="2">{{oneJobData.date_of_delivery}}</td>-->
+<!--                <td></td>-->
+<!--                <td colspan="2"></td>-->
+<!--              </tr>-->
+<!--              <tr>-->
+<!--                <td>Model :</td>-->
+<!--                <td colspan="2"><b>{{oneJobData.model_number}}</b></td>-->
+<!--                <td>Pcs :</td>-->
+<!--                <td colspan="2"><b>{{oneJobData.quantity}}</b></td>-->
+<!--                <td>Size :</td>-->
+<!--                <td colspan="2"><b>{{oneJobData.size}}</b></td>-->
+<!--              </tr>-->
+<!--              </tbody>-->
+<!--            </table>-->
+            <label style="text-align: center"><b>Job ID : {{oneJobData.job_number}}</b></label>
+            <label>Challan No : &nbsp;{{oneJobData.order_number}}</label>
+            <label>Date : &nbsp;{{oneJobData.date}}&nbsp;&nbsp; DD : {{oneJobData.date_of_delivery}} </label>
+            <label>Model : &nbsp;<b>{{oneJobData.model_number}}</b>&nbsp;&nbsp; Pcs : <b>{{oneJobData.quantity}}</b>&nbsp;&nbsp;Size :<b>{{oneJobData.size}}</b></label>
+
+            <table style=""  *ngIf="totalData">
               <tbody>
               <tr>
                 <td colspan="2" class="col-6">Thokai :</td>
@@ -75,11 +76,11 @@
               </tr>
               <tr>
                 <td colspan="2" class="col-6">M.C. :</td>
-                <td colspan="2" class="col-6">Gold : {{totalData[0] ? totalData[0].total : 0}} </td>
+                <td colspan="2" class="col-6">Gold : {{totalData[0] ? totalData[0].total.toFixed(3) : 0}} </td>
               </tr>
               <tr>
                 <td colspan="2" class="col-6">H.M.C :</td>
-                <td colspan="2" class="col-6">RGW- :{{totalData[1] ? totalData[1].total : 0}}</td>
+                <td colspan="2" class="col-6">RGW- :{{totalData[1] ? totalData[1].total.toFixed(3) : 0}}</td>
               </tr>
               <tr>
                 <td colspan="2" class="col-6">H.C. :</td>
@@ -87,14 +88,14 @@
               </tr>
               <tr>
                 <td colspan="2" class="col-6">Polish :</td>
-                <td colspan="2" class="col-6">NGR- : {{totalData[6] ? totalData[6].total : 0}}</td>
+                <td colspan="2" class="col-6">NGR- : {{totalData[6] ? totalData[6].total.toFixed(3) : 0}}</td>
               </tr>
               <tr>
-                <td colspan="2" class="col-6">Dal: {{totalData[2] ? totalData[2].total : 0}}</td>
-                <td colspan="2" class="col-6">Pan+ : {{totalData[4] ? totalData[4].total : 0}}</td>
+                <td colspan="2" class="col-6">Dal: {{totalData[2] ? totalData[2].total.toFixed(3) : 0}}</td>
+                <td colspan="2" class="col-6">Pan+ : {{totalData[4] ? totalData[4].total.toFixed(3) : 0}}</td>
               </tr>
               <tr>
-                <td colspan="2" class="col-6">Bnz : {{totalData[7] ? totalData[7].total : 0}}</td>
+                <td colspan="2" class="col-6">Bnz : {{totalData[7] ? totalData[7].total.toFixed(3) : 0}}</td>
                 <td colspan="2" class="col-6">PLoss+ :{{oneJobData.p_loss}}</td>
               </tr>
               <tr>
@@ -119,7 +120,7 @@
 <!--        <router-outlet ></router-outlet>-->
 <!--        <pre>{{jobTransactionData | json}}</pre>-->
         <div id ="job-transaction-table-div">
-          <table class="table" style="width: 100%" id="my-table">
+          <table class="table" style="" id="my-table">
             <thead>
             <tr>
               <th colspan="2">SL. NO</th>
@@ -161,7 +162,7 @@
       <button type="button" class="btn btn-warning" [routerLink]="['./nitricReturn']">Nitric Return</button>
       <button type="button" class="btn btn-primary" [routerLink]="['./bronzeSubmit']">Bronze Submit</button>
 <!--      <button type="button" class="btn btn-primary"><a href="job_transaction/{{oneJobData.id}}">Transaction Details</a></button>-->
-      <button type="button" class="btn btn-primary" [routerLink]="['./job_transaction']">Transaction Details</button>
+      <button type="button" class="btn btn-warning" [routerLink]="['./job_transaction']">Transaction Details</button>
 
 <!--      <a [routerLink]="['./tracks']">Tracks</a> |-->
     </div>

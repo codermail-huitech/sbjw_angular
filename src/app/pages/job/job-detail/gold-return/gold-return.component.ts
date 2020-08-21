@@ -32,6 +32,7 @@ export class GoldReturnComponent implements OnInit {
   constructor(private jobTaskService: JobTaskService,private router: ActivatedRoute,private _snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
+    this.total = 0;
     this.jobTaskForm = this.jobTaskService.jobTaskForm;
     this.savedJobsData = this.jobTaskService.getAllJobList();
     this.router.parent.params.subscribe(params =>{
@@ -39,6 +40,10 @@ export class GoldReturnComponent implements OnInit {
     });
     const index = this.savedJobsData.findIndex(x => x.id == this.jobMasterId);
     this.oneJobData = this.savedJobsData[index];
+
+    this.jobTaskService.getMaterialDataUpdateListener().subscribe((response) => {
+      this.materialData = response;
+    });
     this.materialData=this.jobTaskService.getMaterials();
     const matIndex=this.materialData.findIndex(x =>x.main_material_id == this.oneJobData.material_id);
     this.jobTaskForm.patchValue({material_name: this.materialData[matIndex].material_name});
@@ -50,6 +55,7 @@ export class GoldReturnComponent implements OnInit {
 
 
   onSubmit(){
+
     if(this.jobTaskForm.value.return_quantity === null){
       this._snackBar.openFromComponent(SncakBarComponent, {
         duration: 4000, data: {message: 'Please enter quantity before submit'}
@@ -63,11 +69,13 @@ export class GoldReturnComponent implements OnInit {
       this.oneJobData = this.savedJobsData[index];
       // console.log(this.oneJobData);
 
-      this.materialData = this.jobTaskService.getMaterials();
+      this.jobTaskService.getMaterialDataUpdateListener().subscribe((response) => {
+        this.materialData = response;
+      });
+      // this.materialData=this.jobTaskService.getMaterials();
       const matIndex = this.materialData.findIndex(x => x.main_material_id == this.oneJobData.material_id);
       // console.log(this.materialData[matIndex]);
       const user = JSON.parse(localStorage.getItem('user'));
-      // this.jobTaskForm.patchValue({ job_Task_id:2, material_name: this.materialData[matIndex].material_name, material_id: this.materialData[matIndex].id,id:this.jobMasterId, size:this.oneJobData.size,employee_id: user.id });
       this.jobTaskForm.patchValue({
         job_Task_id: 2,
         material_id: this.materialData[matIndex].id,

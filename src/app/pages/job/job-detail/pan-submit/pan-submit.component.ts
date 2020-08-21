@@ -25,6 +25,7 @@ export class PanSubmitComponent implements OnInit {
   constructor(private jobTaskService: JobTaskService,private router: ActivatedRoute,private _snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
+    this.total = 0;
     this.jobTaskForm = this.jobTaskService.jobTaskForm;
     this.router.parent.params.subscribe(params =>{
       this.jobMasterId=params.id;

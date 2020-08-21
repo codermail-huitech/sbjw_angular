@@ -25,7 +25,7 @@ export class JobTaskService implements OnDestroy{
   jobReturnData : JobDetail;
   totalData : JobDetail[];
   jobTransactionData : JobDetail[];
- 
+
   private savedJobsSub = new Subject<JobMaster[]>();
   private materialDataSub = new Subject<Material[]>();
   private getJobTaskDataSub = new Subject<JobDetail[]>();
@@ -49,6 +49,11 @@ export class JobTaskService implements OnDestroy{
   getJobTransactionDataUpdateListener(){
     return this.jobTransactionSub.asObservable();
   }
+
+  getMaterialDataUpdateListener(){
+    return this.materialDataSub.asObservable();
+  }
+
 
 
   constructor(private http: HttpClient) {

@@ -20,6 +20,7 @@ export class PanReturnComponent implements OnInit {
   savedJobsData : JobMaster[];
   oneJobData : JobMaster;
   materialData : Material[] ;
+  returnMaterial : string;
   public currentError: any;
   showJobTaskData = false;
   jobTaskData : JobDetail[];
@@ -41,7 +42,8 @@ export class PanReturnComponent implements OnInit {
     });
     this.materialData=this.jobTaskService.getMaterials();
     const matIndex=this.materialData.findIndex(x =>x.main_material_id == this.oneJobData.material_id);
-    this.jobTaskForm.patchValue({material_name: this.materialData[matIndex].material_name});
+    this.returnMaterial=this.materialData[matIndex].material_name;
+    // this.jobTaskForm.patchValue({material_name: this.materialData[matIndex].material_name});
     this.jobTaskService.getJobTaskDataUpdateListener().subscribe((response) => {
       this.jobTaskData = response;
     });

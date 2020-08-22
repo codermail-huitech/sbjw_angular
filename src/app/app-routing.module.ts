@@ -19,6 +19,7 @@ import {PanReturnComponent} from "./pages/job/job-detail/pan-return/pan-return.c
 import {NitricReturnComponent} from "./pages/job/job-detail/nitric-return/nitric-return.component";
 import {BronzeSubmitComponent} from "./pages/job/job-detail/bronze-submit/bronze-submit.component";
 import {JobTransactionComponent} from "./pages/job/job-detail/job-transaction/job-transaction.component";
+import {FinishJobComponent} from "./pages/job/job-detail/finish-job/finish-job.component";
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -42,6 +43,7 @@ const routes: Routes = [
       {path: 'nitricReturn', component: NitricReturnComponent},
       {path: 'bronzeSubmit', component: BronzeSubmitComponent},
       {path: 'job_transaction', component: JobTransactionComponent},
+      {path: 'job_finish', component: FinishJobComponent},
       // {path: 'albums', component: ArtistAlbumListComponent},
     ]
   },

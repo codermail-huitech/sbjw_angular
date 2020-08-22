@@ -66,12 +66,21 @@ export class JobService {
   getAllKarigarhs(){
     return [...this.karigarhData];
   }
+
+
   saveJob(){
     // tslint:disable-next-line:max-line-length
     return this.http.post<JobResponseData>( GlobalVariable.BASE_API_URL + '/jobs', {master: this.jobMasterForm.value, details: this.jobDetailsForm.value})
       .pipe(catchError(this._serverError), tap(((response: {success: number, data: JobMaster}) => {
       })));
   }
+
+  finishJob(){
+    return this.http.post<JobResponseData>( GlobalVariable.BASE_API_URL + '/finishJob', {master: this.jobMasterForm.value})
+      .pipe(catchError(this._serverError), tap(((response: {success: number, data: JobMaster}) => {
+      })));
+  }
+
   private _serverError(err: any) {
     // console.log('sever error:', err);  // debug
     if (err instanceof Response) {

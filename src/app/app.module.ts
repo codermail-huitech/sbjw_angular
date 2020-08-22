@@ -52,6 +52,7 @@ import { DalSubmitComponent } from './pages/job/job-detail/dal-submit/dal-submit
 import { NitricReturnComponent } from './pages/job/job-detail/nitric-return/nitric-return.component';
 import { BronzeSubmitComponent } from './pages/job/job-detail/bronze-submit/bronze-submit.component';
 import { JobTransactionComponent } from './pages/job/job-detail/job-transaction/job-transaction.component';
+import { FinishJobComponent } from './pages/job/job-detail/finish-job/finish-job.component';
 
 
 @NgModule({
@@ -84,7 +85,8 @@ import { JobTransactionComponent } from './pages/job/job-detail/job-transaction/
     DalSubmitComponent,
     NitricReturnComponent,
     BronzeSubmitComponent,
-    JobTransactionComponent
+    JobTransactionComponent,
+    FinishJobComponent
 
   ],
   imports: [

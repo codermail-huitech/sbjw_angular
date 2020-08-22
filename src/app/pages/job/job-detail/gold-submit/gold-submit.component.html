@@ -16,10 +16,10 @@
 
           </div>
           <div class="container" fxLayout="row">
-            <mat-form-field class="col-4">
+            <mat-form-field class="col-2">
               <input matInput placeholder="Size" [readonly]="true" formControlName="size">
             </mat-form-field>
-            <mat-form-field class="col-4">
+            <mat-form-field class="col-2">
               <input  style ="text-align: right;" matInput placeholder="Quantity" formControlName="return_quantity">
             </mat-form-field>
           </div>
@@ -38,7 +38,7 @@
         <th colspan="3" style="text-align: center">Task Name.</th>
         <th colspan="3" style="text-align: center">Quantity</th>
         <th colspan="3" style="text-align: center">User Name.</th>
-        <th colspan="3" style="text-align: center">Time</th>
+<!--        <th colspan="3" style="text-align: center">Time</th>-->
         <th colspan="3" style="text-align: center">Date</th>
         </thead>
         <tbody>
@@ -47,8 +47,8 @@
           <td colspan="3" style="text-align: center">{{data.task_name}}</td>
           <td colspan="3" style="text-align: right">{{data.material_quantity.toFixed(3)}}</td>
           <td colspan="3" style="text-align: center">{{data.person_name}}</td>
-          <td colspan="3" style="text-align: center">{{data.time}}</td>
-          <td colspan="3" style="text-align: center">{{data.date}}</td>
+<!--          <td colspan="1" style="text-align: center">{{data.time}}</td>-->
+          <td colspan="3" style="text-align: center">{{data.date}} &nbsp;&nbsp;{{data.time}} </td>
         </tr>
         <tr>
           <td colspan="3"  style="text-align: center ; background-color: yellow ; font-weight: bolder">Total</td>

@@ -2,21 +2,24 @@
   <mat-card class="ml-2 mt-2" >
     <div class="form-container">
       <!--      <button (click)="backFunction()">Back</button>-->
-      <h2>Bronze Submit</h2>
+<!--      <h2>Bronze Submit</h2>-->
       <form [formGroup] = jobTaskForm>
         <div class="container" fxLayout="column" fxLayout.xs="column" fxLayoutAlign="start" fxLayoutGap="10px" fxLayoutGap.xs="0">
           <!--          <label class="m-2">Job Number: </label>-->
           <div class="container" fxLayout="row">
-            <mat-form-field class="col-4">
-              <input matInput placeholder="Material Name" formControlName="material_name">
-            </mat-form-field>
-            <mat-form-field class="col-4">
+            <h2 class="m-3">Bronze Submit</h2>
+            <h2 class="m-3" *ngIf="oneJobData.material_name">{{oneJobData.material_name}}</h2>
+
+          </div>
+          <div class="container" fxLayout="row">
+            <mat-form-field class="col-2">
               <input matInput placeholder="Size" [readonly]="true" formControlName="size">
             </mat-form-field>
+
+            <mat-form-field class="col-2">
+              <input  style ="text-align: right;" matInput placeholder="Quantity" formControlName="return_quantity">
+            </mat-form-field>
           </div>
-          <mat-form-field class="col-4">
-            <input  style ="text-align: right;" matInput placeholder="Quantity" formControlName="return_quantity">
-          </mat-form-field>
         </div>
       </form>
       <div class="container" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="end" fxLayoutGap="10px" fxLayoutGap.xs="0" >
@@ -33,7 +36,6 @@
           <th colspan="3" style="text-align: center">Task Name</th>
           <th colspan="3" style="text-align: center">Quantity</th>
           <th colspan="3" style="text-align: center">User Name</th>
-          <th colspan="3" style="text-align: center">Time</th>
           <th colspan="3" style="text-align: center">Date</th>
         </thead>
         <tbody>
@@ -42,8 +44,7 @@
             <td colspan="3" style="text-align: center">Bronze Submit</td>
             <td colspan="3" style="text-align: right">{{data.material_quantity.toFixed(3)}}</td>
             <td colspan="3" style="text-align: center">{{data.person_name}}</td>
-            <td colspan="3" style="text-align: center">{{data.time}}</td>
-            <td colspan="3" style="text-align: center">{{data.date}}</td>
+            <td colspan="3" style="text-align: center">{{data.date}} &nbsp;&nbsp;{{data.time}}</td>
           </tr>
           <tr>
             <td colspan="3"  style="text-align: center ; background-color: yellow; font-weight: bolder">Total</td>

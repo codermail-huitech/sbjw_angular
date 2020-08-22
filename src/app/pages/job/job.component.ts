@@ -121,7 +121,7 @@ export class JobComponent implements OnInit {
       })
 
       .catch(() => {
-        console.log('User dismissed the dialog (e.g., by using ESC, clicking the cross icon, or clicking outside the dialog)');
+        console.log('User dismissed the dialog (e.gf., by using ESC, clicking the cross icon, or clicking outside the dialog)');
       });
   }
 

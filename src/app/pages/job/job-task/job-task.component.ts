@@ -21,6 +21,7 @@ export class JobTaskComponent implements OnInit {
 
   jobTaskForm: FormGroup;
   savedJobsData: JobMaster[];
+  finishedJobsList: JobMaster[];
   materialList: Material[];
   jobDetailsData: JobDetail[] = [];
   totalData : JobDetail[];
@@ -32,6 +33,7 @@ export class JobTaskComponent implements OnInit {
 
   saveBtnName: string;
   isShowJobMasterList = true;
+  showCompleteJobs = true;
   constructor(private jobTaskService: JobTaskService ,private _snackBar: MatSnackBar, private confirmationDialogService: ConfirmationDialogService, private orderService: OrderService ) {
 
     console.log('i am constructor');
@@ -39,6 +41,7 @@ export class JobTaskComponent implements OnInit {
 
   ngOnInit(): void {
     console.log('i am initializer');
+    this.showCompleteJobs=true;
 
     this.jobTaskForm = this.jobTaskService.jobTaskForm;
 
@@ -47,8 +50,16 @@ export class JobTaskComponent implements OnInit {
     // console.log(this.jobTaskService.getAllJobList());
     this.jobTaskService.getSavedJobsUpdateListener().subscribe((jobData: JobMaster[]) => {
       this.savedJobsData = jobData;
+
     });
+    this.jobTaskService.getFinishedJobsUpdateListener().subscribe((finishedjobData: JobMaster[]) => {
+      this.finishedJobsList = finishedjobData;
+
+    });
+
     this.savedJobsData = this.jobTaskService.getAllJobList();
+    this.finishedJobsList = this.jobTaskService.getFinishedJobList();
+
 
     // this.savedJobsData = this.jobTaskService.getAllJobList();
     this.orderService.getMaterialUpdateListener()
@@ -78,7 +89,6 @@ export class JobTaskComponent implements OnInit {
 
 
 
-
   placeDetails(data){
     this.materialList = this.orderService.getMaterials();
 
@@ -93,10 +103,9 @@ export class JobTaskComponent implements OnInit {
     //    this.totalData = response.data;
     //
     // });
-
-
-
-
+  }
+  jobListShow(){
+    this.showCompleteJobs = !this.showCompleteJobs;
   }
 
 }

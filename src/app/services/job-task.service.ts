@@ -20,6 +20,7 @@ export class JobTaskService implements OnDestroy{
   materialData : Material[];
 
   savedJobsList: JobMaster[];
+  finishedJobsList: JobMaster[];
   jobMasterData: JobMaster;
   jobDetailData: JobDetail[];
   jobReturnData : JobDetail;
@@ -32,9 +33,13 @@ export class JobTaskService implements OnDestroy{
   private jobReturnDataSub = new Subject<JobDetail>();
   private totalDataSub = new Subject<JobDetail[]>();
   private jobTransactionSub = new Subject<JobDetail[]>();
+  private finishedJobsSub = new Subject<JobMaster[]>();
 
   getSavedJobsUpdateListener(){
     return this.savedJobsSub.asObservable();
+  }
+  getFinishedJobsUpdateListener(){
+    return this.finishedJobsSub.asObservable();
   }
   getJobTaskDataUpdateListener(){
     return this.getJobTaskDataSub.asObservable();
@@ -78,23 +83,34 @@ export class JobTaskService implements OnDestroy{
       .subscribe((response: {success: number, data: JobMaster[]}) => {
         const {data} = response;
         this.savedJobsList = data;
-        console.log('service job task');
         this.savedJobsSub.next([...this.savedJobsList]);
+      });
+
+    this.http.get(GlobalVariable.BASE_API_URL + '/finishedJobs')
+      .subscribe((response: {success: number, data: JobMaster[]}) => {
+        const {data} = response;
+        this.finishedJobsList = data;
+        this.finishedJobsSub.next([...this.finishedJobsList]);
       });
 
     this.http.get(GlobalVariable.BASE_API_URL + '/materials')
       .subscribe((response: {success: number, data: Material[]}) => {
         const {data} = response;
         this.materialData = data;
-        console.log('service job task');
         this.materialDataSub.next([...this.materialData]);
       });
   }
 
   getAllJobList(){
-    // console.log('from getAllJobList');
+
     return [...this.savedJobsList];
   }
+
+  getFinishedJobList(){
+
+    return [...this.finishedJobsList];
+  }
+
 
   getMaterials(){
     return[...this.materialData];

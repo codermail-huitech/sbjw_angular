@@ -1,8 +1,11 @@
+<div class="row" style="align-content: center; text-align: center">
+  <div class="col"><button style="background-color: green" mat-button class="col-12" mat-stroked-button (click)="jobListShow()">{{showCompleteJobs==true? 'Show Pending Jobs List':'Show Finished Jobs List'}}</button></div>
+</div>
 <div fxLayout.xs="column" [hidden]="formTaskDiv" fxLayout="row" fxLayoutAlign="space-between stretch" fxFlexFill id="job-div">
 
-  <div fxLayout="column" fxFlex="100" class="mr-1">
-   
-    <div class="jobTask-table-div" *ngIf="savedJobsData">
+
+  <div fxLayout="column" fxFlex="100" [hidden]="showCompleteJobs" class="mr-1">
+    <div class="jobTask-table-div" *ngIf="savedJobsData" >
       <table class="table">
         <thead>
         <tr>
@@ -14,29 +17,54 @@
         </tr>
         </thead>
         <tbody>
-        <tr  *ngFor="let data of savedJobsData ; let indexOfelement = index;">
+        <tr  *ngFor="let data of savedJobsData; let indexOfelement = index" >
           <td>{{indexOfelement+1}}</td>
           <td >{{data.job_number}}</td>
           <td >{{data.quantity}}</td>
           <td >{{data.size}}</td>
           <td>
            <button mat-icon-button color="primary" aria-label="Open Master" [routerLink]="['/job_detail',data.id]"   (click)="placeDetails(data)">
-
               <mat-icon>forward</mat-icon>
             </button>
           </td>
-
         </tr>
         </tbody>
       </table>
     </div>
 
   </div>
-   
-    
-   
-    
-   
+
+  <div fxLayout="column" fxFlex="100" [hidden]="!showCompleteJobs" class="mr-1">
+    <div class="jobTask-table-div" *ngIf="finishedJobsList" >
+          <table class="table">
+            <thead>
+            <tr>
+              <th>SL No.</th>
+              <th>Job Number</th>
+              <th>Quantity</th>
+              <th>Size</th>
+              <th>Send to Task</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr  *ngFor="let data of finishedJobsList  ; let indexOfelement = index" >
+          <td>{{indexOfelement+1}}</td>
+          <td >{{data.job_number}}</td>
+          <td >{{data.quantity}}</td>
+          <td >{{data.size}}</td>
+          <td>
+            <button mat-icon-button color="primary" aria-label="Open Master" [routerLink]="['/job_detail',data.id]"   (click)="placeDetails(data)">
+              <mat-icon>forward</mat-icon>
+            </button>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+
+
 </div>
 
 

@@ -100,7 +100,7 @@ export class JobComponent implements OnInit {
           saveObserable.subscribe((response) => {
             if (response.success === 1) {
               const index = this.orderDetails.findIndex(x => x.id === this.jobDetailsForm.value.id);
-              this.orderDetails[index].job_status = 1;
+              this.orderDetails[index].status_id = 1;
               // this.isEditEnabled = false;
               this.jobMasterForm.reset();
               this.jobDetailsForm.reset();

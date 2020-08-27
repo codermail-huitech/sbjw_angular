@@ -15,51 +15,36 @@
 <!--      ngxPrint><mat-icon>print</mat-icon></button>-->
     <div fxLayout="column" fxFlex="20" ></div>
     <div fxLayout="column" fxFlex="60" style="background-color: white" id="bill-div" >
-      <!--      <h2 style="text-align: center ">Job ID</h2>-->
-      <button
-        mat-stroked-button
-        [printStyle]="printDivStyle"
-        printSectionId="printDiv"
-        ngxPrint ><mat-icon>print</mat-icon></button>
-<!--      <button (click)="changeVisibility()">Just Test</button>-->
+      <div class="row">
+        <div class="col">
+          <button
+            mat-stroked-button
+            [printStyle]="printDivStyle"
+            printSectionId="printDiv"
+            ngxPrint ><mat-icon>print</mat-icon>
+            Print with transaction
+          </button>
+        </div>
+        <div class="col">
+          <button
+            mat-stroked-button
+            [printStyle]="printDivStyle"
+            printSectionId="printSummery"
+            ngxPrint ><mat-icon>print</mat-icon>
+            Print without transaction
+          </button>
+        </div>
+      </div>
     <div id="printDiv">
+      <div id="printSummery">
       <mat-card class="ml-2 mt-2">
         <div class="form-container">
 
           <div class="container" *ngIf="oneJobData" fxLayout="column" fxLayout.xs="column" fxLayoutAlign="start" fxLayoutGap="10px" fxLayoutGap.xs="0">
-<!--            <table style=" border: none;" class="table1">-->
-<!--              <tbody>-->
-<!--              <tr>-->
-<!--                <th colspan="8" style="text-align: center ; padding-left: 2px;padding-right: 2px;">Job ID : {{oneJobData.job_number}}</th>-->
-<!--              </tr>-->
-<!--              <tr>-->
-<!--                <td>Challan No :</td>-->
-<!--                <td colspan="8">{{oneJobData.order_number}}</td>-->
-
-<!--              </tr>-->
-<!--              <tr>-->
-<!--                <td>Date :</td>-->
-<!--                <td colspan="2">{{oneJobData.date}}</td>-->
-<!--                <td>DD :</td>-->
-<!--                <td colspan="2">{{oneJobData.date_of_delivery}}</td>-->
-<!--                <td></td>-->
-<!--                <td colspan="2"></td>-->
-<!--              </tr>-->
-<!--              <tr>-->
-<!--                <td>Model :</td>-->
-<!--                <td colspan="2"><b>{{oneJobData.model_number}}</b></td>-->
-<!--                <td>Pcs :</td>-->
-<!--                <td colspan="2"><b>{{oneJobData.quantity}}</b></td>-->
-<!--                <td>Size :</td>-->
-<!--                <td colspan="2"><b>{{oneJobData.size}}</b></td>-->
-<!--              </tr>-->
-<!--              </tbody>-->
-<!--            </table>-->
             <label style="text-align: center"><b>Job ID : {{oneJobData.job_number}}</b></label>
             <label>Challan No : &nbsp;{{oneJobData.order_number}}</label>
             <label>Date : &nbsp;{{oneJobData.date}}&nbsp;&nbsp; DD : {{oneJobData.date_of_delivery}} </label>
             <label>Model : &nbsp;<b>{{oneJobData.model_number}}</b>&nbsp;&nbsp; Pcs : <b>{{oneJobData.quantity}}</b>&nbsp;&nbsp;Size :<b>{{oneJobData.size}}</b></label>
-
             <table style=""  *ngIf="totalData">
               <tbody>
               <tr>
@@ -116,6 +101,7 @@
           </div>
         </div>
       </mat-card>
+      </div>
 <!--      <div [hidden]="!showTransactionDiv">-->
       <div  class="col-12">
 <!--        <router-outlet ></router-outlet>-->

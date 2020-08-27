@@ -95,15 +95,14 @@
 <!--              <mat-placeholder>Model Number</mat-placeholder>-->
 <!--              <input matInput  formControlName="model_number" (change)="findModel()">-->
 <!--            </mat-form-field>-->
-            <mat-form-field class="example-full-width">
+            <mat-form-field class="example-full-width" *ngIf="options">
               <input type="text"
                      placeholder="Model"
                      aria-label="Number"
                      matInput
 
                      [matAutocomplete]="auto"
-                     formControlName="model_number"
-              >
+                     formControlName="model_number">
               <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" (optionSelected)="findModel($event)">
                 <mat-option *ngFor="let option of modelNumberFilteredOptions | async" [value]="option">
                   {{option}}
@@ -164,6 +163,9 @@
         </div>
       </div>
     </mat-card>
+    <div style="background-color: aqua; color : black">
+      <pre>{{options | json}}</pre>
+    </div>
   </div>
   <div id ="order-table-div" fxLayout="column" fxFlex="65" class="mr-1">
     <div class="row" style="align-content: center; text-align: center">

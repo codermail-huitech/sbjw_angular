@@ -36,8 +36,9 @@ export class JobDetailComponent implements OnInit {
   }
 
   printDivStyle = {
-    table: {'border-collapse': 'collapse', 'width' : '40%'},
-    label:{'width': '40%'},
+    // printDiv: {marginRight : '5px', marginLeft : '5px', marginTop : '5px'},
+    table: {'border-collapse': 'collapse', 'width' : '35%'},
+    label:{'width': '35%'},
     h1 : {color: 'red'},
     h2 : {border: 'solid 1px'},
     td: {border: '1px solid red', margin: '0px', padding: '3px'}

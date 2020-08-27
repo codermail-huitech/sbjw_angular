@@ -33,7 +33,7 @@ const routes: Routes = [
   // {path: 'job_transaction/:id',canActivate : [AuthGuardService], component: JobTransactionComponent},
   {path: 'job_detail/:id',canActivate : [AuthGuardService], component: JobDetailComponent,
     children: [
-      {path: '', component: GoldSubmitComponent},
+      {path: '', component: JobTransactionComponent},
       {path: 'goldSubmit', component: GoldSubmitComponent},
       {path: 'goldReturn', component: GoldReturnComponent},
       {path: 'dalSubmit', component: DalSubmitComponent},

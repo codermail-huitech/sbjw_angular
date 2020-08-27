@@ -42,6 +42,8 @@ export class GoldSubmitComponent implements OnInit {
     const index = this.savedJobsData.findIndex(x => x.id == this.jobMasterId);
     this.oneJobData = this.savedJobsData[index];
     this.jobTaskForm.patchValue({material_name: this.oneJobData.material_name});
+    console.log('gold submit');
+    console.log(this.oneJobData);
   }
 
   onSubmit(){

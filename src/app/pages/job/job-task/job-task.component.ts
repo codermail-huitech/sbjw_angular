@@ -33,7 +33,7 @@ export class JobTaskComponent implements OnInit {
 
   saveBtnName: string;
   isShowJobMasterList = true;
-  showCompleteJobs = true;
+  showCompleteJobs = false;
   constructor(private jobTaskService: JobTaskService ,private _snackBar: MatSnackBar, private confirmationDialogService: ConfirmationDialogService, private orderService: OrderService ) {
 
     console.log('i am constructor');
@@ -41,7 +41,7 @@ export class JobTaskComponent implements OnInit {
 
   ngOnInit(): void {
     console.log('i am initializer');
-    this.showCompleteJobs=true;
+    this.showCompleteJobs=false;
 
     this.jobTaskForm = this.jobTaskService.jobTaskForm;
 

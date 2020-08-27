@@ -112,6 +112,7 @@
             <label>User : {{userData.personName}}</label>
             <label>POS :</label>
             <label>Time :</label>
+            <br><br><br>
           </div>
         </div>
       </mat-card>
@@ -153,17 +154,17 @@
 
   <div fxLayout="column" fxFlex="60" class="mr-1" id ="jobTask-div" style="background-color: #e8af0a">
     <div class="m-2">
-      <button type="button"  class="btn btn-warning" [routerLink]="['./goldSubmit']">Gold Submit</button>
-      <button type="button"  class="btn btn-primary" [routerLink]="['./goldReturn']">Gold Return</button>
-      <button type="button" class="btn btn-warning" [routerLink]="['./dalSubmit']">Dal Submit</button>
-      <button type="button" class="btn btn-primary" [routerLink]="['./dalReturn']">Dal Return</button>
-      <button type="button" class="btn btn-warning" [routerLink]="['./panSubmit']">Pan Submit</button>
-      <button type="button" class="btn btn-primary" [routerLink]="['./panReturn']">Pan Return</button>
-      <button type="button" class="btn btn-warning" [routerLink]="['./nitricReturn']">Nitric Return</button>
-      <button type="button" class="btn btn-primary" [routerLink]="['./bronzeSubmit']">Bronze Submit</button>
+      <button type="button"  class="btn btn-warning" [hidden]="oneJobData.status_id==100" [routerLink]="['./goldSubmit']">Gold Submit</button>
+      <button type="button"  class="btn btn-primary" [hidden]="oneJobData.status_id==100" [routerLink]="['./goldReturn']">Gold Return</button>
+      <button type="button" class="btn btn-warning"  [hidden]="oneJobData.status_id==100" [routerLink]="['./dalSubmit']">Dal Submit</button>
+      <button type="button" class="btn btn-primary"  [hidden]="oneJobData.status_id==100" [routerLink]="['./dalReturn']">Dal Return</button>
+      <button type="button" class="btn btn-warning"  [hidden]="oneJobData.status_id==100" [routerLink]="['./panSubmit']">Pan Submit</button>
+      <button type="button" class="btn btn-primary"  [hidden]="oneJobData.status_id==100" [routerLink]="['./panReturn']">Pan Return</button>
+      <button type="button" class="btn btn-warning"  [hidden]="oneJobData.status_id==100" [routerLink]="['./nitricReturn']">Nitric Return</button>
+      <button type="button" class="btn btn-primary"  [hidden]="oneJobData.status_id==100" [routerLink]="['./bronzeSubmit']">Bronze Submit</button>
 <!--      <button type="button" class="btn btn-primary"><a href="job_transaction/{{oneJobData.id}}">Transaction Details</a></button>-->
       <button type="button" class="btn btn-warning" [routerLink]="['./job_transaction']">Details</button>
-      <button type="button" class="btn btn-primary" [routerLink]="['./job_finish']">Finish</button>
+      <button type="button" class="btn btn-primary"  [hidden]="oneJobData.status_id==100"   [routerLink]="['./job_finish']">Finish</button>
 
 <!--      <a [routerLink]="['./tracks']">Tracks</a> |-->
     </div>

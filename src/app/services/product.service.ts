@@ -20,6 +20,10 @@ export class ProductService {
   productForm: FormGroup;
   productSubject = new Subject<Product[]>();
 
+  getProductUpdateListener(){
+    return this.productSubject.asObservable();
+  }
+
   constructor(private http: HttpClient) {
     console.log('Product Service Initiated for first time');
     this.http.get('http://127.0.0.1:8000/api/products')
@@ -45,10 +49,6 @@ export class ProductService {
 
   fillFormByUpdatebaleData(product){
     this.productForm.setValue(product);
-  }
-
-  getProductUpdateListener(){
-    return this.productSubject.asObservable();
   }
 
   saveProduct(product){

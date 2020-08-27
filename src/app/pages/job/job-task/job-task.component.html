@@ -1,5 +1,5 @@
 <div class="row" style="align-content: center; text-align: center">
-  <div class="col"><button style="background-color: green" mat-button class="col-12" mat-stroked-button (click)="jobListShow()">{{showCompleteJobs==true? 'Show Pending Jobs List':'Show Finished Jobs List'}}</button></div>
+  <div class="col"><button style="background-color: green" mat-button class="col-12" mat-stroked-button (click)="jobListShow()">{{showCompleteJobs==true ? 'Show Pending Jobs List':'Show Finished Jobs List'}}</button></div>
 </div>
 <div fxLayout.xs="column" [hidden]="formTaskDiv" fxLayout="row" fxLayoutAlign="space-between stretch" fxFlexFill id="job-div">
 
@@ -53,7 +53,7 @@
           <td >{{data.quantity}}</td>
           <td >{{data.size}}</td>
           <td>
-            <button mat-icon-button color="primary" aria-label="Open Master" [routerLink]="['/job_detail',data.id]"   (click)="placeDetails(data)">
+            <button mat-icon-button color="primary" aria-label="Open Master"  [routerLink]="['/job_detail',data.id]"   (click)="placeDetails(data)">
               <mat-icon>forward</mat-icon>
             </button>
           </td>

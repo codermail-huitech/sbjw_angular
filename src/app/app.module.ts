@@ -53,6 +53,7 @@ import { NitricReturnComponent } from './pages/job/job-detail/nitric-return/nitr
 import { BronzeSubmitComponent } from './pages/job/job-detail/bronze-submit/bronze-submit.component';
 import { JobTransactionComponent } from './pages/job/job-detail/job-transaction/job-transaction.component';
 import { FinishJobComponent } from './pages/job/job-detail/finish-job/finish-job.component';
+import { BillComponent } from './pages/bill/bill.component';
 
 
 @NgModule({
@@ -86,7 +87,8 @@ import { FinishJobComponent } from './pages/job/job-detail/finish-job/finish-job
     NitricReturnComponent,
     BronzeSubmitComponent,
     JobTransactionComponent,
-    FinishJobComponent
+    FinishJobComponent,
+    BillComponent
 
   ],
   imports: [

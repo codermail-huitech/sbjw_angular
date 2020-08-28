@@ -9,6 +9,7 @@ import {OrderMaster} from '../models/orderMaster.model';
 import {catchError, tap} from 'rxjs/operators';
 import {OrderResponseData} from './order.service';
 import {JobMaster} from '../models/jobMaster.model';
+import {FinishedJobs} from "../models/finishedJobs";
 
 export interface JobResponseData {
   success: number;

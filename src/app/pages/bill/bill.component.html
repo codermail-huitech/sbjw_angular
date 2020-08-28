@@ -1,0 +1,19 @@
+<div fxLayout.xs="column"  fxLayout="row" fxLayoutAlign="space-between stretch" fxFlexFill class="create-bill-div" >
+  <div  fxFlex="100" *ngIf="finshedJobs" style="background-color: aquamarine" >
+    <table class="table">
+      <thead>
+      <tr>
+        <th>SL No.</th>
+        <th>Customer Name</th>
+
+      </tr>
+      </thead>
+      <tbody>
+      <tr  *ngFor="let data of finshedJobs; let indexOfelement = index" >
+        <td>{{indexOfelement+1}}</td>
+        <td >{{data.person_name}}</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

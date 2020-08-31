@@ -14,9 +14,9 @@
         <td>{{indexOfelement+1}}</td>
         <td >{{data.person_name}}</td>
         <td>
-          <button  mat-icon-button color="primary" aria-label="Open Details" style="text-align: center" (click)="getDetails(data)">
-            <mat-icon>forward</mat-icon>
-          </button>
+<!--          <button  mat-icon-button color="primary" aria-label="Open Details" style="text-align: center" [routerLink]="['/job_detail',data.id]" (click)="getDetails(data)">-->
+<!--            <mat-icon>forward</mat-icon>-->
+<!--          </button>-->
         </td>
 
       </tr>
@@ -24,33 +24,33 @@
     </table>
   </div>
 </div>
-<div fxLayout.xs="column" [hidden]="!showDetails"  fxLayout="row" fxLayoutAlign="space-between stretch" fxFlexFill style="background-color: violet" >
-<!--  <div class="col">-->
-<!--    <button  class="bg-primary m-1 btn btn-block" (click)="changeShowDetails()">-->
-<!--      <mat-icon>keyboard_backspace</mat-icon>-->
-<!--      Back-->
-<!--    </button>-->
+<!--<div fxLayout.xs="column" [hidden]="!showDetails"  fxLayout="row" fxLayoutAlign="space-between stretch" fxFlexFill >-->
+<!--&lt;!&ndash;  <div class="col">&ndash;&gt;-->
+<!--&lt;!&ndash;    <button  class="bg-primary m-1 btn btn-block" (click)="changeShowDetails()">&ndash;&gt;-->
+<!--&lt;!&ndash;      <mat-icon>keyboard_backspace</mat-icon>&ndash;&gt;-->
+<!--&lt;!&ndash;      Back&ndash;&gt;-->
+<!--&lt;!&ndash;    </button>&ndash;&gt;-->
+<!--&lt;!&ndash;  </div>&ndash;&gt;-->
+<!--  <div  fxFlex="100" class="col" *ngIf="orderDetails" style="background-color: #e8c50e" >-->
+<!--    <table class="table">-->
+<!--      <thead>-->
+<!--      <tr>-->
+<!--        <th>SL No.</th>-->
+<!--        <th>Order Number</th>-->
+<!--        <th>Bill</th>-->
+<!--      </tr>-->
+<!--      </thead>-->
+<!--      <tbody>-->
+<!--      <tr  *ngFor="let data of orderDetails; let indexOfelement = index" >-->
+<!--        <td>{{indexOfelement+1}}</td>-->
+<!--        <td >{{data.order_number}}</td>-->
+<!--        <td>-->
+<!--          <button  mat-icon-button color="primary" aria-label="Open Details" style="text-align: center">-->
+<!--            <mat-icon>forward</mat-icon>-->
+<!--          </button>-->
+<!--        </td>-->
+<!--      </tr>-->
+<!--      </tbody>-->
+<!--    </table>-->
 <!--  </div>-->
-  <div  fxFlex="100" class="col" *ngIf="orderDetails" style="background-color: #e8c50e" >
-    <table class="table">
-      <thead>
-      <tr>
-        <th>SL No.</th>
-        <th>Order Number</th>
-        <th>Bill</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr  *ngFor="let data of orderDetails; let indexOfelement = index" >
-        <td>{{indexOfelement+1}}</td>
-        <td >{{data.order_number}}</td>
-        <td>
-          <button  mat-icon-button color="primary" aria-label="Open Details" style="text-align: center">
-            <mat-icon>forward</mat-icon>
-          </button>
-        </td>
-      </tr>
-      </tbody>
-    </table>
-  </div>
-</div>
+<!--</div>-->

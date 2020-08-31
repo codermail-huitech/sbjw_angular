@@ -54,6 +54,7 @@ import { BronzeSubmitComponent } from './pages/job/job-detail/bronze-submit/bron
 import { JobTransactionComponent } from './pages/job/job-detail/job-transaction/job-transaction.component';
 import { FinishJobComponent } from './pages/job/job-detail/finish-job/finish-job.component';
 import { BillComponent } from './pages/bill/bill.component';
+import { BillOrderDetailsComponent } from './pages/bill/bill-order-details/bill-order-details.component';
 
 
 @NgModule({
@@ -88,7 +89,8 @@ import { BillComponent } from './pages/bill/bill.component';
     BronzeSubmitComponent,
     JobTransactionComponent,
     FinishJobComponent,
-    BillComponent
+    BillComponent,
+    BillOrderDetailsComponent
 
   ],
   imports: [

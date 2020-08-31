@@ -21,6 +21,7 @@ import {BronzeSubmitComponent} from "./pages/job/job-detail/bronze-submit/bronze
 import {JobTransactionComponent} from "./pages/job/job-detail/job-transaction/job-transaction.component";
 import {FinishJobComponent} from "./pages/job/job-detail/finish-job/finish-job.component";
 import {BillComponent} from "./pages/bill/bill.component";
+import {BillOrderDetailsComponent} from "./pages/bill/bill-order-details/bill-order-details.component";
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -31,7 +32,6 @@ const routes: Routes = [
   {path: 'order', canActivate:  [AuthGuardService], component: OrderComponent},
   {path: 'job', canActivate:  [AuthGuardService], component: JobComponent},
   {path: 'job_task',canActivate : [AuthGuardService], component: JobTaskComponent},
-  {path: 'bill',canActivate : [AuthGuardService], component: BillComponent},
   {path: 'job_detail/:id',canActivate : [AuthGuardService], component: JobDetailComponent,
 
     children: [
@@ -47,6 +47,12 @@ const routes: Routes = [
       {path: 'job_transaction', component: JobTransactionComponent},
       {path: 'job_finish', component: FinishJobComponent},
       // {path: 'albums', component: ArtistAlbumListComponent},
+    ]
+  },
+  {path: 'bill/:id',canActivate : [AuthGuardService], component: BillComponent,
+
+    children: [
+      {path: 'bill_order_details', component: BillOrderDetailsComponent}
     ]
   },
 

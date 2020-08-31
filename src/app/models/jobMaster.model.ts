@@ -20,6 +20,7 @@ export class JobMaster{
   order_number?: string;
   model_number?: string;
   status_id ?: number;
+  person_name?: string;
   constructor() {
   }
 }

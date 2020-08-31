@@ -55,6 +55,7 @@ import { JobTransactionComponent } from './pages/job/job-detail/job-transaction/
 import { FinishJobComponent } from './pages/job/job-detail/finish-job/finish-job.component';
 import { BillComponent } from './pages/bill/bill.component';
 import { BillOrderDetailsComponent } from './pages/bill/bill-order-details/bill-order-details.component';
+import { BillJobMasterDetailsComponent } from './pages/bill/bill-job-master-details/bill-job-master-details.component';
 
 
 @NgModule({
@@ -90,7 +91,8 @@ import { BillOrderDetailsComponent } from './pages/bill/bill-order-details/bill-
     JobTransactionComponent,
     FinishJobComponent,
     BillComponent,
-    BillOrderDetailsComponent
+    BillOrderDetailsComponent,
+    BillJobMasterDetailsComponent
 
   ],
   imports: [

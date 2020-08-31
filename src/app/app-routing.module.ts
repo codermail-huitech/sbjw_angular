@@ -22,6 +22,7 @@ import {JobTransactionComponent} from "./pages/job/job-detail/job-transaction/jo
 import {FinishJobComponent} from "./pages/job/job-detail/finish-job/finish-job.component";
 import {BillComponent} from "./pages/bill/bill.component";
 import {BillOrderDetailsComponent} from "./pages/bill/bill-order-details/bill-order-details.component";
+import {BillJobMasterDetailsComponent} from './pages/bill/bill-job-master-details/bill-job-master-details.component';
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -33,7 +34,6 @@ const routes: Routes = [
   {path: 'job', canActivate:  [AuthGuardService], component: JobComponent},
   {path: 'job_task',canActivate : [AuthGuardService], component: JobTaskComponent},
   {path: 'job_detail/:id',canActivate : [AuthGuardService], component: JobDetailComponent,
-
     children: [
       {path: '', component: JobTransactionComponent},
       {path: 'goldSubmit', component: GoldSubmitComponent},
@@ -49,12 +49,14 @@ const routes: Routes = [
       // {path: 'albums', component: ArtistAlbumListComponent},
     ]
   },
-  {path: 'bill/:id',canActivate : [AuthGuardService], component: BillComponent,
-
-    children: [
-      {path: 'bill_order_details', component: BillOrderDetailsComponent}
-    ]
+  {path: 'bill',canActivate : [AuthGuardService], component: BillComponent},
+  {path: 'bill_order_details/:id', canActivate:  [AuthGuardService], component: BillOrderDetailsComponent,
+    // children: [
+    //   {
+    //     path: 'bill_jobMaster_details', component: BillJobMasterDetailsComponent },
+    // ],
   },
+  {path: 'bill_jobMaster_details/:id',canActivate : [AuthGuardService], component: BillJobMasterDetailsComponent},
 
 ];
 

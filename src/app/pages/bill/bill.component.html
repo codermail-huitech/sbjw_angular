@@ -1,4 +1,4 @@
-<div fxLayout.xs="column" [hidden]="showDetails"  fxLayout="row" fxLayoutAlign="space-between stretch" fxFlexFill id="create-bill-div" >
+<div fxLayout.xs="column"   fxLayout="row" fxLayoutAlign="space-between stretch" fxFlexFill id="create-bill-div" >
   <div  fxFlex="100" *ngIf="finshedJobs"  >
     <table class="table">
       <thead>
@@ -14,9 +14,9 @@
         <td>{{indexOfelement+1}}</td>
         <td >{{data.person_name}}</td>
         <td>
-<!--          <button  mat-icon-button color="primary" aria-label="Open Details" style="text-align: center" [routerLink]="['/job_detail',data.id]" (click)="getDetails(data)">-->
-<!--            <mat-icon>forward</mat-icon>-->
-<!--          </button>-->
+          <button  mat-icon-button color="primary" aria-label="Open Details" style="text-align: center" [routerLink]="['/bill_order_details',data.order_master_id]">
+            <mat-icon>forward</mat-icon>
+          </button>
         </td>
 
       </tr>

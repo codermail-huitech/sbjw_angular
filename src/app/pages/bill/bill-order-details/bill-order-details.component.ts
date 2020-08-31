@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import {ActivatedRoute} from '@angular/router';
+import {BillService} from '../../../services/bill.service';
+import {OrderDetail} from '../../../models/orderDetail.model';
 
 @Component({
   selector: 'app-bill-order-details',
@@ -6,10 +9,23 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./bill-order-details.component.scss']
 })
 export class BillOrderDetailsComponent implements OnInit {
+  orderDetails: OrderDetail[];
 
-  constructor() { }
+  constructor(private  route : ActivatedRoute, private billService : BillService) { }
 
   ngOnInit(): void {
+    this.route.params.subscribe(params => {
+      // console.log(params['id']);
+      this.billService.getDetails(params['id']);
+    });
+    this.billService.getOrderDetailsSubUpdateListener()
+      .subscribe((details: OrderDetail[]) => {
+        this.orderDetails = details;
+        // console.log('bill_order_details');
+        // console.log(this.orderDetails );
+      });
+
+
   }
 
 }

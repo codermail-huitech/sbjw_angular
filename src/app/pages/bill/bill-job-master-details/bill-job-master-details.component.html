@@ -5,23 +5,23 @@
   <!--      Back-->
   <!--    </button>-->
   <!--  </div>-->
-  <div  fxFlex="100" class="col" *ngIf="orderDetails" style="background-color: #e8c50e" >
+  <div  fxFlex="100" class="col" *ngIf="finishedJobData" style="background-color: #e8c50e" >
     <table class="table">
       <thead>
       <tr>
         <th>SL No.</th>
-        <th>Customer Name</th>
-        <th>Order Number</th>
-        <th>Job Details</th>
+        <th>Job Number</th>
+        <th>Karigarh Name</th>
+        <th>Create Bill</th>
       </tr>
       </thead>
       <tbody>
-      <tr  *ngFor="let data of orderDetails; let indexOfelement = index" >
+      <tr  *ngFor="let data of finishedJobData; let indexOfelement = index" >
         <td>{{indexOfelement+1}}</td>
+        <td >{{data.job_number}}</td>
         <td>{{data.person_name}}</td>
-        <td >{{data.order_number}}</td>
         <td>
-          <button  mat-icon-button color="primary" aria-label="Open Details" style="text-align: center" [routerLink]="['/bill_jobMaster_details',data.id]">
+          <button  mat-icon-button color="primary" aria-label="Open Details" style="text-align: center" >
             <mat-icon>forward</mat-icon>
           </button>
         </td>

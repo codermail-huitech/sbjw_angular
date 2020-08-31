@@ -10,35 +10,14 @@ import {OrderDetail} from "../../models/orderDetail.model";
   styleUrls: ['./bill.component.scss']
 })
 export class BillComponent implements OnInit {
-  finshedJobs : FinishedJobs[] = [];
-  showDetails = false;
+  finshedJobs: FinishedJobs[] = [];
   orderDetails: OrderDetail[];
 
-  constructor(private  billService : BillService) { }
+  constructor(private  billService: BillService) { }
 
   ngOnInit(): void {
-    this.showDetails = false;
-
-    this.billService.getFinishedJobsSubUpdateListener().subscribe((finishedJobs)=>{
-       this.finshedJobs=finishedJobs;
-    })
-
-    this.billService.getOrderDetailsSubUpdateListener()
-      .subscribe((details: OrderDetail[]) => {
-        this.orderDetails = details;
+    this.billService.getFinishedJobsSubUpdateListener().subscribe((finishedJobs) => {
+       this.finshedJobs = finishedJobs;
     });
-
   }
-
-  getDetails(data){
-    this.showDetails = true;
-    let data1 = this.billService.getDetails(data.order_master_id);
-    console.log('data1');
-    console.log(data1);
-  }
-
-  changeShowDetails(){
-    this.showDetails = false;
-  }
-
 }

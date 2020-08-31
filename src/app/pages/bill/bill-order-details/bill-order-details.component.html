@@ -1,4 +1,4 @@
-<div fxLayout.xs="column"  fxLayout="row" fxLayoutAlign="space-between stretch" fxFlexFill >
+<div fxLayout.xs="column" [hidden]="disableDetails" fxLayout="row" fxLayoutAlign="space-between stretch" fxFlexFill >
   <!--  <div class="col">-->
   <!--    <button  class="bg-primary m-1 btn btn-block" (click)="changeShowDetails()">-->
   <!--      <mat-icon>keyboard_backspace</mat-icon>-->
@@ -21,7 +21,7 @@
         <td>{{data.person_name}}</td>
         <td >{{data.order_number}}</td>
         <td>
-          <button  mat-icon-button color="primary" aria-label="Open Details" style="text-align: center" [routerLink]="['/bill_jobMaster_details',data.id]">
+          <button  mat-icon-button color="primary" aria-label="Open Details" style="text-align: center" [routerLink]="['./bill_jobMaster_details',data.id]" (click)="disablePage()">
             <mat-icon>forward</mat-icon>
           </button>
         </td>
@@ -30,3 +30,9 @@
     </table>
   </div>
 </div>
+<div [hidden]="!disableDetails" style="background-color: #c6538c">
+  <router-outlet ></router-outlet>
+</div>
+<!--<div fxLayout.xs="column"  fxLayout="row" fxLayoutAlign="space-between stretch" fxFlexFill >-->
+<!--  <router-outlet ></router-outlet>-->
+<!--</div>-->

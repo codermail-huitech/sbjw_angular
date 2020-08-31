@@ -42,6 +42,10 @@ export class BillService {
       });
   }
 
+  getFinishedJobs(){
+    return([...this.finshedJobs]);
+  }
+
   getDetails(data){
     return this.http.post<ProductResponseData>('http://127.0.0.1:8000/api/fetchingDetails', data)
       .subscribe((response: {success: number, data: OrderDetail[]})  => {

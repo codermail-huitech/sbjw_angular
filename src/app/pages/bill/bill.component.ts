@@ -19,5 +19,6 @@ export class BillComponent implements OnInit {
     this.billService.getFinishedJobsSubUpdateListener().subscribe((finishedJobs) => {
        this.finshedJobs = finishedJobs;
     });
+    this.finshedJobs = this.billService.getFinishedJobs();
   }
 }

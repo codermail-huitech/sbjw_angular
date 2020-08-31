@@ -3,6 +3,7 @@ import {ActivatedRoute} from '@angular/router';
 import {BillService} from '../../../services/bill.service';
 import {OrderDetail} from '../../../models/orderDetail.model';
 import {JobMaster} from '../../../models/jobMaster.model';
+// import {Location} from '@angular/common';
 
 @Component({
   selector: 'app-bill-job-master-details',
@@ -14,7 +15,6 @@ export class BillJobMasterDetailsComponent implements OnInit {
   finishedJobData : JobMaster[];
 
   constructor(private  route : ActivatedRoute, private billService : BillService)  { }
-
   ngOnInit(): void {
     this.route.params.subscribe(params => {
        // console.log(params['id']);
@@ -28,5 +28,8 @@ export class BillJobMasterDetailsComponent implements OnInit {
         console.log(this.finishedJobData );
       });
   }
+  // backbtn(){
+  //   this.location.back();
+  // }
 
 }

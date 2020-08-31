@@ -51,12 +51,11 @@ const routes: Routes = [
   },
   {path: 'bill',canActivate : [AuthGuardService], component: BillComponent},
   {path: 'bill_order_details/:id', canActivate:  [AuthGuardService], component: BillOrderDetailsComponent,
-    // children: [
-    //   {
-    //     path: 'bill_jobMaster_details', component: BillJobMasterDetailsComponent },
-    // ],
+    children: [
+      {path: 'bill_jobMaster_details/:id', component: BillJobMasterDetailsComponent}
+    ],
   },
-  {path: 'bill_jobMaster_details/:id',canActivate : [AuthGuardService], component: BillJobMasterDetailsComponent},
+  // {path: 'bill_jobMaster_details/:id',canActivate : [AuthGuardService], component: BillJobMasterDetailsComponent},
 
 ];
 

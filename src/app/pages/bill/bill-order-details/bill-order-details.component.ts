@@ -10,10 +10,12 @@ import {OrderDetail} from '../../../models/orderDetail.model';
 })
 export class BillOrderDetailsComponent implements OnInit {
   orderDetails: OrderDetail[];
+  disableDetails: boolean;
 
   constructor(private  route : ActivatedRoute, private billService : BillService) { }
 
   ngOnInit(): void {
+    this.disableDetails = false;
     this.route.params.subscribe(params => {
       // console.log(params['id']);
       this.billService.getDetails(params['id']);
@@ -24,8 +26,9 @@ export class BillOrderDetailsComponent implements OnInit {
         // console.log('bill_order_details');
         // console.log(this.orderDetails );
       });
-
-
+  }
+  disablePage(){
+    this.disableDetails = true;
   }
 
 }

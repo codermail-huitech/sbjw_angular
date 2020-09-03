@@ -38,6 +38,7 @@ export class BillService {
       .subscribe((response: {success: number, data: FinishedJobs[]}) => {
         const {data} = response;
         this.finshedJobs = data;
+        console.log(this.finshedJobs);
         this.finishedJobsSub.next([...this.finshedJobs]);
       });
   }

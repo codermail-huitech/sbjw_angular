@@ -6,6 +6,7 @@ export class FinishedJobs{
   person_name: string;
   order_master_id: number;
   order_details_id: number;
+  status : string;
   constructor(){
 
   }

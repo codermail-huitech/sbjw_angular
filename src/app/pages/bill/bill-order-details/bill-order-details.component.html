@@ -6,7 +6,7 @@
   <!--    </button>-->
   <!--  </div>-->
   <div  fxFlex="100" class="col" *ngIf="orderDetails" style="background-color: #e8c50e" >
-    <table class="table">
+    <table class="table"  *ngIf="orderDetails.length != 0">
       <thead>
       <tr>
         <th>SL No.</th>
@@ -28,6 +28,9 @@
       </tr>
       </tbody>
     </table>
+    <div *ngIf="orderDetails.length == 0">
+      <h1 style="text-align: center; margin: 10px">NO JOB PLACED</h1>
+    </div>
   </div>
 </div>
 <div [hidden]="!disableDetails" style="background-color: #c6538c">

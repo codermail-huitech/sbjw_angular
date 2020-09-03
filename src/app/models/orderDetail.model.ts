@@ -17,6 +17,7 @@ export class OrderDetail{
   status_id ?: number;
   order_number?: string;
   person_name?: string;
+    status? : any;
   constructor() {
   }
 }

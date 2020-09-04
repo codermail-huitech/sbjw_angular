@@ -13,6 +13,8 @@ import {JobMaster} from '../../../models/jobMaster.model';
 export class BillJobMasterDetailsComponent implements OnInit {
 
   finishedJobData : JobMaster[];
+  billJobData : JobMaster[] = [];
+
 
   constructor(private  route : ActivatedRoute, private billService : BillService)  { }
   ngOnInit(): void {
@@ -31,5 +33,20 @@ export class BillJobMasterDetailsComponent implements OnInit {
   // backbtn(){
   //   this.location.back();
   // }
+
+  selectionForBill(data){
+
+    const index = this.billJobData.findIndex(x=>x.id === data.id)
+    if(index >= 0){
+      this.billJobData.splice(index,1);
+    }else{
+      this.billJobData.push(data);
+    }
+    console.log(this.billJobData);
+  }
+  test(){
+    alert("hi");
+  }
+
 
 }

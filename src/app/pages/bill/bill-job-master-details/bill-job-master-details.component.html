@@ -20,16 +20,19 @@
       <tr  *ngFor="let data of finishedJobData; let indexOfelement = index" >
         <td>{{indexOfelement+1}}</td>
         <td >{{data.job_number}}</td>
-        <td>{{data.person_name}}</td>
+        <td>{{data.karigarh_name}}</td>
         <td>{{data.status}}</td>
         <td>
-          <button  mat-icon-button color="primary" aria-label="Open Details" style="text-align: center">
-            <mat-icon>forward</mat-icon>
-          </button>
+          <input type="checkbox" name="nameOfChoice" (click)="selectionForBill(data)" [disabled]="data.status == 'WORK IN PROGRESS'" >
         </td>
       </tr>
       </tbody>
     </table>
-  </div>
+    <div  style="text-align: center">
+      <button class="btn btn-info" aria-label=" Generate Bill" [disabled]="billJobData.length==0" (click)="test()" >
+        Generate Bill
+      </button>
+    </div>
 
+  </div>
 </div>

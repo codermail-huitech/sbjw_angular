@@ -1,11 +1,11 @@
-<div fxLayout.xs="column"  fxLayout="row" fxLayoutAlign="space-between stretch" fxFlexFill >
+<div fxLayout.xs="column"  fxLayout="row" fxLayoutAlign="space-between stretch" fxFlexFill  >
 <!--    <div class="col">-->
 <!--      <button  class="bg-primary m-1 btn btn-block" (click)="backbtn()">-->
 <!--        <mat-icon>keyboard_backspace</mat-icon>-->
 <!--        Back-->
 <!--      </button>-->
 <!--    </div>-->
-  <div  fxFlex="100" class="col" *ngIf="finishedJobData" style="background-color: violet" >
+  <div  fxFlex="100" class="col" *ngIf="finishedJobData"style="background-color: violet"  >
     <table class="table">
       <thead>
       <tr>
@@ -29,10 +29,13 @@
       </tbody>
     </table>
     <div  style="text-align: center">
-      <button class="btn btn-info" aria-label=" Generate Bill" [disabled]="billJobData.length==0" (click)="test()" >
+      <button class="btn btn-info" aria-label=" Generate Bill" [disabled]="billDetailsData.length==0" (click)="generateBill()" >
         Generate Bill
       </button>
+      <br>
+      <br>
     </div>
+
 
   </div>
 </div>

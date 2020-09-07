@@ -64,4 +64,6 @@ export class BillService {
         this.finishedJobDataSub.next([...this.finishedJobData]);
       });
   }
+
+
 }

@@ -3,6 +3,8 @@ import {ActivatedRoute} from '@angular/router';
 import {BillService} from '../../../services/bill.service';
 import {OrderDetail} from '../../../models/orderDetail.model';
 import {JobMaster} from '../../../models/jobMaster.model';
+import {BillMaster} from "../../../models/billMaster.model";
+import {BillDetail} from "../../../models/billDetail.model";
 // import {Location} from '@angular/common';
 
 @Component({
@@ -13,7 +15,10 @@ import {JobMaster} from '../../../models/jobMaster.model';
 export class BillJobMasterDetailsComponent implements OnInit {
 
   finishedJobData : JobMaster[];
-  billJobData : JobMaster[] = [];
+  // billJobData : JobMaster[] = [];
+  billMasterData : BillMaster;
+  // billMasterData : Array<{order_master_id: number, order_number: string}> = [];
+  billDetailsData : BillDetail[]=[];
 
 
   constructor(private  route : ActivatedRoute, private billService : BillService)  { }
@@ -36,16 +41,33 @@ export class BillJobMasterDetailsComponent implements OnInit {
 
   selectionForBill(data){
 
-    const index = this.billJobData.findIndex(x=>x.id === data.id)
+    const index = this.billDetailsData.findIndex(x=>x.id === data.id)
     if(index >= 0){
-      this.billJobData.splice(index,1);
+      this.billDetailsData.splice(index,1);
     }else{
-      this.billJobData.push(data);
+      this.billDetailsData.push(data);
     }
-    console.log(this.billJobData);
+    console.log(this.billDetailsData);
   }
-  test(){
-    alert("hi");
+  generateBill(){
+    // const x= this.billDetailsData[0];
+    this.billMasterData = {
+      order_master_id : this.billDetailsData[0].order_master_id,
+      order_number : this.billDetailsData[0].order_number,
+      person_name : this.billDetailsData[0].person_name,
+      address1 : this.billDetailsData[0].address1,
+      mobile1 : this.billDetailsData[0].mobile1,
+      pin : this.billDetailsData[0].pin,
+      area : this.billDetailsData[0].area,
+      city : this.billDetailsData[0].city,
+      state : this.billDetailsData[0].state,
+      po : this.billDetailsData[0].po,
+      date_of_order : this.billDetailsData[0].date_of_order
+    }
+
+
+    console.log('test');
+    console.log(this.billMasterData);
   }
 
 

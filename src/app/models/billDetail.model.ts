@@ -12,6 +12,7 @@ export class BillDetail{
   amount?: number;
   pureGold?: number;
   total?: number;
+  person_name?: string;
 
 
   constructor() {

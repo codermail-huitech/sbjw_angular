@@ -37,7 +37,27 @@
     </div>
   </div>
   <div id="bill-div" [hidden]="!showBill">
-    <table id="bill-detail-table" class="table">
+
+    <div class="d-flex m-5" *ngIf="billMasterData">
+      <div class="col-4">
+        <label><b>Customer Name & Address : </b></label><br>
+          <label>{{billMasterData.person_name}}</label><br>
+          <label>{{billMasterData.address1}}</label><br>
+          <label>{{billMasterData.city}}</label><br>
+          <label>{{billMasterData.area}}</label><br>
+          <label>{{billMasterData.pin}}</label><br>
+          <label>{{billMasterData.po}}</label><br>
+          <label>{{billMasterData.mobile1}}</label><br>
+      </div>
+      <div class="col-4"></div>
+      <div class="col-4"><br>
+        <label>Bill Number :</label><br>
+        <label>Bill Date :</label><br>
+        <label>Order Number :</label><br>
+        <label>Order Date :</label><br>
+      </div>
+    </div>
+    <table id="bill-detail-table" class="table mr-5 ml-5">
       <thead>
       <tr>
         <th>SL No.</th>

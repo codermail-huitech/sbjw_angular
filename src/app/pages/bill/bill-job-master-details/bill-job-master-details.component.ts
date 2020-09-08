@@ -14,11 +14,11 @@ import {BillDetail} from "../../../models/billDetail.model";
 })
 export class BillJobMasterDetailsComponent implements OnInit {
 
-  finishedJobData : JobMaster[];
-  // billJobData : JobMaster[] = [];
-  billMasterData : BillMaster;
+  finishedJobData: JobMaster[];
+  // billJobData: JobMaster[] = [];
+  billMasterData: BillMaster;
   // billMasterData : Array<{order_master_id: number, order_number: string}> = [];
-  billDetailsData : BillDetail[]=[];
+  billDetailsData : BillDetail[] = [];
   showBill = false;
 
 
@@ -65,8 +65,8 @@ export class BillJobMasterDetailsComponent implements OnInit {
   }
   generateBill(){
     // const x= this.billDetailsData[0];
-    this.showBill = true;
-    this.billMasterData = {
+    // this.showBill = true;
+      this.billMasterData = {
       order_master_id : this.billDetailsData[0].order_master_id,
       order_number : this.billDetailsData[0].order_number,
       person_name : this.billDetailsData[0].person_name,
@@ -78,7 +78,8 @@ export class BillJobMasterDetailsComponent implements OnInit {
       state : this.billDetailsData[0].state,
       po : this.billDetailsData[0].po,
       date_of_order : this.billDetailsData[0].date_of_order
-    }
+    };
+    this.showBill = true;
 
 
     console.log('test');

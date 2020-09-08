@@ -19,10 +19,12 @@ export class BillJobMasterDetailsComponent implements OnInit {
   billMasterData : BillMaster;
   // billMasterData : Array<{order_master_id: number, order_number: string}> = [];
   billDetailsData : BillDetail[]=[];
+  showBill = false;
 
 
   constructor(private  route : ActivatedRoute, private billService : BillService)  { }
   ngOnInit(): void {
+    this.showBill =false;
     this.route.params.subscribe(params => {
        // console.log(params['id']);
       this.billService.getFinishedJobData(params['id']);
@@ -40,17 +42,30 @@ export class BillJobMasterDetailsComponent implements OnInit {
   // }
 
   selectionForBill(data){
-
     const index = this.billDetailsData.findIndex(x=>x.id === data.id)
     if(index >= 0){
       this.billDetailsData.splice(index,1);
     }else{
-      this.billDetailsData.push(data);
+      console.log('data');
+      console.log(data);
+      this.billService.getGoldQuantity(data.id).subscribe((response)=>{
+
+        // console.log(response.data[0].total);
+        data.total = response.data[0].total.toFixed(3);
+        data.pure_gold = ((data.total*92)/100).toFixed(3);
+        this.billDetailsData.push(data);
+
+        console.log('response');
+        console.log(this.billDetailsData);
+      });
+
+      // this.billDetailsData.push(data);
     }
-    console.log(this.billDetailsData);
+    // console.log(this.billDetailsData);
   }
   generateBill(){
     // const x= this.billDetailsData[0];
+    this.showBill = true;
     this.billMasterData = {
       order_master_id : this.billDetailsData[0].order_master_id,
       order_number : this.billDetailsData[0].order_number,
@@ -68,6 +83,7 @@ export class BillJobMasterDetailsComponent implements OnInit {
 
     console.log('test');
     console.log(this.billMasterData);
+    console.log(this.billDetailsData);
   }
 
 

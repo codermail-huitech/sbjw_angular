@@ -5,7 +5,7 @@
 <!--        Back-->
 <!--      </button>-->
 <!--    </div>-->
-  <div  fxFlex="100" class="col" *ngIf="finishedJobData"style="background-color: violet"  >
+  <div  fxFlex="100" class="col" *ngIf="finishedJobData"style="background-color: violet" [hidden]="showBill" >
     <table class="table">
       <thead>
       <tr>
@@ -35,7 +35,39 @@
       <br>
       <br>
     </div>
-
+  </div>
+  <div id="bill-div" [hidden]="!showBill">
+    <table id="bill-detail-table" class="table">
+      <thead>
+      <tr>
+        <th>SL No.</th>
+        <th>Job Tag</th>
+        <th>Model</th>
+        <th>Size</th>
+        <th>Gross Weight</th>
+        <th>Gold 92.00g</th>
+        <th>Pure Gold</th>
+        <th>Quantity</th>
+        <th>L.C. Rs.</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr  *ngFor="let data of billDetailsData; let indexOfelement = index" >
+        <td>{{indexOfelement+1}}</td>
+        <td >{{data.job_number}}</td>
+        <td>{{data.model_number}}</td>
+        <td>{{data.size}}</td>
+        <td>{{data.gross_weight}}</td>
+        <td>{{data.total}}</td>
+        <td>{{data.pure_gold}}</td>
+        <td>{{data.quantity}}</td>
+<!--        <td>{{data.pure_gold}}</td>-->
+<!--        <td>-->
+<!--          <input type="checkbox" name="nameOfChoice" (click)="selectionForBill(data)" [disabled]="data.status == 'WORK IN PROGRESS'" >-->
+<!--        </td>-->
+      </tr>
+      </tbody>
+    </table>
 
   </div>
 </div>

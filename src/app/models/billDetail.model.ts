@@ -9,6 +9,7 @@ export class BillDetail{
   gross_weight?: number;
   material_quantity?: number;
   quantity?: number;
+  price?: number;
   amount?: number;
   pureGold?: number;
   total?: number;

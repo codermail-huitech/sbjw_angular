@@ -40,8 +40,8 @@
 
     <div class="d-flex m-5" *ngIf="billMasterData">
       <div class="col-4">
-        <label><b>Customer Name & Address : </b></label><br>
-          <label>{{billMasterData.person_name}}</label><br>
+        <label>Customer Name & Address : </label><br>
+          <label style="font-weight: bolder; font-size: larger">{{billMasterData.person_name}}</label><br>
           <label>{{billMasterData.address1}}</label><br>
           <label>{{billMasterData.city}}</label><br>
           <label>{{billMasterData.area}}</label><br>
@@ -51,8 +51,8 @@
       </div>
       <div class="col-4"></div>
       <div class="col-4"><br>
-        <label>Bill Number :</label><br>
-        <label>Bill Date :</label><br>
+        <label><b>Bill Number :</b></label><br>
+        <label><b>Bill Date :</b></label><br>
         <label>Order Number :</label><br>
         <label>Order Date :</label><br>
       </div>
@@ -81,10 +81,22 @@
         <td>{{data.total}}</td>
         <td>{{data.pure_gold}}</td>
         <td>{{data.quantity}}</td>
-<!--        <td>{{data.pure_gold}}</td>-->
+        <td>{{data.cost}}</td>
+<!--        <td>{{data.price * data.quantity}}</td>-->
 <!--        <td>-->
 <!--          <input type="checkbox" name="nameOfChoice" (click)="selectionForBill(data)" [disabled]="data.status == 'WORK IN PROGRESS'" >-->
 <!--        </td>-->
+      </tr>
+      <tr style=" border-top : 1px solid black; border-collapse: collapse">
+        <td></td>
+        <td></td>
+        <td>Total</td>
+        <td></td>
+        <td></td>
+        <td>{{total92Gold.toFixed(3)}} g</td>
+        <td>{{totalGold.toFixed(3)}} g</td>
+        <td>{{totalQuantity}}</td>
+        <td>{{totalCost}}</td>
       </tr>
       </tbody>
     </table>

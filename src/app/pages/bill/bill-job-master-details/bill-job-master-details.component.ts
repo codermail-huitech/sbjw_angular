@@ -89,30 +89,31 @@ export class BillJobMasterDetailsComponent implements OnInit {
     // const x= this.billDetailsData[0];
     // this.showBill = true;
     // console.log(this.billDetailsData);
-
-
+      if (this.billDetailsData) {
+        // const x = this.billDetailsData[0];
         this.billMasterData = {
-          order_master_id : this.billDetailsData[0].order_master_id,
-          order_number : this.billDetailsData[0].order_number,
-          person_name : this.billDetailsData[0].person_name,
-          address1 : this.billDetailsData[0].address1,
-          mobile1 : this.billDetailsData[0].mobile1,
-          pin : this.billDetailsData[0].pin,
-          area : this.billDetailsData[0].area,
-          city : this.billDetailsData[0].city,
-          state : this.billDetailsData[0].state,
-          po : this.billDetailsData[0].po,
-          date_of_order : this.billDetailsData[0].date_of_order
+          order_master_id: this.billDetailsData[0].order_master_id,
+          order_number: this.billDetailsData[0].order_number,
+          person_name: this.billDetailsData[0].person_name,
+          address1: this.billDetailsData[0].address1,
+          mobile1: this.billDetailsData[0].mobile1,
+          pin: this.billDetailsData[0].pin,
+          area: this.billDetailsData[0].area,
+          city: this.billDetailsData[0].city,
+          state: this.billDetailsData[0].state,
+          po: this.billDetailsData[0].po,
+          date_of_order: this.billDetailsData[0].date_of_order
         };
+      }
 
 
 
-    this.showBill = true;
+        this.showBill = true;
 
 
-    console.log('test');
-    console.log(this.totalGold);
-    console.log(this.billDetailsData);
+        console.log('test');
+        console.log(this.totalGold);
+        console.log(this.billDetailsData);
   }
 
 

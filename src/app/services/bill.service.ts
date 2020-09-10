@@ -11,6 +11,7 @@ import {JobMaster} from '../models/jobMaster.model';
 import {catchError, tap} from "rxjs/operators";
 import {JobResponseData} from "./job.service";
 import {BillDetail} from "../models/billDetail.model";
+import {BillMaster} from "../models/billMaster.model";
 
 @Injectable({
   providedIn: 'root'
@@ -71,6 +72,13 @@ export class BillService {
   getGoldQuantity(data){
     return this.http.get<{ success: number, data: BillDetail }>( GlobalVariable.BASE_API_URL + '/getGoldquantity/' + data,{})
       .pipe(catchError(this._serverError), tap(((response: {success: number, data: BillDetail}) => {
+      })));
+  }
+
+  saveBillMaster(billMasterData, billDetailsData){
+    console.log("service");
+    return this.http.post<{ success: number, data: BillMaster }>( GlobalVariable.BASE_API_URL + '/saveBillMaster' , {master : billMasterData, details: billDetailsData })
+      .pipe(catchError(this._serverError), tap(((response: {success: number, data: BillMaster}) => {
       })));
   }
 

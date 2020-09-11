@@ -7,6 +7,7 @@ import {BillMaster} from "../../../models/billMaster.model";
 import {BillDetail} from "../../../models/billDetail.model";
 import {toNumbers} from "@angular/compiler-cli/src/diagnostics/typescript_version";
 import {toInteger} from "@ng-bootstrap/ng-bootstrap/util/util";
+import {FinishedJobs} from "../../../models/finishedJobs";
 // import {Location} from '@angular/common';
 
 @Component({
@@ -26,10 +27,19 @@ export class BillJobMasterDetailsComponent implements OnInit {
   totalGold: number;
   totalQuantity: number;
   totalCost: number;
-
+  x : FinishedJobs[];
 
   constructor(private  route: ActivatedRoute, private billService: BillService) {
   }
+
+  printDivStyle = {
+    // printDiv: {marginRight : '5px', marginLeft : '5px', marginTop : '5px'},
+    table: {'border-collapse': 'collapse', 'width' : '100%'},
+    label:{'width': '100%'},
+    h1 : {color: 'red'},
+    h2 : {border: 'solid 1px'},
+    td: {border: '1px solid red', margin: '0px', padding: '3px'}
+  };
 
   ngOnInit(): void {
     this.total92Gold = 0;
@@ -94,13 +104,15 @@ export class BillJobMasterDetailsComponent implements OnInit {
     // this.showBill = true;
     // console.log(this.billDetailsData);
     const x = new Date();
-    let billDate =  x.getFullYear() + '-' + parseInt(x.getMonth() +1) + '-' + x.getDate()
+    let billDate =  x.getFullYear() + '-' + parseInt(x.getMonth() +1) + '-' + x.getDate();
+    console.log(billDate);
+    console.log(this.billDetailsData[0]);
       if (this.billDetailsData[0]) {
         // const x = this.billDetailsData[0];
         this.billMasterData = {
           order_master_id: this.billDetailsData[0].order_master_id,
-          order_number: this.billDetailsData[0].order_number,
-          person_name: this.billDetailsData[0].person_name,
+          orderNumber: this.billDetailsData[0].order_number,
+          personName: this.billDetailsData[0].person_name,
           address1: this.billDetailsData[0].address1,
           mobile1: this.billDetailsData[0].mobile1,
           pin: this.billDetailsData[0].pin,
@@ -108,18 +120,19 @@ export class BillJobMasterDetailsComponent implements OnInit {
           city: this.billDetailsData[0].city,
           state: this.billDetailsData[0].state,
           po: this.billDetailsData[0].po,
-          date_of_order: this.billDetailsData[0].date_of_order,
-          karigarh_id: this.billDetailsData[0].karigarh_id,
-          customer_id: this.billDetailsData[0].customer_id,
-          bill_date: billDate,
+          orderDate: this.billDetailsData[0].date_of_order,
+          karigarhId: this.billDetailsData[0].karigarh_id,
+          customerId: this.billDetailsData[0].customer_id,
+          billDate:  x.getFullYear() + '-' + parseInt(x.getMonth() +1) + '-' + x.getDate(),
           discount: 0
         };
+        console.log(this.billMasterData);
       }
       this.billService.saveBillMaster(this.billMasterData, this.billDetailsData).subscribe((response) => {
         this.billMasterData = {
           order_master_id: this.billDetailsData[0].order_master_id,
-          order_number: this.billDetailsData[0].order_number,
-          person_name: this.billDetailsData[0].person_name,
+          orderNumber: this.billDetailsData[0].order_number,
+          personName: this.billDetailsData[0].person_name,
           address1: this.billDetailsData[0].address1,
           mobile1: this.billDetailsData[0].mobile1,
           pin: this.billDetailsData[0].pin,
@@ -127,17 +140,30 @@ export class BillJobMasterDetailsComponent implements OnInit {
           city: this.billDetailsData[0].city,
           state: this.billDetailsData[0].state,
           po: this.billDetailsData[0].po,
-          date_of_order: this.billDetailsData[0].date_of_order,
-          karigarh_id: this.billDetailsData[0].karigarh_id,
-          customer_id: this.billDetailsData[0].customer_id,
-          bill_date: billDate,
+          orderDate: this.billDetailsData[0].date_of_order,
+          karigarhId: this.billDetailsData[0].karigarh_id,
+          customerId: this.billDetailsData[0].customer_id,
+          billDate:  x.getFullYear() + '-' + parseInt(x.getMonth() +1) + '-' + x.getDate(),
           discount: 0,
-          billNumber: response.data.bill_number
-        }
-        console.log( this.billMasterData);
+          billNumber:response.data.bill_number
+        };
+        // if(response.data){
+
+        this.x = this.billService.getFinishedJobs();
+        // const index = this.x.findIndex(s=>s.id===this.billMasterData.order_master_id);
+        // this.x.splice(index,1);
+        this.billService.getFinishedJobsSubUpdateListener().subscribe((finishedJobs) => {
+          const index = this.x.findIndex(s=>s.id===this.billMasterData.order_master_id);
+          this.x.splice(index,1);
+          return this.billService.finishedJobDataSub.next([...this.x]);
+        });
+        // this.billService.finishedJobDataSub.next([...this.x]);
+        console.log(this.x);
+        // this.billService.
+        // }
+        // console.log( this.billMasterData);
         this.showBill = true;
       });
-
 
   }
 

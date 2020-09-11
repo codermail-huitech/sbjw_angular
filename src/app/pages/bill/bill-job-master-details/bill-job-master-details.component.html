@@ -37,11 +37,21 @@
     </div>
   </div>
   <div id="bill-div" [hidden]="!showBill">
-
-    <div class="d-flex m-5" *ngIf="billMasterData">
+    <div style="text-align: center">
+      <button class="btn-primary"
+        mat-stroked-button
+        [printStyle]="printDivStyle"
+        printSectionId="printBillDiv"
+        ngxPrint ><mat-icon>print</mat-icon>
+        Print Bill
+      </button>
+    </div>
+    <div id="printBillDiv">
+<!--    <div class="d-flex" *ngIf="billMasterData">-->
+    <div fxLayout="row" *ngIf="billMasterData" style="justify-content: space-between">
       <div class="col-4">
         <label>Customer Name & Address : </label><br>
-          <label style="font-weight: bolder; font-size: larger">{{billMasterData.person_name}}</label><br>
+          <label style="font-weight: bolder; font-size: larger">{{billMasterData.personName}}</label><br>
           <label>{{billMasterData.address1}}</label><br>
           <label>{{billMasterData.city}}</label><br>
           <label>{{billMasterData.area}}</label><br>
@@ -52,12 +62,12 @@
       <div class="col-4"></div>
       <div class="col-4"><br>
         <label><b>Bill Number : {{billMasterData.billNumber}}</b></label><br>
-        <label><b>Bill Date : {{billMasterData.bill_date}}</b></label><br>
+        <label><b>Bill Date : {{billMasterData.billDate}}</b></label><br>
         <label>Order Number :</label><br>
         <label>Order Date :</label><br>
       </div>
-    </div>
-    <table id="bill-detail-table" class="table mr-5 ml-5">
+    </div><br> <br>
+    <table id="bill-detail-table" class="table">
       <thead>
       <tr>
         <th>SL No.</th>
@@ -100,6 +110,7 @@
       </tr>
       </tbody>
     </table>
+    </div>
 
   </div>
 </div>

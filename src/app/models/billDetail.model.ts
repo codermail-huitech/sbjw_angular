@@ -14,6 +14,20 @@ export class BillDetail{
   pureGold?: number;
   total?: number;
   person_name?: string;
+  order_master_id?: number;
+  address1?: string;
+  mobile1?: string;
+  pin?: string;
+  area?: string;
+  city?: string;
+  state?: string;
+  po?: string;
+  billNumber?: string;
+  billDate?: string;
+  orderDate?: string;
+  orderNumber?: string;
+  karigarhId?: number;
+  customerId?: number;
 
 
   constructor() {

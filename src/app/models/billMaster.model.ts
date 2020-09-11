@@ -3,7 +3,7 @@
 
 export class BillMaster{
   id?: number;
-  person_name?: string;
+  personName?: string;
   address1?: string;
   mobile1?: string;
   state?: string;
@@ -15,6 +15,10 @@ export class BillMaster{
   billDate?: string;
   orderDate?: string;
   orderNumber?: string;
+  order_master_id?: number;
+  karigarhId?: number;
+  customerId?: number;
+  discount?: number;
   constructor() {
   }
 }

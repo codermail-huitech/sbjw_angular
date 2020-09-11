@@ -23,7 +23,7 @@ export class BillService {
   finishedJobData : JobMaster[];
   private finishedJobsSub = new Subject<FinishedJobs[]>();
   private orderDetailsSub = new Subject<OrderDetail[]>();
-  private finishedJobDataSub = new Subject<JobMaster[]>();
+  finishedJobDataSub = new Subject<JobMaster[]>();
 
   getFinishedJobsSubUpdateListener(){
     return this.finishedJobsSub.asObservable();

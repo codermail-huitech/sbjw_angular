@@ -42,13 +42,23 @@ export class BillService {
       .subscribe((response: {success: number, data: FinishedJobs[]}) => {
         const {data} = response;
         this.finshedJobs = data;
-        console.log(this.finshedJobs);
+        // console.log(this.finshedJobs);
         this.finishedJobsSub.next([...this.finshedJobs]);
       });
   }
 
   getFinishedJobs(){
     return([...this.finshedJobs]);
+  }
+
+  getUpdatedList(){
+    this.http.get(GlobalVariable.BASE_API_URL + '/finishedJobsCustomers')
+      .subscribe((response: {success: number, data: FinishedJobs[]}) => {
+        const {data} = response;
+        this.finshedJobs = data;
+        // console.log(this.finshedJobs);
+        this.finishedJobsSub.next([...this.finshedJobs]);
+      });
   }
 
   getDetails(data){

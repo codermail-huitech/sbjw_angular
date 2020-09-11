@@ -104,11 +104,10 @@ export class BillJobMasterDetailsComponent implements OnInit {
     // this.showBill = true;
     // console.log(this.billDetailsData);
     const x = new Date();
-    let billDate =  x.getFullYear() + '-' + parseInt(x.getMonth() +1) + '-' + x.getDate();
-    console.log(billDate);
-    console.log(this.billDetailsData[0]);
-      if (this.billDetailsData[0]) {
-        // const x = this.billDetailsData[0];
+    // let billDate =  x.getFullYear() + '-' + parseInt(x.getMonth() +1) + '-' + x.getDate();
+    // console.log(billDate);
+    // console.log(this.billDetailsData[0]);
+    if (this.billDetailsData[0]) {
         this.billMasterData = {
           order_master_id: this.billDetailsData[0].order_master_id,
           orderNumber: this.billDetailsData[0].order_number,
@@ -128,7 +127,7 @@ export class BillJobMasterDetailsComponent implements OnInit {
         };
         console.log(this.billMasterData);
       }
-      this.billService.saveBillMaster(this.billMasterData, this.billDetailsData).subscribe((response) => {
+    this.billService.saveBillMaster(this.billMasterData, this.billDetailsData).subscribe((response) => {
         this.billMasterData = {
           order_master_id: this.billDetailsData[0].order_master_id,
           orderNumber: this.billDetailsData[0].order_number,
@@ -147,24 +146,9 @@ export class BillJobMasterDetailsComponent implements OnInit {
           discount: 0,
           billNumber:response.data.bill_number
         };
-        // if(response.data){
-
-        this.x = this.billService.getFinishedJobs();
-        // const index = this.x.findIndex(s=>s.id===this.billMasterData.order_master_id);
-        // this.x.splice(index,1);
-        this.billService.getFinishedJobsSubUpdateListener().subscribe((finishedJobs) => {
-          const index = this.x.findIndex(s=>s.id===this.billMasterData.order_master_id);
-          this.x.splice(index,1);
-          return this.billService.finishedJobDataSub.next([...this.x]);
-        });
-        // this.billService.finishedJobDataSub.next([...this.x]);
-        console.log(this.x);
-        // this.billService.
-        // }
-        // console.log( this.billMasterData);
+        this.billService.getUpdatedList();
         this.showBill = true;
       });
-
   }
 
 

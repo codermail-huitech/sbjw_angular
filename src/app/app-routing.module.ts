@@ -23,6 +23,10 @@ import {FinishJobComponent} from "./pages/job/job-detail/finish-job/finish-job.c
 import {BillComponent} from "./pages/bill/bill.component";
 import {BillOrderDetailsComponent} from "./pages/bill/bill-order-details/bill-order-details.component";
 import {BillJobMasterDetailsComponent} from './pages/bill/bill-job-master-details/bill-job-master-details.component';
+import {CompletedBillComponent} from "./pages/completed-bill/completed-bill.component";
+import {CompletedBillOrderDetailsComponent} from "./pages/completed-bill/completed-bill-order-details/completed-bill-order-details.component";
+import {CommonJsUsageWarnPlugin} from "@angular-devkit/build-angular/src/angular-cli-files/plugins/common-js-usage-warn-plugin";
+import {CompletedBillDetailsComponent} from "./pages/completed-bill/completed-bill-details/completed-bill-details.component";
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -56,7 +60,12 @@ const routes: Routes = [
     ],
   },
   // {path: 'bill_jobMaster_details/:id',canActivate : [AuthGuardService], component: BillJobMasterDetailsComponent},
-
+  {path: 'completed_bills',canActivate : [AuthGuardService], component: CompletedBillComponent},
+  {path: 'completed_bill_order_details/:id', canActivate:  [AuthGuardService], component: CompletedBillOrderDetailsComponent,
+    children: [
+      {path: 'completed_bill_details/:id', component: CompletedBillDetailsComponent}
+    ],
+  },
 ];
 
 @NgModule({

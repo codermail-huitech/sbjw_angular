@@ -60,9 +60,7 @@ export class BillJobMasterDetailsComponent implements OnInit {
       });
   }
 
-  // backbtn(){
-  //   this.location.back();
-  // }
+
 
   selectionForBill(data) {
     const index = this.billDetailsData.findIndex(x => x.id === data.id)
@@ -110,7 +108,7 @@ export class BillJobMasterDetailsComponent implements OnInit {
     if (this.billDetailsData[0]) {
         this.billMasterData = {
           order_master_id: this.billDetailsData[0].order_master_id,
-          orderNumber: this.billDetailsData[0].order_number,
+          orderNumber: this.billDetailsData[0].orderNumber,
           personName: this.billDetailsData[0].person_name,
           address1: this.billDetailsData[0].address1,
           mobile1: this.billDetailsData[0].mobile1,
@@ -122,7 +120,7 @@ export class BillJobMasterDetailsComponent implements OnInit {
           orderDate: this.billDetailsData[0].date_of_order,
           karigarhId: this.billDetailsData[0].karigarh_id,
           customerId: this.billDetailsData[0].customer_id,
-          billDate:  x.getFullYear() + '-' + parseInt(x.getMonth() +1) + '-' + x.getDate(),
+          billDate:  x.getFullYear() + '-' + parseInt(String(x.getMonth() + 1)) + '-' + x.getDate(),
           discount: 0
         };
         console.log(this.billMasterData);
@@ -142,7 +140,7 @@ export class BillJobMasterDetailsComponent implements OnInit {
           orderDate: this.billDetailsData[0].date_of_order,
           karigarhId: this.billDetailsData[0].karigarh_id,
           customerId: this.billDetailsData[0].customer_id,
-          billDate:  x.getFullYear() + '-' + parseInt(x.getMonth() +1) + '-' + x.getDate(),
+          billDate:  x.getFullYear() + '-' + parseInt(String(x.getMonth() + 1)) + '-' + x.getDate(),
           discount: 0,
           billNumber:response.data.bill_number
         };

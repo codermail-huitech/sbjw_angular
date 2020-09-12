@@ -19,6 +19,7 @@ export class BillMaster{
   karigarhId?: number;
   customerId?: number;
   discount?: number;
+  bill_number? :string ;
   constructor() {
   }
 }

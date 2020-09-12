@@ -19,11 +19,19 @@ import {BillMaster} from "../models/billMaster.model";
 export class BillService {
 
   finshedJobs : FinishedJobs[] = [];
+  completedBill : FinishedJobs[] = [];
   orderDetails : OrderDetail[] = [];
+  completedBillOrderDetails : OrderDetail[] = [];
   finishedJobData : JobMaster[];
+  finishedBillData : JobMaster[];
+  showCompletedBillsData : JobMaster[];
   private finishedJobsSub = new Subject<FinishedJobs[]>();
   private orderDetailsSub = new Subject<OrderDetail[]>();
+  private completedBillOrderDetailsSub = new Subject<OrderDetail[]>();
   finishedJobDataSub = new Subject<JobMaster[]>();
+  finishedBillDataSub = new Subject<JobMaster[]>();
+  showCompletedBillsDataSub = new Subject<JobMaster[]>();
+  completedBillDataSub = new Subject<FinishedJobs[]>();
 
   getFinishedJobsSubUpdateListener(){
     return this.finishedJobsSub.asObservable();
@@ -36,6 +44,22 @@ export class BillService {
   getfinishedJobDataSubUpdateListener(){
     return this.finishedJobDataSub.asObservable();
   }
+  getCompletedBillOrderDetailsSubUpdateListener(){
+    return this.completedBillOrderDetailsSub.asObservable();
+  }
+
+  getCompletedBillDataSubUpdateListener(){
+    return this.completedBillDataSub.asObservable();
+  }
+
+  getfinishedBillDataSubUpdateListener(){
+    return this.finishedBillDataSub.asObservable();
+  }
+
+  showCompletedBillsDataSubUpdateListener(){
+    return this.showCompletedBillsDataSub.asObservable();
+  }
+
 
   constructor(private http: HttpClient) {
     this.http.get(GlobalVariable.BASE_API_URL + '/finishedJobsCustomers')
@@ -45,10 +69,22 @@ export class BillService {
         // console.log(this.finshedJobs);
         this.finishedJobsSub.next([...this.finshedJobs]);
       });
+
+    this.http.get(GlobalVariable.BASE_API_URL + '/completedBillCustomers')
+      .subscribe((response: {success: number, data: FinishedJobs[]}) => {
+        const {data} = response;
+        this.completedBill = data;
+        // console.log(this.finshedJobs);
+        this.completedBillDataSub.next([...this.completedBill]);
+      });
   }
 
   getFinishedJobs(){
     return([...this.finshedJobs]);
+  }
+
+  getCompletedBills(){
+    return([...this.completedBill]);
   }
 
   getUpdatedList(){
@@ -70,6 +106,17 @@ export class BillService {
       });
   }
 
+
+  getCompletedBIllDetails(data){
+    return this.http.post<ProductResponseData>('http://127.0.0.1:8000/api/getCompletedBIllDetails', data)
+      .subscribe((response: {success: number, data: OrderDetail[]})  => {
+        const {data} = response;
+        this.completedBillOrderDetails = data;
+        // console.log(this.completedBillOrderDetails);
+        this.completedBillOrderDetailsSub.next([...this.completedBillOrderDetails]);
+      });
+  }
+
   getFinishedJobData(data){
     return this.http.post<ProductResponseData>('http://127.0.0.1:8000/api/getFinishedJobData', data)
       .subscribe((response: {success: number, data: JobMaster[]})  => {
@@ -78,6 +125,28 @@ export class BillService {
         this.finishedJobDataSub.next([...this.finishedJobData]);
       });
   }
+
+
+  showCompletedBills(data){
+    return this.http.post<ProductResponseData>('http://127.0.0.1:8000/api/showCompletedBills', data)
+      .subscribe((response: {success: number, data: JobMaster[]})  => {
+        const {data} = response;
+        this.showCompletedBillsData = data;
+        this.showCompletedBillsDataSub.next([...this.showCompletedBillsData]);
+      });
+  }
+
+
+
+  getFinishedBillData(data){
+    return this.http.post<{success: number, data: JobMaster[]}>('http://127.0.0.1:8000/api/getFinishedBillData', data)
+      .subscribe((response: {success: number, data: JobMaster[]})  => {
+        const {data} = response;
+        this.finishedBillData = data;
+        this.finishedBillDataSub.next([...this.finishedBillData]);
+      });
+  }
+
 
   getGoldQuantity(data){
     return this.http.get<{ success: number, data: BillDetail }>( GlobalVariable.BASE_API_URL + '/getGoldquantity/' + data,{})

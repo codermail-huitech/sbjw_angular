@@ -24,10 +24,11 @@ export class BillDetail{
   po?: string;
   billNumber?: string;
   billDate?: string;
-  orderDate?: string;
+  date_of_order?: string;
   orderNumber?: string;
-  karigarhId?: number;
-  customerId?: number;
+  karigarh_id?: number;
+  customer_id?: number;
+  order_number? : string;
 
 
   constructor() {

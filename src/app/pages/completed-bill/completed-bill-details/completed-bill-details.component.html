@@ -1,0 +1,116 @@
+<div fxLayout.xs="column"  fxLayout="row" fxLayoutAlign="space-between stretch" fxFlexFill  >
+  <!--    <div class="col">-->
+  <!--      <button  class="bg-primary m-1 btn btn-block" (click)="backbtn()">-->
+  <!--        <mat-icon>keyboard_backspace</mat-icon>-->
+  <!--        Back-->
+  <!--      </button>-->
+  <!--    </div>-->
+  <div  fxFlex="100" class="col" *ngIf="finishedBillData"style="background-color: violet" [hidden]="showBill" >
+    <table class="table">
+      <thead>
+      <tr>
+        <th>SL No.</th>
+        <th>Bill Number</th>
+        <th>Status</th>
+        <th>Create Bill</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr  *ngFor="let data of finishedBillData; let indexOfelement = index" >
+        <td>{{indexOfelement+1}}</td>
+        <td >{{data.bill_number}}</td>
+<!--        <td>{{data.status}}</td>-->
+        <td><button (click)="getBillDetails(data.id)">show</button></td>
+        <td>
+          <input type="checkbox" name="nameOfChoice" (click)="selectionForBill(data)" [disabled]="data.status == 'WORK IN PROGRESS'" >
+        </td>
+      </tr>
+      </tbody>
+    </table>
+    <div  style="text-align: center">
+      <button class="btn btn-info" aria-label=" Generate Bill" [disabled]="billDetailsData.length==0" (click)="generateBill()" >
+        Generate Bill
+      </button>
+      <br>
+      <br>
+    </div>
+  </div>
+  <div id="bill-div" [hidden]="!showBill">
+    <div style="text-align: center">
+      <button class="btn-primary"
+              mat-stroked-button
+              [printStyle]="printDivStyle"
+              printSectionId="printBillDiv"
+              ngxPrint ><mat-icon>print</mat-icon>
+        Print Bill
+      </button>
+    </div>
+    <div id="printBillDiv">
+      <!--    <div class="d-flex" *ngIf="billMasterData">-->
+      <div fxLayout="row" *ngIf="billMasterData" style="justify-content: space-between">
+        <div class="col-4">
+          <label>Customer Name & Address : </label><br>
+          <label style="font-weight: bolder; font-size: larger">{{billMasterData.personName}}</label><br>
+          <label>{{billMasterData.address1}}</label><br>
+          <label>{{billMasterData.city}}</label><br>
+          <label>{{billMasterData.area}}</label><br>
+          <label>{{billMasterData.pin}}</label><br>
+          <label>{{billMasterData.po}}</label><br>
+          <label>{{billMasterData.mobile1}}</label><br>
+        </div>
+        <div class="col-4"></div>
+        <div class="col-4"><br>
+          <label><b>Bill Number : {{billMasterData.billNumber}}</b></label><br>
+          <label><b>Bill Date : {{billMasterData.billDate}}</b></label><br>
+          <label>Order Number :</label><br>
+          <label>Order Date :</label><br>
+        </div>
+      </div><br> <br>
+      <table id="bill-detail-table" class="table">
+        <thead>
+        <tr>
+          <th>SL No.</th>
+          <th>Job Tag</th>
+          <th>Model</th>
+          <th>Size</th>
+          <th>Gross Weight</th>
+          <th>Gold 92.00g</th>
+          <th>Pure Gold</th>
+          <th>Quantity</th>
+          <th>L.C. Rs.</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr  *ngFor="let data of billDetailsData; let indexOfelement = index" >
+          <td>{{indexOfelement+1}}</td>
+          <td >{{data.job_number}}</td>
+          <td>{{data.model_number}}</td>
+          <td>{{data.size}}</td>
+          <td>{{data.gross_weight}}</td>
+          <td>{{data.total}}</td>
+          <td>{{data.pure_gold}}</td>
+          <td>{{data.quantity}}</td>
+          <td>{{data.cost}}</td>
+          <!--        <td>{{data.price * data.quantity}}</td>-->
+          <!--        <td>-->
+          <!--          <input type="checkbox" name="nameOfChoice" (click)="selectionForBill(data)" [disabled]="data.status == 'WORK IN PROGRESS'" >-->
+          <!--        </td>-->
+        </tr>
+        <tr style=" border-top : 1px solid black; border-collapse: collapse">
+          <td></td>
+          <td></td>
+          <td>Total</td>
+          <td></td>
+          <td></td>
+          <td>{{total92Gold.toFixed(3)}} g</td>
+          <td>{{totalGold.toFixed(3)}} g</td>
+          <td>{{totalQuantity}}</td>
+          <td>{{totalCost}}</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+</div>
+

@@ -14,7 +14,7 @@
         <td>{{indexOfelement+1}}</td>
         <td >{{data.person_name}}</td>
         <td>
-          <button  mat-icon-button color="primary" aria-label="Open Details" style="text-align: center" [routerLink]="['/bill_order_details',data.id]">
+          <button  mat-icon-button color="primary" aria-label="Open Details" style="text-align: center"  [routerLink]="['/completed_bill_order_details',data.id]">
             <mat-icon>forward</mat-icon>
           </button>
         </td>
@@ -24,4 +24,3 @@
     </table>
   </div>
 </div>
-

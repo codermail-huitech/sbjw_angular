@@ -11,7 +11,7 @@ export class BillDetail{
   quantity?: number;
   price?: number;
   amount?: number;
-  pureGold?: number;
+  pure_gold?: number;
   total?: number;
   person_name?: string;
   order_master_id?: number;
@@ -22,13 +22,14 @@ export class BillDetail{
   city?: string;
   state?: string;
   po?: string;
-  billNumber?: string;
-  billDate?: string;
+  bill_number?: string;
+  bill_date?: string;
   date_of_order?: string;
   orderNumber?: string;
   karigarh_id?: number;
   customer_id?: number;
   order_number? : string;
+  cost?: number;
 
 
   constructor() {

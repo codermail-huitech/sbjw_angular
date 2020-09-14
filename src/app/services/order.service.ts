@@ -38,14 +38,14 @@ export class OrderService {
   // orderDetailUpdate is for updating a single odder details
 
   orderMasterData: OrderMaster[] = [];
-  productData: Product[] ;
+  // productData: Product[] ;
   orderDetailUpdate: object;
   private agentSub = new Subject<Agent[]>();
   private materialSub = new Subject<Material[]>();
   private orderSub = new Subject<OrderMaster[]>();
   private orderDetailsSub = new Subject<OrderDetail[]>();
 
-  private productDataSub = new Subject<Product[] >();
+  // private productDataSub = new Subject<Product[] >();
 
   getAgentUpdateListener(){
     return this.agentSub.asObservable();
@@ -63,9 +63,9 @@ export class OrderService {
   }
 
 
-  getProductDataUpdateListener(){
-    return this.productDataSub.asObservable();
-  }
+  // getProductDataUpdateListener(){
+  //   return this.productDataSub.asObservable();
+  // }
 
 
   constructor(private http: HttpClient) {
@@ -140,7 +140,7 @@ export class OrderService {
     // tslint:disable-next-line:max-line-length
        return this.http.post<OrderResponseData>( GlobalVariable.BASE_API_URL + '/orders', {master: this.orderMaster, details: this.orderDetails})
          .pipe(catchError(this._serverError), tap(((response: {success: number, data: OrderMaster}) => {
-          if(this.orderMaster.id === null) {
+          if (this.orderMaster.id === null) {
             this.orderMasterData.unshift(response.data);
           }
           // console.log(this.orderMaster);
@@ -236,11 +236,11 @@ export class OrderService {
   getProductData(model_number, customer_category_id){
 
     // tslint:disable-next-line:max-line-length
-    this.http.post(GlobalVariable.BASE_API_URL + '/getProductData', {model_number, customer_category_id})
-      .subscribe((response: {success: number, data: Product[]}) => {
-        const {data} = response;
-        this.productData = data;
-        this.productDataSub.next([...this.productData]);
-      });
+    return this.http.post(GlobalVariable.BASE_API_URL + '/getProductData', {model_number, customer_category_id});
+      // .subscribe((response: {success: number, data: Product[]}) => {
+      //   const {data} = response;
+      //   this.productData = data;
+      //   this.productDataSub.next([...this.productData]);
+      // });
   }
 }

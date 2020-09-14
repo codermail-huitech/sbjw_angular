@@ -47,9 +47,8 @@ export class OrderComponent implements OnInit {
   orderDetails: OrderDetail[] = [];
   orderMasterForm: FormGroup;
   orderDetailsForm: FormGroup;
-  // orderData: object;
   isSaveEnabled = true;
-  orderData: OrderMaster[] = [];
+  orderData: OrderMaster;
   product_id: number;
   showProduct = true;
   showUpdate = false;
@@ -162,12 +161,13 @@ export class OrderComponent implements OnInit {
 
   addOrder(){
     this.isSaveEnabled = false;
-    const index = this.products.findIndex(x => x.model_number === this.orderDetailsForm.value.model_number);
-    this.orderDetailsForm.value.product_id = this.products[index].id;
-    this.orderService.setOrderDetails();
+    // const index = this.products.findIndex(x => x.model_number === this.orderDetailsForm.value.model_number);
+    // this.orderDetailsForm.value.product_id = this.products[index].id;
+    this.orderData = this.orderMasterForm.value;
+    // this.orderService.setOrderDetails();
+    // this.orderDetailsForm.value.amount = null;
+    this.orderDetails.unshift(this.orderDetailsForm.value);
     this.orderDetailsForm.reset();
-    this.orderDetailsForm.value.amount = null;
-    this.orderDetails = this.orderService.orderDetails;
   }
 
   productShow(){
@@ -210,7 +210,7 @@ export class OrderComponent implements OnInit {
     this.orderService.setOrderMasterData();
     this.orderService.updateOrder().subscribe((response) => {
 
-      if(response.success===1){
+      if(response.success === 1){
         this.orderDetailsForm.reset();
         this._snackBar.openFromComponent(SncakBarComponent, {
           duration: 4000, data: {message: 'Details Updated'}
@@ -302,15 +302,19 @@ export class OrderComponent implements OnInit {
     // const index = this.products.findIndex(k => k.model_number === this.orderDetailsForm.value.model_number.toString().toUpperCase() );
 
     const index = this.customerList.findIndex(k => k.id === this.orderMasterForm.value.customer_id );
-    this.orderService.getProductData(this.orderDetailsForm.value.model_number, this.customerList[index].customer_category_id);
-    this.orderService.getProductDataUpdateListener().subscribe((responseProducts: Product[]) => {
-      if (responseProducts.length > 0){
-        this.productData = responseProducts;
+    // tslint:disable-next-line:max-line-length
+    this.orderService.getProductData(this.orderDetailsForm.value.model_number, this.customerList[index].customer_category_id)
+      .subscribe((responseProducts: {success: number, data: Product}) => {
+      console.log(responseProducts);
+      if (responseProducts.data){
+        const tempProduct = responseProducts.data;
         // tslint:disable-next-line:max-line-length
-        this.orderDetailsForm.patchValue({ p_loss: this.productData[0].p_loss, price: this.productData[0].price, price_code : this.productData[0].price_code_name});
+        this.orderDetailsForm.patchValue({ product_id: tempProduct.id, p_loss: tempProduct.p_loss, price: tempProduct.price, price_code : tempProduct.price_code_name});
       }else{
         alert('This model does not exist');
-        this.productData = [];
+        // this.productData = [];
+        // tslint:disable-next-line:max-line-length
+        this.orderDetailsForm.patchValue({ p_loss: null, price: null, price_code : null});
       }
     });
   }

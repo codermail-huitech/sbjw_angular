@@ -37,8 +37,8 @@ export class OrderService {
   orderDetails: OrderDetail[] = [];
   // orderDetailUpdate is for updating a single odder details
 
-  orderMasterData : OrderMaster[] = [];
-  productData :  Product[] ;
+  orderMasterData: OrderMaster[] = [];
+  productData: Product[] ;
   orderDetailUpdate: object;
   private agentSub = new Subject<Agent[]>();
   private materialSub = new Subject<Material[]>();
@@ -137,9 +137,10 @@ export class OrderService {
   saveOrder(){
     // tslint:disable-next-line:max-line-length
        console.log(this.orderMaster);
+    // tslint:disable-next-line:max-line-length
        return this.http.post<OrderResponseData>( GlobalVariable.BASE_API_URL + '/orders', {master: this.orderMaster, details: this.orderDetails})
          .pipe(catchError(this._serverError), tap(((response: {success: number, data: OrderMaster}) => {
-          if(this.orderMaster.id===null) {
+          if(this.orderMaster.id === null) {
             this.orderMasterData.unshift(response.data);
           }
           // console.log(this.orderMaster);
@@ -232,19 +233,14 @@ export class OrderService {
     return throwError(err);
   }
 
-  getProductData(model_number,customer_category_id){
+  getProductData(model_number, customer_category_id){
 
-    this.http.post(GlobalVariable.BASE_API_URL + '/getProductData',{'model_number' : model_number, 'customer_category_id'  :customer_category_id})
+    // tslint:disable-next-line:max-line-length
+    this.http.post(GlobalVariable.BASE_API_URL + '/getProductData', {model_number, customer_category_id})
       .subscribe((response: {success: number, data: Product[]}) => {
         const {data} = response;
         this.productData = data;
-        console.log(this.productData);
-
         this.productDataSub.next([...this.productData]);
       });
-
   }
-
-
-
 }

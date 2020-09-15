@@ -32,7 +32,6 @@
                 <input matInput
                        [matDatepicker]="picker1"
                        formControlName="order_date"
-                       [matDatepickerFilter]="onlyOdds"
                        [min]="minDate"
                        [max]="maxDate">
                 <mat-datepicker-toggle matSuffix [for]="picker1">
@@ -45,7 +44,6 @@
                 <mat-label>Delivery Date</mat-label>
                 <input matInput [matDatepicker]="picker2"
                        formControlName="delivery_date"
-                       [matDatepickerFilter]="onlyOdds"
                        [min]="minDate"
                        [max]="maxDate">
                 <mat-datepicker-toggle matSuffix [for]="picker2">
@@ -74,15 +72,11 @@
 
 
           <div class="container" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="start" fxLayoutGap="10px" fxLayoutGap.xs="0">
-<!--            <mat-form-field fxFlex="33">-->
-<!--              <mat-placeholder>Model Number</mat-placeholder>-->
-<!--              <input matInput  formControlName="model_number" (change)="findModel()">-->
-<!--            </mat-form-field>-->
-            <mat-form-field class="example-full-width" *ngIf="true">
+            <mat-form-field class="example-full-width" *ngIf="orderMasterForm.value.customer_id">
               <input type="text" placeholder="Model" aria-label="Number" matInput  (blur)="findModel($event)" formControlName="model_number">
             </mat-form-field>
 
-            <div class="container" fxLayout="row" fxFlex="50" fxLayout.xs="column" fxLayoutAlign="right" fxLayoutGap="10px" fxLayoutGap.xs="0">
+            <div class="container" fxLayout="row" fxFlex="50" fxLayout.xs="column" fxLayoutAlign="right" fxLayoutGap="10px" fxLayoutGap.xs="0" *ngIf="orderDetailsForm.value.product_id">
               <mat-form-field fxFlex="20">
                 <mat-placeholder>PLoss</mat-placeholder>
                 <input matInput formControlName="p_loss" [readonly]="true" class="text-right">
@@ -128,8 +122,7 @@
         </form>
 
         <div class="container" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="end" fxLayoutGap="10px" fxLayoutGap.xs="0" >
-          <button mat-button (click)="addOrder()" mat-stroked-button  >Add Order</button>
-          <button mat-button (click)="onSubmit()" mat-stroked-button >Save Order</button>
+          <button mat-button (click)="addOrder()" mat-stroked-button [disabled]="!orderDetailsForm.valid" >Add Order</button>
           <button mat-button (click)="updateOrder()" mat-stroked-button>Update Order</button>
           <button mat-button (click)="clearForm()" mat-stroked-button>clear</button>
         </div>
@@ -144,7 +137,7 @@
       <div class="col"><button style="background-color: green" mat-button class="col-12" mat-stroked-button (click)="productShow()">{{showProduct==true? 'Show Order Master List':'Show Order Details List'}}</button></div>
     </div>
     <div [hidden]="!showProduct">
-      <table class="table" id="my-order-details-table">
+      <table class="table" id="order-details-table">
         <thead>
         <tr>
           <th>SL No.</th>
@@ -155,33 +148,39 @@
           <th>Approx Gold</th>
           <th>Quantity</th>
           <th>Amount</th>
-          <th>Edit</th>
-          <th>Delete</th>
+          <th>Action</th>
         </tr>
         </thead>
         <tbody>
-        <tr  *ngFor="let details of orderDetails ; let indexOfElement = index;">
+        <tr [ngStyle]="getBackgroundColor(indexOfElement)"  *ngFor="let item of orderDetails ; let indexOfElement = index;">
           <td>{{indexOfElement+1}}</td>
-          <td >{{details.model_number}}</td>
-          <td >{{details.price_code}}</td>
-          <td>{{details.price}}</td>
-          <td>{{details.p_loss}}</td>
-          <td>{{details.approx_gold}}</td>
-          <td>{{details.quantity}}</td>
-          <td>{{details.amount}}</td>
+          <td >{{item.model_number}}</td>
+          <td >{{item.price_code}}</td>
+          <td>{{item.price}}</td>
+          <td>{{item.p_loss}}</td>
+          <td>{{item.approx_gold}}</td>
+          <td>{{item.quantity}}</td>
+          <td>{{item.amount}}</td>
           <td>
-            <button mat-icon-button color="primary" aria-label="Edit Product" (click)="fillOrderDetailsForm(details)">
+            <button mat-icon-button color="primary" aria-label="Edit Product" (click)="fillOrderDetailsForm(item)" *ngIf="editableItemIndex != indexOfElement">
               <mat-icon>edit</mat-icon>
             </button>
-          </td>
-          <td>
-            <button mat-icon-button color="warn" aria-label="Edit Customer"  (click)="deleteDetails(details)">
+            <button mat-icon-button color="primary" aria-label="Edit Product" (click)="cancelEditCurrentItem(item)" *ngIf="editableItemIndex == indexOfElement">
+              <mat-icon>restore</mat-icon>
+            </button>
+            <button mat-icon-button color="warn" aria-label="Edit Customer"  (click)="deleteDetails(item)">
               <mat-icon>delete</mat-icon>
             </button>
           </td>
-
         </tr>
         </tbody>
+        <tfoot>
+          <tr>
+            <td colspan="5">
+              <button mat-button (click)="onSubmit()" mat-stroked-button [disabled]="orderDetails.length<1 || orderDetailsForm.valid">Save Order</button>
+            </td>
+          </tr>
+        </tfoot>
       </table>
     </div>
 

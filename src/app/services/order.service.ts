@@ -70,15 +70,19 @@ export class OrderService {
 
 
   constructor(private http: HttpClient) {
-    const now = new Date();
-    const val = formatDate(now, 'yyyy-MM-dd', 'en');
+    const order_date = new Date();
+    const delivery_date = new Date();
+    delivery_date.setDate(order_date.getDate() + 3);
+    const order_date_format = formatDate(order_date, 'yyyy-MM-dd', 'en');
+    const delivery_date_format = formatDate(delivery_date, 'yyyy-MM-dd', 'en');
+
 
     this.orderMasterForm = new FormGroup({
       id : new FormControl(null),
       customer_id : new FormControl(null, [Validators.required]),
       agent_id : new FormControl(null, [Validators.required]),
-      order_date : new FormControl(val, [Validators.required]),
-      delivery_date : new FormControl(val, [Validators.required])
+      order_date : new FormControl(order_date_format, [Validators.required]),
+      delivery_date : new FormControl(delivery_date_format, [Validators.required])
     });
 
     this.orderDetailsForm = new FormGroup({

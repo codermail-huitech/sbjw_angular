@@ -167,7 +167,8 @@ export class OrderComponent implements OnInit {
     // this.orderService.setOrderDetails();
     // this.orderDetailsForm.value.amount = null;
     this.orderDetails.unshift(this.orderDetailsForm.value);
-    // this.orderDetailsForm.reset();
+    // tslint:disable-next-line:max-line-length
+    this.orderDetailsForm.patchValue({product_id: null, model_number: null, p_loss: null, price: null, price_code: null, approx_gold: null, size: null, quantity: null, amount: null});
   }
 
   productShow(){

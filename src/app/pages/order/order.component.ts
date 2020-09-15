@@ -339,6 +339,7 @@ export class OrderComponent implements OnInit {
     let saveObserable = new Observable<any>();
     saveObserable = this.orderService.saveOrder(this.orderMaster , this.orderDetails);
     saveObserable.subscribe((response) => {
+      console.log(response);
       if (response.success === 1){
         this.orderMasterForm.reset();
         this.orderDetailsForm.reset();

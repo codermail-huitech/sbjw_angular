@@ -73,7 +73,8 @@ export class CompletedBillDetailsComponent implements OnInit {
           console.log(i);
           this.billService.getGoldQuantity(this.billDetailsData[i].id).subscribe((response)=>{
             this.billDetailsData[i].total = response.data[0].total.toFixed(3);
-            this.billDetailsData[i].pure_gold = ((this.billDetailsData[i].total * 92) / 100);
+            // this.billDetailsData[i].pure_gold = ((this.billDetailsData[i].total * 92) / 100);
+            this.billDetailsData[i].pure_gold =Number((this.billDetailsData[i].total * 92 / 100).toFixed(3));
             this.billDetailsData[i].cost = this.billDetailsData[i].price * this.billDetailsData[i].quantity;
 
             this.total92Gold = this.total92Gold + Number(this.billDetailsData[i].total);

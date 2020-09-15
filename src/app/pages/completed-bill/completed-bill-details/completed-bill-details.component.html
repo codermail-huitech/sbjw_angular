@@ -1,11 +1,6 @@
 <div fxLayout.xs="column"  fxLayout="row" fxLayoutAlign="space-between stretch" fxFlexFill  >
-  <!--    <div class="col">-->
-  <!--      <button  class="bg-primary m-1 btn btn-block" (click)="backbtn()">-->
-  <!--        <mat-icon>keyboard_backspace</mat-icon>-->
-  <!--        Back-->
-  <!--      </button>-->
-  <!--    </div>-->
-  <div  fxFlex="100" class="col" *ngIf="finishedBillData"style="background-color: pink" [hidden]="showBill" >
+
+  <div  fxFlex="100" class="col" *ngIf="finishedBillData"style="background-color: violet" [hidden]="showBill" >
     <table class="table">
       <thead>
       <tr>
@@ -18,24 +13,24 @@
       <tbody>
       <tr  *ngFor="let data of finishedBillData; let indexOfelement = index" >
         <td>{{indexOfelement+1}}</td>
-        <td >{{data.bill_number}}</td>
-<!--        <td>{{data.status}}</td>-->
+        <td>{{data.bill_number}}</td>
         <td><button (click)="getBillDetails(data.id)">show</button></td>
+<!--        <td>{{data.status}}</td>-->
 <!--        <td>-->
 <!--          <input type="checkbox" name="nameOfChoice" (click)="selectionForBill(data)" [disabled]="data.status == 'WORK IN PROGRESS'" >-->
 <!--        </td>-->
       </tr>
       </tbody>
     </table>
-<!--    <div  style="text-align: center">-->
+    <div  style="text-align: center">
 <!--      <button class="btn btn-info" aria-label=" Generate Bill" [disabled]="billDetailsData.length==0" (click)="generateBill()" >-->
 <!--        Generate Bill-->
 <!--      </button>-->
-<!--      <br>-->
-<!--      <br>-->
-<!--    </div>-->
+      <br>
+      <br>
+    </div>
   </div>
-  <div id="show-bill-div" [hidden]="!showBill">
+  <div id="bill-div" [hidden]="!showBill">
     <div style="text-align: center">
       <button class="btn-primary"
               mat-stroked-button
@@ -47,7 +42,7 @@
     </div>
     <div id="printBillDiv">
       <!--    <div class="d-flex" *ngIf="billMasterData">-->
-      <div fxLayout="row" *ngIf="billDetailsData.length > 0" style="justify-content: space-between">
+      <div fxLayout="row" *ngIf="billDetailsData.length" style="justify-content: space-between">
         <div class="col-4">
           <label>Customer Name & Address : </label><br>
           <label style="font-weight: bolder; font-size: larger">{{billDetailsData[0].person_name}}</label><br>
@@ -88,7 +83,7 @@
           <td>{{data.size}}</td>
           <td>{{data.gross_weight}}</td>
           <td>{{data.total}}</td>
-          <td>{{data.pure_gold.toFixed(3)}}</td>
+          <td>{{data.pure_gold}}</td>
           <td>{{data.quantity}}</td>
           <td>{{data.cost}}</td>
           <!--        <td>{{data.price * data.quantity}}</td>-->
@@ -113,4 +108,3 @@
 
   </div>
 </div>
-

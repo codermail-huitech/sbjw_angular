@@ -12,6 +12,7 @@ import {catchError, tap} from 'rxjs/operators';
 import {Customer} from '../models/customer.model';
 // this global.ts file is created to store all global variables
 import {GlobalVariable} from '../shared/global';
+import {formatDate} from '@angular/common';
 
 
 export interface OrderResponseData {
@@ -69,17 +70,21 @@ export class OrderService {
 
 
   constructor(private http: HttpClient) {
+    const now = new Date();
+    const val = formatDate(now, 'yyyy-MM-dd', 'en');
+
     this.orderMasterForm = new FormGroup({
       id : new FormControl(null),
       customer_id : new FormControl(null, [Validators.required]),
       agent_id : new FormControl(null, [Validators.required]),
-      order_date : new FormControl('', [Validators.required]),
-      delivery_date : new FormControl(null, [Validators.required])
+      order_date : new FormControl(val, [Validators.required]),
+      delivery_date : new FormControl(val, [Validators.required])
     });
 
     this.orderDetailsForm = new FormGroup({
       id : new FormControl(null),
       material_id : new FormControl(3, [Validators.required]),
+      product_id : new FormControl(null, [Validators.required]),
       model_number : new FormControl(null, [Validators.required]),
       p_loss : new FormControl(null, [Validators.required]),
       price : new FormControl(null, [Validators.required]),
@@ -134,11 +139,11 @@ export class OrderService {
   }
 
 
-  saveOrder(){
+  saveOrder(orderMaster, orderDetails){
     // tslint:disable-next-line:max-line-length
        console.log(this.orderMaster);
     // tslint:disable-next-line:max-line-length
-       return this.http.post<OrderResponseData>( GlobalVariable.BASE_API_URL + '/orders', {master: this.orderMaster, details: this.orderDetails})
+       return this.http.post<OrderResponseData>( GlobalVariable.BASE_API_URL + '/orders', {master: orderMaster, details: orderDetails})
          .pipe(catchError(this._serverError), tap(((response: {success: number, data: OrderMaster}) => {
           if (this.orderMaster.id === null) {
             this.orderMasterData.unshift(response.data);

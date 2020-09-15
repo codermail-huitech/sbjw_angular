@@ -44,12 +44,11 @@ export class OrderComponent implements OnInit {
   products: Product[];
 
   productData: Product[] ;
+  orderMaster: OrderMaster;
   orderDetails: OrderDetail[] = [];
   orderMasterForm: FormGroup;
   orderDetailsForm: FormGroup;
-  // orderData: object;
   isSaveEnabled = true;
-  orderData: OrderMaster[] = [];
   product_id: number;
   showProduct = true;
   showUpdate = false;
@@ -63,6 +62,7 @@ export class OrderComponent implements OnInit {
   pipe = new DatePipe('en-US');
 
   now = Date.now();
+
 
 
   // tslint:disable-next-line:max-line-length
@@ -83,7 +83,6 @@ export class OrderComponent implements OnInit {
     // this.orderDetailsForm.controls['amount'].disable();
     this.showUpdate = false;
     // this.options = [];
-    this.orderData = this.orderService.getOrderMaster();
     this.customerService.getCustomerUpdateListener()
       .subscribe((customers: Customer[]) => {
         this.customerList = customers;
@@ -116,7 +115,7 @@ export class OrderComponent implements OnInit {
 
     this.orderService.getOrderUpdateListener()
       .subscribe((responseOrders: OrderMaster[]) => {
-        this.orderData = responseOrders;
+        // this.orderData = responseOrders;
 
       });
 
@@ -147,7 +146,7 @@ export class OrderComponent implements OnInit {
       }
       this.currentError = null;
 
-    },(error) => {
+    }, (error) => {
       console.log('error occured ');
       console.log(error);
       this.currentError = error;
@@ -161,13 +160,15 @@ export class OrderComponent implements OnInit {
 
 
   addOrder(){
-    this.isSaveEnabled = false;
-    const index = this.products.findIndex(x => x.model_number === this.orderDetailsForm.value.model_number);
-    this.orderDetailsForm.value.product_id = this.products[index].id;
-    this.orderService.setOrderDetails();
-    this.orderDetailsForm.reset();
-    this.orderDetailsForm.value.amount = null;
-    this.orderDetails = this.orderService.orderDetails;
+    // this.isSaveEnabled = false;
+    // const index = this.products.findIndex(x => x.model_number === this.orderDetailsForm.value.model_number);
+    // this.orderDetailsForm.value.product_id = this.products[index].id;
+    this.orderMaster = this.orderMasterForm.value;
+    // this.orderService.setOrderDetails();
+    // this.orderDetailsForm.value.amount = null;
+    this.orderDetails.unshift(this.orderDetailsForm.value);
+    // tslint:disable-next-line:max-line-length
+    this.orderDetailsForm.patchValue({product_id: null, model_number: null, p_loss: null, price: null, price_code: null, approx_gold: null, size: null, quantity: null, amount: null});
   }
 
   productShow(){
@@ -210,7 +211,7 @@ export class OrderComponent implements OnInit {
     this.orderService.setOrderMasterData();
     this.orderService.updateOrder().subscribe((response) => {
 
-      if(response.success===1){
+      if(response.success === 1){
         this.orderDetailsForm.reset();
         this._snackBar.openFromComponent(SncakBarComponent, {
           duration: 4000, data: {message: 'Details Updated'}
@@ -218,7 +219,7 @@ export class OrderComponent implements OnInit {
       }
       this.currentError = null;
 
-    },(error) => {
+    }, (error) => {
       console.log('error occured');
       console.log(error);
       this.currentError = error;
@@ -302,15 +303,19 @@ export class OrderComponent implements OnInit {
     // const index = this.products.findIndex(k => k.model_number === this.orderDetailsForm.value.model_number.toString().toUpperCase() );
 
     const index = this.customerList.findIndex(k => k.id === this.orderMasterForm.value.customer_id );
-    this.orderService.getProductData(this.orderDetailsForm.value.model_number, this.customerList[index].customer_category_id);
-    this.orderService.getProductDataUpdateListener().subscribe((responseProducts: Product[]) => {
-      if (responseProducts.length > 0){
-        this.productData = responseProducts;
+    // tslint:disable-next-line:max-line-length
+    this.orderService.getProductData(this.orderDetailsForm.value.model_number, this.customerList[index].customer_category_id)
+      .subscribe((responseProducts: {success: number, data: Product}) => {
+      console.log(responseProducts);
+      if (responseProducts.data){
+        const tempProduct = responseProducts.data;
         // tslint:disable-next-line:max-line-length
-        this.orderDetailsForm.patchValue({ p_loss: this.productData[0].p_loss, price: this.productData[0].price, price_code : this.productData[0].price_code_name});
+        this.orderDetailsForm.patchValue({ product_id: tempProduct.id, p_loss: tempProduct.p_loss, price: tempProduct.price, price_code : tempProduct.price_code_name});
       }else{
         alert('This model does not exist');
-        this.productData = [];
+        // this.productData = [];
+        // tslint:disable-next-line:max-line-length
+        this.orderDetailsForm.patchValue({ p_loss: null, price: null, price_code : null});
       }
     });
   }
@@ -328,9 +333,11 @@ export class OrderComponent implements OnInit {
     this.orderMasterForm.value.employee_id = user.id;
     this.orderMasterForm.value.order_date = this.pipe.transform(this.orderMasterForm.value.order_date, 'yyyy-MM-dd');
     this.orderMasterForm.value.delivery_date = this.pipe.transform(this.orderMasterForm.value.delivery_date, 'yyyy-MM-dd');
-    this.orderService.setOrderMasterData();
+    // this.orderService.setOrderMasterData();
+
+    this.orderMaster = this.orderMasterForm.value;
     let saveObserable = new Observable<any>();
-    saveObserable = this.orderService.saveOrder();
+    saveObserable = this.orderService.saveOrder(this.orderMaster , this.orderDetails);
     saveObserable.subscribe((response) => {
       if (response.success === 1){
         this.orderMasterForm.reset();

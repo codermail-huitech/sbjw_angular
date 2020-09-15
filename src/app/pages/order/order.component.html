@@ -53,9 +53,7 @@
                 </mat-datepicker-toggle>
                 <mat-datepicker #picker2></mat-datepicker>
               </mat-form-field>
-              <!--              Adding form to -->
-<!--              <button mat-button (click)="selectCustomerForOrder()" mat-stroked-button fxFlex="20">Save</button>-->
-              <button mat-button (click)="updateMaster()" mat-stroked-button fxFlex="20" [hidden]="!showUpdate" >Update</button>
+              <button mat-button (click)="updateMaster()" mat-stroked-button fxFlex="20"  >Update</button>
             </div>
         </form>
       </div>
@@ -74,21 +72,6 @@
               </mat-form-field>
           </div>
 
-<!--          <mat-form-field class="example-full-width">-->
-<!--            <input type="text"-->
-<!--                   placeholder="Model"-->
-<!--                   aria-label="Number"-->
-<!--                   matInput-->
-
-<!--                   [matAutocomplete]="auto"-->
-<!--                   formControlName="model_number"-->
-<!--            >-->
-<!--            <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" (optionSelected)="findModel($event)">-->
-<!--              <mat-option *ngFor="let option of modelNumberFilteredOptions | async" [value]="option">-->
-<!--                {{option}}-->
-<!--              </mat-option>-->
-<!--            </mat-autocomplete>-->
-<!--          </mat-form-field>-->
 
           <div class="container" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="start" fxLayoutGap="10px" fxLayoutGap.xs="0">
 <!--            <mat-form-field fxFlex="33">-->
@@ -134,7 +117,7 @@
           <div class="container" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="start" fxLayoutGap="10px" fxLayoutGap.xs="0">
             <mat-form-field fxFlex="40"  class="pr-4">
               <mat-placeholder>Quantity</mat-placeholder>
-              <input matInput  formControlName="quantity" (change)="this.orderDetailsForm.value.amount = this.orderDetailsForm.value.quantity * this.orderDetailsForm.value.price">
+              <input matInput  formControlName="quantity" (change)="this.orderDetailsForm.value.amount = (this.orderDetailsForm.value.quantity * this.orderDetailsForm.value.price)">
             </mat-form-field>
             <mat-form-field fxFlex="40">
               <mat-placeholder>Amount</mat-placeholder>
@@ -145,9 +128,9 @@
         </form>
 
         <div class="container" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="end" fxLayoutGap="10px" fxLayoutGap.xs="0" >
-          <button mat-button (click)="addOrder()" mat-stroked-button [disabled]="!orderDetailsForm.valid" >Add Order</button>
-          <button mat-button (click)="onSubmit()" mat-stroked-button [disabled]=" ">Save Order</button>
-          <button mat-button (click)="updateOrder()" mat-stroked-button [disabled]="!orderDetailsForm.dirty">Update Order</button>
+          <button mat-button (click)="addOrder()" mat-stroked-button  >Add Order</button>
+          <button mat-button (click)="onSubmit()" mat-stroked-button >Save Order</button>
+          <button mat-button (click)="updateOrder()" mat-stroked-button>Update Order</button>
           <button mat-button (click)="clearForm()" mat-stroked-button>clear</button>
         </div>
       </div>
@@ -161,7 +144,7 @@
       <div class="col"><button style="background-color: green" mat-button class="col-12" mat-stroked-button (click)="productShow()">{{showProduct==true? 'Show Order Master List':'Show Order Details List'}}</button></div>
     </div>
     <div [hidden]="!showProduct">
-      <table class="table" id="my-table">
+      <table class="table" id="my-order-details-table">
         <thead>
         <tr>
           <th>SL No.</th>
@@ -177,8 +160,8 @@
         </tr>
         </thead>
         <tbody>
-        <tr  *ngFor="let details of orderDetails ; let indexOfelement = index;">
-          <td>{{indexOfelement+1}}</td>
+        <tr  *ngFor="let details of orderDetails ; let indexOfElement = index;">
+          <td>{{indexOfElement+1}}</td>
           <td >{{details.model_number}}</td>
           <td >{{details.price_code}}</td>
           <td>{{details.price}}</td>
@@ -202,48 +185,33 @@
       </table>
     </div>
 
-    <div [hidden]="showProduct">
-      <table class="table" id="my-table">
-        <thead>
-        <tr>
-          <th>SL No.</th>
-          <th>Order Number</th>
-          <th>Customer</th>
-          <th>Agent</th>
-          <th>Order Date</th>
-          <th>Delivery Date</th>
-          <th>Edit</th>
-          <th>Delete</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr  *ngFor="let data of orderData ; let indexOfelement = index;">
-          <td>{{indexOfelement+1}}</td>
-          <td >{{data.order_number}}</td>
-          <td >{{data.customer_name}}</td>
-          <td >{{data.agent_name}}</td>
-          <td >{{data.date_of_order}}</td>
-          <td >{{data.date_of_delivery}}</td>
-          <td>
-            <button mat-icon-button color="primary" aria-label="Edit Product" (click)="fetchDetails(data)">
-              <mat-icon>edit</mat-icon>
-            </button>
-          </td>
-          <td>
-            <button mat-icon-button color="warn" aria-label="Edit Customer" (click)="deleteOrderMaster(data)">
-              <mat-icon>delete</mat-icon>
-            </button>
-          </td>
-
-        </tr>
-        </tbody>
-      </table>
-    </div>
-
   </div>
-<!--  <div style="background-color : white">-->
-<!--    <pre>{{orderMasterForm.value | json }}</pre>-->
-<!--  </div>-->
 </div>
+
+
+<!--This is developer div-->
+<div fxLayout.xs="column" fxLayout="row" fxLayoutAlign="space-between stretch"  id="developer-div">
+  <div fxLayout="column" fxFlex="25" class="mr-1" style="background-color: #dddddd">
+    <pre>
+      orderData = {{orderMaster | json}}
+    </pre>
+  </div>
+  <div fxLayout="column" fxFlex="25" class="mr-1" style="background-color: #d9dd9b">
+    <pre>
+      orderDetails = {{orderDetails | json}}
+    </pre>
+  </div>
+  <div fxLayout="column" fxFlex="25" class="mr-1" style="background-color: #dddddd">
+    <pre>
+      orderMasterForm = {{orderMasterForm.value | json}}
+    </pre>
+  </div>
+  <div fxLayout="column" fxFlex="25" class="mr-1" style="background-color: #d9dd9b">
+    <pre>
+      orderDetailsForm = {{orderDetailsForm.value | json}}
+    </pre>
+  </div>
+</div>
+
 
 

@@ -3,11 +3,11 @@
 
 export class OrderDetail{
   id?: number;
-  order_master_id ? : number;
+  order_master_id ?: number;
   material_id: number;
   product_id?: number;
   model_number: number;
-  pLoss: number;
+  p_loss: number;
   price: number;
   price_code: number;
   approx_gold: number;
@@ -17,7 +17,7 @@ export class OrderDetail{
   status_id ?: number;
   order_number?: string;
   person_name?: string;
-    status? : any;
+  status?: any;
   constructor() {
   }
 }

@@ -12,6 +12,7 @@ import {catchError, tap} from 'rxjs/operators';
 import {Customer} from '../models/customer.model';
 // this global.ts file is created to store all global variables
 import {GlobalVariable} from '../shared/global';
+import {formatDate} from '@angular/common';
 
 
 export interface OrderResponseData {
@@ -38,14 +39,14 @@ export class OrderService {
   // orderDetailUpdate is for updating a single odder details
 
   orderMasterData: OrderMaster[] = [];
-  productData: Product[] ;
+  // productData: Product[] ;
   orderDetailUpdate: object;
   private agentSub = new Subject<Agent[]>();
   private materialSub = new Subject<Material[]>();
   private orderSub = new Subject<OrderMaster[]>();
   private orderDetailsSub = new Subject<OrderDetail[]>();
 
-  private productDataSub = new Subject<Product[] >();
+  // private productDataSub = new Subject<Product[] >();
 
   getAgentUpdateListener(){
     return this.agentSub.asObservable();
@@ -63,23 +64,31 @@ export class OrderService {
   }
 
 
-  getProductDataUpdateListener(){
-    return this.productDataSub.asObservable();
-  }
+  // getProductDataUpdateListener(){
+  //   return this.productDataSub.asObservable();
+  // }
 
 
   constructor(private http: HttpClient) {
+    const order_date = new Date();
+    const delivery_date = new Date();
+    delivery_date.setDate(order_date.getDate() + 3);
+    const order_date_format = formatDate(order_date, 'yyyy-MM-dd', 'en');
+    const delivery_date_format = formatDate(delivery_date, 'yyyy-MM-dd', 'en');
+
+
     this.orderMasterForm = new FormGroup({
       id : new FormControl(null),
       customer_id : new FormControl(null, [Validators.required]),
       agent_id : new FormControl(null, [Validators.required]),
-      order_date : new FormControl('', [Validators.required]),
-      delivery_date : new FormControl(null, [Validators.required])
+      order_date : new FormControl(order_date_format, [Validators.required]),
+      delivery_date : new FormControl(delivery_date_format, [Validators.required])
     });
 
     this.orderDetailsForm = new FormGroup({
       id : new FormControl(null),
       material_id : new FormControl(3, [Validators.required]),
+      product_id : new FormControl(null, [Validators.required]),
       model_number : new FormControl(null, [Validators.required]),
       p_loss : new FormControl(null, [Validators.required]),
       price : new FormControl(null, [Validators.required]),
@@ -134,13 +143,13 @@ export class OrderService {
   }
 
 
-  saveOrder(){
+  saveOrder(orderMaster, orderDetails){
     // tslint:disable-next-line:max-line-length
        console.log(this.orderMaster);
     // tslint:disable-next-line:max-line-length
-       return this.http.post<OrderResponseData>( GlobalVariable.BASE_API_URL + '/orders', {master: this.orderMaster, details: this.orderDetails})
+       return this.http.post<OrderResponseData>( GlobalVariable.BASE_API_URL + '/orders', {master: orderMaster, details: orderDetails})
          .pipe(catchError(this._serverError), tap(((response: {success: number, data: OrderMaster}) => {
-          if(this.orderMaster.id === null) {
+          if (this.orderMaster.id === null) {
             this.orderMasterData.unshift(response.data);
           }
           // console.log(this.orderMaster);
@@ -236,11 +245,11 @@ export class OrderService {
   getProductData(model_number, customer_category_id){
 
     // tslint:disable-next-line:max-line-length
-    this.http.post(GlobalVariable.BASE_API_URL + '/getProductData', {model_number, customer_category_id})
-      .subscribe((response: {success: number, data: Product[]}) => {
-        const {data} = response;
-        this.productData = data;
-        this.productDataSub.next([...this.productData]);
-      });
+    return this.http.post(GlobalVariable.BASE_API_URL + '/getProductData', {model_number, customer_category_id});
+      // .subscribe((response: {success: number, data: Product[]}) => {
+      //   const {data} = response;
+      //   this.productData = data;
+      //   this.productDataSub.next([...this.productData]);
+      // });
   }
 }

@@ -53,6 +53,9 @@ export class OrderComponent implements OnInit {
   now = Date.now();
   public editableItemIndex = -1;
   public orderContainer: any;
+  public totalOrderAmount = 0;
+  public totalQuantity = 0;
+  public totalApproxGold = 0;
 
 
 
@@ -96,7 +99,9 @@ export class OrderComponent implements OnInit {
         this.orderMaster = orderContainer.orderMaster;
         this.orderDetails = orderContainer.orderDetails;
         this.orderMasterForm.setValue(orderContainer.orderMasterFormValue);
-        console.log(orderContainer.orderMasterFormValue);
+        this.totalOrderAmount = orderContainer.totalAmount;
+        this.totalQuantity = orderContainer.totalQuantity;
+        this.totalApproxGold = orderContainer.totalApproxGold;
       }
     }, (error) => {});
   }
@@ -136,8 +141,29 @@ export class OrderComponent implements OnInit {
     }
     // tslint:disable-next-line:max-line-length
     this.orderDetailsForm.patchValue({product_id: null, model_number: null, p_loss: null, price: null, price_code: null, approx_gold: null, size: null, quantity: null, amount: null});
+    this.totalOrderAmount = this.orderDetails.reduce( (total, record) => {
+      // @ts-ignore
+      return total + (record.price * record.quantity);
+    }, 0);
+
+    this.totalQuantity = this.orderDetails.reduce( (total, record) => {
+      // @ts-ignore
+      return total + record.quantity;
+    }, 0);
+
+    this.totalApproxGold = this.orderDetails.reduce( (total, record) => {
+      // @ts-ignore
+      return total + record.approx_gold;
+    }, 0);
     // tslint:disable-next-line:max-line-length
-    this.orderContainer = {orderMaster: this.orderMaster, orderDetails: this.orderDetails, orderMasterFormValue: this.orderMasterForm.value};
+    this.orderContainer = {
+      orderMaster: this.orderMaster,
+      orderDetails: this.orderDetails,
+      orderMasterFormValue: this.orderMasterForm.value,
+      totalAmount: this.totalOrderAmount,
+      totalQuantity: this.totalQuantity,
+      totalApproxGold: this.totalApproxGold
+    };
     this.storage.set('orderContainer', this.orderContainer).subscribe(() => {});
   }
 

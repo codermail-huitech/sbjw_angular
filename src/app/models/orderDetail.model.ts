@@ -6,12 +6,12 @@ export class OrderDetail{
   order_master_id ?: number;
   material_id: number;
   product_id?: number;
-  model_number: number;
+  model_number: string;
   p_loss: number;
   price: number;
-  price_code: number;
+  price_code: string;
   approx_gold: number;
-  size: number;
+  size: string;
   quantity: number;
   amount: number;
   status_id ?: number;

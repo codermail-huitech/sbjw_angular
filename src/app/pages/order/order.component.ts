@@ -163,6 +163,8 @@ export class OrderComponent implements OnInit {
     // this.orderDetailsForm.setValue(item);
     this.editableItemIndex = this.orderDetails.findIndex(x => x === item);
     this.isSaveEnabled = false;
+
+    const amount = item.quantity * item.price;
     // tslint:disable-next-line:max-line-length
     this.orderDetailsForm.patchValue({id: item.id, product_id: item.product_id, model_number : item.model_number, p_loss: item.p_loss, price: item.price, price_code: item.price_code, quantity: item.quantity, amount: item.amount, approx_gold: item.approx_gold, size: item.size });
     this.product_id = item.product_id;
@@ -171,7 +173,7 @@ export class OrderComponent implements OnInit {
     // tslint:disable-next-line:triple-equals
     if (index == this.editableItemIndex){
       return {
-        'background-color': 'rgba(200,200,200,.6)',
+        'background-color': 'rgba(200,29,55,0.6)',
         color: 'seashell'
       };
     }
@@ -344,4 +346,16 @@ export class OrderComponent implements OnInit {
   //   this.orderMasterForm.value.delivery_date = this.pipe.transform(this.orderMasterForm.value.delivery_date, 'yyyy-MM-dd');
   //   this.orderService.setOrderMasterData();
   // }
+  cancelOrder() {
+    this.storage.delete('orderContainer').subscribe(() => {});
+    this.orderContainer = null;
+    this.orderMaster = null;
+    this.orderDetails = [];
+  }
+
+  updateItemAmount() {
+    console.log('quantity changed')
+    const calculatedAmount = (this.orderDetailsForm.value.quantity * this.orderDetailsForm.value.price);
+    this.orderDetailsForm.patchValue({amount: calculatedAmount});
+  }
 }

@@ -59,6 +59,7 @@ import { BillJobMasterDetailsComponent } from './pages/bill/bill-job-master-deta
 import { CompletedBillComponent } from './pages/completed-bill/completed-bill.component';
 import { CompletedBillOrderDetailsComponent } from './pages/completed-bill/completed-bill-order-details/completed-bill-order-details.component';
 import { CompletedBillDetailsComponent } from './pages/completed-bill/completed-bill-details/completed-bill-details.component';
+import { RateComponent } from './pages/rate/rate.component';
 
 
 @NgModule({
@@ -98,7 +99,8 @@ import { CompletedBillDetailsComponent } from './pages/completed-bill/completed-
     BillJobMasterDetailsComponent,
     CompletedBillComponent,
     CompletedBillOrderDetailsComponent,
-    CompletedBillDetailsComponent
+    CompletedBillDetailsComponent,
+    RateComponent
 
   ],
   imports: [

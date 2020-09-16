@@ -1,0 +1,47 @@
+<div fxLayout.xs="column" fxLayout="row" fxLayoutAlign="space-between stretch" fxFlexFill id="rate-div">
+  <div fxLayout="column" fxFlex="40" class="mr-1" style="background-color: white">
+<!--    <pre>{{rateData | json}} </pre>-->
+    <h2>Rate Form</h2>
+    <mat-card class="ml-2 mt-2">
+      <form [formGroup] = rateForm>
+        <div class="container" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="start" fxLayoutGap="10px" fxLayoutGap.xs="0">
+          <mat-form-field>
+            <mat-label>Price Code</mat-label>
+            <mat-select  formControlName="price_code_id">
+              <mat-option *ngFor="let priceCode of priceCodes" [value]="priceCode.id">
+                {{priceCode.price_code_name}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Customer Category</mat-label>
+            <mat-select formControlName="customer_category_id">
+              <mat-option *ngFor="let customerCategory of customerCategories" [value]="customerCategory.id">
+                {{customerCategory.customer_category_name}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <mat-form-field class="m-2">
+          <mat-label>Price</mat-label>
+          <input matInput formControlName="price" class="text-right">
+        </mat-form-field>
+        <mat-form-field class="m-2">
+          <mat-label>P Loss</mat-label>
+          <input matInput formControlName="p_loss" class="text-right">
+        </mat-form-field>
+      </form>
+      <div class="container" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="end" fxLayoutGap="10px" fxLayoutGap.xs="0" >
+        <button mat-button (click)="onSubmit()" mat-stroked-button [disabled]="!rateForm.valid" >Save</button>
+      </div>
+    </mat-card>
+  </div>
+  <div fxLayout="column" fxFlex="40" class="mr-1" style="background-color: white">
+    <h1>FOR TESTING PURPOSE</h1>
+    <pre>{{priceCodes | json}}</pre>
+  </div>
+  <div fxLayout="column" fxFlex="40" class="mr-1" style="background-color: white">
+    <h1>FOR TESTING PURPOSE</h1>
+    <pre>{{customerCategories | json}}</pre>
+  </div>
+</div>

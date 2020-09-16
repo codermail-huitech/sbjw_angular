@@ -272,7 +272,7 @@ export class OrderComponent implements OnInit {
       .catch(() => {
         console.log('User dismissed the dialog (e.g., by using ESC, clicking the cross icon, or clicking outside the dialog)');
       });
-    console.log(masterData);
+    // console.log(masterData);
   }
 
 
@@ -309,7 +309,7 @@ export class OrderComponent implements OnInit {
     // tslint:disable-next-line:max-line-length
     this.orderService.getProductData(this.orderDetailsForm.value.model_number, this.customerList[index].customer_category_id)
       .subscribe((responseProducts: {success: number, data: Product}) => {
-      console.log(responseProducts);
+      // console.log(responseProducts);
       if (responseProducts.data){
         const tempProduct = responseProducts.data;
         // tslint:disable-next-line:max-line-length
@@ -339,26 +339,41 @@ export class OrderComponent implements OnInit {
     // this.orderService.setOrderMasterData();
 
     this.orderMaster = this.orderMasterForm.value;
-    let saveObserable = new Observable<any>();
-    saveObserable = this.orderService.saveOrder(this.orderMaster , this.orderDetails);
-    saveObserable.subscribe((response) => {
-      console.log(response);
-      if (response.success === 1){
-        this.orderMasterForm.reset();
-        this.orderDetailsForm.reset();
-        this.orderDetails = [];
-        this._snackBar.openFromComponent(SncakBarComponent, {
-          duration: 4000, data: {message: 'Order Saved'}
-        });
-        this.orderDetailsForm.value.amount = 0;
-      }
-    }, (error) => {
-      console.log('error occured ');
-      console.log(error);
-      this._snackBar.openFromComponent(SncakBarComponent, {
-        duration: 4000, data: {message: error.message}
-      });
+
+    this.orderService.saveOrder(this.orderMaster , this.orderDetails).subscribe((response) => {
+        if (response.data){
+          this.storage.delete('orderContainer').subscribe(() => {});
+          this.orderContainer = null;
+          this.orderMaster = null;
+          this.orderDetails = [];
+          this.orderMasterForm.reset();
+          this.orderDetailsForm.reset();
+          this.totalOrderAmount = 0;
+          this.totalQuantity = 0;
+          this.totalApproxGold = 0;
+        }
     });
+
+    // let saveObserable = new Observable<any>();
+    // saveObserable = this.orderService.saveOrder(this.orderMaster , this.orderDetails);
+    // saveObserable.subscribe((response) => {
+    //   console.log(response);
+    //   if (response.success === 1){
+    //     this.orderMasterForm.reset();
+    //     this.orderDetailsForm.reset();
+    //     this.orderDetails = [];
+    //     this._snackBar.openFromComponent(SncakBarComponent, {
+    //       duration: 4000, data: {message: 'Order Saved'}
+    //     });
+    //     this.orderDetailsForm.value.amount = 0;
+    //   }
+    // }, (error) => {
+    //   console.log('error occured ');
+    //   console.log(error);
+    //   this._snackBar.openFromComponent(SncakBarComponent, {
+    //     duration: 4000, data: {message: error.message}
+    //   });
+    // });
   }
 
   cancelEditCurrentItem(item: OrderDetail) {
@@ -377,10 +392,15 @@ export class OrderComponent implements OnInit {
     this.orderContainer = null;
     this.orderMaster = null;
     this.orderDetails = [];
+    this.totalOrderAmount = 0;
+    this.totalQuantity = 0;
+    this.totalApproxGold = 0;
+    this.orderMasterForm.reset();
+    this.orderDetailsForm.reset();
   }
 
   updateItemAmount() {
-    console.log('quantity changed')
+    console.log('quantity changed');
     const calculatedAmount = (this.orderDetailsForm.value.quantity * this.orderDetailsForm.value.price);
     this.orderDetailsForm.patchValue({amount: calculatedAmount});
   }

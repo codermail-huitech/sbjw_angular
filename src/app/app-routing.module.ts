@@ -27,11 +27,13 @@ import {CompletedBillComponent} from "./pages/completed-bill/completed-bill.comp
 import {CompletedBillOrderDetailsComponent} from "./pages/completed-bill/completed-bill-order-details/completed-bill-order-details.component";
 import {CommonJsUsageWarnPlugin} from "@angular-devkit/build-angular/src/angular-cli-files/plugins/common-js-usage-warn-plugin";
 import {CompletedBillDetailsComponent} from "./pages/completed-bill/completed-bill-details/completed-bill-details.component";
+import {RateComponent} from './pages/rate/rate.component';
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
   {path: 'customer', canActivate:  [AuthGuardService], component: CustomerComponent},
   {path: 'product', canActivate:  [AuthGuardService], component: ProductComponent},
+  {path: 'rate', canActivate:  [AuthGuardService], component: RateComponent},
   {path: 'auth', component: AuthComponent},
   {path: 'owner', canActivate:  [AuthGuardService], component: OwnerComponent},
   {path: 'order', canActivate:  [AuthGuardService], component: OrderComponent},

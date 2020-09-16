@@ -71,10 +71,11 @@
             </div>
           </div>
 
-          <button mat-button [matMenuTriggerFor]="menu">Menu</button>
+          <button mat-button [matMenuTriggerFor]="menu">Master</button>
           <mat-menu #menu="matMenu">
             <button mat-menu-item [routerLink]="['/customer']" routerLinkActive="MyActiveMenu">Customer</button>
             <button mat-menu-item [routerLink]="['/product']" routerLinkActive="MyActiveMenu">Product</button>
+            <button mat-menu-item [routerLink]="['/rate']" routerLinkActive="MyActiveMenu">Rate</button>
           </mat-menu>
 
         <button mat-button [matMenuTriggerFor]="TransactionMenu">Transaction</button>

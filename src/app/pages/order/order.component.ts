@@ -7,7 +7,6 @@ import {OrderService} from '../../services/order.service';
 import {Agent} from '../../models/agent.model';
 import {Material} from '../../models/material.model';
 import { DatePipe } from '@angular/common';
-import {ProductService} from '../../services/product.service';
 import {Product} from '../../models/product.model';
 import {StorageMap} from '@ngx-pwa/local-storage';
 import {MatSnackBar} from '@angular/material/snack-bar';
@@ -17,6 +16,7 @@ import {OrderMaster} from '../../models/orderMaster.model';
 import {Observable} from 'rxjs';
 import {ConfirmationDialogService} from '../../common/confirmation-dialog/confirmation-dialog.service';
 import {map, startWith} from 'rxjs/operators';
+import Swal from 'sweetalert2';
 
 
 @Component({
@@ -250,33 +250,33 @@ export class OrderComponent implements OnInit {
   }
 
 
-  deleteDetails(details){
-    // console.log(details);
-    this.confirmationDialogService.confirm('Please confirm..', 'Do you really want to delete order detail ?')
-      .then((confirmed) => {
-        // deleting record if confirmed
-        if (confirmed){
-          this.orderService.deleteOrderDetails(details.id).subscribe((response) => {
-            if (response.success === 1){
-              this._snackBar.openFromComponent(SncakBarComponent, {
-                duration: 4000, data: {message: 'Order Deleted'}
-              });
-            }
-            this.currentError = null;
-          }, (error) => {
-            console.log('error occured ');
-            console.log(error);
-            this.currentError = error;
-            this._snackBar.openFromComponent(SncakBarComponent, {
-              duration: 4000, data: {message: error.message}
-            });
-          });
-        }
-
-      })
-      .catch(() => {
-        console.log('User dismissed the dialog (e.g., by using ESC, clicking the cross icon, or clicking outside the dialog)');
-      });
+  deleteDetails(item){
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'Item will be deleted from order list',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, delete it!',
+      cancelButtonText: 'No, keep it'
+    }).then((result) => {
+      if (result.value) {
+        const index = this.orderDetails.findIndex(x => x === item);
+        this.orderDetails.splice(index, 1);
+        Swal.fire(
+          'Deleted!',
+          'Item deleted from Order List',
+          'success'
+        );
+        // For more information about handling dismissals please visit
+        // https://sweetalert2.github.io/#handling-dismissals
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        Swal.fire(
+          'Cancelled',
+          'Your order item is not deleted :)',
+          'error'
+        );
+      }
+    });
   }
   findModel(event){
     const index = this.customerList.findIndex(k => k.id === this.orderMasterForm.value.customer_id );

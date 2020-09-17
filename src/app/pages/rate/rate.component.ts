@@ -19,6 +19,7 @@ export class RateComponent implements OnInit {
   rateData: Rate[] = [];
   priceCodes: PriceCode[] = [];
   customerCategories: CustomerCategory[] = [];
+  p = 1;
 
   constructor(private rateService: RateService, private priceCodeService: PriceCodeService, private customerCategoryService: CustomerCategoryService) { }
 
@@ -33,7 +34,7 @@ export class RateComponent implements OnInit {
       this.priceCodes = response;
     });
 
-    this.customerCategoryService.getCustomerCategoryUpdateListener().subscribe((response) =>{
+    this.customerCategoryService.getCustomerCategoryUpdateListener().subscribe((response) => {
       this.customerCategories = response;
     });
 
@@ -46,13 +47,48 @@ export class RateComponent implements OnInit {
   onSubmit(){
     console.log(this.rateForm.value);
     this.rateService.saveRate().subscribe((response: {success: number, data: Rate}) => {
-      if(response.data){
+      if (response.data){
         Swal.fire(
           'Saved!',
           'Item Successfully saved',
           'success'
         );
+        // console.log(response.data);
         this.rateData.unshift(response.data);
+      }
+    });
+  }
+
+  deleteRate(rateData){
+
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'Item will be deleted from rate list',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, delete it!',
+      cancelButtonText: 'No, keep it'
+    }).then((result) => {
+      if (result.value) {
+        this.rateService.deleteRate(rateData.id).subscribe((response: {success: number, data: Rate} ) => {
+          if(response.data){
+            const index = this.rateData.findIndex(x => x.id === response.data.id);
+            this.rateData.splice(index, 1);
+            Swal.fire(
+              'Deleted!',
+              'Item deleted from Order List',
+              'success'
+            );
+          }
+        });
+        // For more information about handling dismissals please visit
+        // https://sweetalert2.github.io/#handling-dismissals
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        Swal.fire(
+          'Cancelled',
+          'Not Deleted :)',
+          'error'
+        );
       }
     });
   }

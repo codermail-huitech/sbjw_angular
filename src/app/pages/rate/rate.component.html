@@ -1,47 +1,91 @@
 <div fxLayout.xs="column" fxLayout="row" fxLayoutAlign="space-between stretch" fxFlexFill id="rate-div">
-  <div fxLayout="column" fxFlex="40" class="mr-1" style="background-color: white">
-<!--    <pre>{{rateData | json}} </pre>-->
-    <h2>Rate Form</h2>
+  <div fxLayout="column" fxFlex="40" class="mr-1">
     <mat-card class="ml-2 mt-2">
-      <form [formGroup] = rateForm>
-        <div class="container" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="start" fxLayoutGap="10px" fxLayoutGap.xs="0">
-          <mat-form-field>
-            <mat-label>Price Code</mat-label>
-            <mat-select  formControlName="price_code_id">
-              <mat-option *ngFor="let priceCode of priceCodes" [value]="priceCode.id">
-                {{priceCode.price_code_name}}
-              </mat-option>
-            </mat-select>
+      <div class="form-container">
+        <h2>Rate Form</h2>
+        <form [formGroup] = rateForm>
+          <div class="container" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="start" fxLayoutGap="10px" fxLayoutGap.xs="0">
+            <mat-form-field>
+              <mat-label>Price Code</mat-label>
+              <mat-select  formControlName="price_code_id">
+                <mat-option *ngFor="let priceCode of priceCodes" [value]="priceCode.id">
+                  {{priceCode.price_code_name}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field>
+              <mat-label>Customer Category</mat-label>
+              <mat-select formControlName="customer_category_id">
+                <mat-option *ngFor="let customerCategory of customerCategories" [value]="customerCategory.id">
+                  {{customerCategory.customer_category_name}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <mat-form-field class="m-2">
+            <mat-label>Price</mat-label>
+            <input matInput formControlName="price" class="text-right">
           </mat-form-field>
-          <mat-form-field>
-            <mat-label>Customer Category</mat-label>
-            <mat-select formControlName="customer_category_id">
-              <mat-option *ngFor="let customerCategory of customerCategories" [value]="customerCategory.id">
-                {{customerCategory.customer_category_name}}
-              </mat-option>
-            </mat-select>
+          <mat-form-field class="m-2">
+            <mat-label>P Loss</mat-label>
+            <input matInput formControlName="p_loss" class="text-right">
           </mat-form-field>
+        </form>
+        <div class="container" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="end" fxLayoutGap="10px" fxLayoutGap.xs="0" >
+          <button mat-button (click)="onSubmit()" mat-stroked-button [disabled]="!rateForm.valid" >Save</button>
         </div>
-        <mat-form-field class="m-2">
-          <mat-label>Price</mat-label>
-          <input matInput formControlName="price" class="text-right">
-        </mat-form-field>
-        <mat-form-field class="m-2">
-          <mat-label>P Loss</mat-label>
-          <input matInput formControlName="p_loss" class="text-right">
-        </mat-form-field>
-      </form>
-      <div class="container" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="end" fxLayoutGap="10px" fxLayoutGap.xs="0" >
-        <button mat-button (click)="onSubmit()" mat-stroked-button [disabled]="!rateForm.valid" >Save</button>
       </div>
     </mat-card>
   </div>
-  <div fxLayout="column" fxFlex="40" class="mr-1" style="background-color: white">
-    <h1>FOR TESTING PURPOSE</h1>
-    <pre>{{priceCodes | json}}</pre>
+  <div fxLayout="column" fxFlex="60" class="mr-1">
+    <div id="rate-table-div">
+
+    <table class="table" id="my-table">
+      <thead>
+      <tr>
+        <th>SL No.</th>
+        <th>Price Code Name</th>
+        <th>Customer Category Name</th>
+        <th>Price</th>
+        <th>P_Loss</th>
+        <th colspan="2">Action</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr  *ngFor="let rate of rateData | paginate: { itemsPerPage: 10, currentPage: p } ; let indexOfelement = index;">
+        <td>{{indexOfelement+1}}</td>
+        <td>{{rate.price_code_name}}</td>
+        <td>{{rate.customer_category_name}}</td>
+        <td>{{rate.price}}</td>
+        <td>{{rate.p_loss}}</td>
+<!--        <td>-->
+<!--          <button mat-icon-button color="primary" aria-label="Edit Product" (click)="populateFormByCurrentProduct(product)">-->
+<!--            <mat-icon>edit</mat-icon>-->
+<!--          </button>-->
+<!--        </td>-->
+        <td>
+          <button mat-icon-button color="warn" aria-label="delete rate" (click)="deleteRate(rate)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+    <div fxLayout.xs="column" fxLayout="column" fxFlexFill>
+      <pagination-controls (pageChange)="p = $event"></pagination-controls>
+      <pagination-controls  id="some_id"
+                            (pageChange)="p=($event)"
+                            maxSize="5"
+                            directionLinks="true"
+                            autoHide="true"
+                            responsive="true"
+                            previousLabel="Previous"
+                            nextLabel="Next"
+                            screenReaderPaginationLabel="Pagination"
+                            screenReaderPageLabel="page"
+                            screenReaderCurrentLabel="You're on page">
+      </pagination-controls>
+    </div>
   </div>
-  <div fxLayout="column" fxFlex="40" class="mr-1" style="background-color: white">
-    <h1>FOR TESTING PURPOSE</h1>
-    <pre>{{customerCategories | json}}</pre>
   </div>
 </div>

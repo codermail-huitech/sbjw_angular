@@ -6,6 +6,8 @@ import {Agent} from '../models/agent.model';
 import {Rate} from '../models/rate.model';
 import {Subject} from 'rxjs';
 import {OrderDetail} from '../models/orderDetail.model';
+import {Customer} from '../models/customer.model';
+import {CustomerResponseData} from './customer.service';
 
 export interface RateResponseData {
   success: number;
@@ -57,5 +59,9 @@ private rateSub = new Subject<Rate[]>();
       //   console.log("rate data");
       //   console.log(response);
       // });
+  }
+
+  deleteRate(data){
+    return this.http.delete<RateResponseData>('http://127.0.0.1:8000/api/deleteRate/' + data);
   }
 }

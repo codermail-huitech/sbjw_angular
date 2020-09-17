@@ -64,4 +64,9 @@ private rateSub = new Subject<Rate[]>();
   deleteRate(data){
     return this.http.delete<RateResponseData>('http://127.0.0.1:8000/api/deleteRate/' + data);
   }
+
+  updateRate(){
+    return this.http.put<RateResponseData>(GlobalVariable.BASE_API_URL + '/updateRate', {rateData: this.rateForm.value});
+  }
+
 }

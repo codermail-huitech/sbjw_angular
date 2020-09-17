@@ -55,6 +55,7 @@ export class RateComponent implements OnInit {
         );
         // console.log(response.data);
         this.rateData.unshift(response.data);
+        this.rateForm.reset();
       }
     });
   }
@@ -89,6 +90,25 @@ export class RateComponent implements OnInit {
           'Not Deleted :)',
           'error'
         );
+      }
+    });
+  }
+
+  editRate(rateData){
+    this.rateForm.patchValue({id: rateData.id , price_code_id: rateData.price_code_id, customer_category_id: rateData.customer_category_id, price: rateData.price, p_loss: rateData.p_loss});
+  }
+
+  updateRate(){
+    this.rateService.updateRate().subscribe((response: {success: number, data: Rate}) => {
+      if (response.data){
+        const index = this.rateData.findIndex(x => x.id === response.data.id);
+        this.rateData[index] = response.data;
+        Swal.fire(
+          'Updated!',
+          'Item Successfully updated',
+          'success'
+        );
+        this.rateForm.reset();
       }
     });
   }

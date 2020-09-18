@@ -35,6 +35,8 @@ export class OrderComponent implements OnInit {
   productData: Product[] ;
   orderMaster: OrderMaster;
   orderDetails: OrderDetail[] = [];
+  orderMasterList : OrderMaster[] = [];
+  editableOrderMaster : OrderMaster;
   orderMasterForm: FormGroup;
   orderDetailsForm: FormGroup;
   isSaveEnabled = true;
@@ -77,6 +79,8 @@ export class OrderComponent implements OnInit {
     // this.orderDetailsForm.controls['amount'].disable();
     this.showUpdate = false;
     // this.options = [];
+
+
     this.customerService.getCustomerUpdateListener()
       .subscribe((customers: Customer[]) => {
         this.customerList = customers;
@@ -93,7 +97,14 @@ export class OrderComponent implements OnInit {
       });
     this.orderService.getOrderUpdateListener()
       .subscribe((responseOrders: OrderMaster[]) => {
+         this.orderMasterList = responseOrders;
       });
+    this.orderService.getOrderDetailsListener()
+      .subscribe((orderDetail)=>{
+          this.orderDetails =orderDetail;
+      });
+
+
     this.storage.get('orderContainer').subscribe((orderContainer: any) => {
       if (orderContainer){
         this.orderMaster = orderContainer.orderMaster;
@@ -187,11 +198,22 @@ export class OrderComponent implements OnInit {
   }
   fillOrderDetailsForm(item){
     // this.orderDetailsForm.setValue(item);
+
     this.editableItemIndex = this.orderDetails.findIndex(x => x === item);
     this.isSaveEnabled = false;
 
     const amount = item.quantity * item.price;
     // tslint:disable-next-line:max-line-length
+
+    let index = this.orderMasterList.findIndex(x => x.id ===item.order_master_id);
+    this.editableOrderMaster = this.orderMasterList[index];
+
+    // this.editableOrderMaster.date_of_order = this.pipe.transform(this.editableOrderMaster.date_of_order,'dd/MM/yyyy');
+    // this.editableOrderMaster.date_of_delivery = this.pipe.transform(this.editableOrderMaster.date_of_delivery,'dd/MM/yyyy');
+
+    console.log(this.editableOrderMaster);
+    this.orderMasterForm.patchValue({id : this.editableOrderMaster.id, customer_id : this.editableOrderMaster.customer_id, agent_id : this.editableOrderMaster.agent_id, order_date : this.editableOrderMaster.date_of_order, delivery_date : this.editableOrderMaster.date_of_delivery});
+
     this.orderDetailsForm.patchValue({id: item.id, product_id: item.product_id, model_number : item.model_number, p_loss: item.p_loss, price: item.price, price_code: item.price_code, quantity: item.quantity, amount: item.amount, approx_gold: item.approx_gold, size: item.size });
     this.product_id = item.product_id;
   }
@@ -342,6 +364,11 @@ export class OrderComponent implements OnInit {
 
     this.orderService.saveOrder(this.orderMaster , this.orderDetails).subscribe((response) => {
         if (response.data){
+          Swal.fire(
+            'Saved!',
+            'Order Successfully saved',
+            'success'
+          );
           this.storage.delete('orderContainer').subscribe(() => {});
           this.orderContainer = null;
           this.orderMaster = null;
@@ -351,6 +378,8 @@ export class OrderComponent implements OnInit {
           this.totalOrderAmount = 0;
           this.totalQuantity = 0;
           this.totalApproxGold = 0;
+
+          this.orderMasterList.unshift(response.data);
         }
     });
 
@@ -403,5 +432,12 @@ export class OrderComponent implements OnInit {
     console.log('quantity changed');
     const calculatedAmount = (this.orderDetailsForm.value.quantity * this.orderDetailsForm.value.price);
     this.orderDetailsForm.patchValue({amount: calculatedAmount});
+  }
+
+  showOrderDetailsList(item){
+
+    this.orderService.fetchOrderDetails(item.id);
+    this.showProduct = true;
+
   }
 }

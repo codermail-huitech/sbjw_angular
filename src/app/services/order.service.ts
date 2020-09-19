@@ -204,9 +204,9 @@ export class OrderService {
 
   deleteOrderDetails(id){
     return this.http.delete(GlobalVariable.BASE_API_URL + '/ordersDetailsDelete/' + id)
-      .pipe(catchError(this._serverError), tap((response: {success: number, data: string}) => {
-        const index = this.orderDetails.findIndex(x => x.id === id);
-        this.orderDetails.splice(index , 1);
+      .pipe(catchError(this._serverError), tap((response: {success: number, data: OrderDetail}) => {
+        // const index = this.orderDetails.findIndex(x => x.id === id);
+        // this.orderDetails.splice(index , 1);
         this.orderDetailsSub.next([...this.orderDetails]);
       }));
   }

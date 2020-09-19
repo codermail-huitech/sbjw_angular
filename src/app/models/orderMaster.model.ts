@@ -11,6 +11,8 @@ export class OrderMaster{
   agent_id: number;
   order_date: string;
   delivery_date: string;
+  date_of_order?: any;
+  date_of_delivery?: any;
   constructor() {
   }
 }

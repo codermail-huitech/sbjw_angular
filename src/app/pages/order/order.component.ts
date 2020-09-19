@@ -3,7 +3,7 @@ import {Customer} from '../../models/customer.model';
 import {CustomerService} from '../../services/customer.service';
 // import {FormGroup} from "@angular/forms";
 import {FormControl, FormGroup} from '@angular/forms';
-import {OrderService} from '../../services/order.service';
+import {OrderResponseData, OrderService} from '../../services/order.service';
 import {Agent} from '../../models/agent.model';
 import {Material} from '../../models/material.model';
 import { DatePipe } from '@angular/common';
@@ -211,7 +211,7 @@ export class OrderComponent implements OnInit {
     // this.editableOrderMaster.date_of_order = this.pipe.transform(this.editableOrderMaster.date_of_order,'dd/MM/yyyy');
     // this.editableOrderMaster.date_of_delivery = this.pipe.transform(this.editableOrderMaster.date_of_delivery,'dd/MM/yyyy');
 
-    console.log(this.editableOrderMaster);
+    // console.log(this.editableOrderMaster);
     this.orderMasterForm.patchValue({id : this.editableOrderMaster.id, customer_id : this.editableOrderMaster.customer_id, agent_id : this.editableOrderMaster.agent_id, order_date : this.editableOrderMaster.date_of_order, delivery_date : this.editableOrderMaster.date_of_delivery});
 
     this.orderDetailsForm.patchValue({id: item.id, product_id: item.product_id, model_number : item.model_number, p_loss: item.p_loss, price: item.price, price_code: item.price_code, quantity: item.quantity, amount: item.amount, approx_gold: item.approx_gold, size: item.size });
@@ -308,13 +308,18 @@ export class OrderComponent implements OnInit {
       cancelButtonText: 'No, keep it'
     }).then((result) => {
       if (result.value) {
-        const index = this.orderDetails.findIndex(x => x === item);
-        this.orderDetails.splice(index, 1);
-        Swal.fire(
-          'Deleted!',
-          'Item deleted from Order List',
-          'success'
-        );
+        this.orderService.deleteOrderDetails(item.id).subscribe((response: {data: OrderDetail, success: number}) => {
+          if (response.data){
+            const index = this.orderDetails.findIndex(x => x.id === response.data.id);
+            this.orderDetails.splice(index, 1);
+            Swal.fire(
+              'Deleted!',
+              'Item deleted from Order List',
+              'success'
+            );
+          }
+        });
+
         // For more information about handling dismissals please visit
         // https://sweetalert2.github.io/#handling-dismissals
       } else if (result.dismiss === Swal.DismissReason.cancel) {

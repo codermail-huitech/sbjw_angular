@@ -102,6 +102,14 @@ export class OrderComponent implements OnInit {
     this.orderService.getOrderDetailsListener()
       .subscribe((orderDetail)=>{
           this.orderDetails =orderDetail;
+          this.totalApproxGold =0;
+          this.totalOrderAmount =0;
+          this.totalQuantity =0;
+          for(let x =0; x< this.orderDetails.length; x++){
+            this.totalApproxGold = this.totalApproxGold + this.orderDetails[x].approx_gold;
+            this.totalQuantity = this.totalQuantity + this.orderDetails[x].quantity;
+            this.totalOrderAmount = this.totalOrderAmount + this.orderDetails[x].amount;
+          }
       });
 
 
@@ -311,7 +319,12 @@ export class OrderComponent implements OnInit {
         this.orderService.deleteOrderDetails(item.id).subscribe((response: {data: OrderDetail, success: number}) => {
           if (response.data){
             const index = this.orderDetails.findIndex(x => x.id === response.data.id);
+            this.totalApproxGold = this.totalApproxGold - this.orderDetails[index].approx_gold;
+            this.totalQuantity = this.totalQuantity - this.orderDetails[index].quantity;
+            this.totalOrderAmount = this.totalOrderAmount - this.orderDetails[index].amount;
             this.orderDetails.splice(index, 1);
+            console.log(response.data);
+            // this.totalApproxGold = this.totalApproxGold - this.orderDetails
             Swal.fire(
               'Deleted!',
               'Item deleted from Order List',
@@ -331,6 +344,51 @@ export class OrderComponent implements OnInit {
       }
     });
   }
+
+  deleteDetailsLocal(index,data){
+
+
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'Item will be deleted from order list',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, delete it!',
+      cancelButtonText: 'No, keep it'
+    }).then((result) => {
+      if (result.value) {
+        this.totalOrderAmount = this.totalOrderAmount - data.amount;
+        this.totalQuantity = this.totalQuantity - data.quantity;
+        this.totalApproxGold = this.totalApproxGold - data.approx_gold;
+        this.orderDetails.splice(index,1);
+
+        this.orderContainer = {
+          // orderMaster: this.orderMaster,
+          orderDetails: this.orderDetails,
+          orderMasterFormValue: this.orderMasterForm.value,
+          totalAmount: this.totalOrderAmount,
+          totalQuantity: this.totalQuantity,
+          totalApproxGold: this.totalApproxGold
+        };
+        this.storage.set('orderContainer', this.orderContainer).subscribe(() => {});
+            // this.totalApproxGold = this.totalApproxGold - this.orderDetails
+        Swal.fire(
+          'Deleted!',
+          'Item deleted from Order List',
+          'success'
+        );
+        // For more information about handling dismissals please visit
+        // https://sweetalert2.github.io/#handling-dismissals
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        Swal.fire(
+          'Cancelled',
+          'Your order item is not deleted :)',
+          'error'
+        );
+      }
+    });
+  }
+
   findModel(event){
     const index = this.customerList.findIndex(k => k.id === this.orderMasterForm.value.customer_id );
     // tslint:disable-next-line:max-line-length

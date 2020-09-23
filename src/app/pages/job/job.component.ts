@@ -48,7 +48,8 @@ export class JobComponent implements OnInit {
     });
     this.orderService.getOrderUpdateListener().subscribe((responseProducts: OrderMaster[]) => {
       this.orderMasterData = responseProducts;
-      console.log (this.orderMasterData);
+      console.log("job component");
+      console.log (responseProducts);
     });
     this.productService.getProductUpdateListener()
       .subscribe((responseProducts: Product[]) => {
@@ -59,6 +60,7 @@ export class JobComponent implements OnInit {
         this.materialList = material;
         console.log(this.materialList);
       });
+    this.materialList = this.orderService.getMaterials();
   }
 
   viewDetails(data) {
@@ -75,7 +77,10 @@ export class JobComponent implements OnInit {
   }
 
   placeJob(details) {
+    console.log("details");
     console.log(details);
+    console.log("materials");
+    console.log(this.materialList);
     const index = this.materialList.findIndex(x => x.id === details.material_id);
     this.jobMasterForm.patchValue({
       model_number: details.model_number,

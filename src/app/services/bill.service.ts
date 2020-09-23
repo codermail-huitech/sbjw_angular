@@ -97,6 +97,16 @@ export class BillService {
       });
   }
 
+  getUpdatedCompletedJobs(){
+    this.http.get(GlobalVariable.BASE_API_URL + '/completedBillCustomers')
+      .subscribe((response: {success: number, data: FinishedJobs[]}) => {
+        const {data} = response;
+        this.completedBill = data;
+        // console.log(this.finshedJobs);
+        this.completedBillDataSub.next([...this.completedBill]);
+      });
+  }
+
   getDetails(data){
     return this.http.post<ProductResponseData>('http://127.0.0.1:8000/api/fetchingDetails', data)
       .subscribe((response: {success: number, data: OrderDetail[]})  => {
@@ -158,6 +168,12 @@ export class BillService {
     console.log("service");
     return this.http.post<{ success: number, data: BillMaster }>( GlobalVariable.BASE_API_URL + '/saveBillMaster' , {master : billMasterData, details: billDetailsData })
       .pipe(catchError(this._serverError), tap(((response: {success: number, data: BillMaster}) => {
+
+        // if(response.data){
+        //   this.completedBill.unshift(response.data);
+        //
+        //
+        // }
       })));
   }
 

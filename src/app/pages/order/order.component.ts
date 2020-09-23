@@ -63,7 +63,7 @@ export class OrderComponent implements OnInit {
 
   // tslint:disable-next-line:max-line-length
   constructor(private confirmationDialogService: ConfirmationDialogService, private customerService: CustomerService, private orderService: OrderService, private storage: StorageMap, private _snackBar: MatSnackBar) {
-    this.orderService.getOrderMaster();
+    this.orderMasterList = this.orderService.getOrderMaster();
   }
   // onlyOdds = (d: Date): boolean => {
   //   const date = d.getDate();

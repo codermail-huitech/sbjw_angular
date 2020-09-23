@@ -1,5 +1,6 @@
 <div fxLayout.xs="column"   fxLayout="row" fxLayoutAlign="space-between stretch" fxFlexFill id="create-bill-div" >
-  <div  fxFlex="100" *ngIf="finshedJobs"  >
+  <div *ngIf="finshedJobs.length ==0"><h1>Nothing to show.....</h1></div>
+  <div  fxFlex="100" *ngIf="finshedJobs.length > 0"  >
     <table class="table">
       <thead>
       <tr>

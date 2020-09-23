@@ -198,7 +198,7 @@
         </tfoot>
       </table>
     </div>
-    <div [hidden]="showProduct">
+    <div [hidden]="showProduct" *ngIf="orderMasterList">
       <table class="table" id="order-master-table">
         <thead>
         <tr>

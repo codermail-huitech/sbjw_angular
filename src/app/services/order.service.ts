@@ -123,6 +123,7 @@ export class OrderService {
         this.orderSub.next([...this.orderMasterData]);
       });
   }
+
   getOrderMaster(){
     return([...this.orderMasterData]);
   }
@@ -156,6 +157,10 @@ export class OrderService {
           // // console.log(this.orderMaster);
           //
           // this.orderSub.next([...this.orderMasterData]);
+           if(response.data){
+             this.orderMasterData.unshift(response.data);
+             this.orderSub.next([...this.orderMasterData]);
+           }
         })));
     }
 

@@ -125,13 +125,13 @@
                         <td>{{details.quantity}}</td>
                         <td>{{details.amount}}</td>
                         <td>
-                          <button mat-icon-button color="primary" [disabled]="details.status_id==1" aria-label="Edit Product" (click)="placeJob(details)">
+                          <button mat-icon-button color="primary" [disabled]="details.status_id!=40" aria-label="Edit Product" (click)="placeJob(details)">
                             <mat-icon>done</mat-icon>
 
                           </button>
                         </td>
                         <td>
-                          <button mat-icon-button color="warn" [disabled]="details.job_status==1" aria-label="Edit Customer">
+                          <button mat-icon-button color="warn" [disabled]="details.status_id!=40" aria-label="Edit Customer">
                             <mat-icon>delete</mat-icon>
                           </button>
                         </td>

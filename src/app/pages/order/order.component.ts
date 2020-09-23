@@ -206,6 +206,7 @@ export class OrderComponent implements OnInit {
   }
   fillOrderDetailsForm(item){
     // this.orderDetailsForm.setValue(item);
+    console.log(item);
 
     this.editableItemIndex = this.orderDetails.findIndex(x => x === item);
     this.isSaveEnabled = false;
@@ -222,7 +223,7 @@ export class OrderComponent implements OnInit {
     // console.log(this.editableOrderMaster);
     this.orderMasterForm.patchValue({id : this.editableOrderMaster.id, customer_id : this.editableOrderMaster.customer_id, agent_id : this.editableOrderMaster.agent_id, order_date : this.editableOrderMaster.date_of_order, delivery_date : this.editableOrderMaster.date_of_delivery});
 
-    this.orderDetailsForm.patchValue({id: item.id, product_id: item.product_id, model_number : item.model_number, p_loss: item.p_loss, price: item.price, price_code: item.price_code, quantity: item.quantity, amount: item.amount, approx_gold: item.approx_gold, size: item.size });
+    this.orderDetailsForm.patchValue({id: item.id, product_id: item.product_id, model_number : item.model_number, p_loss: item.p_loss, price: item.price, price_code: item.price_code, quantity: item.quantity, amount: item.amount, approx_gold: item.approx_gold, size: item.size , material_id: item.material_id});
     this.product_id = item.product_id;
   }
   getBackgroundColor(index: number) {
@@ -249,10 +250,16 @@ export class OrderComponent implements OnInit {
     this.orderService.updateOrder().subscribe((response) => {
 
       if (response.success === 1){
+        Swal.fire(
+          'Updated!',
+          'Item updated in Order List',
+          'success'
+        );
+
         this.orderDetailsForm.reset();
-        this._snackBar.openFromComponent(SncakBarComponent, {
-          duration: 4000, data: {message: 'Details Updated'}
-        });
+        // this._snackBar.openFromComponent(SncakBarComponent, {
+        //   duration: 4000, data: {message: 'Details Updated'}
+        // });
       }
       this.currentError = null;
 

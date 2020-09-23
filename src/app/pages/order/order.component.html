@@ -1,5 +1,5 @@
 <div fxLayout.xs="column" fxLayout="row" fxLayoutAlign="space-between stretch" fxFlexFill id="order-div">
-  <div fxLayout="column" fxFlex="35" class="mr-1">
+  <div fxLayout="column" fxFlex="30" class="mr-1">
     <mat-card class="ml-2 mt-2">
       <div class="form-container-master">
       <!--Order Master form-->
@@ -132,7 +132,7 @@
 <!--      <pre>{{options | json}}</pre>-->
     </div>
   </div>
-  <div id ="order-table-div" fxLayout="column" fxFlex="65" class="mr-1">
+  <div id ="order-table-div" fxLayout="column" fxFlex="70" class="mr-1">
     <div class="row" style="align-content: center; text-align: center">
       <div class="col"><button style="background-color: green" mat-button class="col-12" mat-stroked-button (click)="productShow()">{{showProduct==true? 'Show Order Master List':'Show Order Details List'}}</button></div>
     </div>
@@ -187,9 +187,9 @@
           <td class="text-right"></td>
           <td class="text-right">{{totalOrderAmount | currency:"&#8377;"}}</td>
         </tr>
-          <tr>
+        <tr>
             <td colspan="2">
-              <button mat-button (click)="cancelOrder()" mat-stroked-button>Cancel Order</button>
+              <button mat-button  (click)="cancelOrder()" mat-stroked-button>Cancel Order</button>
             </td>
             <td colspan="2">
               <button mat-button (click)="onSubmit()" mat-stroked-button [disabled]="orderDetails.length<1 || orderDetailsForm.valid">Save Order</button>

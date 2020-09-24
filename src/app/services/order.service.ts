@@ -130,6 +130,9 @@ export class OrderService {
   getMaterials(){
     return([...this.materialData]);
   }
+  getAgentList(){
+    return([...this.agentData]);
+  }
   // this function is to save the orderMasterForm value while pressing in save
   setOrderMasterData() {
     this.orderMaster = this.orderMasterForm.value;

@@ -64,6 +64,9 @@ export class OrderComponent implements OnInit {
   // tslint:disable-next-line:max-line-length
   constructor(private confirmationDialogService: ConfirmationDialogService, private customerService: CustomerService, private orderService: OrderService, private storage: StorageMap, private _snackBar: MatSnackBar) {
     this.orderMasterList = this.orderService.getOrderMaster();
+    this.customerList = this.customerService.getCustomers();
+    this.agentList = this.orderService.getAgentList();
+
   }
   // onlyOdds = (d: Date): boolean => {
   //   const date = d.getDate();
@@ -449,7 +452,7 @@ export class OrderComponent implements OnInit {
           this.totalQuantity = 0;
           this.totalApproxGold = 0;
 
-          this.orderMasterList.unshift(response.data);
+          // this.orderMasterList.unshift(response.data);
         }
     });
 

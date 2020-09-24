@@ -6,7 +6,7 @@
 
   <div fxLayout="column" fxFlex="100" [hidden]="showCompleteJobs" class="mr-1">
     <div class="jobTask-table-div" *ngIf="savedJobsData" >
-      <table class="table">
+      <table class="table" *ngIf="savedJobsData">
         <thead>
         <tr>
           <th>SL No.</th>
@@ -30,13 +30,16 @@
         </tr>
         </tbody>
       </table>
+      <div *ngIf="!savedJobsData">
+        <h1>Nothing to show</h1>
+      </div>
     </div>
 
   </div>
 
   <div fxLayout="column" fxFlex="100" [hidden]="!showCompleteJobs" class="mr-1">
-    <div class="jobTask-table-div" *ngIf="finishedJobsList" >
-          <table class="table">
+    <div class="jobTask-table-div" >
+          <table class="table" *ngIf="finishedJobsList.length!=0">
             <thead>
             <tr>
               <th>SL No.</th>
@@ -60,6 +63,9 @@
         </tr>
         </tbody>
       </table>
+      <div *ngIf="finishedJobsList.length==0">
+        <h1>Nothing to show</h1>
+      </div>
     </div>
   </div>
 

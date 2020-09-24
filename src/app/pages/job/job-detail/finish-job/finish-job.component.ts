@@ -5,6 +5,7 @@ import {ActivatedRoute} from "@angular/router";
 import {SncakBarComponent} from "../../../../common/sncak-bar/sncak-bar.component";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {BillService} from "../../../../services/bill.service";
+import {JobTaskService} from "../../../../services/job-task.service";
 
 @Component({
   selector: 'app-finish-job',
@@ -14,7 +15,7 @@ import {BillService} from "../../../../services/bill.service";
 export class FinishJobComponent implements OnInit {
   jobMasterForm : FormGroup;
   id : number;
-  constructor(private route: ActivatedRoute ,private jobService :JobService, private _snackBar: MatSnackBar, private  billService : BillService) { }
+  constructor(private route: ActivatedRoute ,private jobService :JobService, private _snackBar: MatSnackBar, private  billService : BillService,private  jobTaskService : JobTaskService) { }
 
   ngOnInit(): void {
     this.jobMasterForm = this.jobService.jobMasterForm;
@@ -33,10 +34,17 @@ export class FinishJobComponent implements OnInit {
 
       this.jobService.finishJob().subscribe((response)=>{
         if(response.data){
+          // window.location.href = "http://localhost:4200/job_task";
+
+          // this.jobTaskService.getUpdatedSavedJobs();
           this.billService.getUpdatedList();
           this._snackBar.openFromComponent(SncakBarComponent, {
             duration: 4000, data: {message: 'Job Finished'}
           });
+          setTimeout(function(){
+            window.location.href = "http://localhost:4200/job_task";
+          },2000);
+
         }
       }, (error) => {
         console.log('error occured ');

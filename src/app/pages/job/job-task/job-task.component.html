@@ -5,8 +5,8 @@
 
 
   <div fxLayout="column" fxFlex="100" [hidden]="showCompleteJobs" class="mr-1">
-    <div class="jobTask-table-div" *ngIf="savedJobsData" >
-      <table class="table" *ngIf="savedJobsData">
+    <div class="jobTask-table-div"  >
+      <table class="table" *ngIf="savedJobsData.length > 0">
         <thead>
         <tr>
           <th>SL No.</th>
@@ -30,8 +30,8 @@
         </tr>
         </tbody>
       </table>
-      <div *ngIf="!savedJobsData">
-        <h1>Nothing to show</h1>
+      <div *ngIf="savedJobsData.length == 0">
+        <h1>Nothing to show.....</h1>
       </div>
     </div>
 
@@ -46,7 +46,7 @@
               <th>Job Number</th>
               <th>Quantity</th>
               <th>Size</th>
-              <th>Send to Task</th>
+              <th>Show Details</th>
             </tr>
             </thead>
             <tbody>
@@ -64,7 +64,7 @@
         </tbody>
       </table>
       <div *ngIf="finishedJobsList.length==0">
-        <h1>Nothing to show</h1>
+        <h1>Nothing to show....</h1>
       </div>
     </div>
   </div>

@@ -112,12 +112,24 @@ export class JobTaskService implements OnDestroy{
   }
 
 
+
+
   getMaterials(){
     return[...this.materialData];
   }
 
   ngOnDestroy(): void {
     this.getJobTaskDataSub.complete();
+  }
+
+  getUpdatedSavedJobs(){
+    this.http.get(GlobalVariable.BASE_API_URL + '/savedJobs')
+      .subscribe((response: {success: number, data: JobMaster[]}) => {
+        const {data} = response;
+        this.savedJobsList = data;
+        this.savedJobsSub.next([...this.savedJobsList]);
+      });
+
   }
 
   jobReturn(){

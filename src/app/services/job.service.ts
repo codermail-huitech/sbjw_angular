@@ -26,13 +26,25 @@ export class JobService {
   jobDetailsForm: FormGroup;
   karigarhData: Karigarh[] = [];
   orderMaster: OrderMaster[];
+
+  savedJobsList: JobMaster[];
+  finishedJobsList: JobMaster[];
   // jobMasterData: JobMaster;
 
   // subject declaration
   private karigarhSub = new Subject<Karigarh[]>();
 
+  private finishedJobsSub = new Subject<JobMaster[]>();
+  private savedJobsSub = new Subject<JobMaster[]>();
+
   getKarigarhUpdateListener(){
     return this.karigarhSub.asObservable();
+  }
+  getSavedJobsUpdateListener(){
+    return this.savedJobsSub.asObservable();
+  }
+  getFinishedJobsUpdateListener(){
+    return this.finishedJobsSub.asObservable();
   }
 
   constructor(private http: HttpClient) {
@@ -62,10 +74,36 @@ export class JobService {
         this.karigarhSub.next([...this.karigarhData]);
       });
 
+    //-----------------
+    this.http.get(GlobalVariable.BASE_API_URL + '/savedJobs')
+      .subscribe((response: {success: number, data: JobMaster[]}) => {
+        const {data} = response;
+        this.savedJobsList = data;
+        this.savedJobsSub.next([...this.savedJobsList]);
+      });
+
+    this.http.get(GlobalVariable.BASE_API_URL + '/finishedJobs')
+      .subscribe((response: {success: number, data: JobMaster[]}) => {
+        const {data} = response;
+        this.finishedJobsList = data;
+        this.finishedJobsSub.next([...this.finishedJobsList]);
+      });
+
   }
 
   getAllKarigarhs(){
     return [...this.karigarhData];
+  }
+
+
+  getAllJobList(){
+
+    return [...this.savedJobsList];
+  }
+
+  getFinishedJobList(){
+
+    return [...this.finishedJobsList];
   }
 
 
@@ -76,9 +114,28 @@ export class JobService {
       })));
   }
 
+  // finishJob(){
+  //   return this.http.post<JobResponseData>( GlobalVariable.BASE_API_URL + '/finishJob', {master: this.jobMasterForm.value})
+  //     .pipe(catchError(this._serverError), tap(((response: {success: number, data: JobMaster}) => {
+  //       console.log('finishJOb');
+  //       console.log(response.data);
+  //     })));
+  // }
+
+
   finishJob(){
     return this.http.post<JobResponseData>( GlobalVariable.BASE_API_URL + '/finishJob', {master: this.jobMasterForm.value})
       .pipe(catchError(this._serverError), tap(((response: {success: number, data: JobMaster}) => {
+        if(response.data){
+          let index = this.savedJobsList.findIndex(x=> x.id === response.data.id);
+          this.savedJobsList[index].status_id = response.data.status_id;
+          this.finishedJobsList.unshift(this.savedJobsList[index]);
+          this.savedJobsList.splice(index,1);
+
+
+          this.finishedJobsSub.next([...this.finishedJobsList]);
+          this.savedJobsSub.next([...this.savedJobsList]);
+        }
       })));
   }
 

@@ -33,17 +33,20 @@ export class FinishJobComponent implements OnInit {
       });
 
       this.jobService.finishJob().subscribe((response)=>{
+
         if(response.data){
           // window.location.href = "http://localhost:4200/job_task";
 
           // this.jobTaskService.getUpdatedSavedJobs();
-          this.billService.getUpdatedList();
+          this.jobService.getSavedJobsUpdateListener().subscribe();
+          this.jobService.getFinishedJobsUpdateListener().subscribe();
+          // this.billService.getUpdatedList();
           this._snackBar.openFromComponent(SncakBarComponent, {
             duration: 4000, data: {message: 'Job Finished'}
           });
-          setTimeout(function(){
-            window.location.href = "http://localhost:4200/job_task";
-          },2000);
+          // setTimeout(function(){
+          //   window.location.href = "http://localhost:4200/job_task";
+          // },2000);
 
         }
       }, (error) => {

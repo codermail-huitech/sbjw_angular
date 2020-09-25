@@ -66,6 +66,7 @@ export class OrderComponent implements OnInit {
     this.orderMasterList = this.orderService.getOrderMaster();
     this.customerList = this.customerService.getCustomers();
     this.agentList = this.orderService.getAgentList();
+    this.materialList = this.orderService.getMaterials();
 
   }
   // onlyOdds = (d: Date): boolean => {
@@ -186,7 +187,10 @@ export class OrderComponent implements OnInit {
       totalQuantity: this.totalQuantity,
       totalApproxGold: this.totalApproxGold
     };
-    this.storage.set('orderContainer', this.orderContainer).subscribe(() => {});
+    this.storage.set('orderContainer', this.orderContainer).subscribe(() => {
+      // console.log('orderContainer');
+      // console.log(this.orderContainer);
+    });
   }
 
   productShow(){

@@ -34,7 +34,7 @@ export class JobTaskComponent implements OnInit {
   saveBtnName: string;
   isShowJobMasterList = true;
   showCompleteJobs = false;
-  constructor(private jobTaskService: JobTaskService ,private _snackBar: MatSnackBar, private confirmationDialogService: ConfirmationDialogService, private orderService: OrderService ) {
+  constructor(private jobTaskService: JobTaskService ,private _snackBar: MatSnackBar, private confirmationDialogService: ConfirmationDialogService, private orderService: OrderService ,private  jobService : JobService) {
 
     console.log('i am constructor');
   }
@@ -48,17 +48,17 @@ export class JobTaskComponent implements OnInit {
     // this.savedJobsData = this.jobTaskService.getAllJobList();
 
     // console.log(this.jobTaskService.getAllJobList());
-    this.jobTaskService.getSavedJobsUpdateListener().subscribe((jobData: JobMaster[]) => {
+    this.jobService.getSavedJobsUpdateListener().subscribe((jobData: JobMaster[]) => {
       this.savedJobsData = jobData;
 
     });
-    this.jobTaskService.getFinishedJobsUpdateListener().subscribe((finishedjobData: JobMaster[]) => {
+    this.jobService.getFinishedJobsUpdateListener().subscribe((finishedjobData: JobMaster[]) => {
       this.finishedJobsList = finishedjobData;
 
     });
 
-    this.savedJobsData = this.jobTaskService.getAllJobList();
-    this.finishedJobsList = this.jobTaskService.getFinishedJobList();
+    this.savedJobsData = this.jobService.getAllJobList();
+    this.finishedJobsList = this.jobService.getFinishedJobList();
 
 
     // this.savedJobsData = this.jobTaskService.getAllJobList();

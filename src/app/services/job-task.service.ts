@@ -10,6 +10,7 @@ import {JobDetail} from 'src/app/models/jobDetail.model';
 import {OrderMaster} from '../models/orderMaster.model';
 import {OrderResponseData} from './order.service';
 import {Material} from "../models/material.model";
+import {JobResponseData} from "./job.service";
 
 @Injectable({
   providedIn: 'root'
@@ -17,6 +18,7 @@ import {Material} from "../models/material.model";
 export class JobTaskService implements OnDestroy{
 
   jobTaskForm: FormGroup;
+  jobMasterForm: FormGroup;
   materialData : Material[];
 
   savedJobsList: JobMaster[];
@@ -76,6 +78,24 @@ export class JobTaskService implements OnDestroy{
       job_Task_id : new FormControl(null, [Validators.required]),
       employee_id : new FormControl(null, [Validators.required])
     });
+
+
+
+    //---------------------------
+
+    this.jobMasterForm = new FormGroup({
+      id : new FormControl(null),
+      date : new FormControl(null, [Validators.required]),
+      karigarh_id : new FormControl(null, [Validators.required]),
+      gross_weight : new FormControl(null, [Validators.required]),
+      order_details_id : new FormControl(null, [Validators.required]),
+      model_number : new FormControl({value: null, disabled: true}, [Validators.required]),
+      material_name : new FormControl({value: null, disabled: true}, [Validators.required])
+    });
+
+
+
+    //---------------------
 
     //fetching the orders which are sent to job
 
@@ -189,6 +209,12 @@ export class JobTaskService implements OnDestroy{
 
        })));
   }
+
+
+
+
+
+
 
   private _serverError(err: any) {
     // console.log('sever error:', err);  // debug

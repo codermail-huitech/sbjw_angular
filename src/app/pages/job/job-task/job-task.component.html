@@ -10,6 +10,7 @@
         <thead>
         <tr>
           <th>SL No.</th>
+          <th>Customer Name</th>
           <th>Job Number</th>
           <th>Quantity</th>
           <th>Size</th>
@@ -19,6 +20,7 @@
         <tbody>
         <tr  *ngFor="let data of savedJobsData; let indexOfelement = index" >
           <td>{{indexOfelement+1}}</td>
+          <td>{{data.person_name}}</td>
           <td >{{data.job_number}}</td>
           <td >{{data.quantity}}</td>
           <td >{{data.size}}</td>
@@ -43,6 +45,7 @@
             <thead>
             <tr>
               <th>SL No.</th>
+              <th>Customer Name </th>
               <th>Job Number</th>
               <th>Quantity</th>
               <th>Size</th>
@@ -52,6 +55,7 @@
             <tbody>
             <tr  *ngFor="let data of finishedJobsList  ; let indexOfelement = index" >
           <td>{{indexOfelement+1}}</td>
+          <td>{{data.person_name}}</td>
           <td >{{data.job_number}}</td>
           <td >{{data.quantity}}</td>
           <td >{{data.size}}</td>

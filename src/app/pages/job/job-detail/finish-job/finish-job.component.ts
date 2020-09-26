@@ -6,6 +6,7 @@ import {SncakBarComponent} from "../../../../common/sncak-bar/sncak-bar.componen
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {BillService} from "../../../../services/bill.service";
 import {JobTaskService} from "../../../../services/job-task.service";
+import Swal from "sweetalert2";
 
 @Component({
   selector: 'app-finish-job',
@@ -40,13 +41,19 @@ export class FinishJobComponent implements OnInit {
           // this.jobTaskService.getUpdatedSavedJobs();
           this.jobService.getSavedJobsUpdateListener().subscribe();
           this.jobService.getFinishedJobsUpdateListener().subscribe();
+          this.billService.getFinishedJobsCustomers();
           // this.billService.getUpdatedList();
-          this._snackBar.openFromComponent(SncakBarComponent, {
-            duration: 4000, data: {message: 'Job Finished'}
-          });
+          // this._snackBar.openFromComponent(SncakBarComponent, {
+          //   duration: 4000, data: {message: 'Job Finished'}
+          // });
           // setTimeout(function(){
           //   window.location.href = "http://localhost:4200/job_task";
           // },2000);
+          Swal.fire(
+            'Done !',
+            'The job has been finished',
+            'success'
+          );
 
         }
       }, (error) => {

@@ -13,6 +13,7 @@ import {ConfirmationDialogService} from '../../common/confirmation-dialog/confir
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {ProductService} from '../../services/product.service';
 import {Material} from '../../models/material.model';
+import Swal from "sweetalert2";
 
 @Component({
   selector: 'app-job',
@@ -35,6 +36,7 @@ export class JobComponent implements OnInit {
 
   constructor(private productService: ProductService, private _snackBar: MatSnackBar, private confirmationDialogService: ConfirmationDialogService, private jobService: JobService, private orderService: OrderService) {
     this.products = this.productService.getProducts();
+    this.karigarhData = this.jobService.getAllKarigarhs();
 
   }
 
@@ -110,9 +112,16 @@ export class JobComponent implements OnInit {
               // this.isEditEnabled = false;
               this.jobMasterForm.reset();
               this.jobDetailsForm.reset();
-              this._snackBar.openFromComponent(SncakBarComponent, {
-                duration: 4000, data: {message: 'Job Saved'}
-              });
+
+              this.jobService.getSavedJobsUpdateListener().subscribe();
+              Swal.fire(
+                'Saved!',
+                'Order has been sent to job',
+                'success'
+              );
+              // this._snackBar.openFromComponent(SncakBarComponent, {
+              //   duration: 4000, data: {message: 'Job Saved'}
+              // });
             }
           }, (error) => {
             console.log('error occured ');

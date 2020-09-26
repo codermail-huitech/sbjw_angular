@@ -144,8 +144,8 @@ export class BillJobMasterDetailsComponent implements OnInit {
           discount: 0,
           billNumber:response.data.bill_number
         };
-        this.billService.getUpdatedList();
-        this.billService.getUpdatedCompletedJobs();
+        this.billService.getFinishedJobsCustomers();
+        this.billService.getCompletedBillCustomers();
         this.showBill = true;
       });
   }

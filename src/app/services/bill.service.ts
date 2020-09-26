@@ -87,7 +87,7 @@ export class BillService {
     return([...this.completedBill]);
   }
 
-  getUpdatedList(){
+  getFinishedJobsCustomers(){
     this.http.get(GlobalVariable.BASE_API_URL + '/finishedJobsCustomers')
       .subscribe((response: {success: number, data: FinishedJobs[]}) => {
         const {data} = response;
@@ -97,7 +97,7 @@ export class BillService {
       });
   }
 
-  getUpdatedCompletedJobs(){
+  getCompletedBillCustomers(){
     this.http.get(GlobalVariable.BASE_API_URL + '/completedBillCustomers')
       .subscribe((response: {success: number, data: FinishedJobs[]}) => {
         const {data} = response;

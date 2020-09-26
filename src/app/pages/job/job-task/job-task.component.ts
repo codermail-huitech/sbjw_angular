@@ -20,8 +20,8 @@ import {JobService} from "../../../services/job.service";
 export class JobTaskComponent implements OnInit {
 
   jobTaskForm: FormGroup;
-  savedJobsData: JobMaster[];
-  finishedJobsList: JobMaster[];
+  savedJobsData: JobMaster[] = [];
+  finishedJobsList: JobMaster[] = [];
   materialList: Material[];
   jobDetailsData: JobDetail[] = [];
   totalData : JobDetail[];
@@ -34,6 +34,8 @@ export class JobTaskComponent implements OnInit {
   saveBtnName: string;
   isShowJobMasterList = true;
   showCompleteJobs = false;
+  public searchTerm: string;
+
   constructor(private jobTaskService: JobTaskService ,private _snackBar: MatSnackBar, private confirmationDialogService: ConfirmationDialogService, private orderService: OrderService ,private  jobService : JobService) {
 
     console.log('i am constructor');

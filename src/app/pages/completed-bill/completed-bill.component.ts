@@ -13,7 +13,7 @@ export class CompletedBillComponent implements OnInit {
   orderDetails: OrderDetail[];
 
   constructor(private  billService: BillService) { }
-
+  public searchTerm: string;
 
   ngOnInit(): void {
     this.billService.getCompletedBillDataSubUpdateListener().subscribe((finishedJobs) => {

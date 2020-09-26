@@ -5,7 +5,13 @@
 
 
   <div fxLayout="column" fxFlex="100" [hidden]="showCompleteJobs" class="mr-1">
-    <div class="jobTask-table-div"  >
+
+    <div class="jobTask-table-div">
+
+      <mat-form-field class="example-full-width" [hidden]="savedJobsData.length==0">
+        <input matInput placeholder="Search..." [(ngModel)] = "searchTerm" name="search" type="text" autofocus>
+      </mat-form-field>
+
       <table class="table" *ngIf="savedJobsData.length > 0">
         <thead>
         <tr>
@@ -18,7 +24,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr  *ngFor="let data of savedJobsData; let indexOfelement = index" >
+        <tr  *ngFor="let data of savedJobsData | filter: searchTerm;  let indexOfelement = index" >
           <td>{{indexOfelement+1}}</td>
           <td>{{data.person_name}}</td>
           <td >{{data.job_number}}</td>
@@ -32,15 +38,23 @@
         </tr>
         </tbody>
       </table>
+
       <div *ngIf="savedJobsData.length == 0">
         <h1>Nothing to show.....</h1>
       </div>
+
     </div>
+
 
   </div>
 
   <div fxLayout="column" fxFlex="100" [hidden]="!showCompleteJobs" class="mr-1">
     <div class="jobTask-table-div" >
+
+          <mat-form-field class="example-full-width" [hidden]="finishedJobsList.length==0">
+            <input matInput placeholder="Search..." [(ngModel)] = "searchTerm" name="search" type="text" autofocus>
+          </mat-form-field>
+
           <table class="table" *ngIf="finishedJobsList.length!=0">
             <thead>
             <tr>
@@ -53,7 +67,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr  *ngFor="let data of finishedJobsList  ; let indexOfelement = index" >
+            <tr  *ngFor="let data of finishedJobsList  | filter: searchTerm ; let indexOfelement = index" >
           <td>{{indexOfelement+1}}</td>
           <td>{{data.person_name}}</td>
           <td >{{data.job_number}}</td>
@@ -67,9 +81,11 @@
         </tr>
         </tbody>
       </table>
+
       <div *ngIf="finishedJobsList.length==0">
         <h1>Nothing to show....</h1>
       </div>
+
     </div>
   </div>
 

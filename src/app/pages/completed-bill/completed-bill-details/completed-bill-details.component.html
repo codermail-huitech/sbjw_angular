@@ -42,13 +42,22 @@
     </div>
     <div id="printBillDiv">
       <!--    <div class="d-flex" *ngIf="billMasterData">-->
+      <div style="align-content: center; text-align: center">
+        <h3 style="text-align: center; font-weight:bold">SRIKRISHNA BANGLE JEWELLERY WORKSHOP</h3><br>
+        <label style="font-weight: bold ; font-size: 13px ">সোনার পাত বসান ব্রোঞ্জ চুরি</label><br>
+        <label style="font-weight: bold ; font-size: 13px ">Sewli,P.O- S.T.P , (Baro Kanthaliya),Barrackpore,Dist:- North 24 Parganas,Kol-121</label><br>
+        <label style="font-weight: bold ; font-size: 11px">contact:- 033 2535 3727 , 2535 7777 , 2535 2222 ,Mob: - 9836444999 ,email: bangle312@gmail.com</label><br>
+        <hr>
+        <label style="text-align: center ; font-weight: bold ;">Received the following materials along with design in good condition for manufacturing of Bangles against labour charges only </label>
+        <hr>
+      </div>
       <div fxLayout="row" *ngIf="billDetailsData.length" style="justify-content: space-between">
         <div class="col-4">
           <label>Customer Name & Address : </label><br>
           <label style="font-weight: bolder; font-size: larger">{{billDetailsData[0].person_name}}</label><br>
           <label>{{billDetailsData[0].address1}}</label><br>
-          <label>{{billDetailsData[0].city}}</label><br>
-          <label>{{billDetailsData[0].area}}</label><br>
+          <label>{{billDetailsData[0].city}} &nbsp;&nbsp;{{billDetailsData[0].area}}</label><br>
+<!--          <label>{{billDetailsData[0].area}}</label><br>-->
           <label>{{billDetailsData[0].pin}}</label><br>
           <label>{{billDetailsData[0].po}}</label><br>
           <label>{{billDetailsData[0].mobile1}}</label><br>
@@ -61,7 +70,7 @@
           <label>Order Date :</label><br>
         </div>
       </div><br> <br>
-      <table id="bill-detail-table" class="table">
+      <table id="bill-detail-table" class="table table-bordered">
         <thead>
         <tr>
           <th>SL No.</th>
@@ -85,7 +94,7 @@
           <td>{{data.total}}</td>
           <td>{{data.pure_gold}}</td>
           <td>{{data.quantity}}</td>
-          <td>{{data.cost}}</td>
+          <td>{{data.cost | currency:"&#8377;"}}</td>
           <!--        <td>{{data.price * data.quantity}}</td>-->
           <!--        <td>-->
           <!--          <input type="checkbox" name="nameOfChoice" (click)="selectionForBill(data)" [disabled]="data.status == 'WORK IN PROGRESS'" >-->
@@ -94,17 +103,24 @@
         <tr style=" border-top : 1px solid black; border-collapse: collapse">
           <td></td>
           <td></td>
-          <td>Total</td>
+          <td><b>Total</b></td>
           <td></td>
           <td></td>
-          <td>{{total92Gold.toFixed(3)}} g</td>
-          <td>{{totalGold.toFixed(3)}} g</td>
-          <td>{{totalQuantity}}</td>
-          <td>{{totalCost}}</td>
+          <td><b>{{total92Gold.toFixed(3)}} g</b></td>
+          <td><b>{{totalGold.toFixed(3)}} g</b></td>
+          <td><b>{{totalQuantity}}</b></td>
+          <td><b>{{totalCost | currency:"&#8377;"}}</b></td>
         </tr>
         </tbody>
       </table>
+      <div class="ml-2" *ngIf="totalCost"><b>Amount in Word:</b> Rupees {{convert(totalCost)}}</div>
+      <br><br>
+<!--      <label style="">Party signature with ?, Date & Time</label>-->
+      <p style="text-align:right ; margin-right: 7px; font-size: medium ; font-weight: bold">Party signature with stamp, Date & Time</p>
+      <p style="text-align:right ; margin-right: 7px; font-size: smaller">Received goods as per requirement &  in good condition</p>
+      <p style="text-align:left ; margin-right: 7px; font-size: smaller">শর্তাবলী: - আপনার যাবতীয় লেনদেন ও দেনাপাওনা সম্পূর্ণ ভাবে প্রোপরাইটার শ্রী বিবেকানন্দ ঘোষ এর সাথে সম্পর্ক যুক্ত |</p>
     </div>
+<!--    <div>{{numberToWords.toWords(totalCost)}}</div>-->
 
   </div>
 </div>

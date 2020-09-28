@@ -7,6 +7,8 @@ import {BillDetail} from "../../../models/billDetail.model";
 import {FinishedJobs} from "../../../models/finishedJobs";
 import {toInteger} from "@ng-bootstrap/ng-bootstrap/util/util";
 import {float} from "html2canvas/dist/types/css/property-descriptors/float";
+import toWords from 'number-to-words/src/toWords.js';
+// import toWords from 'number-to-words/src/toWords';
 
 @Component({
   selector: 'app-completed-bill-details',
@@ -27,18 +29,20 @@ export class CompletedBillDetailsComponent implements OnInit {
   totalCost: number;
 
 
-
   x : FinishedJobs[];
+
+
 
   constructor(private  route: ActivatedRoute, private billService: BillService) {}
 
   printDivStyle = {
-    // printDiv: {marginRight : '5px', marginLeft : '5px', marginTop : '5px'},
+    printBillDiv: {marginRight : '5px', marginLeft : '5px', marginTop : '5px'},
     table: {'border-collapse': 'collapse', 'width' : '100%'},
     label:{'width': '100%'},
-    h1 : {color: 'red'},
+    // h1 : {color: 'red'},
     h2 : {border: 'solid 1px'},
-    td: {border: '1px solid red', margin: '0px', padding: '3px'}
+    td: {border: '1px solid black'},
+    th: {border: '1px  solid black'}
   };
 
   ngOnInit(): void {
@@ -47,30 +51,22 @@ export class CompletedBillDetailsComponent implements OnInit {
     this.totalQuantity = 0;
     this.totalCost = 0;
     this.showBill = false;
-    console.log("testing");
+
     this.route.params.subscribe(params => {
-      console.log(params['id']);
       this.billService.getFinishedBillData(params['id']);
     });
 
     this.billService.getfinishedBillDataSubUpdateListener()
       .subscribe((details: JobMaster[]) => {
         this.finishedBillData = details;
-        console.log(this.finishedBillData);
       });
 
     this.billService.showCompletedBillsDataSubUpdateListener()
       .subscribe((details: BillDetail[]) => {
         this.showBill = true;
-        // console.log(details);
         this.billDetailsData = details;
-        console.log('billDetailsData 1');
-        console.log(this.billDetailsData);
-        console.log(this.billDetailsData.length);
 
         for(let i =0; i<this.billDetailsData.length; i++){
-          console.log('testcheck');
-          console.log(i);
           this.billService.getGoldQuantity(this.billDetailsData[i].id).subscribe((response)=>{
             this.billDetailsData[i].total = response.data[0].total.toFixed(3);
             // this.billDetailsData[i].pure_gold = ((this.billDetailsData[i].total * 92) / 100);
@@ -121,6 +117,10 @@ export class CompletedBillDetailsComponent implements OnInit {
   //   }
   //   // console.log(this.billDetailsData);
   // }
+
+  convert(value){
+    return toWords(value);
+  }
 
   getBillDetails(data){
     // console.log(data);

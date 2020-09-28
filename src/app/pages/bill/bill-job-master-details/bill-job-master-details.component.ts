@@ -9,6 +9,7 @@ import {toNumbers} from "@angular/compiler-cli/src/diagnostics/typescript_versio
 import {toInteger} from "@ng-bootstrap/ng-bootstrap/util/util";
 import {FinishedJobs} from "../../../models/finishedJobs";
 // import {Location} from '@angular/common';
+import toWords from 'number-to-words/src/toWords.js';
 
 @Component({
   selector: 'app-bill-job-master-details',
@@ -33,12 +34,13 @@ export class BillJobMasterDetailsComponent implements OnInit {
   }
 
   printDivStyle = {
-    // printDiv: {marginRight : '5px', marginLeft : '5px', marginTop : '5px'},
+    printBillDiv: {marginRight : '5px', marginLeft : '5px', marginTop : '5px'},
     table: {'border-collapse': 'collapse', 'width' : '100%'},
     label:{'width': '100%'},
-    h1 : {color: 'red'},
+    // h1 : {color: 'red'},
     h2 : {border: 'solid 1px'},
-    td: {border: '1px solid red', margin: '0px', padding: '3px'}
+    td: {border: '1px solid black'},
+    th: {border: '1px  solid black'}
   };
 
   ngOnInit(): void {
@@ -60,7 +62,9 @@ export class BillJobMasterDetailsComponent implements OnInit {
       });
   }
 
-
+  convert(value){
+    return toWords(value);
+  }
 
   selectionForBill(data) {
     const index = this.billDetailsData.findIndex(x => x.id === data.id)

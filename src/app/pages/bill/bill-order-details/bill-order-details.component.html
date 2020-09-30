@@ -5,7 +5,7 @@
   <!--      Back-->
   <!--    </button>-->
   <!--  </div>-->
-  <div  fxFlex="100" class="col" *ngIf="orderDetails" style="background-color: #e8c50e" >
+  <div  fxFlex="100" class="col" *ngIf="orderDetails" id ="bill-orderDetails-div">
     <table class="table"  *ngIf="orderDetails.length != 0">
       <thead>
       <tr>
@@ -18,7 +18,7 @@
       <tbody>
       <tr  *ngFor="let data of orderDetails; let indexOfelement = index" >
         <td>{{indexOfelement+1}}</td>
-        <td>{{data.person_name}}</td>
+        <td>{{data.person_name | uppercase}}</td>
         <td >{{data.order_number}}</td>
         <td>
           <button  mat-icon-button color="primary" aria-label="Open Details" style="text-align: center" [routerLink]="['./bill_jobMaster_details',data.id]" (click)="disablePage()">
@@ -33,7 +33,7 @@
     </div>
   </div>
 </div>
-<div [hidden]="!disableDetails" style="background-color: #c6538c">
+<div [hidden]="!disableDetails">
   <router-outlet></router-outlet>
 </div>
 

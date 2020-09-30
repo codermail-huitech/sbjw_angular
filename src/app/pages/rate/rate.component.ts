@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {RateService} from '../../services/rate.service';
-import {FormGroup} from '@angular/forms';
+import {FormControl, FormGroup} from '@angular/forms';
 import {Rate} from '../../models/rate.model';
 import {PriceCodeService} from '../../services/price-code.service';
 import {PriceCode} from '../../models/priceCode.model';
@@ -19,9 +19,16 @@ export class RateComponent implements OnInit {
   rateData: Rate[] = [];
   priceCodes: PriceCode[] = [];
   customerCategories: CustomerCategory[] = [];
+  public searchTerm: string;
+  filter = new FormControl('');
+  page: number;
+  pageSize: number;
   p = 1;
 
-  constructor(private rateService: RateService, private priceCodeService: PriceCodeService, private customerCategoryService: CustomerCategoryService) { }
+  constructor(private rateService: RateService, private priceCodeService: PriceCodeService, private customerCategoryService: CustomerCategoryService) {
+    this.page = 1;
+    this.pageSize = 15;
+  }
 
   ngOnInit(): void {
     this.rateForm = this.rateService.rateForm;

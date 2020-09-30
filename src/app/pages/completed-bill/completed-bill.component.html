@@ -1,30 +1,59 @@
 <div fxLayout.xs="column"   fxLayout="row" fxLayoutAlign="space-between stretch" fxFlexFill id="create-bill-div" >
-  <div *ngIf="finshedJobs.length ==0"><h1>Nothing to show.....</h1></div>
-  <div  fxFlex="100" *ngIf="finshedJobs.length > 0"  >
-    <mat-form-field class="example-full-width">
-      <input matInput placeholder="Search..." [(ngModel)]="searchTerm" name="search" type="text" autofocus>
-    </mat-form-field>
-    <table class="table">
-      <thead>
-      <tr>
-        <th>SL No.</th>
-        <th>Customer Name</th>
-        <th>Check Order Details</th>
+  <div id ="show-completedBill-customer-div">
+    <div *ngIf="finshedJobs.length ==0"><h1>Nothing to show.....</h1></div>
+    <div  fxFlex="100" *ngIf="finshedJobs.length > 0"  >
+      <div  fxLayout fxLayout.xs="column" fxLayoutAlign="start" fxLayoutGap="30px" fxLayoutGap.xs="0">
+        <mat-form-field class="example-full-width">
+          <input matInput placeholder="Search..." [(ngModel)]="searchTerm" name="search" type="text" autofocus>
+        </mat-form-field>
 
-      </tr>
-      </thead>
-      <tbody>
-      <tr  *ngFor="let data of finshedJobs | filter: searchTerm; let indexOfelement = index" >
-        <td>{{indexOfelement+1}}</td>
-        <td >{{data.person_name}}</td>
-        <td>
-          <button  mat-icon-button color="primary" aria-label="Open Details" style="text-align: center"  [routerLink]="['/completed_bill_order_details',data.id]">
-            <mat-icon>forward</mat-icon>
-          </button>
-        </td>
+        <mat-form-field class="example-full-width">
+          <input matInput placeholder="Items per page" [(ngModel)]="pageSize" name="PageSize" type="text">
+        </mat-form-field>
+      </div>
+      <div>
+        <table class="table">
+          <thead>
+          <tr>
+            <th>SL No.</th>
+            <th>Customer Name</th>
+            <th>Check Order Details</th>
 
-      </tr>
-      </tbody>
-    </table>
+          </tr>
+          </thead>
+          <tbody>
+          <tr  *ngFor="let data of finshedJobs | filter: searchTerm |filter : searchTerm | paginate: { itemsPerPage: pageSize, currentPage: p } let indexOfelement = index" >
+            <td>{{indexOfelement+1}}</td>
+            <td ><b>{{data.person_name | uppercase}}</b></td>
+            <td>
+              <button  mat-icon-button color="primary" aria-label="Open Details" style="text-align: center"  [routerLink]="['/completed_bill_order_details',data.id]">
+                <mat-icon>forward</mat-icon>
+              </button>
+            </td>
+
+          </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div fxLayout.xs="column" fxLayout="column" fxFlexFill>
+        <!--    https://www.npmjs.com/package/ngx-pagination-->
+        <!--    npm i ngx-pagination-->
+        <pagination-controls (pageChange)="p = $event"></pagination-controls>
+        <pagination-controls  id="some_id"
+                              (pageChange)="p=($event)"
+                              maxSize="5"
+                              directionLinks="true"
+                              autoHide="true"
+                              responsive="true"
+                              previousLabel="Previous"
+                              nextLabel="Next"
+                              screenReaderPaginationLabel="Pagination"
+                              screenReaderPageLabel="page"
+                              screenReaderCurrentLabel="You're on page">
+        </pagination-controls>
+      </div>
+    </div>
   </div>
+
 </div>

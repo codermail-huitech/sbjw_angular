@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {FormGroup} from '@angular/forms';
+import {FormControl, FormGroup} from '@angular/forms';
 import {JobService} from '../../services/job.service';
 import {Karigarh} from '../../models/karigarh.model';
 import {Product} from '../../models/product.model';
@@ -34,9 +34,18 @@ export class JobComponent implements OnInit {
   pipe = new DatePipe('en-US');
   isEditEnabled = true;
 
+  public searchTerm: string;
+  filter = new FormControl('');
+  page: number;
+  pageSize: number;
+  p = 1;
+
   constructor(private productService: ProductService, private _snackBar: MatSnackBar, private confirmationDialogService: ConfirmationDialogService, private jobService: JobService, private orderService: OrderService) {
     this.products = this.productService.getProducts();
     this.karigarhData = this.jobService.getAllKarigarhs();
+
+    this.page = 1;
+    this.pageSize = 15;
 
   }
 

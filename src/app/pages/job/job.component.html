@@ -62,6 +62,17 @@
                     <div class="col-3"><button style="background-color: green" mat-button class="col-12" mat-stroked-button (click)="productShow()">{{showProduct==true? 'Show Order Master List':'Back'}}</button></div>
                   </div>
                   <div id="job-table-div" [hidden]="!showProduct">
+
+                    <div class="container" fxLayout fxLayout.xs="column" fxLayoutAlign="start" fxLayoutGap="30px" fxLayoutGap.xs="0">
+                      <mat-form-field class="example-full-width">
+                        <input matInput placeholder="Search..." [(ngModel)]="searchTerm" name="search" type="text" autofocus>
+                      </mat-form-field>
+
+                      <mat-form-field class="example-full-width">
+                        <input matInput placeholder="Items per page" [(ngModel)]="pageSize" name="PageSize" type="text">
+                      </mat-form-field>
+                    </div>
+
                     <table class="table" id="my-table">
                       <thead>
                       <tr>
@@ -76,7 +87,7 @@
                       </tr>
                       </thead>
                       <tbody>
-                      <tr  *ngFor="let data of orderMasterData ; let indexOfelement = index;">
+                      <tr  *ngFor="let data of orderMasterData | filter : searchTerm | paginate: { itemsPerPage: pageSize, currentPage: p } let indexOfelement = index;">
                         <td>{{indexOfelement+1}}</td>
                         <td >{{data.order_number}}</td>
                         <td >{{data.customer_name}}</td>
@@ -97,6 +108,23 @@
                       </tr>
                       </tbody>
                     </table>
+                    <div fxLayout.xs="column" fxLayout="column" fxFlexFill>
+                      <!--    https://www.npmjs.com/package/ngx-pagination-->
+                      <!--    npm i ngx-pagination-->
+                      <pagination-controls (pageChange)="p = $event"></pagination-controls>
+                      <pagination-controls  id="some_id"
+                                            (pageChange)="p=($event)"
+                                            maxSize="5"
+                                            directionLinks="true"
+                                            autoHide="true"
+                                            responsive="true"
+                                            previousLabel="Previous"
+                                            nextLabel="Next"
+                                            screenReaderPaginationLabel="Pagination"
+                                            screenReaderPageLabel="page"
+                                            screenReaderCurrentLabel="You're on page">
+                      </pagination-controls>
+                    </div>
                   </div>
                   <div id="job-table-div" [hidden]="showProduct">
                     <table class="table" id="my-table">

@@ -34,12 +34,12 @@ export class BillJobMasterDetailsComponent implements OnInit {
   }
 
   printDivStyle = {
-    printBillDiv: {marginRight : '5px', marginLeft : '5px', marginTop : '5px'},
+    printBillDiv: {marginRight : '3px', marginLeft : '3px', marginTop : '5px'},
     table: {'border-collapse': 'collapse', 'width' : '100%'},
     label:{'width': '100%'},
     // h1 : {color: 'red'},
     h2 : {border: 'solid 1px'},
-    td: {border: '1px solid black'},
+    // td: {border: '1px solid black'},
     th: {border: '1px  solid black'}
   };
 

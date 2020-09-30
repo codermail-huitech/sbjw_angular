@@ -5,6 +5,7 @@ import {Material} from "../../models/material.model";
 import {OrderDetail} from "../../models/orderDetail.model";
 import {JobService} from "../../services/job.service";
 import {JobMaster} from "../../models/jobMaster.model";
+import {FormControl} from "@angular/forms";
 
 @Component({
   selector: 'app-bill',
@@ -17,7 +18,15 @@ export class BillComponent implements OnInit {
   // finshedJobs: JobMaster[] = [];
   orderDetails: OrderDetail[];
 
-  constructor(private  billService: BillService , private  jobService : JobService) { }
+  filter = new FormControl('');
+  page: number;
+  pageSize: number;
+  p = 1;
+
+  constructor(private  billService: BillService , private  jobService : JobService) {
+    this.page = 1;
+    this.pageSize = 15;
+  }
 
   ngOnInit(): void {
     this.billService.getFinishedJobsSubUpdateListener().subscribe((finishedJobs) => {

@@ -20,9 +20,11 @@ export class CustomerComponent implements OnInit {
   customers: Customer[];
   customer: Customer;
   currentEerror: {status: number, message: string, statusText: string};
+  showDeveloperDiv = true;
 
   constructor(public customerService: CustomerService, private http: HttpClient, private _snackBar: MatSnackBar) {
     console.log('Customer Component calls');
+    this.showDeveloperDiv = false;
   }
 
   onCustomerInsert(){

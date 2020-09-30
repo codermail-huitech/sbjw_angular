@@ -200,57 +200,107 @@
       </table>
     </div>
     <div [hidden]="showProduct" *ngIf="orderMasterList">
-      <table class="table" id="order-master-table">
-        <thead>
-        <tr>
-          <th class="w-2 text-center">SL No.</th>
-          <th class="w-15 text-left">Order Number</th>
-          <th class="w-2 text-center">Customer Name</th>
-          <th class="w-5 text-right">Agent Name</th>
-          <th class="w-5 text-right">Order Date</th>
-          <th class="w-5 text-right">Delivery Date</th>
-          <th class="w-5 text-right">View Details</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr [ngStyle]="getBackgroundColor(indexOfElement)"  *ngFor="let item of orderMasterList ; let indexOfElement = index;">
-          <td class="text-center">{{(indexOfElement+1) }}</td>
-          <td class="text-left">{{item.order_number }}</td>
-          <td  class="text-center">{{item.customer_name | uppercase}}</td>
-          <td class="text-right">{{item.agent_name | uppercase}}</td>
-          <td class="text-right">{{item.date_of_order | date : 'dd/MM/yyyy' }}</td>
-          <td class="text-right">{{item.date_of_delivery | date : 'dd/MM/yyyy'}}</td>
-          <td class="text-center">
-            <button mat-icon-button color="primary" aria-label="Edit Product" (click)="showOrderDetailsList(item)" *ngIf="editableItemIndex != indexOfElement">
-              <mat-icon>arrow_right_alt</mat-icon>
-            </button>
-<!--            <button mat-icon-button color="primary" aria-label="Edit Product" (click)="cancelEditCurrentItem(item)" *ngIf="editableItemIndex == indexOfElement">-->
-<!--              <mat-icon>restore</mat-icon>-->
-<!--            </button>-->
-<!--            <button mat-icon-button color="warn" aria-label="Edit Customer"  (click)="deleteDetails(item)" *ngIf="editableItemIndex != indexOfElement">-->
-<!--              <mat-icon>delete</mat-icon>-->
-<!--            </button>-->
-          </td>
-        </tr>
-        </tbody>
-<!--        <tfoot>-->
-<!--        <tr>-->
-<!--          <td class="text-center" colspan="4">Total</td>-->
-<!--          <td class="text-right">{{totalApproxGold | number:'1.3-3'}}</td>-->
-<!--          <td class="text-right">{{totalQuantity }}</td>-->
-<!--          <td class="text-right"></td>-->
-<!--          <td class="text-right">{{totalOrderAmount | currency:"&#8377;"}}</td>-->
-<!--        </tr>-->
-<!--        <tr>-->
-<!--          <td colspan="2">-->
-<!--            <button mat-button (click)="cancelOrder()" mat-stroked-button>Cancel Order</button>-->
-<!--          </td>-->
-<!--          <td colspan="2">-->
-<!--            <button mat-button (click)="onSubmit()" mat-stroked-button [disabled]="orderDetails.length<1 || orderDetailsForm.valid">Save Order</button>-->
-<!--          </td>-->
-<!--        </tr>-->
-<!--        </tfoot>-->
-      </table>
+      <div class="container" fxLayout fxLayout.xs="column" fxLayoutAlign="start" fxLayoutGap="30px" fxLayoutGap.xs="0">
+        <mat-form-field class="example-full-width">
+          <input matInput placeholder="Search..." [(ngModel)]="searchTerm" name="search" type="text" autofocus>
+        </mat-form-field>
+
+        <mat-form-field class="example-full-width">
+          <input matInput placeholder="Items per page" [(ngModel)]="pageSize" name="PageSize" type="text">
+        </mat-form-field>
+      </div>
+      <div  id="htmlData" #htmlData>
+        <table class="table" id="order-master-table">
+          <thead>
+          <tr>
+            <th class="w-2 text-center">SL No.</th>
+            <th class="w-15 text-left">Order Number</th>
+            <th class="w-2 text-center">Customer Name</th>
+            <th class="w-5 text-right">Agent Name</th>
+            <th class="w-5 text-right">Order Date</th>
+            <th class="w-5 text-right">Delivery Date</th>
+            <th class="w-5 text-right">View Details</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr [ngStyle]= "getBackgroundColor(indexOfElement)"  *ngFor= "let item of orderMasterList | filter : searchTerm | paginate: { itemsPerPage: pageSize, currentPage: p } let indexOfElement = index ">
+            <td class="text-center">{{(indexOfElement+1) }}</td>
+            <td class="text-left">{{item.order_number }}</td>
+            <td  class="text-center">{{item.customer_name | uppercase}}</td>
+            <td class="text-right">{{item.agent_name | uppercase}}</td>
+            <td class="text-right">{{item.date_of_order | date : 'dd/MM/yyyy' }}</td>
+            <td class="text-right">{{item.date_of_delivery | date : 'dd/MM/yyyy'}}</td>
+            <td class="text-center">
+              <button mat-icon-button color="primary" aria-label="Edit Product" (click)="showOrderDetailsList(item)" *ngIf="editableItemIndex != indexOfElement">
+                <mat-icon>arrow_right_alt</mat-icon>
+              </button>
+              <!--            <button mat-icon-button color="primary" aria-label="Edit Product" (click)="cancelEditCurrentItem(item)" *ngIf="editableItemIndex == indexOfElement">-->
+              <!--              <mat-icon>restore</mat-icon>-->
+              <!--            </button>-->
+              <!--            <button mat-icon-button color="warn" aria-label="Edit Customer"  (click)="deleteDetails(item)" *ngIf="editableItemIndex != indexOfElement">-->
+              <!--              <mat-icon>delete</mat-icon>-->
+              <!--            </button>-->
+            </td>
+          </tr>
+          </tbody>
+          <!--        <tfoot>-->
+          <!--        <tr>-->
+          <!--          <td class="text-center" colspan="4">Total</td>-->
+          <!--          <td class="text-right">{{totalApproxGold | number:'1.3-3'}}</td>-->
+          <!--          <td class="text-right">{{totalQuantity }}</td>-->
+          <!--          <td class="text-right"></td>-->
+          <!--          <td class="text-right">{{totalOrderAmount | currency:"&#8377;"}}</td>-->
+          <!--        </tr>-->
+          <!--        <tr>-->
+          <!--          <td colspan="2">-->
+          <!--            <button mat-button (click)="cancelOrder()" mat-stroked-button>Cancel Order</button>-->
+          <!--          </td>-->
+          <!--          <td colspan="2">-->
+          <!--            <button mat-button (click)="onSubmit()" mat-stroked-button [disabled]="orderDetails.length<1 || orderDetailsForm.valid">Save Order</button>-->
+          <!--          </td>-->
+          <!--        </tr>-->
+          <!--        </tfoot>-->
+        </table>
+      </div>
+
+      <div fxLayout.xs="column" fxLayout="column" fxFlexFill>
+        <!--    https://www.npmjs.com/package/ngx-pagination-->
+        <!--    npm i ngx-pagination-->
+        <pagination-controls (pageChange)="p = $event"></pagination-controls>
+        <pagination-controls  id="some_id"
+                              (pageChange)="p=($event)"
+                              maxSize="5"
+                              directionLinks="true"
+                              autoHide="true"
+                              responsive="true"
+                              previousLabel="Previous"
+                              nextLabel="Next"
+                              screenReaderPaginationLabel="Pagination"
+                              screenReaderPageLabel="page"
+                              screenReaderCurrentLabel="You're on page">
+        </pagination-controls>
+      </div>
+      <div fxLayout.xs="column" fxLayout="row" fxFlexFill>
+        <div fxFlex="25" >
+          <!-- <ngb-pagination [collectionSize]=customerData.length [(page)]="page" [maxSize]="3" [rotate]="true" [ellipses]="false" [boundaryLinks]="true"></ngb-pagination>-->
+        </div>
+        <div fxFlex="10" >
+          <button
+            mat-stroked-button
+            [printStyle]="printDivStyle"
+            printSectionId="order-master-table"
+            ngxPrint><mat-icon>print</mat-icon></button>
+        </div>
+        <div fxFlex="10" >
+          <button mat-stroked-button (click)="OrderListToExcel()" ><mat-icon>cloud_download</mat-icon></button>
+        </div>
+        <div fxFlex="10" >
+          <button mat-stroked-button (click)="ConvertToExcel()" >Excel</button>
+        </div>
+        <div fxFlex="15" >
+          <button mat-stroked-button  (click)="ConvertToPdf()" >PDF </button>
+        </div>
+      </div>
     </div>
 
   </div>
@@ -258,7 +308,7 @@
 
 
 <!--This is developer div-->
-<div fxLayout.xs="column" fxLayout="row" fxLayoutAlign="space-between stretch"  id="developer-div">
+<div fxLayout.xs="column" fxLayout="row" fxLayoutAlign="space-between stretch"  id="developer-div" [hidden]="!showDeveloperDiv">
   <div fxLayout="column" fxFlex="25" class="mr-1" style="background-color: #dddddd">
     <pre>
       orderData = {{orderMasterList | json}}

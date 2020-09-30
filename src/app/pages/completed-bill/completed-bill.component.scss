@@ -1,7 +1,17 @@
 #create-bill-div{
+
   width: 100%;
   min-height: 100%;
   padding: 10px;
-  background: rgb(102,0,255);
-  background: linear-gradient(90deg, rgba(102,0,255,1) -57%, rgba(172,240,244,0.7231093120842087) 10%);
+  background: linear-gradient(90deg, rgba(153,50,204,.3) 0%, rgb(138,43,226,.2) 35%, rgba(255,0,0,.2) 100%);
+}
+#show-completedBill-customer-div{
+  width: inherit;
+  padding: 5px;
+  border: 2px solid wheat;
+  border-radius: 5px;
+  -webkit-box-shadow: 10px 10px 5px -7px rgba(0,0,0,0.35);
+  -moz-box-shadow: 10px 10px 5px -7px rgba(0,0,0,0.35);
+  box-shadow: 10px 10px 5px -7px rgba(0,0,0,0.35);
+  background: linear-gradient(90deg, rgba(206, 232, 17, 0.9) 0%, rgba(232, 197, 14, 0.7) 35%, rgba(232, 221, 24, 0.6) 100%);
 }

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {FormGroup} from '@angular/forms';
+import {FormControl, FormGroup} from '@angular/forms';
 import{JobTaskService} from '../../../services/job-task.service'
 import {SncakBarComponent} from '../../../common/sncak-bar/sncak-bar.component';
 import {ConfirmationDialogService} from '../../../common/confirmation-dialog/confirmation-dialog.service';
@@ -35,10 +35,16 @@ export class JobTaskComponent implements OnInit {
   isShowJobMasterList = true;
   showCompleteJobs = false;
   public searchTerm: string;
+  filter = new FormControl('');
+  page: number;
+  pageSize: number;
+  p = 1;
 
   constructor(private jobTaskService: JobTaskService ,private _snackBar: MatSnackBar, private confirmationDialogService: ConfirmationDialogService, private orderService: OrderService ,private  jobService : JobService) {
 
     console.log('i am constructor');
+    this.page = 1;
+    this.pageSize = 15;
   }
 
   ngOnInit(): void {

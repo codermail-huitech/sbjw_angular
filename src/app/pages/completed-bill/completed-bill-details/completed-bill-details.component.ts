@@ -8,6 +8,7 @@ import {FinishedJobs} from "../../../models/finishedJobs";
 import {toInteger} from "@ng-bootstrap/ng-bootstrap/util/util";
 import {float} from "html2canvas/dist/types/css/property-descriptors/float";
 import toWords from 'number-to-words/src/toWords.js';
+import {ExcelService} from "../../../services/excel.service";
 // import toWords from 'number-to-words/src/toWords';
 
 @Component({
@@ -33,16 +34,16 @@ export class CompletedBillDetailsComponent implements OnInit {
 
 
 
-  constructor(private  route: ActivatedRoute, private billService: BillService) {}
+  constructor(private  route: ActivatedRoute, private billService: BillService ,private excelService: ExcelService,) {}
 
   printDivStyle = {
-    printBillDiv: {marginRight : '5px', marginLeft : '5px', marginTop : '5px'},
-    table: {'border-collapse': 'collapse', 'width' : '100%'},
+    // printBillDiv: {marginRight : '3px', marginLeft : '3px', marginTop : '5px'},
+    table: {'border-collapse': 'collapse', 'width' : '100%' },
     label:{'width': '100%'},
     // h1 : {color: 'red'},
     h2 : {border: 'solid 1px'},
-    td: {border: '1px solid black'},
-    th: {border: '1px  solid black'}
+    // td: {border: '1px solid black'},
+    th: {border: '1px  solid black' , 'fontSize' : 'small'}
   };
 
   ngOnInit(): void {
@@ -121,6 +122,9 @@ export class CompletedBillDetailsComponent implements OnInit {
   convert(value){
     return toWords(value);
   }
+
+
+
 
   getBillDetails(data){
     // console.log(data);

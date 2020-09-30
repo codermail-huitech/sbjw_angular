@@ -54,6 +54,7 @@ export class FinishJobComponent implements OnInit {
             'The job has been finished',
             'success'
           );
+          this.jobMasterForm.controls['gross_weight'].reset();
 
         }
       }, (error) => {

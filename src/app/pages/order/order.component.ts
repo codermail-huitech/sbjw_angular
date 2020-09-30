@@ -17,6 +17,10 @@ import {Observable} from 'rxjs';
 import {ConfirmationDialogService} from '../../common/confirmation-dialog/confirmation-dialog.service';
 import {map, startWith} from 'rxjs/operators';
 import Swal from 'sweetalert2';
+import {ExcelService} from "../../services/excel.service";
+import * as jsPDF from 'jspdf';
+import 'jspdf-autotable';
+import {  ViewChild, ElementRef } from '@angular/core';
 
 
 @Component({
@@ -26,6 +30,8 @@ import Swal from 'sweetalert2';
 })
 
 export class OrderComponent implements OnInit {
+
+  @ViewChild('htmlData') htmlData:ElementRef;
 
   customerList: Customer[];
   agentList: Agent[];
@@ -40,6 +46,7 @@ export class OrderComponent implements OnInit {
   orderMasterForm: FormGroup;
   orderDetailsForm: FormGroup;
   isSaveEnabled = true;
+  showDeveloperDiv = true;
   product_id: number;
   showProduct = true;
   showUpdate = false;
@@ -59,14 +66,25 @@ export class OrderComponent implements OnInit {
   public totalQuantity = 0;
   public totalApproxGold = 0;
 
+  public searchTerm: string;
+  filter = new FormControl('');
+  page: number;
+  pageSize: number;
+  p = 1;
+
 
 
   // tslint:disable-next-line:max-line-length
-  constructor(private confirmationDialogService: ConfirmationDialogService, private customerService: CustomerService, private orderService: OrderService, private storage: StorageMap, private _snackBar: MatSnackBar) {
+  constructor(private confirmationDialogService: ConfirmationDialogService, private customerService: CustomerService, private orderService: OrderService, private storage: StorageMap, private _snackBar: MatSnackBar , private  excelService : ExcelService) {
     this.orderMasterList = this.orderService.getOrderMaster();
     this.customerList = this.customerService.getCustomers();
     this.agentList = this.orderService.getAgentList();
     this.materialList = this.orderService.getMaterials();
+
+    this.page = 1;
+    this.pageSize = 15;
+
+    this.showDeveloperDiv = false;
 
   }
   // onlyOdds = (d: Date): boolean => {
@@ -75,6 +93,15 @@ export class OrderComponent implements OnInit {
   //   return true;
   //   return date % 2 === 0;
   // }
+
+  printDivStyle = {
+    table: {'border-collapse': 'collapse' , 'width': '100%'},
+    h1 : {color: 'red'},
+    h2 : {border: 'solid 1px'},
+    td: {border: '1px solid red', margin: '0px', padding: '3px'}
+  };
+
+
 
   ngOnInit(): void {
     this.isSaveEnabled = true;
@@ -516,5 +543,38 @@ export class OrderComponent implements OnInit {
     this.orderService.fetchOrderDetails(item.id);
     this.showProduct = true;
 
+  }
+
+  OrderListToExcel(){
+    this.excelService.simpleExportToExcel(this.orderMasterList, 'Orders.xlsx');
+  }
+  ConvertToPdf(){
+    let DATA = this.htmlData.nativeElement;
+    let doc = new jsPDF('p','pt', 'a1');
+    // doc.text('My PDF Table', 5, 5);
+    let handleElement = {
+      '#editor':function(element,renderer){
+        return true;
+      }
+    };
+    doc.fromHTML(DATA.innerHTML,10,10,{
+      'width': 500,
+      'elementHandlers': handleElement,
+    });
+
+    doc.save('OrderList.pdf');
+  }
+
+  ConvertToExcel(){
+
+    let head = [
+      {header: 'Id', key: 'id', width: 10},
+      {header: 'Order Number', key: 'order_number', width: 32},
+      {header: 'Customer', key: 'customer_name', width: 40},
+      {header: 'Agent', key: 'agent_name', width: 40},
+      {header: 'Order Date', key: 'date_of_order', width: 20},
+      {header: 'Delivery Date', key: 'date_of_delivery', width: 20},
+    ];
+    this.excelService.exportToExcelSpecial(this.orderMasterList, 'Orders', head);
   }
 }

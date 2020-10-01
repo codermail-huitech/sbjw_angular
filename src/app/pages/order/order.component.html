@@ -51,7 +51,7 @@
                 </mat-datepicker-toggle>
                 <mat-datepicker #picker2></mat-datepicker>
               </mat-form-field>
-              <button mat-button (click)="updateMaster()" mat-stroked-button fxFlex="20"  >Update</button>
+              <button mat-button (click)="updateMaster()" mat-stroked-button  [hidden]="!orderMasterForm.value.id" [disabled]="!orderMasterForm.dirty">Update</button>
             </div>
         </form>
       </div>
@@ -122,8 +122,8 @@
         </form>
 
         <div class="container" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="end" fxLayoutGap="10px" fxLayoutGap.xs="0" >
-          <button mat-button (click)="addOrder()" mat-stroked-button [disabled]="!orderDetailsForm.valid" >Add Order</button>
-          <button mat-button (click)="updateOrder()" mat-stroked-button>Update Order</button>
+          <button mat-button (click)="addOrder()" mat-stroked-button [disabled]="!orderDetailsForm.valid " >Add Order</button>
+          <button mat-button (click)="updateOrder()" mat-stroked-button [hidden]="!orderDetailsForm.value.id" [disabled]="!orderDetailsForm.dirty">Update Order</button>
           <button mat-button (click)="clearForm()" mat-stroked-button>clear</button>
         </div>
       </div>
@@ -164,7 +164,7 @@
           <td class="text-right">{{item.amount | currency:"&#8377;"}}</td>
           <td class="text-right">{{item.status_id==1 ? "Started":(item.status_id==40)? "Not Started" : (item.status_id==100)? "Finished":"Not Saved"}}</td>
           <td class="text-center">
-            <button mat-icon-button color="primary" aria-label="Edit Product" [hidden]="!(item.status_id)" (click)="fillOrderDetailsForm(item)" *ngIf="editableItemIndex != indexOfElement">
+            <button mat-icon-button color="primary" aria-label="Edit Product" [disabled]="item.status_id==100" (click)="fillOrderDetailsForm(item)" *ngIf="editableItemIndex != indexOfElement">
               <mat-icon>edit</mat-icon>
             </button>
             <button mat-icon-button color="primary" aria-label="Edit Product" (click)="cancelEditCurrentItem(item)" *ngIf="editableItemIndex == indexOfElement">
@@ -188,16 +188,20 @@
           <td class="text-right">{{totalOrderAmount | currency:"&#8377;"}}</td>
 
         </tr>
-        <tr>
-            <td colspan="2">
-              <button mat-button  (click)="cancelOrder()" mat-stroked-button>Cancel Order</button>
-            </td>
-            <td colspan="2">
-              <button mat-button (click)="onSubmit()" mat-stroked-button [disabled]="orderDetails.length<1 || orderDetailsForm.valid">Save Order</button>
-            </td>
-          </tr>
+<!--        <tr>-->
+<!--            <td colspan="2">-->
+<!--              <button mat-button  (click)="cancelOrder()" mat-stroked-button>Cancel Order</button>-->
+<!--            </td>-->
+<!--            <td colspan="2">-->
+<!--              <button mat-button (click)="onSubmit()" mat-stroked-button [disabled]="orderDetails.length<1 || orderDetailsForm.valid">Save Order</button>-->
+<!--            </td>-->
+<!--          </tr>-->
         </tfoot>
       </table>
+      <div class="container" fxLayout fxLayout.xs="column" fxLayoutAlign="start" fxLayoutGap="30px" fxLayoutGap.xs="0" >
+        <button mat-button  (click)="cancelOrder()" mat-stroked-button>Cancel Order</button>
+        <button mat-button (click)="onSubmit()" mat-stroked-button [disabled]="orderDetails.length<1 || orderDetailsForm.valid">Save Order</button>
+      </div>
     </div>
     <div [hidden]="showProduct" *ngIf="orderMasterList">
       <div class="container" fxLayout fxLayout.xs="column" fxLayoutAlign="start" fxLayoutGap="30px" fxLayoutGap.xs="0">

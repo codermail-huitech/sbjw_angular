@@ -48,8 +48,9 @@ export class OrderComponent implements OnInit {
   isSaveEnabled = true;
   showDeveloperDiv = true;
   product_id: number;
-  showProduct = true;
+  showProduct = false;
   showUpdate = false;
+  isAddEnabled = true;
   yourModelDate: string;
   minDate = new Date(2010, 11, 2);
   maxDate = new Date(2021, 3, 2);
@@ -86,6 +87,7 @@ export class OrderComponent implements OnInit {
 
     this.showDeveloperDiv = false;
 
+
   }
   // onlyOdds = (d: Date): boolean => {
   //   const date = d.getDate();
@@ -109,6 +111,10 @@ export class OrderComponent implements OnInit {
     this.orderDetailsForm = this.orderService.orderDetailsForm;
     // this.orderDetailsForm.controls['amount'].disable();
     this.showUpdate = false;
+
+    this.showProduct = false;
+    this.isAddEnabled =true;
+
     // this.options = [];
 
 
@@ -183,7 +189,12 @@ export class OrderComponent implements OnInit {
 
 
   addOrder(){
-    this.orderMaster = this.orderMasterForm.value;
+      if(this.orderMasterForm.value.id){
+        this.orderDetails = [];
+        this.orderMasterForm.value.id = null;
+      }
+
+      this.orderMaster = this.orderMasterForm.value;
     if (this.editableItemIndex === -1){
       this.orderDetails.unshift(this.orderDetailsForm.value);
     }else{
@@ -218,6 +229,7 @@ export class OrderComponent implements OnInit {
       // console.log('orderContainer');
       // console.log(this.orderContainer);
     });
+
   }
 
   productShow(){
@@ -541,7 +553,11 @@ export class OrderComponent implements OnInit {
   showOrderDetailsList(item){
 
     this.orderService.fetchOrderDetails(item.id);
+
     this.showProduct = true;
+    this.isAddEnabled = false;
+
+
 
   }
 

@@ -32,8 +32,11 @@
           </mat-form-field>
         </form>
         <div class="container" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="end" fxLayoutGap="10px" fxLayoutGap.xs="0" >
-          <button mat-button (click)="onSubmit()" mat-stroked-button [disabled]="!rateForm.valid || rateForm.value.id" >Save</button>
-          <button mat-button (click)="updateRate()" mat-stroked-button [disabled]="!rateForm.dirty || !rateForm.value.id" >Update</button>
+<!--          <button mat-button (click)="onSubmit()" mat-stroked-button [disabled]="!rateForm.valid || rateForm.value.id" >Save</button>-->
+          <button mat-button (click)="onSubmit()" mat-stroked-button [disabled]="!rateForm.valid" [hidden]="rateForm.value.id">Save</button>
+<!--          <button mat-button (click)="updateRate()" mat-stroked-button [disabled]="!rateForm.dirty || !rateForm.value.id" >Update</button>-->
+          <button mat-button (click)="updateRate()" mat-stroked-button [disabled]="!rateForm.dirty" [hidden]="!rateForm.value.id">Update</button>
+          <button mat-button (click)="clearRate()" mat-stroked-button  [hidden]="!rateForm.value.id">Clear</button>
         </div>
       </div>
     </mat-card>

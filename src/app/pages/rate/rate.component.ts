@@ -104,6 +104,9 @@ export class RateComponent implements OnInit {
   editRate(rateData){
     this.rateForm.patchValue({id: rateData.id , price_code_id: rateData.price_code_id, customer_category_id: rateData.customer_category_id, price: rateData.price, p_loss: rateData.p_loss});
   }
+  clearRate(){
+    this.rateForm.reset();
+  }
 
   updateRate(){
     this.rateService.updateRate().subscribe((response: {success: number, data: Rate}) => {

@@ -1,0 +1,66 @@
+<div>
+  <div fxFlex="30" >
+    <mat-card style="background-color: yellowgreen">
+      <form [formGroup] = goldReceivedForm>
+         <mat-form-field>
+           <input matInput placeholder="Customer Name" formControlName="customer_id">
+         </mat-form-field>
+
+        <mat-form-field>
+          <input matInput placeholder="Agent Name" formControlName="agent_id">
+        </mat-form-field>
+
+        <mat-form-field class="col-6">
+          <mat-label>Job Date</mat-label>
+          <input matInput
+                 [matDatepicker]="picker1"
+                 formControlName="received_date"
+                 [min]="minDate"
+                 [max]="maxDate">
+          <mat-datepicker-toggle matSuffix [for]="picker1">
+            <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
+          </mat-datepicker-toggle>
+          <mat-datepicker #picker1></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field>
+          <input matInput placeholder="Gold Received" formControlName="gold_received">
+        </mat-form-field>
+      </form>
+      <div style="text-align: right">
+        <button class="btn btn-primary" (click)="onSubmit()">Submit</button>
+      </div>
+
+    </mat-card>
+
+  </div>
+  <div  fxFlex="70" style="background-color: #cdd20c">
+    <table class="table">
+      <thead>
+      <tr>
+        <th>SL No.</th>
+        <th>Bill Number</th>
+        <th>Customer Name</th>
+        <th>Agent  Name</th>
+        <th>Gold Received</th>
+
+      </tr>
+      </thead>
+      <tbody>
+      <tr  *ngFor="let data of completedBillList ; let indexOfelement = index" >
+        <td>{{indexOfelement+1}}</td>
+        <td>{{data.bill_number}}</td>
+        <td ><b>{{data.customer_name | uppercase}}</b></td>
+        <td ><b>{{data.agent_name | uppercase}}</b></td>
+        <td ><b>0</b></td>
+        <td>
+          <button  aria-label="Open Details" style="text-align: center" (click)="fillGoldReceivedForm(data)" >
+             Gold received
+          </button>
+        </td>
+
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

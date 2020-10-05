@@ -89,11 +89,11 @@
 
 
         <!--for huge menus-->
-        <button mat-button [matMenuTriggerFor]="animals">Animal index</button>
+        <button mat-button [matMenuTriggerFor]="animals">Bills</button>
 
         <mat-menu #animals="matMenu">
-          <button mat-menu-item [matMenuTriggerFor]="vertebrates">Vertebrates</button>
-          <button mat-menu-item [matMenuTriggerFor]="invertebrates">Invertebrates</button>
+<!--          <button mat-menu-item [matMenuTriggerFor]="vertebrates">Vertebrates</button>-->
+          <button mat-menu-item [matMenuTriggerFor]="receipts">Receipts</button>
         </mat-menu>
 
         <mat-menu #vertebrates="matMenu">
@@ -104,14 +104,9 @@
           <button mat-menu-item>Mammals</button>
         </mat-menu>
 
-        <mat-menu #invertebrates="matMenu">
-          <button mat-menu-item>Insects</button>
-          <button mat-menu-item>Molluscs</button>
-          <button mat-menu-item>Crustaceans</button>
-          <button mat-menu-item>Corals</button>
-          <button mat-menu-item>Arachnids</button>
-          <button mat-menu-item>Velvet worms</button>
-          <button mat-menu-item>Horseshoe crabs</button>
+        <mat-menu #receipts="matMenu">
+          <button mat-menu-item [routerLink]="'/gold_receipt'">Gold Receipts</button>
+          <button mat-menu-item [routerLink]="'/lc_receipt'">L.C. Receipts</button>
         </mat-menu>
 
         <mat-menu #fish="matMenu">

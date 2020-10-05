@@ -48,7 +48,7 @@
     <div id="printBillDiv">
 <!--    <div class="d-flex" *ngIf="billMasterData">-->
       <div style="align-content: center; text-align: center">
-        <h3 style="text-align: center; font-weight:bold">SRIKRISHNA BANGLE JEWELLERY WORKSHOP</h3><br>
+        <h2 style="text-align: center; font-weight:bold">SRIKRISHNA BANGLE JEWELLERY WORKSHOP</h2><br>
         <label style="font-weight: bold ; font-size: 13px ">সোনার পাত বসান ব্রোঞ্জ চুরি</label><br>
         <label style="font-weight: bold ; font-size: 13px ">Sewli,P.O- S.T.P , (Baro Kanthaliya),Barrackpore,Dist:- North 24 Parganas,Kol-121</label><br>
         <label style="font-weight: bold ; font-size: 11px">contact:- 033 2535 3727 , 2535 7777 , 2535 2222 ,Mob: - 9836444999 ,email: bangle312@gmail.com</label><br>
@@ -94,11 +94,11 @@
         <td >{{data.job_number}}</td>
         <td>{{data.model_number}}</td>
         <td>{{data.size}}</td>
-        <td>{{data.gross_weight}}</td>
-        <td>{{data.total}}</td>
-        <td>{{data.pure_gold}}</td>
-        <td>{{data.quantity}}</td>
-        <td>{{data.cost | currency:"&#8377;"}}</td>
+        <td style="padding: 2px; text-align: right">{{data.gross_weight}}</td>
+        <td style="padding: 2px; text-align: right">{{data.total}}</td>
+        <td style="padding: 2px; text-align: right">{{data.pure_gold}}</td>
+        <td style="padding: 2px; text-align: right">{{data.quantity}}</td>
+        <td style="padding: 2px; text-align: right">{{data.cost | currency:"&#8377;"}}</td>
 <!--        <td>{{data.price * data.quantity}}</td>-->
 <!--        <td>-->
 <!--          <input type="checkbox" name="nameOfChoice" (click)="selectionForBill(data)" [disabled]="data.status == 'WORK IN PROGRESS'" >-->
@@ -111,10 +111,10 @@
         <td><b>Total</b></td>
         <td></td>
         <td></td>
-        <td><b>{{total92Gold.toFixed(3)}} g</b></td>
-        <td><b>{{totalGold.toFixed(3)}} g</b></td>
-        <td><b>{{totalQuantity}}</b></td>
-        <td><b>{{totalCost | currency:"&#8377;"}}</b></td>
+        <td style="padding: 2px; text-align: right"><b>{{total92Gold.toFixed(3)}} g</b></td>
+        <td style="padding: 2px; text-align: right"><b>{{totalGold.toFixed(3)}} g</b></td>
+        <td style="padding: 2px; text-align: right"><b>{{totalQuantity}}</b></td>
+        <td style="padding: 2px; text-align: right"><b>{{totalCost | currency:"&#8377;"}}</b></td>
       </tr>
       </tbody>
     </table>

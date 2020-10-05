@@ -38,7 +38,7 @@ export class BillJobMasterDetailsComponent implements OnInit {
     table: {'border-collapse': 'collapse', 'width' : '100%'},
     label:{'width': '100%'},
     // h1 : {color: 'red'},
-    h2 : {border: 'solid 1px'},
+    // h2 : {border: 'solid 1px'},
     // td: {border: '1px solid black'},
     th: {border: '1px  solid black'}
   };

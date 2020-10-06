@@ -1,96 +1,117 @@
 <div class="d-flex ">
   <div class="col-4">
-    <mat-card  id = "gold-received-entry-form" style="background-color: yellowgreen">
+    <mat-card style="background-color: #FFFFFF">
+      <mat-card  id = "gold-received-entry-form" style="background-color: yellowgreen">
         <form [formGroup] = goldReceivedForm >
           <mat-form-field class="col-6">
-          <input matInput placeholder="Customer Name" formControlName="customer_name">
-        </mat-form-field>
+            <mat-label>Customer</mat-label>
+            <mat-select  formControlName="customer_id">
+              <mat-option *ngFor="let customer of customerList" [value]="customer.id">
+                {{customer.person_name}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <!--          <div class="container" fxLayout="column" fxLayout.xs="column" fxLayoutAlign="start" fxLayoutGap="10px" fxLayoutGap.xs="0">-->
+          <mat-form-field class="col-6">
+            <mat-label>Agent</mat-label>
+            <mat-select  formControlName="agent_id">
+              <mat-option *ngFor="let agent of agentList" [value]="agent.id">
+                {{agent.person_name}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <!--          </div>-->
 
           <mat-form-field class="col-6">
-          <input matInput placeholder="Agent Name" formControlName="agent_name">
-        </mat-form-field>
+            <mat-label>Job Date</mat-label>
+            <input matInput
+                   [matDatepicker]="picker1"
+                   formControlName="received_date"
+                   [min]="minDate"
+                   [max]="maxDate">
+            <mat-datepicker-toggle matSuffix [for]="picker1">
+              <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
+            </mat-datepicker-toggle>
+            <mat-datepicker #picker1></mat-datepicker>
+          </mat-form-field>
 
           <mat-form-field class="col-6">
-          <mat-label>Job Date</mat-label>
-          <input matInput
-                 [matDatepicker]="picker1"
-                 formControlName="received_date"
-                 [min]="minDate"
-                 [max]="maxDate">
-          <mat-datepicker-toggle matSuffix [for]="picker1">
-            <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
-          </mat-datepicker-toggle>
-          <mat-datepicker #picker1></mat-datepicker>
-        </mat-form-field>
-
-          <mat-form-field class="col-6">
-          <input matInput placeholder="Gold Received" formControlName="gold_received">
-        </mat-form-field>
+            <input matInput placeholder="Gold Received" formControlName="gold_received">
+          </mat-form-field>
         </form>
 
         <div style="text-align: right">
           <button class="btn btn-primary" (click)="onSubmit()">Submit</button>
         </div>
       </mat-card>
+    </mat-card>
+
 
 
 
 
   </div>
-  <div  class="col-8" style="background-color: #cdd20c">
-    <div class="container" fxLayout fxLayout.xs="column" fxLayoutAlign="start" fxLayoutGap="30px" fxLayoutGap.xs="0">
-      <mat-form-field class="example-full-width">
-        <input matInput placeholder="Search..." [(ngModel)]="searchTerm" name="search" type="text" autofocus>
-      </mat-form-field>
-
-      <mat-form-field class="example-full-width">
-        <input matInput placeholder="Items per page" [(ngModel)]="pageSize" name="PageSize" type="text">
-      </mat-form-field>
+  <div  class="col-8" style="background-color: #e8c50e">
+    <div *ngIf="completedBillList.length ===0" style="text-align: center">
+      <h1 style="font-weight: bold">Nothing to show ...</h1>
     </div>
-    <table class="table">
-      <thead>
-      <tr>
-        <th>SL No.</th>
-        <th>Bill Number</th>
-        <th>Customer Name</th>
-        <th>Agent  Name</th>
-        <th>Gold Received</th>
-        <th>Action</th>
+    <div *ngIf="completedBillList.length > 0">
+      <div class="container" fxLayout fxLayout.xs="column" fxLayoutAlign="start" fxLayoutGap="30px" fxLayoutGap.xs="0" >
+        <mat-form-field class="example-full-width">
+          <input matInput placeholder="Search..." [(ngModel)]="searchTerm" name="search" type="text" autofocus>
+        </mat-form-field>
 
-      </tr>
-      </thead>
-      <tbody>
-      <tr  *ngFor="let data of completedBillList | filter : searchTerm | paginate: { itemsPerPage: pageSize, currentPage: p }; let indexOfelement = index" >
-        <td>{{indexOfelement+1}}</td>
-        <td>{{data.bill_number}}</td>
-        <td ><b>{{data.customer_name | uppercase}}</b></td>
-        <td ><b>{{data.agent_name | uppercase}}</b></td>
-        <td ><b>{{data.gold_received===null ? 0 : data.gold_received}}</b></td>
-        <td>
-          <button  class="btn btn-primary"  style="text-align: center" (click)="fillGoldReceivedForm(data)" >
-             Make Entry
-          </button>
-        </td>
+        <mat-form-field class="example-full-width">
+          <input matInput placeholder="Items per page" [(ngModel)]="pageSize" name="PageSize" type="text">
+        </mat-form-field>
+      </div>
+      <table class="table">
+        <thead style="background-color: aquamarine">
+        <tr>
+          <th>SL No.</th>
+          <th>Customer Name</th>
+          <th>Agent  Name</th>
+          <th>Gold Received</th>
+          <th>Date</th>
 
-      </tr>
-      </tbody>
-    </table>
-    <div fxLayout.xs="column" fxLayout="column" fxFlexFill>
-      <!--    https://www.npmjs.com/package/ngx-pagination-->
-      <!--    npm i ngx-pagination-->
-      <pagination-controls (pageChange)="p = $event"></pagination-controls>
-      <pagination-controls  id="some_id"
-                            (pageChange)="p=($event)"
-                            maxSize="5"
-                            directionLinks="true"
-                            autoHide="true"
-                            responsive="true"
-                            previousLabel="Previous"
-                            nextLabel="Next"
-                            screenReaderPaginationLabel="Pagination"
-                            screenReaderPageLabel="page"
-                            screenReaderCurrentLabel="You're on page">
-      </pagination-controls>
+
+        </tr>
+        </thead>
+        <tbody>
+        <tr  *ngFor="let data of completedBillList | filter : searchTerm | paginate: { itemsPerPage: pageSize, currentPage: p }; let indexOfelement = index" >
+          <td>{{indexOfelement+1}}</td>
+          <td ><b>{{data.customer_name | uppercase}}</b></td>
+          <td ><b>{{data.agent_name | uppercase}}</b></td>
+          <td style="text-align: right"><b>{{data.gold_received.toFixed(3)}}</b></td>
+          <td ><b>{{data.received_date}}</b></td>
+          <!--        <td>-->
+          <!--          <button  class="btn btn-primary"  style="text-align: center" (click)="fillGoldReceivedForm(data)" [disabled]="data.gold_received > 0" >-->
+          <!--             Make Entry-->
+          <!--          </button>-->
+          <!--        </td>-->
+
+        </tr>
+        </tbody>
+      </table>
+      <div fxLayout.xs="column" fxLayout="column" fxFlexFill>
+        <!--    https://www.npmjs.com/package/ngx-pagination-->
+        <!--    npm i ngx-pagination-->
+        <pagination-controls (pageChange)="p = $event"></pagination-controls>
+        <pagination-controls  id="some_id"
+                              (pageChange)="p=($event)"
+                              maxSize="5"
+                              directionLinks="true"
+                              autoHide="true"
+                              responsive="true"
+                              previousLabel="Previous"
+                              nextLabel="Next"
+                              screenReaderPaginationLabel="Pagination"
+                              screenReaderPageLabel="page"
+                              screenReaderCurrentLabel="You're on page">
+        </pagination-controls>
+      </div>
     </div>
+
   </div>
 </div>

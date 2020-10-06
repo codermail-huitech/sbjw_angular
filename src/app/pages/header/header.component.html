@@ -83,8 +83,8 @@
           <button mat-menu-item [routerLink]="['/order']" routerLinkActive="MyActiveMenu">Order</button>
           <button mat-menu-item [routerLink]="['/job']" routerLinkActive="MyActiveMenu">Job</button>
           <button mat-menu-item [routerLink]="['/job_task']" routerLinkActive="MyActiveMenu">Work In Progress</button>
-          <button mat-menu-item [routerLink]="['/bill']" routerLinkActive="MyActiveMenu">Create Bill</button>
-          <button mat-menu-item [routerLink]="['/completed_bills']" routerLinkActive="MyActiveMenu">Completed Bills</button>
+<!--          <button mat-menu-item [routerLink]="['/bill']" routerLinkActive="MyActiveMenu">Create Bill</button>-->
+<!--          <button mat-menu-item [routerLink]="['/completed_bills']" routerLinkActive="MyActiveMenu">Completed Bills</button>-->
         </mat-menu>
 
 
@@ -92,16 +92,16 @@
         <button mat-button [matMenuTriggerFor]="animals">Bills</button>
 
         <mat-menu #animals="matMenu">
-<!--          <button mat-menu-item [matMenuTriggerFor]="vertebrates">Vertebrates</button>-->
+          <button mat-menu-item [matMenuTriggerFor]="bills">Bills</button>
           <button mat-menu-item [matMenuTriggerFor]="receipts">Receipts</button>
         </mat-menu>
 
-        <mat-menu #vertebrates="matMenu">
-          <button mat-menu-item [matMenuTriggerFor]="fish">Fishes</button>
-          <button mat-menu-item [matMenuTriggerFor]="amphibians">Amphibians</button>
-          <button mat-menu-item [matMenuTriggerFor]="reptiles">Reptiles</button>
-          <button mat-menu-item>Birds</button>
-          <button mat-menu-item>Mammals</button>
+        <mat-menu #bills="matMenu">
+          <button mat-menu-item [routerLink]="['/bill']">Create Bill</button>
+          <button mat-menu-item [routerLink]="['/completed_bills']">Completed Bills</button>
+<!--          <button mat-menu-item [matMenuTriggerFor]="reptiles">Reptiles</button>-->
+<!--          <button mat-menu-item>Birds</button>-->
+<!--          <button mat-menu-item>Mammals</button>-->
         </mat-menu>
 
         <mat-menu #receipts="matMenu">

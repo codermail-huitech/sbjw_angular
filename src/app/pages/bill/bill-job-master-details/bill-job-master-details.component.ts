@@ -10,6 +10,7 @@ import {toInteger} from "@ng-bootstrap/ng-bootstrap/util/util";
 import {FinishedJobs} from "../../../models/finishedJobs";
 // import {Location} from '@angular/common';
 import toWords from 'number-to-words/src/toWords.js';
+import {GoldReceiptService} from "../../../services/gold-receipt.service";
 
 @Component({
   selector: 'app-bill-job-master-details',
@@ -30,7 +31,7 @@ export class BillJobMasterDetailsComponent implements OnInit {
   totalCost: number;
   x : FinishedJobs[];
 
-  constructor(private  route: ActivatedRoute, private billService: BillService) {
+  constructor(private  route: ActivatedRoute, private billService: BillService , private  goldReceiptService : GoldReceiptService) {
   }
 
   printDivStyle = {
@@ -150,6 +151,7 @@ export class BillJobMasterDetailsComponent implements OnInit {
         };
         this.billService.getFinishedJobsCustomers();
         this.billService.getCompletedBillCustomers();
+        this.goldReceiptService.getUpdatedList();
         this.showBill = true;
       });
   }

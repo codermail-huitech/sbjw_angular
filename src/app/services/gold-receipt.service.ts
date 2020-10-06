@@ -32,7 +32,6 @@ export class GoldReceiptService {
       received_date : new FormControl(null, [Validators.required]),
       customer_id : new FormControl(null, [Validators.required]),
       agent_id : new FormControl( null, [Validators.required]),
-      bill_master_id : new FormControl( null, [Validators.required]),
       gold_received : new FormControl( null, [Validators.required])
     });
 
@@ -48,14 +47,23 @@ export class GoldReceiptService {
     this.goldReceivedForm = item;
     return this.http.post(GlobalVariable.BASE_API_URL + '/SaveReceivedGold',this.goldReceivedForm)
       .pipe((tap((response: {success : number , data : GoldReceipt})=>{
-          let index = this.completedBillList.findIndex(x=>x.id===item.bill_master_id);
-          this.completedBillList[index].gold_received = response.data.gold_received;
-          // console.log('test');
-          // console.log(this.completedBillList);
-          this.completedBillSub.next([...this.completedBillList]);
+
+        this.completedBillList.unshift(response.data);
+        this.completedBillSub.next([...this.completedBillList]);
       })));
   }
+
+  getUpdatedList(){
+    this.http.get(GlobalVariable.BASE_API_URL + '/getCompletedBills')
+      .subscribe((response: {success: number, data: GoldReceipt[]}) => {
+        const {data} = response;
+        this.completedBillList = data;
+        this.completedBillSub.next([...this.completedBillList]);
+      });
+  }
+
   getCompletedBills(){
     return  [...this.completedBillList];
   }
+
 }

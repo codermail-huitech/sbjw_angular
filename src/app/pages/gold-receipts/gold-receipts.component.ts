@@ -73,9 +73,7 @@ export class GoldReceiptsComponent implements OnInit {
           'Received Gold Submitted',
           'success'
         );
-        this.goldReceiptService.getCompletedBillUpdateListener().subscribe((response)=>{
-          this.completedBillList = response;
-        });
+
         this.goldReceivedForm.reset();
 
       }

@@ -2,7 +2,7 @@
   <div class="col-4">
     <mat-card style="background-color: #FFFFFF">
       <mat-card  id = "gold-received-entry-form" style="background-color: yellowgreen">
-        <form [formGroup] = goldReceivedForm >
+        <form [formGroup] = lcReceivedForm >
           <mat-form-field class="col-6">
             <mat-label>Customer</mat-label>
             <mat-select  formControlName="customer_id">
@@ -37,7 +37,7 @@
           </mat-form-field>
 
           <mat-form-field class="col-6">
-            <input matInput placeholder="Gold Received" formControlName="gold_received">
+            <input matInput placeholder="LC Received" formControlName="lc_received">
           </mat-form-field>
         </form>
 
@@ -45,14 +45,13 @@
           <button class="btn btn-primary" (click)="onSubmit()">Submit</button>
         </div>
       </mat-card>
+<!--      <pre>{{lcReceiptList.length}}</pre>-->
     </mat-card>
 
 
 
-
-
   </div>
-  <div  class="col-8" style="background-color: #e8c50e">
+  <div  class="col-8" style="background-color:  darkcyan">
     <div *ngIf="lcReceiptList.length ===0" style="text-align: center">
       <h1 style="font-weight: bold">Nothing to show ...</h1>
     </div>
@@ -72,7 +71,7 @@
           <th>SL No.</th>
           <th>Customer Name</th>
           <th>Agent  Name</th>
-          <th>Gold Received</th>
+          <th>L.C Received</th>
           <th>Date</th>
 
 
@@ -95,8 +94,7 @@
         </tbody>
       </table>
       <div fxLayout.xs="column" fxLayout="column" fxFlexFill>
-        <!--    https://www.npmjs.com/package/ngx-pagination-->
-        <!--    npm i ngx-pagination-->
+
         <pagination-controls (pageChange)="p = $event"></pagination-controls>
         <pagination-controls  id="some_id"
                               (pageChange)="p=($event)"
@@ -115,3 +113,4 @@
 
   </div>
 </div>
+

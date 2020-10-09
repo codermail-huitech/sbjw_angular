@@ -68,7 +68,7 @@ export class CompletedBillDetailsComponent implements OnInit {
         this.billDetailsData = details;
 
         for(let i =0; i<this.billDetailsData.length; i++){
-          this.billService.getGoldQuantity(this.billDetailsData[i].id).subscribe((response)=>{
+          this.billService.getGoldQuantity(this.billDetailsData[i].job_master_id).subscribe((response)=>{
             this.billDetailsData[i].total = response.data[0].total.toFixed(3);
             // this.billDetailsData[i].pure_gold = ((this.billDetailsData[i].total * 92) / 100);
             this.billDetailsData[i].pure_gold =Number((this.billDetailsData[i].total * 92 / 100).toFixed(3));

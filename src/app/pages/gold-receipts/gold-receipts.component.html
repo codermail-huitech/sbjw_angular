@@ -1,5 +1,5 @@
 <div class="d-flex ">
-  <div class="col-4">
+  <div class="col-5">
     <mat-card style="background-color: #FFFFFF">
       <mat-card  id = "gold-received-entry-form" style="background-color: yellowgreen">
         <form [formGroup] = goldReceivedForm >
@@ -24,7 +24,7 @@
           <!--          </div>-->
 
           <mat-form-field class="col-6">
-            <mat-label>Job Date</mat-label>
+            <mat-label> Date</mat-label>
             <input matInput
                    [matDatepicker]="picker1"
                    formControlName="received_date"
@@ -52,7 +52,7 @@
 
 
   </div>
-  <div  class="col-8" style="background-color: #e8c50e">
+  <div  class="col-7" style="background-color: #e8c50e">
     <div *ngIf="completedBillList.length ===0" style="text-align: center">
       <h1 style="font-weight: bold">Nothing to show ...</h1>
     </div>
@@ -84,7 +84,7 @@
           <td ><b>{{data.customer_name | uppercase}}</b></td>
           <td ><b>{{data.agent_name | uppercase}}</b></td>
           <td style="text-align: right"><b>{{data.gold_received.toFixed(3)}}</b></td>
-          <td ><b>{{data.received_date}}</b></td>
+          <td ><b>{{data.received_date | date :  "dd.MM.y"}}</b></td>
           <!--        <td>-->
           <!--          <button  class="btn btn-primary"  style="text-align: center" (click)="fillGoldReceivedForm(data)" [disabled]="data.gold_received > 0" >-->
           <!--             Make Entry-->

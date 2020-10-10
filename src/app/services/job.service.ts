@@ -109,6 +109,7 @@ export class JobService {
 
   saveJob(){
     // tslint:disable-next-line:max-line-length
+    console.log(this.jobMasterForm);
     return this.http.post<JobResponseData>( GlobalVariable.BASE_API_URL + '/jobs', {master: this.jobMasterForm.value, details: this.jobDetailsForm.value})
       .pipe(catchError(this._serverError), tap(((response: {success: number, data: JobMaster}) => {
         if(response.data){

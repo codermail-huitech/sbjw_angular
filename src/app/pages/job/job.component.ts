@@ -40,6 +40,7 @@ export class JobComponent implements OnInit {
   pageSize: number;
   p = 1;
 
+
   constructor(private productService: ProductService, private _snackBar: MatSnackBar, private confirmationDialogService: ConfirmationDialogService, private jobService: JobService, private orderService: OrderService) {
     this.products = this.productService.getProducts();
     this.karigarhData = this.jobService.getAllKarigarhs();
@@ -90,18 +91,24 @@ export class JobComponent implements OnInit {
   placeJob(details) {
     console.log("details");
     console.log(details);
-    console.log("materials");
-    console.log(this.materialList);
+    // console.log("materials");
+    // console.log(this.materialList);
     const index = this.materialList.findIndex(x => x.id === details.material_id);
     this.jobMasterForm.patchValue({
+      // id: details.order_master_id,
       model_number: details.model_number,
       order_details_id: details.id,
       material_name: this.materialList[index].material_name
     });
     this.jobDetailsForm.patchValue({material_id: details.material_id, id: details.id});
+    // this.jobDetailsForm.value.id = details.id;
+    // console.log('job details form');
+    // console.log(this.jobDetailsForm.value);
   }
 
   onSubmit() {
+    console.log('component');
+    console.log(this.jobMasterForm.value);
 
     this.confirmationDialogService.confirm('Please confirm..', 'Do you really want to send order to job ?')
       .then((confirmed) => {

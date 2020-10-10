@@ -56,18 +56,30 @@ export class LcReceiptsComponent implements OnInit {
   }
 
   onSubmit(){
-    console.log(this.lcReceivedForm.value);
-    this.lcReceivedForm.value.received_date = this.pipe.transform(this.lcReceivedForm.value.received_date, 'yyyy-MM-dd');
-    this.lcReceiptService.SaveReceivedLC(this.lcReceivedForm.value).subscribe((response)=>{
-      if(response.success ===1){
-        Swal.fire(
-          'Done!',
-          'Received L.C. Submitted',
-          'success'
-        );
-        this.lcReceivedForm.reset();
+    Swal.fire({
+      title: 'Do you want to submit L.C ?',
+      text: 'L.C  will be added in the  list',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, add it!',
+      cancelButtonText: 'No, cancel it'
+    }).then((result) => {
+      if (result.value) {
+        this.lcReceivedForm.value.received_date = this.pipe.transform(this.lcReceivedForm.value.received_date, 'yyyy-MM-dd');
+        this.lcReceiptService.SaveReceivedLC(this.lcReceivedForm.value).subscribe((response) => {
+          if (response.success === 1) {
+            Swal.fire(
+              'Done!',
+              'Received L.C. Submitted',
+              'success'
+            );
+            this.lcReceivedForm.reset();
+          }
+        });
       }
     });
   }
+
+
 
 }

@@ -62,19 +62,29 @@ export class GoldReceiptsComponent implements OnInit {
   //
   // }
 
-  onSubmit(){
-    console.log(this.goldReceivedForm.value);
-    this.goldReceivedForm.value.received_date = this.pipe.transform(this.goldReceivedForm.value.received_date, 'yyyy-MM-dd');
-    this.goldReceiptService.SaveReceivedGold(this.goldReceivedForm.value).subscribe((response)=>{
-      if(response.success === 1)
-      {
-        Swal.fire(
-          'Done!',
-          'Received Gold Submitted',
-          'success'
-        );
+  onSubmit() {
+    Swal.fire({
+      title: 'Do you want to submit gold ?',
+      text: 'gold  will be added in the  list',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, add it!',
+      cancelButtonText: 'No, cancel it'
+    }).then((result) => {
+      if (result.value) {
+        this.goldReceivedForm.value.received_date = this.pipe.transform(this.goldReceivedForm.value.received_date, 'yyyy-MM-dd');
+        this.goldReceiptService.SaveReceivedGold(this.goldReceivedForm.value).subscribe((response) => {
+          if (response.success === 1) {
+            Swal.fire(
+              'Done!',
+              'Received Gold Submitted',
+              'success'
+            );
 
-        this.goldReceivedForm.reset();
+            this.goldReceivedForm.reset();
+
+          }
+        });
 
       }
     });

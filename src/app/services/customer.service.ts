@@ -60,7 +60,10 @@ export class CustomerService implements OnDestroy{
       po : new FormControl(null),
       area : new FormControl(null),
       city : new FormControl(null),
-      pin : new FormControl(null, [Validators.pattern('^[0-9]*$'), Validators.maxLength(6)])
+      pin : new FormControl(null, [Validators.pattern('^[0-9]*$'), Validators.maxLength(6)]),
+      opening_balance_LC : new FormControl(0.00),
+      opening_balance_Gold : new FormControl(0.00),
+
     });
 
   } // End of Controller

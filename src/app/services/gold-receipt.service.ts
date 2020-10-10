@@ -7,6 +7,7 @@ import {Subject} from "rxjs";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {catchError, tap} from 'rxjs/operators';
 import {GoldReceipt} from "../models/goldReceipt.model";
+import {formatDate} from "@angular/common";
 
 @Injectable({
   providedIn: 'root'
@@ -25,11 +26,14 @@ export class GoldReceiptService {
 
   constructor(private http: HttpClient) {
 
+    const received_date = new Date();
+    const received_date_format = formatDate(received_date, 'yyyy-MM-dd', 'en');
+
     this.goldReceivedForm = new FormGroup({
       id : new FormControl(null),
       customer_name: new FormControl({value : null, disabled: true}),
       agent_name: new FormControl({value : null, disabled: true}),
-      received_date : new FormControl(null, [Validators.required]),
+      received_date : new FormControl(received_date_format, [Validators.required]),
       customer_id : new FormControl(null, [Validators.required]),
       agent_id : new FormControl( null, [Validators.required]),
       gold_received : new FormControl( null, [Validators.required])

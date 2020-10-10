@@ -30,6 +30,7 @@ export class BillDetail{
   customer_id?: number;
   order_number? : string;
   cost?: number;
+  job_master_id? : number;
 
 
   constructor() {

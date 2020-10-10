@@ -5,6 +5,7 @@ import {Subject} from "rxjs";
 import {HttpClient} from "@angular/common/http";
 import {tap} from "rxjs/operators";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {formatDate} from "@angular/common";
 
 @Injectable({
   providedIn: 'root'
@@ -21,11 +22,15 @@ export class LcReceiptService {
 
 
   constructor( private  http : HttpClient) {
+
+    const received_date = new Date();
+    const received_date_format = formatDate(received_date, 'yyyy-MM-dd', 'en');
+
     this.lcReceivedForm = new FormGroup({
       id : new FormControl(null),
       customer_name: new FormControl({value : null, disabled: true}),
       agent_name: new FormControl({value : null, disabled: true}),
-      received_date : new FormControl(null, [Validators.required]),
+      received_date : new FormControl(received_date_format, [Validators.required]),
       customer_id : new FormControl(null, [Validators.required]),
       agent_id : new FormControl( null, [Validators.required]),
       lc_received : new FormControl( null, [Validators.required])

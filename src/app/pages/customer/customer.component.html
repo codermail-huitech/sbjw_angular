@@ -24,14 +24,14 @@
                 </div>
               </mat-form-field>
 
-              <div class="container" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="start" fxLayoutGap="10px" fxLayoutGap.xs="0">
-                <mat-form-field>
+              <div  fxLayout="row" fxLayout.xs="column" fxLayoutAlign="start" fxLayoutGap="5px" fxLayoutGap.xs="0">
+                <mat-form-field class="col-4">
                   <input matInput placeholder="Contact 1" formControlName="mobile1">
                 </mat-form-field>
-                <mat-form-field>
+                <mat-form-field class="col-4">
                   <input matInput placeholder="Contact 2" formControlName="mobile2">
                 </mat-form-field>
-                <mat-form-field>
+                <mat-form-field class="col-4">
                   <mat-label>Category</mat-label>
                   <select matNativeControl required>
                     <option value="2">Base</option>
@@ -84,7 +84,7 @@
                 <button mat-button  mat-stroked-button [disabled]="!customerForm.valid" >
                     Save
                 </button>
-                <button mat-button type="button"  mat-stroked-button (click)="updateCustomer()" [disabled]="!customerForm.valid">
+                <button mat-button type="button"  mat-stroked-button (click)="updateCustomer()" [disabled]="!customerForm.dirty">
                   Update
                 </button>
               </div>

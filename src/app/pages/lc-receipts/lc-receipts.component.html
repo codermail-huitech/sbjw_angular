@@ -43,16 +43,16 @@
         </form>
 
         <div style="text-align: right">
-          <button class="btn btn-primary" (click)="onSubmit()">Submit</button>
+          <button class="btn btn-primary" (click)="onSubmit()" [disabled]="lcReceivedForm.invalid">Submit</button>
         </div>
       </mat-card>
-<!--      <pre>{{lcReceiptList.length}}</pre>-->
+<!--      <pre>{{lcReceivedForm.value | json}}</pre>-->
     </mat-card>
 
 
 
   </div>
-  <div  class="col-7" style="background-color:  darkcyan">
+  <mat-card  class="col-7" style="background-color:  darkcyan">
     <div *ngIf="lcReceiptList.length ===0" style="text-align: center">
       <h1 style="font-weight: bold">Nothing to show ...</h1>
     </div>
@@ -112,7 +112,7 @@
       </div>
     </div>
 
-  </div>
+  </mat-card>
 </div>
 
 

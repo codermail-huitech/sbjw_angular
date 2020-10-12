@@ -8,6 +8,7 @@ import {MatSnackBar} from '@angular/material/snack-bar';
 import {SncakBarComponent} from '../../common/sncak-bar/sncak-bar.component';
 import {Observable} from 'rxjs';
 import {AuthResponseData} from '../../services/auth.service';
+import Swal from 'sweetalert2';
 
 // @ts-ignore
 @Component({
@@ -48,7 +49,15 @@ export class CustomerComponent implements OnInit {
 
   onSubmit() {
     console.log(this.customerForm.value);
-    this.customerService.saveCustomer(this.customerForm.value);
+    this.customerService.saveCustomer(this.customerForm.value).subscribe((response: {success: number, data: Customer}) => {
+      if (response.data){
+        Swal.fire(
+          'Done!',
+          'Customer Added',
+          'success'
+        );
+      }
+    });
   }
 
   myCustomValidation(control: FormControl): {[s: string]: boolean } {
@@ -71,9 +80,14 @@ export class CustomerComponent implements OnInit {
 
     updateObserable.subscribe((response) => {
       if (response.success === 1){
-        this._snackBar.openFromComponent(SncakBarComponent, {
-          duration: 4000, data: {message: 'Hello World!'}
-        });
+        Swal.fire(
+          'Done!',
+          'Customer Updated',
+          'success'
+        );
+        // this._snackBar.openFromComponent(SncakBarComponent, {
+        //   duration: 4000, data: {message: 'Hello World!'}
+        // });
       }
       this.currentEerror = null;
     }, (error) => {

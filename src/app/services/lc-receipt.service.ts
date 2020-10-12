@@ -26,6 +26,10 @@ export class LcReceiptService {
     const received_date = new Date();
     const received_date_format = formatDate(received_date, 'yyyy-MM-dd', 'en');
 
+
+
+
+
     this.lcReceivedForm = new FormGroup({
       id : new FormControl(null),
       customer_name: new FormControl({value : null, disabled: true}),

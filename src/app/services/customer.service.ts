@@ -50,8 +50,8 @@ export class CustomerService implements OnDestroy{
       id : new FormControl(null),
       person_name : new FormControl(null, [Validators.required, Validators.maxLength(20), Validators.minLength(4)]),
       email : new FormControl(null, [Validators.required, Validators.email]),
-      mobile1 : new FormControl('+91', [Validators.maxLength(10)]),
-      mobile2 : new FormControl('+91', [Validators.maxLength(10)]),
+      mobile1 : new FormControl('+91', [Validators.maxLength(13)]),
+      mobile2 : new FormControl('+91', [Validators.maxLength(13)]),
       person_type_id : new FormControl(10),
       customer_category_id : new FormControl(2),
       address1 : new FormControl(null),
@@ -72,10 +72,14 @@ export class CustomerService implements OnDestroy{
 
   saveCustomer(customer){
     return this.http.post<CustomerResponseData>('http://127.0.0.1:8000/api/customers', customer)
-      .subscribe((response: {success: number, data: Customer})  => {
-        this.customerData.push(response.data);
+      .pipe(tap((response: {success: number, data: Customer} ) => {
+        this.customerData.unshift(response.data);
         this.customerSub.next([...this.customerData]);
-      });
+      }));
+      // .subscribe((response: {success: number, data: Customer})  => {
+      //   this.customerData.unshift(response.data);
+      //   this.customerSub.next([...this.customerData]);
+      // });
   }
   updateCustomer(customer){
     return this.http.patch<CustomerResponseData>('http://127.0.0.1:8000/api/customers/' + customer.id, customer)
@@ -102,6 +106,7 @@ export class CustomerService implements OnDestroy{
 
 
   fillFormByUpdatebaleData(customer){
+    console.log(customer);
     this.customerForm.setValue(customer);
   }
 

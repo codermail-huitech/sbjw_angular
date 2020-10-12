@@ -30,6 +30,7 @@ import {CompletedBillDetailsComponent} from "./pages/completed-bill/completed-bi
 import {RateComponent} from './pages/rate/rate.component';
 import {GoldReceiptsComponent} from "./pages/gold-receipts/gold-receipts.component";
 import {LcReceiptsComponent} from "./pages/lc-receipts/lc-receipts.component";
+import {StockComponent} from './pages/stock/stock.component';
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -72,6 +73,7 @@ const routes: Routes = [
   },
   {path: 'gold_receipt',canActivate: [AuthGuardService], component: GoldReceiptsComponent},
   {path: 'lc_receipt',canActivate: [AuthGuardService], component: LcReceiptsComponent},
+  {path: 'stock',canActivate: [AuthGuardService], component: StockComponent },
 ];
 
 @NgModule({

@@ -42,7 +42,7 @@
         </form>
 
         <div style="text-align: right">
-          <button class="btn btn-primary" (click)="onSubmit()">Submit</button>
+          <button class="btn btn-primary" (click)="onSubmit()" [disabled]="goldReceivedForm.invalid">Submit</button>
         </div>
       </mat-card>
     </mat-card>
@@ -52,66 +52,69 @@
 
 
   </div>
-  <div  class="col-7" style="background-color: #e8c50e">
-    <div *ngIf="completedBillList.length ===0" style="text-align: center">
-      <h1 style="font-weight: bold">Nothing to show ...</h1>
-    </div>
-    <div *ngIf="completedBillList.length > 0">
-      <div class="container" fxLayout fxLayout.xs="column" fxLayoutAlign="start" fxLayoutGap="30px" fxLayoutGap.xs="0" >
-        <mat-form-field class="example-full-width">
-          <input matInput placeholder="Search..." [(ngModel)]="searchTerm" name="search" type="text" autofocus>
-        </mat-form-field>
 
-        <mat-form-field class="example-full-width">
-          <input matInput placeholder="Items per page" [(ngModel)]="pageSize" name="PageSize" type="text">
-        </mat-form-field>
+    <mat-card  class="col-7" style="background-color: lightslategray">
+      <div *ngIf="completedBillList.length ===0" style="text-align: center">
+        <h1 style="font-weight: bold">Nothing to show ...</h1>
       </div>
-      <table class="table">
-        <thead style="background-color: aquamarine">
-        <tr>
-          <th>SL No.</th>
-          <th>Customer Name</th>
-          <th>Agent  Name</th>
-          <th>Gold Received</th>
-          <th>Date</th>
+      <div *ngIf="completedBillList.length > 0">
+        <div class="container" fxLayout fxLayout.xs="column" fxLayoutAlign="start" fxLayoutGap="30px" fxLayoutGap.xs="0" >
+          <mat-form-field class="example-full-width">
+            <input matInput placeholder="Search..." [(ngModel)]="searchTerm" name="search" type="text" autofocus>
+          </mat-form-field>
+
+          <mat-form-field class="example-full-width">
+            <input matInput placeholder="Items per page" [(ngModel)]="pageSize" name="PageSize" type="text">
+          </mat-form-field>
+        </div>
+        <table class="table">
+          <thead style="background-color: aquamarine">
+          <tr>
+            <th>SL No.</th>
+            <th>Customer Name</th>
+            <th>Agent  Name</th>
+            <th>Gold Received</th>
+            <th>Date</th>
 
 
-        </tr>
-        </thead>
-        <tbody>
-        <tr  *ngFor="let data of completedBillList | filter : searchTerm | paginate: { itemsPerPage: pageSize, currentPage: p }; let indexOfelement = index" >
-          <td>{{indexOfelement+1}}</td>
-          <td ><b>{{data.customer_name | uppercase}}</b></td>
-          <td ><b>{{data.agent_name | uppercase}}</b></td>
-          <td style="text-align: right"><b>{{data.gold_received.toFixed(3)}}</b></td>
-          <td ><b>{{data.received_date | date :  "dd.MM.y"}}</b></td>
-          <!--        <td>-->
-          <!--          <button  class="btn btn-primary"  style="text-align: center" (click)="fillGoldReceivedForm(data)" [disabled]="data.gold_received > 0" >-->
-          <!--             Make Entry-->
-          <!--          </button>-->
-          <!--        </td>-->
+          </tr>
+          </thead>
+          <tbody>
+          <tr  *ngFor="let data of completedBillList | filter : searchTerm | paginate: { itemsPerPage: pageSize, currentPage: p }; let indexOfelement = index" >
+            <td>{{indexOfelement+1}}</td>
+            <td ><b>{{data.customer_name | uppercase}}</b></td>
+            <td ><b>{{data.agent_name | uppercase}}</b></td>
+            <td style="text-align: right"><b>{{data.gold_received.toFixed(3)}} g</b></td>
+            <td ><b>{{data.received_date | date :  "dd.MM.y"}}</b></td>
+            <!--        <td>-->
+            <!--          <button  class="btn btn-primary"  style="text-align: center" (click)="fillGoldReceivedForm(data)" [disabled]="data.gold_received > 0" >-->
+            <!--             Make Entry-->
+            <!--          </button>-->
+            <!--        </td>-->
 
-        </tr>
-        </tbody>
-      </table>
-      <div fxLayout.xs="column" fxLayout="column" fxFlexFill>
-        <!--    https://www.npmjs.com/package/ngx-pagination-->
-        <!--    npm i ngx-pagination-->
-        <pagination-controls (pageChange)="p = $event"></pagination-controls>
-        <pagination-controls  id="some_id"
-                              (pageChange)="p=($event)"
-                              maxSize="5"
-                              directionLinks="true"
-                              autoHide="true"
-                              responsive="true"
-                              previousLabel="Previous"
-                              nextLabel="Next"
-                              screenReaderPaginationLabel="Pagination"
-                              screenReaderPageLabel="page"
-                              screenReaderCurrentLabel="You're on page">
-        </pagination-controls>
+          </tr>
+          </tbody>
+        </table>
+        <div fxLayout.xs="column" fxLayout="column" fxFlexFill>
+          <!--    https://www.npmjs.com/package/ngx-pagination-->
+          <!--    npm i ngx-pagination-->
+          <pagination-controls (pageChange)="p = $event"></pagination-controls>
+          <pagination-controls  id="some_id"
+                                (pageChange)="p=($event)"
+                                maxSize="5"
+                                directionLinks="true"
+                                autoHide="true"
+                                responsive="true"
+                                previousLabel="Previous"
+                                nextLabel="Next"
+                                screenReaderPaginationLabel="Pagination"
+                                screenReaderPageLabel="page"
+                                screenReaderCurrentLabel="You're on page">
+          </pagination-controls>
+        </div>
       </div>
-    </div>
 
-  </div>
+    </mat-card>
+
+
 </div>

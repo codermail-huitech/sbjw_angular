@@ -62,6 +62,7 @@ import { CompletedBillDetailsComponent } from './pages/completed-bill/completed-
 import { RateComponent } from './pages/rate/rate.component';
 import { GoldReceiptsComponent } from './pages/gold-receipts/gold-receipts.component';
 import { LcReceiptsComponent } from './pages/lc-receipts/lc-receipts.component';
+import { StockComponent } from './pages/stock/stock.component';
 
 
 @NgModule({
@@ -104,7 +105,8 @@ import { LcReceiptsComponent } from './pages/lc-receipts/lc-receipts.component';
     CompletedBillDetailsComponent,
     RateComponent,
     GoldReceiptsComponent,
-    LcReceiptsComponent
+    LcReceiptsComponent,
+    StockComponent
 
   ],
   imports: [

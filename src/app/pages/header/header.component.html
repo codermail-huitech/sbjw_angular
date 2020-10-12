@@ -89,9 +89,10 @@
 
 
         <!--for huge menus-->
-        <button mat-button [matMenuTriggerFor]="animals">Bills</button>
+        <button mat-button [matMenuTriggerFor]="bills">Bills</button>
+        <button mat-button  [routerLink]="['/stock']">Stock</button>
 
-        <mat-menu #animals="matMenu">
+        <mat-menu #bills="matMenu">
           <button mat-menu-item [matMenuTriggerFor]="bills">Bills</button>
           <button mat-menu-item [matMenuTriggerFor]="receipts">Receipts</button>
         </mat-menu>

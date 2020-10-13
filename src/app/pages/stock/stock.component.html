@@ -8,7 +8,7 @@
             <mat-form-field>
               <mat-label>Select Order</mat-label>
               <mat-select  formControlName="order_details_id">
-                <mat-option *ngFor="let stocks of stockData" [value]="stocks.id" (blur)="findStock(stocks.id)">
+                <mat-option *ngFor="let stocks of stockData" [value]="stocks.order_details_id" (blur)="findStock(stocks.order_details_id)">
                   {{stocks.order_name}}
                 </mat-option>
               </mat-select>
@@ -32,7 +32,7 @@
 <!--              <input matInput type="text" formControlName="division"  class="text-right"  (blur)="calculateDivision()" >{{stockForm.value.quantity % stockForm.value.division === 0 ? stockForm.value.division : "improper entry"}}-->
               <input matInput type="text" formControlName="division"  class="text-right"  (blur)="calculateDivision()" >
             </mat-form-field>
-              <label style="margin-left: 20px; margin-top: 10px" [hidden]="calculateDivision()">Invalid Division</label>
+<!--              <label style="margin-left: 20px; margin-top: 10px" [hidden]="calculateDivision()">Invalid Division</label>-->
           </div>
           <div>
             <mat-form-field fxFlex="20">
@@ -50,7 +50,8 @@
           </div>
           <div style="text-align: right">
             <button class="btn btn-primary mr-2" [hidden]="!(stockList.length>0)" (click)="saveStock()">Save</button>
-            <button class="btn btn-primary" [disabled]="!calculateDivision()" (click)="setStock()">Set</button>
+<!--            <button class="btn btn-primary" [disabled]="!calculateDivision()" (click)="setStock()">Set</button>-->
+            <button class="btn btn-primary" (click)="setStock()">Set</button>
           </div>
         </form>
       </div>

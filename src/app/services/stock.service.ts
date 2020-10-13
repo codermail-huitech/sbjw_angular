@@ -5,6 +5,12 @@ import {Stock} from '../models/stock.model';
 import {GlobalVariable} from '../shared/global';
 import {Rate} from '../models/rate.model';
 import {Subject} from 'rxjs';
+import {Product} from '../models/product.model';
+
+export interface StockResponseData {
+  success: number;
+  data: object;
+}
 
 @Injectable({
   providedIn: 'root'
@@ -22,6 +28,7 @@ export class StockService {
     this.stockFrom = new FormGroup({
       id : new FormControl(null),
       order_details_id : new FormControl(null, [Validators.required]),
+      job_master_id : new FormControl(null, [Validators.required]),
       order_name : new FormControl(null, [Validators.required]),
       approx_gold : new FormControl(null, [Validators.required]),
       quantity : new FormControl(null, [Validators.required]),
@@ -41,5 +48,8 @@ export class StockService {
         this.stockData = data;
         this.stockSub.next([...this.stockData]);
       });
+  }
+  saveStock(stockArray){
+    return this.http.post<StockResponseData>('http://127.0.0.1:8000/api/createStock', stockArray);
   }
 }

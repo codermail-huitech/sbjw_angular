@@ -49,15 +49,34 @@
             </mat-form-field>
           </div>
           <div style="text-align: right">
-            <button class="btn btn-primary" (click)="setStock()">Set</button>
+            <button class="btn btn-primary mr-2" [hidden]="!(stockList.length>0)" (click)="saveStock()">Save</button>
+            <button class="btn btn-primary" [disabled]="!calculateDivision()" (click)="setStock()">Set</button>
           </div>
         </form>
       </div>
     </mat-card>
   </div>
-  <div fxLayout="column" fxflex ="60" style="background-color: #a6e0ff">
+  <div fxLayout="column" fxFlex="60" class="mr-1">
     <mat-card>
-      <table>
+      <table class="table" id="my-table">
+        <thead>
+          <tr>
+            <th>SL. NO.</th>
+            <th>Name</th>
+            <th>Gold</th>
+            <th>Quantity</th>
+            <th>Amount</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let stcoks of stockList;let indexOfelement = index;">
+            <td>{{indexOfelement+1}}</td>
+            <td>{{stcoks.order_name}}</td>
+            <td>{{stcoks.set_gold}}gm</td>
+            <td>{{stcoks.set_quantity}}</td>
+            <td>{{stcoks.set_amount}}</td>
+          </tr>
+        </tbody>
 
       </table>
     </mat-card>

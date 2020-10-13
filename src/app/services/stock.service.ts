@@ -51,5 +51,6 @@ export class StockService {
   }
   saveStock(stockArray){
     return this.http.post<StockResponseData>('http://127.0.0.1:8000/api/createStock', stockArray);
+
   }
 }

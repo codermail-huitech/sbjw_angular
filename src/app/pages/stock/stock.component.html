@@ -5,7 +5,7 @@
 <!--        <pre>{{stockData | json}}</pre>-->
         <form [formGroup] = stockForm>
           <div>
-            <mat-form-field>
+            <mat-form-field class="col-12">
               <mat-label>Select Order</mat-label>
               <mat-select  formControlName="order_details_id">
                 <mat-option *ngFor="let stocks of stockData" [value]="stocks.order_details_id" (blur)="findStock(stocks.order_details_id)">
@@ -13,45 +13,48 @@
                 </mat-option>
               </mat-select>
             </mat-form-field>
-            <mat-form-field fxFlex="20">
+          </div>
+
+          <div>
+            <mat-form-field class="col-4">
               <mat-placeholder>Quantity</mat-placeholder>
               <input matInput type="text" formControlName="quantity" [readonly]="true" class="text-right">
             </mat-form-field>
-            <mat-form-field fxFlex="20">
+            <mat-form-field class="col-4">
               <mat-placeholder>Amount</mat-placeholder>
               <input matInput type="text" formControlName="amount" [readonly]="true" class="text-right">
             </mat-form-field>
-            <mat-form-field fxFlex="20">
+            <mat-form-field class="col-4">
               <mat-placeholder>Gold</mat-placeholder>
               <input matInput type="text" formControlName="approx_gold" [readonly]="true" class="text-right">
             </mat-form-field>
           </div>
           <div>
-            <mat-form-field fxFlex="20">
+            <mat-form-field class="col-4">
               <mat-placeholder>Division</mat-placeholder>
 <!--              <input matInput type="text" formControlName="division"  class="text-right"  (blur)="calculateDivision()" >{{stockForm.value.quantity % stockForm.value.division === 0 ? stockForm.value.division : "improper entry"}}-->
               <input matInput type="text" formControlName="division"  class="text-right"  (blur)="calculateDivision()" >
             </mat-form-field>
 <!--              <label style="margin-left: 20px; margin-top: 10px" [hidden]="calculateDivision()">Invalid Division</label>-->
           </div>
-          <div>
-            <mat-form-field fxFlex="20">
-              <mat-placeholder>Quantity</mat-placeholder>
-              <input matInput type="text" formControlName="set_quantity" [readonly]="true" class="text-right">
-            </mat-form-field>
-            <mat-form-field fxFlex="20">
-              <mat-placeholder>Amount</mat-placeholder>
-              <input matInput type="text" formControlName="set_amount" [readonly]="true" class="text-right">
-            </mat-form-field>
-            <mat-form-field fxFlex="20">
-              <mat-placeholder>Gold</mat-placeholder>
-              <input matInput type="text" formControlName="set_gold" [readonly]="true" class="text-right">
-            </mat-form-field>
-          </div>
+<!--          <div>-->
+<!--            <mat-form-field fxFlex="20">-->
+<!--              <mat-placeholder>Quantity</mat-placeholder>-->
+<!--              <input matInput type="text" formControlName="set_quantity" [readonly]="true" class="text-right">-->
+<!--            </mat-form-field>-->
+<!--            <mat-form-field fxFlex="20">-->
+<!--              <mat-placeholder>Amount</mat-placeholder>-->
+<!--              <input matInput type="text" formControlName="set_amount" [readonly]="true" class="text-right">-->
+<!--            </mat-form-field>-->
+<!--            <mat-form-field fxFlex="20">-->
+<!--              <mat-placeholder>Gold</mat-placeholder>-->
+<!--              <input matInput type="text" formControlName="set_gold" [readonly]="true" class="text-right">-->
+<!--            </mat-form-field>-->
+<!--          </div>-->
           <div style="text-align: right">
-            <button class="btn btn-primary mr-2" [hidden]="!(stockList.length>0)" (click)="saveStock()">Save</button>
+            <button class="btn btn-primary mr-2" [hidden]="this.stockForm.value.set_quantity == null" (click)="saveStock()">Save</button>
 <!--            <button class="btn btn-primary" [disabled]="!calculateDivision()" (click)="setStock()">Set</button>-->
-            <button class="btn btn-primary" (click)="setStock()">Set</button>
+<!--            <button class="btn btn-primary" (click)="setStock()">Set</button>-->
           </div>
         </form>
       </div>

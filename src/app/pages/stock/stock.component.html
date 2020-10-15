@@ -4,12 +4,24 @@
       <div class="form-container">
 <!--        <pre>{{stockData | json}}</pre>-->
         <form [formGroup] = stockForm>
+
+          <div>
+            <mat-form-field class="col-12">
+              <mat-label>Select Customer</mat-label>
+              <mat-select  formControlName="customer_id">
+                <mat-option *ngFor="let customer of stockCustomerList" [value]="customer.id" (click)="getStockRecord(customer.id)" >
+                  {{customer.person_name}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+
           <div>
             <mat-form-field class="col-12">
               <mat-label>Select Order</mat-label>
               <mat-select  formControlName="order_details_id">
-                <mat-option *ngFor="let stocks of stockData" [value]="stocks.order_details_id" (blur)="findStock(stocks.order_details_id)">
-                  {{stocks.order_name}}
+                <mat-option *ngFor="let item of filterResult" [value]="item.order_details_id" (blur)="findStock(item.order_details_id)">
+                  {{item.order_name}}
                 </mat-option>
               </mat-select>
             </mat-form-field>
@@ -58,10 +70,11 @@
           </div>
         </form>
       </div>
+
     </mat-card>
   </div>
   <div fxLayout="column" fxFlex="60" class="mr-1">
-    <mat-card>
+    <mat-card [hidden]="stockList.length ===0">
       <table class="table" id="my-table">
         <thead>
           <tr>
@@ -76,9 +89,9 @@
           <tr *ngFor="let stcoks of stockList;let indexOfelement = index;">
             <td>{{indexOfelement+1}}</td>
             <td>{{stcoks.order_name}}</td>
-            <td>{{stcoks.set_gold}}gm</td>
+            <td>{{stcoks.set_gold}} gm</td>
             <td>{{stcoks.set_quantity}}</td>
-            <td>{{stcoks.set_amount}}</td>
+            <td>{{stcoks.set_amount | currency:"&#8377;"}}</td>
           </tr>
         </tbody>
 

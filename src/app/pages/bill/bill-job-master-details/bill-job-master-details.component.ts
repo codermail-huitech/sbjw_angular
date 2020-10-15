@@ -11,6 +11,7 @@ import {FinishedJobs} from "../../../models/finishedJobs";
 // import {Location} from '@angular/common';
 import toWords from 'number-to-words/src/toWords.js';
 import {GoldReceiptService} from "../../../services/gold-receipt.service";
+import {StockService} from '../../../services/stock.service';
 
 @Component({
   selector: 'app-bill-job-master-details',
@@ -31,7 +32,7 @@ export class BillJobMasterDetailsComponent implements OnInit {
   totalCost: number;
   x : FinishedJobs[];
 
-  constructor(private  route: ActivatedRoute, private billService: BillService , private  goldReceiptService : GoldReceiptService) {
+  constructor(private  route: ActivatedRoute, private billService: BillService , private  goldReceiptService : GoldReceiptService, private stockService: StockService) {
   }
 
   printDivStyle = {
@@ -152,6 +153,8 @@ export class BillJobMasterDetailsComponent implements OnInit {
         this.billService.getFinishedJobsCustomers();
         this.billService.getCompletedBillCustomers();
         this.goldReceiptService.getUpdatedList();
+        this.stockService.getUpdatedStockCustomer();
+        this.stockService.getUpdatedStockRecord();
         this.showBill = true;
       });
   }

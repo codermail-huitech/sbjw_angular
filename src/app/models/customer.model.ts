@@ -14,6 +14,9 @@ export class Customer{
   pin: string;
   opening_balance_Gold ?: number;
   opening_balance_LC ?: number;
+  job_number ?: string;
+  order_details_id ?: number;
+  job_master_id ?: number;
   constructor(public id: number, public person_name: string, public email: string, public customer_category_id: number) {
       this.person_type_id = 10;
   }

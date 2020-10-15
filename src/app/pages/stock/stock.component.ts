@@ -3,6 +3,7 @@ import {StockService} from '../../services/stock.service';
 import {FormGroup} from '@angular/forms';
 import {Stock} from '../../models/stock.model';
 import Swal from 'sweetalert2';
+import {Customer} from '../../models/customer.model';
 
 @Component({
   selector: 'app-stock',
@@ -14,22 +15,36 @@ export class StockComponent implements OnInit {
   stockData: Stock[] = [];
   stockList: Stock[] = [];
 
-  dividor : number;
-  remainder : number;
-  totalAraay : number;
+  dividor: number;
+  remainder: number;
+  totalAraay: number;
+  stockCustomerList: Customer[];
+  filterResult: any;
 
-  constructor(private stockService: StockService) { }
+
+  constructor(private stockService: StockService) {
+    this.stockData = this.stockService.getStockRecord();
+    this.stockCustomerList = this.stockService.getStockCustomer();
+  }
 
   ngOnInit(): void {
     this.stockForm = this.stockService.stockFrom;
     this.stockService.getStockUpdateListener().subscribe((response: Stock[]) => {
-      // console.log(response);
       this.stockData = response;
     });
+    this.stockService.getStockCustomerUpdateListener().subscribe((response: Customer[]) => {
+      this.stockCustomerList = response;
+    });
   }
+
+  getStockRecord(item){
+
+    this.filterResult = this.stockData.filter(x => x.person_id ===  item);
+  }
+
   findStock(data){
     const index = this.stockData.findIndex(x => x.order_details_id === data);
-    var x = this.stockData[index];
+    const x = this.stockData[index];
     this.stockForm.patchValue({order_details_id: x.order_details_id , job_master_id: x.job_master_id, order_name: x.order_name , quantity: x.quantity, approx_gold: x.approx_gold, amount: (x.quantity * x.price)});
   }
 
@@ -40,9 +55,9 @@ export class StockComponent implements OnInit {
       }
       else{
         // tslint:disable-next-line:radix
-        this.dividor =parseInt(String(this.stockForm.value.quantity / this.stockForm.value.division));
+        this.dividor = parseInt(String(this.stockForm.value.quantity / this.stockForm.value.division));
         // tslint:disable-next-line:radix
-        this.remainder =parseInt(String(this.stockForm.value.quantity % this.stockForm.value.division));
+        this.remainder = parseInt(String(this.stockForm.value.quantity % this.stockForm.value.division));
         this.stockForm.patchValue({set_quantity: this.dividor, set_gold: ((this.stockForm.value.approx_gold / this.stockForm.value.quantity) * this.dividor).toFixed(3), set_amount: ((this.stockForm.value.amount / this.stockForm.value.quantity) * this.dividor).toFixed(3)});
       }
     }
@@ -111,7 +126,7 @@ export class StockComponent implements OnInit {
         }
     });
 
-    // this.stockService.saveStock(this.stockList).subscribe();
+
   }
 
 }

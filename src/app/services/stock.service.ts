@@ -6,6 +6,7 @@ import {GlobalVariable} from '../shared/global';
 import {Rate} from '../models/rate.model';
 import {Subject} from 'rxjs';
 import {Product} from '../models/product.model';
+import {Customer} from '../models/customer.model';
 
 export interface StockResponseData {
   success: number;
@@ -18,15 +19,22 @@ export interface StockResponseData {
 export class StockService {
   stockFrom: FormGroup;
   stockData: Stock[] = [];
+  stockCustomers: Customer[] = [];
+  stockCustomerSub = new Subject<Customer[]>();
   private stockSub = new Subject<Stock[]>();
 
   getStockUpdateListener(){
     return this.stockSub.asObservable();
-  };
+  }
+
+  getStockCustomerUpdateListener(){
+    return this.stockCustomerSub.asObservable();
+  }
 
   constructor(private http: HttpClient) {
     this.stockFrom = new FormGroup({
       id : new FormControl(null),
+      customer_id : new FormControl(null,[Validators.required]),
       order_details_id : new FormControl(null, [Validators.required]),
       job_master_id : new FormControl(null, [Validators.required]),
       order_name : new FormControl(null, [Validators.required]),
@@ -42,15 +50,46 @@ export class StockService {
     });
     this.http.get(GlobalVariable.BASE_API_URL + '/getStockRecord')
       .subscribe((response: {success: number, data: Stock[]}) => {
-        // console.log(response);
         const {data} = response;
-        // console.log(data);
+        this.stockData = data;
+        this.stockSub.next([...this.stockData]);
+      });
+
+    this.http.get(GlobalVariable.BASE_API_URL + '/getStockCustomer')
+      .subscribe((response: { success: number , data: Customer[]}) => {
+        this.stockCustomers = response.data;
+        console.log(this.stockCustomers);
+        this.stockCustomerSub.next([...this.stockCustomers]);
+    });
+  }
+  saveStock(stockArray){
+    return this.http.post<StockResponseData>(GlobalVariable.BASE_API_URL + '/createStock', stockArray);
+  }
+
+  getUpdatedStockCustomer(){
+    this.http.get(GlobalVariable.BASE_API_URL + '/getStockCustomer')
+      .subscribe((response: { success: number , data: Customer[]}) => {
+        this.stockCustomers = response.data;
+        console.log(this.stockCustomers);
+        this.stockCustomerSub.next([...this.stockCustomers]);
+      });
+  }
+
+  getUpdatedStockRecord(){
+    this.http.get(GlobalVariable.BASE_API_URL + '/getStockRecord')
+      .subscribe((response: {success: number, data: Stock[]}) => {
+        const {data} = response;
         this.stockData = data;
         this.stockSub.next([...this.stockData]);
       });
   }
-  saveStock(stockArray){
-    return this.http.post<StockResponseData>('http://127.0.0.1:8000/api/createStock', stockArray);
 
+  getStockRecord(){
+    return [...this.stockData];
   }
+  getStockCustomer(){
+    return [...this.stockCustomers];
+  }
+
 }
+

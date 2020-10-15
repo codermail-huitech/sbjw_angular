@@ -89,25 +89,25 @@
 
 
         <!--for huge menus-->
-        <button mat-button [matMenuTriggerFor]="bills">Bills</button>
+        <button mat-button [matMenuTriggerFor]="billInfo">Bills</button>
         <button mat-button  [routerLink]="['/stock']">Stock</button>
 
-        <mat-menu #bills="matMenu">
+        <mat-menu #billInfo="matMenu">
           <button mat-menu-item [matMenuTriggerFor]="bills">Bills</button>
           <button mat-menu-item [matMenuTriggerFor]="receipts">Receipts</button>
         </mat-menu>
 
         <mat-menu #bills="matMenu">
-          <button mat-menu-item [routerLink]="['/bill']">Create Bill</button>
-          <button mat-menu-item [routerLink]="['/completed_bills']">Completed Bills</button>
+          <button mat-menu-item [routerLink]="['/bill']" >Create Bill</button>
+          <button mat-menu-item [routerLink]="['/completed_bills']" >Completed Bills</button>
 <!--          <button mat-menu-item [matMenuTriggerFor]="reptiles">Reptiles</button>-->
 <!--          <button mat-menu-item>Birds</button>-->
 <!--          <button mat-menu-item>Mammals</button>-->
         </mat-menu>
 
         <mat-menu #receipts="matMenu">
-          <button mat-menu-item [routerLink]="'/gold_receipt'">Gold Receipts</button>
-          <button mat-menu-item [routerLink]="'/lc_receipt'">L.C. Receipts</button>
+          <button mat-menu-item [routerLink]="['/gold_receipt']">Gold Receipts</button>
+          <button mat-menu-item [routerLink]="['/lc_receipt']">L.C. Receipts</button>
         </mat-menu>
 
         <mat-menu #fish="matMenu">

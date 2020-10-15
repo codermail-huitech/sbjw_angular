@@ -12,6 +12,7 @@ export class Stock{
   set_amount: number;
   price: number;
   approx_gold: number;
+  person_id?: number;
   // tag?: number;
 
   constructor() {

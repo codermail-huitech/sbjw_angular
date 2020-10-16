@@ -7,6 +7,7 @@ import {MatSnackBar} from "@angular/material/snack-bar";
 import {BillService} from "../../../../services/bill.service";
 import {JobTaskService} from "../../../../services/job-task.service";
 import Swal from "sweetalert2";
+import {StockService} from '../../../../services/stock.service';
 
 @Component({
   selector: 'app-finish-job',
@@ -16,7 +17,7 @@ import Swal from "sweetalert2";
 export class FinishJobComponent implements OnInit {
   jobMasterForm : FormGroup;
   id : number;
-  constructor(private route: ActivatedRoute ,private jobService :JobService, private _snackBar: MatSnackBar, private  billService : BillService,private  jobTaskService : JobTaskService) { }
+  constructor(private route: ActivatedRoute ,private jobService :JobService, private _snackBar: MatSnackBar, private  billService : BillService,private  jobTaskService : JobTaskService,private  stockService: StockService) { }
 
   ngOnInit(): void {
     this.jobMasterForm = this.jobService.jobMasterForm;
@@ -42,6 +43,8 @@ export class FinishJobComponent implements OnInit {
           this.jobService.getSavedJobsUpdateListener().subscribe();
           this.jobService.getFinishedJobsUpdateListener().subscribe();
           this.billService.getFinishedJobsCustomers();
+          this.stockService.getUpdatedStockRecord();
+          this.stockService.getUpdatedStockCustomer();
           // this.billService.getUpdatedList();
           // this._snackBar.openFromComponent(SncakBarComponent, {
           //   duration: 4000, data: {message: 'Job Finished'}

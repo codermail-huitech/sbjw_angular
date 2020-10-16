@@ -62,7 +62,7 @@ export class StockService {
         this.stockCustomerSub.next([...this.stockCustomers]);
     });
   }
-  saveStock(stockArray){
+  saveStock(stockArray) {
     return this.http.post<StockResponseData>(GlobalVariable.BASE_API_URL + '/createStock', stockArray);
   }
 

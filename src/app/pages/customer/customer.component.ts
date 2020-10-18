@@ -56,6 +56,8 @@ export class CustomerComponent implements OnInit {
           'Customer Added',
           'success'
         );
+        this.customers.unshift(response.data);
+
       }
     });
   }

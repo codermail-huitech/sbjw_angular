@@ -73,7 +73,7 @@ const routes: Routes = [
   },
   {path: 'gold_receipt',canActivate: [AuthGuardService], component: GoldReceiptsComponent},
   {path: 'lc_receipt',canActivate: [AuthGuardService], component: LcReceiptsComponent},
-  {path: 'stock',canActivate: [AuthGuardService], component: StockComponent },
+  {path: 'stock/:id',canActivate: [AuthGuardService], component: StockComponent },
 ];
 
 @NgModule({

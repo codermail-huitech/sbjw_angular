@@ -4,6 +4,7 @@ import {FormGroup} from '@angular/forms';
 import {Stock} from '../../models/stock.model';
 import Swal from 'sweetalert2';
 import {Customer} from '../../models/customer.model';
+import {ActivatedRoute} from '@angular/router';
 
 @Component({
   selector: 'app-stock',
@@ -14,6 +15,7 @@ export class StockComponent implements OnInit {
   stockForm: FormGroup;
   stockData: Stock[] = [];
   stockList: Stock[] = [];
+  tempStock: {};
 
   dividor: number;
   remainder: number;
@@ -22,15 +24,35 @@ export class StockComponent implements OnInit {
   filterResult: any;
 
 
-  constructor(private stockService: StockService) {
+
+  constructor(private stockService: StockService,private router: ActivatedRoute) {
     this.stockData = this.stockService.getStockRecord();
     this.stockCustomerList = this.stockService.getStockCustomer();
   }
 
   ngOnInit(): void {
+
     this.stockForm = this.stockService.stockFrom;
+    this.router.params.subscribe(params =>{
+      // this.jobMasterId=params.id;
+      console.log(params.id);
+      this.stockService.getStockDataByJobmasterId(params.id);
+    });
     this.stockService.getStockUpdateListener().subscribe((response: Stock[]) => {
       this.stockData = response;
+      // this.stockForm.patchValue(
+      //   {
+      //     // amount: 4125,
+      //     approx_gold: 13.56,
+      //     ​​customer_id: this.stockData.customer_id,
+      //     // ​​division: '9',
+      //     ​​id: null,
+      //   ​​  job_master_id: this.stockData.job_master_id,
+      //   ​​  order_details_id: this.stockData.order_details_id,​​
+      //     price: this.stockData.price,
+      //     ​​quantity: this.stockData.quantity
+      //   }
+      // );
     });
     this.stockService.getStockCustomerUpdateListener().subscribe((response: Customer[]) => {
       this.stockCustomerList = response;
@@ -38,7 +60,6 @@ export class StockComponent implements OnInit {
   }
 
   getStockRecord(item){
-
     this.filterResult = this.stockData.filter(x => x.person_id ===  item);
     console.log(this.filterResult);
   }
@@ -84,6 +105,7 @@ export class StockComponent implements OnInit {
             set_gold: ((this.stockForm.value.approx_gold / this.stockForm.value.quantity) * (this.stockForm.value.quantity - (this.dividor * this.stockForm.value.division))).toFixed(3),
             set_amount: ((this.stockForm.value.amount / this.stockForm.value.quantity) * (this.stockForm.value.quantity - (this.dividor * this.stockForm.value.division))).toFixed(3)
           };
+          this.tempStock = temp;
           // @ts-ignore
           this.stockList.push(temp);
         }
@@ -99,9 +121,14 @@ export class StockComponent implements OnInit {
   }
 
   saveStock(){
-    console.log("save");
+    // console.log("save");
     this.stockList = Array(parseInt(this.stockForm.value.division)).fill(this.stockForm.value);
-    console.log(this.stockList);
+    if (this.tempStock){
+      if (this.tempStock instanceof Stock) {
+        this.stockList.push(this.tempStock);
+      }
+    }
+    // console.log(this.stockList);
     this.stockService.saveStock(this.stockList).subscribe((response: {success: number, data: Stock})  => {
         if (response.data) {
           Swal.fire(

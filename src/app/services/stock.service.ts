@@ -63,6 +63,8 @@ export class StockService {
     });
   }
   saveStock(stockArray) {
+    // console.log(stockArray);
+    // return ;
     return this.http.post<StockResponseData>(GlobalVariable.BASE_API_URL + '/createStock', stockArray);
   }
 
@@ -89,6 +91,14 @@ export class StockService {
   }
   getStockCustomer(){
     return [...this.stockCustomers];
+  }
+
+  getStockDataByJobmasterId(id){
+    this.http.get(GlobalVariable.BASE_API_URL + '/fetchingStockByJobMasterId/' + id)
+      .subscribe((response: { success: number, data: Stock[]}) => {
+       this.stockData = response.data;
+       this.stockSub.next([...this.stockData]);
+      });
   }
 
 }

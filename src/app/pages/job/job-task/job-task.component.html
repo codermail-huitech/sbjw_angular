@@ -92,6 +92,7 @@
             <th>Quantity</th>
             <th>Size</th>
             <th>Show Details</th>
+            <th>Send to stock</th>
           </tr>
           </thead>
           <tbody>
@@ -105,6 +106,12 @@
               <button mat-icon-button color="primary" aria-label="Open Master"  [routerLink]="['/job_detail',data.id]"   (click)="placeDetails(data)">
                 <mat-icon>forward</mat-icon>
               </button>
+            </td>
+            <td>
+              <button mat-icon-button color="primary" aria-label="Open Master"  [routerLink]="['/stock',data.id]" >
+                <mat-icon>forward</mat-icon>
+              </button>
+
             </td>
           </tr>
           </tbody>

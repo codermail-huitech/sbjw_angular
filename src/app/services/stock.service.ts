@@ -44,6 +44,7 @@ export class StockService {
       order_details_id : new FormControl(null, [Validators.required]),
       job_master_id : new FormControl(null, [Validators.required]),
       order_name : new FormControl(null, [Validators.required]),
+      job_number : new FormControl(null, [Validators.required]),
       approx_gold : new FormControl(null, [Validators.required]),
       quantity : new FormControl(null, [Validators.required]),
       price : new FormControl(null, [Validators.required]),
@@ -71,15 +72,6 @@ export class StockService {
     // return ;
     return this.http.post<StockResponseData>(GlobalVariable.BASE_API_URL + '/createStock', stockArray);
   }
-
-  // getUpdatedStockCustomer(){
-  //   this.http.get(GlobalVariable.BASE_API_URL + '/getStockCustomer')
-  //     .subscribe((response: { success: number , data: Customer[]}) => {
-  //       this.stockCustomers = response.data;
-  //       console.log(this.stockCustomers);
-  //       this.stockCustomerSub.next([...this.stockCustomers]);
-  //     });
-  // }
 
   getUpdatedStockRecord(){
     this.http.get(GlobalVariable.BASE_API_URL + '/getStockRecord')

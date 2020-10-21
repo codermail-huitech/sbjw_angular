@@ -17,6 +17,7 @@ export class StockComponent implements OnInit {
   stockForm: FormGroup;
   stockData: Stock[];
   stockList: Stock[] = [];
+  // tslint:disable-next-line:max-line-length
   // tempStock: { approx_gold: any; amount: any; quantity: any; set_quantity: number; set_gold: string; order_details_id: any; set_amount: string; price: any; id: null; job_master_id: any; order_name: any };
   tempStock: Stock;
   jobMasterData: Stock[];
@@ -53,6 +54,7 @@ export class StockComponent implements OnInit {
           this.jobMasterData = response;
           this.stockForm.patchValue({
             person_name: this.jobMasterData[0].person_name,
+            job_number: this.jobMasterData[0].job_number,
             order_details_id: this.jobMasterData[0].order_details_id,
             job_master_id: this.jobMasterData[0].job_master_id,
             order_name: this.jobMasterData[0].order_name,
@@ -75,6 +77,7 @@ export class StockComponent implements OnInit {
           set_gold: (this.stockForm.value.approx_gold / this.stockForm.value.division).toFixed(3),
           set_amount: (this.stockForm.value.amount / this.stockForm.value.division).toFixed(3)
         });
+        // tslint:disable-next-line:radix
         this.stockList = Array(parseInt(this.stockForm.value.division)).fill(this.stockForm.value);
       } else {
         // tslint:disable-next-line:radix
@@ -83,9 +86,10 @@ export class StockComponent implements OnInit {
         this.remainder = parseInt(String(this.stockForm.value.quantity % this.stockForm.value.division));
         this.stockForm.patchValue({
           set_quantity: this.divider,
-          set_gold: ((this.stockForm.value.approx_gold / this.stockForm.value.quantity) * this.divider).toFixed(3),
-          set_amount: ((this.stockForm.value.amount / this.stockForm.value.quantity) * this.divider).toFixed(3)
+          set_gold: parseFloat(String((this.stockForm.value.approx_gold / this.stockForm.value.quantity) * this.divider)).toFixed(3),
+          set_amount: parseFloat(String((this.stockForm.value.amount / this.stockForm.value.quantity) * this.divider)).toFixed(3)
         });
+        // tslint:disable-next-line:radix
         this.stockList = Array(parseInt(this.stockForm.value.division)).fill(this.stockForm.value);
         if (this.remainder > 0) {
           // tslint:disable-next-line:prefer-const
@@ -93,14 +97,15 @@ export class StockComponent implements OnInit {
             id: null,
             order_details_id: this.stockForm.value.order_details_id,
             order_name: this.stockForm.value.order_name,
+            job_number: this.stockForm.value.job_number,
             job_master_id: this.stockForm.value.job_master_id,
             approx_gold: this.stockForm.value.approx_gold,
             quantity: this.stockForm.value.quantity,
             price: this.stockForm.value.price,
             amount: this.stockForm.value.amount,
             set_quantity: this.stockForm.value.quantity - (this.divider * this.stockForm.value.division),
-            set_gold: ((this.stockForm.value.approx_gold / this.stockForm.value.quantity) * (this.stockForm.value.quantity - (this.divider * this.stockForm.value.division))).toFixed(3),
-            set_amount: ((this.stockForm.value.amount / this.stockForm.value.quantity) * (this.stockForm.value.quantity - (this.divider * this.stockForm.value.division))).toFixed(3)
+            set_gold: parseFloat(String((this.stockForm.value.approx_gold / this.stockForm.value.quantity) * (this.stockForm.value.quantity - (this.divider * this.stockForm.value.division)))).toFixed(3),
+            set_amount: parseFloat(String((this.stockForm.value.amount / this.stockForm.value.quantity) * (this.stockForm.value.quantity - (this.divider * this.stockForm.value.division)))).toFixed(3)
           };
           this.tempStock = temp;
           // @ts-ignore
@@ -119,6 +124,7 @@ export class StockComponent implements OnInit {
 
   saveStock(){
     // console.log("save");
+    // tslint:disable-next-line:radix
     this.stockList = Array(parseInt(this.stockForm.value.division)).fill(this.stockForm.value);
     if (this.tempStock){
       this.stockList.push(this.tempStock);

@@ -153,7 +153,7 @@ export class BillJobMasterDetailsComponent implements OnInit {
         this.billService.getFinishedJobsCustomers();
         this.billService.getCompletedBillCustomers();
         this.goldReceiptService.getUpdatedList();
-        this.stockService.getUpdatedStockCustomer();
+        // this.stockService.getUpdatedStockCustomer();
         this.stockService.getUpdatedStockRecord();
         this.showBill = true;
       });

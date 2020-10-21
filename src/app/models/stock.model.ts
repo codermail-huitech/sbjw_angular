@@ -4,7 +4,6 @@ export class Stock{
   order_details_id: number;
   job_master_id: number;
   order_name?: string;
-  // gold: number;
   set_gold: number;
   quantity: number;
   set_quantity: number;
@@ -13,8 +12,13 @@ export class Stock{
   price: number;
   approx_gold: number;
   person_id?: number;
-  // tag?: number;
   person_name?: string;
+  model_number?: string;
+  job_number?: string;
+
+  //for showing table
+  tag?: string;
+  gold?: string;
 
   constructor() {
   }

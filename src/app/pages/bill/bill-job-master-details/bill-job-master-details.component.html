@@ -9,21 +9,26 @@
     <table class="table">
       <thead>
       <tr>
-        <th>SL No.</th>
-        <th>Job Number</th>
-        <th>Karigarh Name</th>
-        <th>Status</th>
-        <th>Create Bill</th>
+        <th style="text-align: center">SL No.</th>
+        <th style="text-align: center">Job Number</th>
+        <th style="text-align: center">Karigarh Name</th>
+        <th style="text-align: center">Status</th>
+        <th style="text-align: center">Create Bill</th>
       </tr>
       </thead>
       <tbody>
       <tr  *ngFor="let data of finishedJobData; let indexOfelement = index" >
-        <td>{{indexOfelement+1}}</td>
-        <td >{{data.job_number}}</td>
-        <td>{{data.karigarh_name | uppercase}}</td>
-        <td>{{data.status}}</td>
-        <td>
-          <input type="checkbox" name="nameOfChoice" (click)="selectionForBill(data)" [disabled]="data.status == 'WORK IN PROGRESS' || 'STOCK CREATED'" >
+        <td style="text-align: center">{{indexOfelement+1}}</td>
+        <td  style="text-align: center">{{data.job_number}}</td>
+        <td style="text-align: center">{{data.karigarh_name | uppercase}}</td>
+        <td style="text-align: center">{{data.status}}</td>
+        <td [hidden]="data.status_id != 100" style="text-align: center">
+<!--        <td>-->
+          <input type="checkbox" name="nameOfChoice" (click)="selectionForBill(data)" [disabled]="data.status_id != 100" >
+<!--          <input type="checkbox" name="nameOfChoice" (click)="selectionForBill(data)" >-->
+        </td>
+        <td [hidden]="data.status_id == 100" style="text-align: center">
+          <button mat-icon-button color="primary" [disabled]="true"><mat-icon>close</mat-icon></button>
         </td>
       </tr>
       </tbody>

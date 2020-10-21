@@ -7,32 +7,32 @@
 
           <mat-form-field class="col-12">
             <mat-label>Customer Name</mat-label>
-            <input matInput formControlName="person_name">
+            <input matInput formControlName="person_name" [readonly]="true">
           </mat-form-field>
 
           <mat-form-field class="col-12">
             <mat-label>Order Name</mat-label>
-            <input matInput formControlName="order_name">
+            <input matInput formControlName="order_name" [readonly]="true">
           </mat-form-field>
 
           <mat-form-field class="col-4">
             <mat-label>Quantity</mat-label>
-            <input matInput formControlName="quantity">
+            <input type="number" matInput formControlName="quantity" [readonly]="true">
           </mat-form-field>
 
           <mat-form-field class="col-4">
             <mat-label>Approx_gold</mat-label>
-            <input matInput formControlName="approx_gold">
+            <input type="number" matInput formControlName="approx_gold" [readonly]="true">
           </mat-form-field>
 
           <mat-form-field class="col-4">
             <mat-label>Amount</mat-label>
-            <input matInput formControlName="amount">
+            <input type="number" matInput formControlName="amount" [readonly]="true">
           </mat-form-field>
 
           <mat-form-field class="col-12">
             <mat-label>Division</mat-label>
-            <input matInput formControlName="division" (blur)="calculateDivision()">
+            <input type="number" matInput formControlName="division" (blur)="calculateDivision()">
           </mat-form-field>
 
           <div style="text-align: right">
@@ -84,17 +84,17 @@
       <table class="table table-hover">
         <thead style="background-color: lightslategray">
         <th>SL NO.</th>
-        <!--          <th>job_master_id</th>-->
-        <th>tag</th>
-        <th>gold</th>
-        <th>amount</th>
-        <th>quantity</th>
+        <th>Model Name</th>
+        <th>Tag</th>
+        <th>Gold</th>
+        <th>Amount</th>
+        <th>Quantity</th>
         </thead>
 
         <tbody>
         <tr *ngFor="let item of stockData ; let indexofElement = index">
           <td>{{indexofElement+1}}</td>
-          <!--          <td>{{item.job_master_id}}</td>-->
+          <td>{{item.model_number}}</td>
           <td>{{item.tag}}</td>
           <td>{{item.gold}}</td>
           <td>{{item.amount}}</td>

@@ -19,22 +19,22 @@ export interface StockResponseData {
 export class StockService {
   stockFrom: FormGroup;
   stockData: Stock[] = [];
-  stockCustomers: Customer[] = [];
-  stockCustomerSub = new Subject<Customer[]>();
+  // stockCustomers: Customer[] = [];
+  // stockCustomerSub = new Subject<Customer[]>();
   private stockSub = new Subject<Stock[]>();
 
   getStockUpdateListener(){
     return this.stockSub.asObservable();
   }
 
-  getStockCustomerUpdateListener(){
-    return this.stockCustomerSub.asObservable();
-  }
+  // getStockCustomerUpdateListener(){
+  //   return this.stockCustomerSub.asObservable();
+  // }
 
   constructor(private http: HttpClient) {
     this.stockFrom = new FormGroup({
       id : new FormControl(null),
-      customer_id : new FormControl(null,[Validators.required]),
+      person_name : new FormControl(null,[Validators.required]),
       order_details_id : new FormControl(null, [Validators.required]),
       job_master_id : new FormControl(null, [Validators.required]),
       order_name : new FormControl(null, [Validators.required]),
@@ -55,12 +55,12 @@ export class StockService {
         this.stockSub.next([...this.stockData]);
       });
 
-    this.http.get(GlobalVariable.BASE_API_URL + '/getStockCustomer')
-      .subscribe((response: { success: number , data: Customer[]}) => {
-        this.stockCustomers = response.data;
-        console.log(this.stockCustomers);
-        this.stockCustomerSub.next([...this.stockCustomers]);
-    });
+    // this.http.get(GlobalVariable.BASE_API_URL + '/getStockCustomer')
+    //   .subscribe((response: { success: number , data: Customer[]}) => {
+    //     this.stockCustomers = response.data;
+    //     console.log(this.stockCustomers);
+    //     this.stockCustomerSub.next([...this.stockCustomers]);
+    // });
   }
   saveStock(stockArray) {
     // console.log(stockArray);
@@ -68,14 +68,14 @@ export class StockService {
     return this.http.post<StockResponseData>(GlobalVariable.BASE_API_URL + '/createStock', stockArray);
   }
 
-  getUpdatedStockCustomer(){
-    this.http.get(GlobalVariable.BASE_API_URL + '/getStockCustomer')
-      .subscribe((response: { success: number , data: Customer[]}) => {
-        this.stockCustomers = response.data;
-        console.log(this.stockCustomers);
-        this.stockCustomerSub.next([...this.stockCustomers]);
-      });
-  }
+  // getUpdatedStockCustomer(){
+  //   this.http.get(GlobalVariable.BASE_API_URL + '/getStockCustomer')
+  //     .subscribe((response: { success: number , data: Customer[]}) => {
+  //       this.stockCustomers = response.data;
+  //       console.log(this.stockCustomers);
+  //       this.stockCustomerSub.next([...this.stockCustomers]);
+  //     });
+  // }
 
   getUpdatedStockRecord(){
     this.http.get(GlobalVariable.BASE_API_URL + '/getStockRecord')
@@ -89,9 +89,10 @@ export class StockService {
   getStockRecord(){
     return [...this.stockData];
   }
-  getStockCustomer(){
-    return [...this.stockCustomers];
-  }
+
+  // getStockCustomer(){
+  //   return [...this.stockCustomers];
+  // }
 
   getStockDataByJobmasterId(id){
     this.http.get(GlobalVariable.BASE_API_URL + '/fetchingStockByJobMasterId/' + id)

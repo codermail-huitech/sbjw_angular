@@ -189,7 +189,8 @@ export class OrderComponent implements OnInit {
 
 
   addOrder(){
-      if(this.orderMasterForm.value.id){
+    this.showProduct = true;
+      if (this.orderMasterForm.value.id){
         this.orderDetails = [];
         this.orderMasterForm.value.id = null;
       }

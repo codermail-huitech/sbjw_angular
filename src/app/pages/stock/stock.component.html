@@ -5,25 +5,34 @@
 <!--        <pre>{{stockData | json}}</pre>-->
         <form [formGroup] = stockForm>
 
-          <div>
-            <mat-form-field class="col-12">
-              <mat-label>Select Customer</mat-label>
-              <mat-select  formControlName="customer_id">
-                <mat-option *ngFor="let customer of stockCustomerList" [value]="customer.id" (click)="getStockRecord(customer.id)" >
-                  {{customer.person_name | uppercase}}
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
-          </div>
+<!--          <div>-->
+<!--            <mat-form-field class="col-12">-->
+<!--              <mat-label>Select Customer</mat-label>-->
+<!--              <mat-select  formControlName="customer_id">-->
+<!--                <mat-option *ngFor="let customer of stockCustomerList" [value]="customer.id" (click)="getStockRecord(customer.id)" >-->
+<!--                  {{customer.person_name | uppercase}}-->
+<!--                </mat-option>-->
+<!--              </mat-select>-->
+<!--            </mat-form-field>-->
+<!--          </div>-->
+
+          <mat-form-field class="col-12">
+            <mat-placeholder>Person Name</mat-placeholder>
+            <input matInput type="text" formControlName="person_name" [readonly]="true">
+          </mat-form-field>
 
           <div>
+<!--            <mat-form-field class="col-12">-->
+<!--              <mat-label>Select Order</mat-label>-->
+<!--              <mat-select  formControlName="order_details_id">-->
+<!--                <mat-option *ngFor="let item of filterResult" [value]="item.order_details_id" (blur)="findStock(item.order_details_id)">-->
+<!--                  {{item.order_name}}-->
+<!--                </mat-option>-->
+<!--              </mat-select>-->
+<!--            </mat-form-field>-->
             <mat-form-field class="col-12">
-              <mat-label>Select Order</mat-label>
-              <mat-select  formControlName="order_details_id">
-                <mat-option *ngFor="let item of filterResult" [value]="item.order_details_id" (blur)="findStock(item.order_details_id)">
-                  {{item.order_name}}
-                </mat-option>
-              </mat-select>
+            <mat-placeholder>Order Name</mat-placeholder>
+            <input matInput type="text" formControlName="order_name" [readonly]="true">
             </mat-form-field>
           </div>
 

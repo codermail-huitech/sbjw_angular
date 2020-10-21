@@ -44,7 +44,7 @@ export class FinishJobComponent implements OnInit {
           this.jobService.getFinishedJobsUpdateListener().subscribe();
           this.billService.getFinishedJobsCustomers();
           this.stockService.getUpdatedStockRecord();
-          this.stockService.getUpdatedStockCustomer();
+          // this.stockService.getUpdatedStockCustomer();
           // this.billService.getUpdatedList();
           // this._snackBar.openFromComponent(SncakBarComponent, {
           //   duration: 4000, data: {message: 'Job Finished'}

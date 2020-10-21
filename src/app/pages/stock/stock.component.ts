@@ -13,33 +13,48 @@ import {ActivatedRoute} from '@angular/router';
 })
 export class StockComponent implements OnInit {
   stockForm: FormGroup;
-  stockData: Stock[] = [];
+  stockData: Stock;
   stockList: Stock[] = [];
   tempStock: {};
 
   dividor: number;
   remainder: number;
   totalAraay: number;
-  stockCustomerList: Customer[];
+  // stockCustomerList: Customer[];
   filterResult: any;
 
 
 
   constructor(private stockService: StockService,private router: ActivatedRoute) {
-    this.stockData = this.stockService.getStockRecord();
-    this.stockCustomerList = this.stockService.getStockCustomer();
+    // this.stockData = this.stockService.getStockRecord();
+    // this.stockCustomerList = this.stockService.getStockCustomer();
   }
 
   ngOnInit(): void {
 
     this.stockForm = this.stockService.stockFrom;
-    this.router.params.subscribe(params =>{
+    this.router.params.subscribe(params => {
       // this.jobMasterId=params.id;
       console.log(params.id);
       this.stockService.getStockDataByJobmasterId(params.id);
     });
     this.stockService.getStockUpdateListener().subscribe((response: Stock[]) => {
-      this.stockData = response;
+      this.stockData = response[0];
+      console.log("component response");
+      console.log(this.stockData);
+
+      this.stockForm.patchValue({
+        order_details_id: this.stockData.order_details_id ,
+        job_master_id: this.stockData.job_master_id ,
+        order_name: this.stockData.order_name ,
+        person_name : this.stockData.person_name,
+        quantity: this.stockData.quantity,
+        approx_gold: this.stockData.approx_gold,
+        amount: (this.stockData.quantity * this.stockData.price)
+      });
+      console.log("stockForm Value");
+      console.log(this.stockForm.value);
+
       // this.stockForm.patchValue(
       //   {
       //     // amount: 4125,
@@ -54,21 +69,21 @@ export class StockComponent implements OnInit {
       //   }
       // );
     });
-    this.stockService.getStockCustomerUpdateListener().subscribe((response: Customer[]) => {
-      this.stockCustomerList = response;
-    });
+    // this.stockService.getStockCustomerUpdateListener().subscribe((response: Customer[]) => {
+    //   this.stockCustomerList = response;
+    // });
   }
 
-  getStockRecord(item){
-    this.filterResult = this.stockData.filter(x => x.person_id ===  item);
-    console.log(this.filterResult);
-  }
+  // getStockRecord(item){
+  //   this.filterResult = this.stockData.filter(x => x.person_id ===  item);
+  //   // console.log(this.filterResult);
+  // }
 
-  findStock(data){
-    const index = this.stockData.findIndex(x => x.order_details_id === data);
-    const x = this.stockData[index];
-    this.stockForm.patchValue({order_details_id: x.order_details_id , job_master_id: x.job_master_id, order_name: x.order_name , quantity: x.quantity, approx_gold: x.approx_gold, amount: (x.quantity * x.price)});
-  }
+  // findStock(data){
+  //   const index = this.stockData.findIndex(x => x.order_details_id === data);
+  //   const x = this.stockData[index];
+  //   this.stockForm.patchValue({order_details_id: x.order_details_id , job_master_id: x.job_master_id, order_name: x.order_name , quantity: x.quantity, approx_gold: x.approx_gold, amount: (x.quantity * x.price)});
+  // }
 
   calculateDivision() {
     if (this.stockForm.value.quantity >= this.stockForm.value.division) {
@@ -124,9 +139,7 @@ export class StockComponent implements OnInit {
     // console.log("save");
     this.stockList = Array(parseInt(this.stockForm.value.division)).fill(this.stockForm.value);
     if (this.tempStock){
-      if (this.tempStock instanceof Stock) {
-        this.stockList.push(this.tempStock);
-      }
+      this.stockList.push(this.tempStock);
     }
     // console.log(this.stockList);
     this.stockService.saveStock(this.stockList).subscribe((response: {success: number, data: Stock})  => {
@@ -137,19 +150,12 @@ export class StockComponent implements OnInit {
             'success'
           );
           const index = this.filterResult.findIndex(x => x.id === this.stockForm.value.job_master_id);
-          this.filterResult.splice(index,1);
-
-
-
-          this.stockService.getUpdatedStockCustomer();
+          // this.filterResult.splice(index,1);
+          // this.stockService.getUpdatedStockCustomer();
           this.stockService.getUpdatedStockRecord();
           this.stockForm.reset();
         }
     });
-
-
-
-
 
   }
 

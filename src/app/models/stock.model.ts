@@ -14,6 +14,7 @@ export class Stock{
   approx_gold: number;
   person_id?: number;
   // tag?: number;
+  person_name?: string;
 
   constructor() {
   }

@@ -108,7 +108,7 @@
               </button>
             </td>
             <td>
-              <button mat-icon-button color="primary" aria-label="Open Master"  [routerLink]="['/stock',data.id]" >
+              <button mat-icon-button color="primary" aria-label="Open Master"  [routerLink]="['/stock',data.id]" [disabled]="data.status_id===102" >
                 <mat-icon>forward</mat-icon>
               </button>
 

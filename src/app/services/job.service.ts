@@ -106,6 +106,15 @@ export class JobService {
     return [...this.finishedJobsList];
   }
 
+  getUpdatedFinishedJob(){
+    this.http.get(GlobalVariable.BASE_API_URL + '/finishedJobs')
+      .subscribe((response: {success: number, data: JobMaster[]}) => {
+        const {data} = response;
+        this.finishedJobsList = data;
+        this.finishedJobsSub.next([...this.finishedJobsList]);
+      });
+  }
+
 
   saveJob(){
     // tslint:disable-next-line:max-line-length

@@ -5,6 +5,8 @@ import {Stock} from '../../models/stock.model';
 import Swal from 'sweetalert2';
 import {Customer} from '../../models/customer.model';
 import {ActivatedRoute} from '@angular/router';
+import {JobMaster} from '../../models/jobMaster.model';
+import {JobService} from '../../services/job.service';
 
 @Component({
   selector: 'app-stock',
@@ -13,77 +15,56 @@ import {ActivatedRoute} from '@angular/router';
 })
 export class StockComponent implements OnInit {
   stockForm: FormGroup;
-  stockData: Stock;
+  stockData: Stock[];
   stockList: Stock[] = [];
-  tempStock: {};
+  tempStock: Stock;
+  jobMasterData: Stock[];
 
   dividor: number;
   remainder: number;
   totalAraay: number;
   // stockCustomerList: Customer[];
   filterResult: any;
+  showStockList = false;
 
 
 
-  constructor(private stockService: StockService,private router: ActivatedRoute) {
-    // this.stockData = this.stockService.getStockRecord();
-    // this.stockCustomerList = this.stockService.getStockCustomer();
+  constructor(private stockService: StockService, private router: ActivatedRoute ,  private  jobService: JobService) {
+    this.stockData = this.stockService.getStockList();
   }
 
   ngOnInit(): void {
 
     this.stockForm = this.stockService.stockFrom;
-    this.router.params.subscribe(params => {
-      // this.jobMasterId=params.id;
-      console.log(params.id);
-      this.stockService.getStockDataByJobmasterId(params.id);
-    });
-    this.stockService.getStockUpdateListener().subscribe((response: Stock[]) => {
-      this.stockData = response[0];
-      console.log("component response");
-      console.log(this.stockData);
 
-      this.stockForm.patchValue({
-        order_details_id: this.stockData.order_details_id ,
-        job_master_id: this.stockData.job_master_id ,
-        order_name: this.stockData.order_name ,
-        person_name : this.stockData.person_name,
-        quantity: this.stockData.quantity,
-        approx_gold: this.stockData.approx_gold,
-        amount: (this.stockData.quantity * this.stockData.price)
-      });
-      console.log("stockForm Value");
-      console.log(this.stockForm.value);
-
-      // this.stockForm.patchValue(
-      //   {
-      //     // amount: 4125,
-      //     approx_gold: 13.56,
-      //     ​​customer_id: this.stockData.customer_id,
-      //     // ​​division: '9',
-      //     ​​id: null,
-      //   ​​  job_master_id: this.stockData.job_master_id,
-      //   ​​  order_details_id: this.stockData.order_details_id,​​
-      //     price: this.stockData.price,
-      //     ​​quantity: this.stockData.quantity
-      //   }
-      // );
+    this.stockService.getStockUpdateListener().subscribe((response) => {
+      this.stockData = response;
     });
-    // this.stockService.getStockCustomerUpdateListener().subscribe((response: Customer[]) => {
-    //   this.stockCustomerList = response;
-    // });
+
+    this.router.params.subscribe((params) => {
+      if (params.id === undefined){
+        this.showStockList = true;
+      }
+      else{
+        this.stockService.getRecordByJobMasterId(params.id);
+
+        this.stockService.getJobMasterDataUpdateListener().subscribe((response) => {
+          this.jobMasterData = response;
+          this.stockForm.patchValue({
+            person_name: this.jobMasterData[0].person_name,
+            order_details_id: this.jobMasterData[0].order_details_id,
+            job_master_id: this.jobMasterData[0].job_master_id,
+            order_name: this.jobMasterData[0].order_name,
+            approx_gold: this.jobMasterData[0].approx_gold,
+            quantity: this.jobMasterData[0].quantity,
+            price: this.jobMasterData[0].price,
+            amount: this.jobMasterData[0].price * this.jobMasterData[0].quantity,
+          });
+        });
+      }
+    });
+
   }
-
-  // getStockRecord(item){
-  //   this.filterResult = this.stockData.filter(x => x.person_id ===  item);
-  //   // console.log(this.filterResult);
-  // }
-
-  // findStock(data){
-  //   const index = this.stockData.findIndex(x => x.order_details_id === data);
-  //   const x = this.stockData[index];
-  //   this.stockForm.patchValue({order_details_id: x.order_details_id , job_master_id: x.job_master_id, order_name: x.order_name , quantity: x.quantity, approx_gold: x.approx_gold, amount: (x.quantity * x.price)});
-  // }
 
   calculateDivision() {
     if (this.stockForm.value.quantity >= this.stockForm.value.division) {
@@ -149,10 +130,11 @@ export class StockComponent implements OnInit {
             'Submitted in Stock',
             'success'
           );
-          const index = this.filterResult.findIndex(x => x.id === this.stockForm.value.job_master_id);
+          // const index = this.filterResult.findIndex(x => x.id === this.stockForm.value.job_master_id);
           // this.filterResult.splice(index,1);
           // this.stockService.getUpdatedStockCustomer();
-          this.stockService.getUpdatedStockRecord();
+          // this.stockService.getUpdatedStockRecord();
+          this.jobService.getUpdatedFinishedJob();
           this.stockForm.reset();
         }
     });

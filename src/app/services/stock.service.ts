@@ -19,6 +19,8 @@ export interface StockResponseData {
 export class StockService {
   stockFrom: FormGroup;
   stockData: Stock[] = [];
+  jobMasterData: Stock[];
+  jobMasterDataSub = new Subject<Stock[]>();
   // stockCustomers: Customer[] = [];
   // stockCustomerSub = new Subject<Customer[]>();
   private stockSub = new Subject<Stock[]>();
@@ -30,6 +32,10 @@ export class StockService {
   // getStockCustomerUpdateListener(){
   //   return this.stockCustomerSub.asObservable();
   // }
+
+  getJobMasterDataUpdateListener(){
+    return this.jobMasterDataSub.asObservable();
+  }
 
   constructor(private http: HttpClient) {
     this.stockFrom = new FormGroup({
@@ -48,12 +54,10 @@ export class StockService {
       set_amount : new FormControl(null, [Validators.required]),
       // tag : new FormControl(null, [Validators.required])
     });
-    this.http.get(GlobalVariable.BASE_API_URL + '/getStockRecord')
-      .subscribe((response: {success: number, data: Stock[]}) => {
-        const {data} = response;
-        this.stockData = data;
-        this.stockSub.next([...this.stockData]);
-      });
+    this.http.get(GlobalVariable.BASE_API_URL + '/getStockList').subscribe((response: {success: number, data: Stock[]})=>{
+      this.stockData = response.data;
+      this.stockSub.next([...this.stockData]);
+    });
 
     // this.http.get(GlobalVariable.BASE_API_URL + '/getStockCustomer')
     //   .subscribe((response: { success: number , data: Customer[]}) => {
@@ -86,7 +90,7 @@ export class StockService {
       });
   }
 
-  getStockRecord(){
+  getStockList(){
     return [...this.stockData];
   }
 
@@ -94,13 +98,21 @@ export class StockService {
   //   return [...this.stockCustomers];
   // }
 
-  getStockDataByJobmasterId(id){
-    this.http.get(GlobalVariable.BASE_API_URL + '/fetchingStockByJobMasterId/' + id)
-      .subscribe((response: { success: number, data: Stock[]}) => {
-       this.stockData = response.data;
-       this.stockSub.next([...this.stockData]);
-      });
+  getRecordByJobMasterId(id){
+     return this.http.get(GlobalVariable.BASE_API_URL + '/getRecordByJobMasterId/' + id)
+       .subscribe((response: {success: number, data: Stock[]}) => {
+          this.jobMasterData = response.data;
+          this.jobMasterDataSub.next([...this.jobMasterData]);
+       });
+
   }
+
+  // getStockList(){
+  //   this.http.get(GlobalVariable.BASE_API_URL + '/getStockList').subscribe((response: {success: number, data: Stock[]})=>{
+  //       this.stockData = response.data;
+  //       this.stockSub.next([...this.stockData]);
+  //   });
+  // }
 
 }
 

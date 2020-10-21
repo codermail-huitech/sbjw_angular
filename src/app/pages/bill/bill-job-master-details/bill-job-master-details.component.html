@@ -23,7 +23,7 @@
         <td>{{data.karigarh_name | uppercase}}</td>
         <td>{{data.status}}</td>
         <td>
-          <input type="checkbox" name="nameOfChoice" (click)="selectionForBill(data)" [disabled]="data.status == 'WORK IN PROGRESS'" >
+          <input type="checkbox" name="nameOfChoice" (click)="selectionForBill(data)" [disabled]="data.status == 'WORK IN PROGRESS' || 'STOCK CREATED'" >
         </td>
       </tr>
       </tbody>

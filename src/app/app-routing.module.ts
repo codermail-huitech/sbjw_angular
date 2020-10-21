@@ -65,15 +65,16 @@ const routes: Routes = [
     ],
   },
   // {path: 'bill_jobMaster_details/:id',canActivate : [AuthGuardService], component: BillJobMasterDetailsComponent},
-  {path: 'completed_bills',canActivate : [AuthGuardService], component: CompletedBillComponent},
+  {path: 'completed_bills', canActivate : [AuthGuardService], component: CompletedBillComponent},
   {path: 'completed_bill_order_details/:id', canActivate:  [AuthGuardService], component: CompletedBillOrderDetailsComponent,
     children: [
       {path: 'completed_bill_details/:id', component: CompletedBillDetailsComponent}
     ],
   },
-  {path: 'gold_receipt',canActivate: [AuthGuardService], component: GoldReceiptsComponent},
-  {path: 'lc_receipt',canActivate: [AuthGuardService], component: LcReceiptsComponent},
-  {path: 'stock/:id',canActivate: [AuthGuardService], component: StockComponent },
+  {path: 'gold_receipt', canActivate: [AuthGuardService], component: GoldReceiptsComponent},
+  {path: 'lc_receipt', canActivate: [AuthGuardService], component: LcReceiptsComponent},
+  {path: 'stock/:id', canActivate: [AuthGuardService], component: StockComponent },
+  {path: 'stock', canActivate: [AuthGuardService], component: StockComponent },
 ];
 
 @NgModule({

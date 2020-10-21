@@ -17,10 +17,11 @@ export class StockComponent implements OnInit {
   stockForm: FormGroup;
   stockData: Stock[];
   stockList: Stock[] = [];
+  // tempStock: { approx_gold: any; amount: any; quantity: any; set_quantity: number; set_gold: string; order_details_id: any; set_amount: string; price: any; id: null; job_master_id: any; order_name: any };
   tempStock: Stock;
   jobMasterData: Stock[];
 
-  dividor: number;
+  divider: number;
   remainder: number;
   totalAraay: number;
   // stockCustomerList: Customer[];
@@ -77,13 +78,13 @@ export class StockComponent implements OnInit {
         this.stockList = Array(parseInt(this.stockForm.value.division)).fill(this.stockForm.value);
       } else {
         // tslint:disable-next-line:radix
-        this.dividor = parseInt(String(this.stockForm.value.quantity / this.stockForm.value.division));
+        this.divider = parseInt(String(this.stockForm.value.quantity / this.stockForm.value.division));
         // tslint:disable-next-line:radix
         this.remainder = parseInt(String(this.stockForm.value.quantity % this.stockForm.value.division));
         this.stockForm.patchValue({
-          set_quantity: this.dividor,
-          set_gold: ((this.stockForm.value.approx_gold / this.stockForm.value.quantity) * this.dividor).toFixed(3),
-          set_amount: ((this.stockForm.value.amount / this.stockForm.value.quantity) * this.dividor).toFixed(3)
+          set_quantity: this.divider,
+          set_gold: ((this.stockForm.value.approx_gold / this.stockForm.value.quantity) * this.divider).toFixed(3),
+          set_amount: ((this.stockForm.value.amount / this.stockForm.value.quantity) * this.divider).toFixed(3)
         });
         this.stockList = Array(parseInt(this.stockForm.value.division)).fill(this.stockForm.value);
         if (this.remainder > 0) {
@@ -97,9 +98,9 @@ export class StockComponent implements OnInit {
             quantity: this.stockForm.value.quantity,
             price: this.stockForm.value.price,
             amount: this.stockForm.value.amount,
-            set_quantity: this.stockForm.value.quantity - (this.dividor * this.stockForm.value.division),
-            set_gold: ((this.stockForm.value.approx_gold / this.stockForm.value.quantity) * (this.stockForm.value.quantity - (this.dividor * this.stockForm.value.division))).toFixed(3),
-            set_amount: ((this.stockForm.value.amount / this.stockForm.value.quantity) * (this.stockForm.value.quantity - (this.dividor * this.stockForm.value.division))).toFixed(3)
+            set_quantity: this.stockForm.value.quantity - (this.divider * this.stockForm.value.division),
+            set_gold: ((this.stockForm.value.approx_gold / this.stockForm.value.quantity) * (this.stockForm.value.quantity - (this.divider * this.stockForm.value.division))).toFixed(3),
+            set_amount: ((this.stockForm.value.amount / this.stockForm.value.quantity) * (this.stockForm.value.quantity - (this.divider * this.stockForm.value.division))).toFixed(3)
           };
           this.tempStock = temp;
           // @ts-ignore

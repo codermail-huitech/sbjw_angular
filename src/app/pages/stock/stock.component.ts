@@ -8,6 +8,7 @@ import {ActivatedRoute} from '@angular/router';
 import {JobMaster} from '../../models/jobMaster.model';
 import {JobService} from '../../services/job.service';
 import {parse} from '@fortawesome/fontawesome-svg-core';
+import {isNumber} from '@ng-bootstrap/ng-bootstrap/util/util';
 
 @Component({
   selector: 'app-stock',
@@ -20,7 +21,8 @@ export class StockComponent implements OnInit {
   stockList: Stock[] = [];
   // tslint:disable-next-line:max-line-length
   // tempStock: { approx_gold: any; amount: any; quantity: any; set_quantity: number; set_gold: string; order_details_id: any; set_amount: string; price: any; id: null; job_master_id: any; order_name: any };
-  tempStock: {};
+  // tempStock: {};
+  tempStock: Stock;
   jobMasterData: Stock[];
 
   divider: number;
@@ -42,19 +44,12 @@ export class StockComponent implements OnInit {
 
     this.stockService.getStockUpdateListener().subscribe((response) => {
       this.stockData = response;
-      // const x = this.stockData[0].tag.split('-');
-      // console.log( parseInt(x[1], 16));
       // tslint:disable-next-line:only-arrow-functions
-      // this.stockData.forEach(function(value) {
-      //   // @ts-ignore
-      //   // var str = toString(value.tag);
-      //   // const x = str.split('-');
-      //   const x = value.tag.split('-');
-      //   // @ts-ignore
-      //   value.tag = parseInt(x[1].toString(16), 16) + '-' + parseInt((x[2]), 16) + '-' + parseInt(x[3]);
-      //   // tslint:disable-next-line:radix
-      //   // console.log(parseInt(value.tag), 16));
-      // });
+      this.stockData.forEach(function(value) {
+        const x = value.tag.split('-');
+        // tslint:disable-next-line:radix
+        value.tag = (parseInt(x[1]).toString(16) + '-' + parseInt(x[2]).toString(16) + '-' + parseInt(x[3]));
+      });
     });
 
     this.router.params.subscribe((params) => {

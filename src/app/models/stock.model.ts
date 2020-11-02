@@ -17,7 +17,7 @@ export class Stock{
   job_number?: string;
 
   //for showing table
-  tag?: string;
+  tag?: number;
   gold?: string;
 
   constructor() {

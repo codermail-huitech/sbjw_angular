@@ -22,12 +22,13 @@ export class StockComponent implements OnInit {
   // tslint:disable-next-line:max-line-length
   // tempStock: { approx_gold: any; amount: any; quantity: any; set_quantity: number; set_gold: string; order_details_id: any; set_amount: string; price: any; id: null; job_master_id: any; order_name: any };
   // tempStock: {};
-  tempStock: Stock;
+  // tempStock: Stock;
+  tempStock: any;
   jobMasterData: Stock[];
 
   divider: number;
   remainder: number;
-  totalAraay: number;
+  // totalAraay: number;
   // stockCustomerList: Customer[];
   filterResult: any;
   showStockList = false;
@@ -70,6 +71,9 @@ export class StockComponent implements OnInit {
             approx_gold: this.jobMasterData[0].approx_gold,
             quantity: this.jobMasterData[0].quantity,
             price: this.jobMasterData[0].price,
+            size: this.jobMasterData[0].size,
+            material_id: this.jobMasterData[0].material_id,
+            gross_weight: this.jobMasterData[0].gross_weight,
             amount: this.jobMasterData[0].price * this.jobMasterData[0].quantity,
           });
         });
@@ -84,7 +88,8 @@ export class StockComponent implements OnInit {
         this.stockForm.patchValue({
           set_quantity: (this.stockForm.value.quantity / this.stockForm.value.division),
           set_gold: (this.stockForm.value.approx_gold / this.stockForm.value.division).toFixed(3),
-          set_amount: (this.stockForm.value.amount / this.stockForm.value.division).toFixed(3)
+          set_amount: (this.stockForm.value.amount / this.stockForm.value.division).toFixed(3),
+          set_gross_weight: (this.stockForm.value.gross_weight / this.stockForm.value.division).toFixed(3),
         });
         // tslint:disable-next-line:radix
         this.stockList = Array(parseInt(this.stockForm.value.division)).fill(this.stockForm.value);
@@ -96,7 +101,8 @@ export class StockComponent implements OnInit {
         this.stockForm.patchValue({
           set_quantity: this.divider,
           set_gold: parseFloat(String((this.stockForm.value.approx_gold / this.stockForm.value.quantity) * this.divider)).toFixed(3),
-          set_amount: parseFloat(String((this.stockForm.value.amount / this.stockForm.value.quantity) * this.divider)).toFixed(3)
+          set_amount: parseFloat(String((this.stockForm.value.amount / this.stockForm.value.quantity) * this.divider)).toFixed(3),
+          set_gross_weight: parseFloat(String((this.stockForm.value.gross_weight / this.stockForm.value.quantity) * this.divider)).toFixed(3)
         });
         // tslint:disable-next-line:radix
         this.stockList = Array(parseInt(this.stockForm.value.division)).fill(this.stockForm.value);
@@ -111,10 +117,13 @@ export class StockComponent implements OnInit {
             approx_gold: this.stockForm.value.approx_gold,
             quantity: this.stockForm.value.quantity,
             price: this.stockForm.value.price,
+            size: this.stockForm.value.size,
+            material_id: this.stockForm.value.material_id,
             amount: this.stockForm.value.amount,
             set_quantity: this.stockForm.value.quantity - (this.divider * this.stockForm.value.division),
             set_gold: parseFloat(String((this.stockForm.value.approx_gold / this.stockForm.value.quantity) * (this.stockForm.value.quantity - (this.divider * this.stockForm.value.division)))).toFixed(3),
-            set_amount: parseFloat(String((this.stockForm.value.amount / this.stockForm.value.quantity) * (this.stockForm.value.quantity - (this.divider * this.stockForm.value.division)))).toFixed(3)
+            set_amount: parseFloat(String((this.stockForm.value.amount / this.stockForm.value.quantity) * (this.stockForm.value.quantity - (this.divider * this.stockForm.value.division)))).toFixed(3),
+            set_gross_weight: parseFloat(String((this.stockForm.value.gross_weight / this.stockForm.value.quantity) * (this.stockForm.value.quantity - (this.divider * this.stockForm.value.division)))).toFixed(3)
           };
           this.tempStock = temp;
           // @ts-ignore

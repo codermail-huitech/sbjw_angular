@@ -1,0 +1,31 @@
+<div style="background-color: #d9dd9b">
+  <mat-card style="background-color: #e8c50e">
+    <mat-card style="background-color: lightgray">
+      <table class="table table-hover">
+        <thead style="background-color: lightslategray">
+        <th>SL NO.</th>
+        <th>Model Name</th>
+        <th>Tag</th>
+        <th>Select For Billing</th>
+        </thead>
+        <tbody>
+        <tr *ngFor="let item of stockList; let indexOfElement = index">
+          <td>{{indexOfElement+1}}</td>
+          <td>{{item.model_number}}</td>
+          <td>{{item.tag | uppercase}}</td>
+          <td style="text-align: center">
+            <input type="checkbox" name="nameOfChoice" (click)="stockSelectionForBill(item)"  >
+          </td>
+        </tr>
+        </tbody>
+      </table>
+      <div style="text-align: center">
+        <button class="btn badge-info">Generate Bill</button>
+      </div>
+    </mat-card>
+  </mat-card>
+
+</div>
+<!--<div>-->
+<!--  <pre>{{stockList | json}}</pre>-->
+<!--</div>-->

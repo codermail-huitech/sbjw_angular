@@ -7,6 +7,7 @@ export class Stock{
   set_gold: number;
   quantity: number;
   set_quantity: number;
+  set_gross_weight: number;
   amount: number;
   set_amount: number;
   price: number;
@@ -16,10 +17,12 @@ export class Stock{
   model_number?: string;
   job_number?: string;
 
-  //for showing table
+  size?: string;
+  material_id?: number;
+  gross_weight?: number;
+  // for showing table
   tag?: string;
   gold?: string;
-
   constructor() {
   }
 }

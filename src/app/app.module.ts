@@ -63,6 +63,7 @@ import { RateComponent } from './pages/rate/rate.component';
 import { GoldReceiptsComponent } from './pages/gold-receipts/gold-receipts.component';
 import { LcReceiptsComponent } from './pages/lc-receipts/lc-receipts.component';
 import { StockComponent } from './pages/stock/stock.component';
+import { StockBillComponent } from './pages/stock-bill/stock-bill.component';
 
 
 @NgModule({
@@ -106,7 +107,8 @@ import { StockComponent } from './pages/stock/stock.component';
     RateComponent,
     GoldReceiptsComponent,
     LcReceiptsComponent,
-    StockComponent
+    StockComponent,
+    StockBillComponent
 
   ],
   imports: [

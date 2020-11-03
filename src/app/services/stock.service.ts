@@ -48,11 +48,15 @@ export class StockService {
       approx_gold : new FormControl(null, [Validators.required]),
       quantity : new FormControl(null, [Validators.required]),
       price : new FormControl(null, [Validators.required]),
+      size : new FormControl(null, [Validators.required]),
+      material_id : new FormControl(null, [Validators.required]),
+      gross_weight : new FormControl(null, [Validators.required]),
       amount : new FormControl(null, [Validators.required]),
       division : new FormControl(1),
       set_gold : new FormControl(null, [Validators.required]),
       set_quantity : new FormControl(null, [Validators.required]),
       set_amount : new FormControl(null, [Validators.required]),
+      set_gross_weight : new FormControl(null, [Validators.required]),
       // tag : new FormControl(null, [Validators.required])
     });
     this.http.get(GlobalVariable.BASE_API_URL + '/getStockList').subscribe((response: {success: number, data: Stock[]})=>{

@@ -15,20 +15,26 @@
             <input matInput formControlName="order_name" [readonly]="true">
           </mat-form-field>
 
-          <mat-form-field class="col-4">
+          <mat-form-field class="col-3">
             <mat-label>Quantity</mat-label>
             <input type="number" matInput formControlName="quantity" [readonly]="true">
           </mat-form-field>
 
-          <mat-form-field class="col-4">
+          <mat-form-field class="col-3">
             <mat-label>Approx_gold</mat-label>
             <input type="number" matInput formControlName="approx_gold" [readonly]="true">
           </mat-form-field>
 
-          <mat-form-field class="col-4">
+          <mat-form-field class="col-3">
+            <mat-label>Gross Weight</mat-label>
+            <input type="number" matInput formControlName="gross_weight" [readonly]="true">
+          </mat-form-field>
+
+          <mat-form-field class="col-3">
             <mat-label>Amount</mat-label>
             <input type="number" matInput formControlName="amount" [readonly]="true">
           </mat-form-field>
+
 
           <mat-form-field class="col-12">
             <mat-label>Division</mat-label>
@@ -58,6 +64,7 @@
             <th>SL. NO.</th>
             <th>Name</th>
             <th>Gold</th>
+            <th>Gross Weight</th>
             <th>Quantity</th>
             <th>Amount</th>
           </tr>
@@ -67,6 +74,7 @@
             <td>{{indexOfelement+1}}</td>
             <td>{{stcoks.order_name}}</td>
             <td  style="text-align: right">{{stcoks.set_gold}} gm</td>
+            <td  style="text-align: right">{{stcoks.set_gross_weight}} gm</td>
             <td style="text-align: right">{{stcoks.set_quantity}}</td>
             <td  style="text-align: right">{{stcoks.set_amount | currency:"&#8377;"}}</td>
           </tr>
@@ -95,7 +103,7 @@
         <tr *ngFor="let item of stockData ; let indexofElement = index">
           <td>{{indexofElement+1}}</td>
           <td>{{item.model_number}}</td>
-          <td>{{item.tag}}</td>
+          <td>{{item.tag | uppercase}}</td>
           <td>{{item.gold}}</td>
           <td>{{item.amount}}</td>
           <td>{{item.quantity}}</td>
@@ -104,6 +112,7 @@
 
       </table>
     </mat-card>
+
   </mat-card>
 
 

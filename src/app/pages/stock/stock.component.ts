@@ -9,6 +9,7 @@ import {JobMaster} from '../../models/jobMaster.model';
 import {JobService} from '../../services/job.service';
 import {parse} from '@fortawesome/fontawesome-svg-core';
 import {isNumber} from '@ng-bootstrap/ng-bootstrap/util/util';
+import {BillService} from '../../services/bill.service';
 
 @Component({
   selector: 'app-stock',
@@ -25,9 +26,11 @@ export class StockComponent implements OnInit {
   // tempStock: Stock;
   tempStock: any;
   jobMasterData: Stock[];
+  jobMasterContainer: any;
 
   divider: number;
   remainder: number;
+  totalGold: number;
   // totalAraay: number;
   // stockCustomerList: Customer[];
   filterResult: any;
@@ -35,7 +38,7 @@ export class StockComponent implements OnInit {
 
 
 
-  constructor(private stockService: StockService, private router: ActivatedRoute ,  private  jobService: JobService) {
+  constructor(private stockService: StockService, private router: ActivatedRoute ,  private  jobService: JobService, private billService:BillService ) {
     this.stockData = this.stockService.getStockList();
   }
 
@@ -59,23 +62,55 @@ export class StockComponent implements OnInit {
       }
       else{
         this.stockService.getRecordByJobMasterId(params.id);
+        // this.billService.getTotalGoldQuantity(params.id).subscribe((response:{success: number, data: number }) => {
+        //   this.totalGold =  response.data ;
+        //
+        //
+        // });
 
         this.stockService.getJobMasterDataUpdateListener().subscribe((response) => {
           this.jobMasterData = response;
-          this.stockForm.patchValue({
-            person_name: this.jobMasterData[0].person_name,
-            job_number: this.jobMasterData[0].job_number,
-            order_details_id: this.jobMasterData[0].order_details_id,
-            job_master_id: this.jobMasterData[0].job_master_id,
-            order_name: this.jobMasterData[0].order_name,
-            approx_gold: this.jobMasterData[0].approx_gold,
-            quantity: this.jobMasterData[0].quantity,
-            price: this.jobMasterData[0].price,
-            size: this.jobMasterData[0].size,
-            material_id: this.jobMasterData[0].material_id,
-            gross_weight: this.jobMasterData[0].gross_weight,
-            amount: this.jobMasterData[0].price * this.jobMasterData[0].quantity,
+          this.billService.getTotalGoldQuantity(params.id).subscribe((response:{success: number, data: number }) => {
+            this.totalGold =  response.data ;
+            this.jobMasterContainer = {
+              jobMasterData: this.jobMasterData,
+              totalGold: this.totalGold
+            };
+            console.log(this.jobMasterContainer);
+
+
+            this.stockForm.patchValue({
+              person_name: this.jobMasterContainer.jobMasterData[0].person_name,
+              job_number: this.jobMasterContainer.jobMasterData[0].job_number,
+              order_details_id: this.jobMasterContainer.jobMasterData[0].order_details_id,
+              job_master_id: this.jobMasterContainer.jobMasterData[0].job_master_id,
+              order_name: this.jobMasterContainer.jobMasterData[0].order_name,
+              // // approx_gold: this.jobMasterData[0].approx_gold,
+              total_gold: this.jobMasterContainer.totalGold.data,
+              quantity: this.jobMasterContainer.jobMasterData[0].quantity,
+              price: this.jobMasterContainer.jobMasterData[0].price,
+              size: this.jobMasterContainer.jobMasterData[0].size,
+              material_id: this.jobMasterContainer.jobMasterData[0].material_id,
+              gross_weight: this.jobMasterContainer.jobMasterData[0].gross_weight,
+              amount: this.jobMasterContainer.jobMasterData[0].price * this.jobMasterContainer.jobMasterData[0].quantity,
+            });
           });
+
+          // this.stockForm.patchValue({
+          //   person_name: this.jobMasterData[0].person_name,
+          //   job_number: this.jobMasterData[0].job_number,
+          //   order_details_id: this.jobMasterData[0].order_details_id,
+          //   job_master_id: this.jobMasterData[0].job_master_id,
+          //   order_name: this.jobMasterData[0].order_name,
+          //   // approx_gold: this.jobMasterData[0].approx_gold,
+          //   total_gold: this.totalGold,
+          //   quantity: this.jobMasterData[0].quantity,
+          //   price: this.jobMasterData[0].price,
+          //   size: this.jobMasterData[0].size,
+          //   material_id: this.jobMasterData[0].material_id,
+          //   gross_weight: this.jobMasterData[0].gross_weight,
+          //   amount: this.jobMasterData[0].price * this.jobMasterData[0].quantity,
+          // });
         });
       }
     });

@@ -28,9 +28,10 @@ export class BillDetail{
   orderNumber?: string;
   karigarh_id?: number;
   customer_id?: number;
-  order_number? : string;
+  order_number?: string;
   cost?: number;
-  job_master_id? : number;
+  job_master_id?: number;
+  tag?: string;
 
 
   constructor() {

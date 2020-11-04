@@ -22,6 +22,7 @@ export class JobMaster{
   status_id ?: number;
   person_name?: string;
   karigarh_name?: string;
+  total_gold?: number;
   constructor() {
   }
 }

@@ -20,6 +20,7 @@ export class Stock{
   size?: string;
   material_id?: number;
   gross_weight?: number;
+  totalGold?: number;
   // for showing table
   tag?: string;
   gold?: string;

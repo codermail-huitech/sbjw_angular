@@ -81,10 +81,11 @@ export class BillJobMasterDetailsComponent implements OnInit {
     } else {
       console.log('data');
       console.log(data);
-      this.billService.getGoldQuantity(data.id).subscribe((response) => {
+      this.billService.getTotalGoldQuantity(data.id).subscribe((response:{success: number, data: any}) => {
 
-        // console.log(response.data[0].total);
-        data.total = response.data[0].total.toFixed(3);
+
+
+        data.total = response.data.data;
         data.pure_gold = ((data.total * 92) / 100).toFixed(3);
         data.cost = data.price * data.quantity;
 
@@ -97,6 +98,22 @@ export class BillJobMasterDetailsComponent implements OnInit {
         console.log('response');
         console.log(this.billDetailsData);
       });
+      // this.billService.getGoldQuantity(data.id).subscribe((response) => {
+      //
+      //   // console.log(response.data[0].total);
+      //   data.total = response.data[0].total.toFixed(3);
+      //   data.pure_gold = ((data.total * 92) / 100).toFixed(3);
+      //   data.cost = data.price * data.quantity;
+      //
+      //   this.total92Gold = this.total92Gold + Number(data.total);
+      //   this.totalGold = this.totalGold + Number(data.pure_gold);
+      //   this.totalQuantity = this.totalQuantity + Number(data.quantity);
+      //   this.totalCost = this.totalCost + Number(data.cost);
+      //   this.billDetailsData.push(data);
+      //
+      //   console.log('response');
+      //   console.log(this.billDetailsData);
+      // });
 
       // this.billDetailsData.push(data);
     }

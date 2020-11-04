@@ -178,6 +178,20 @@ export class BillService {
   }
 
 
+
+  getStockGoldQuantity(data){
+    return this.http.get<{ success: number, data: BillDetail }>( GlobalVariable.BASE_API_URL + '/getGoldquantity/' + data)
+      .pipe(catchError(this._serverError), tap(((response: {success: number, data: BillDetail}) => {
+      })));
+  }
+
+  getTotalGoldQuantity(data){
+    return this.http.get<{ success: number, data: number }>( GlobalVariable.BASE_API_URL + '/getTotalGoldQuantity/' + data)
+      .pipe(catchError(this._serverError), tap(((response: {success: number, data: number }) => {
+      })));
+  }
+
+
   private _serverError(err: any) {
     // console.log('sever error:', err);  // debug
     if (err instanceof Response) {

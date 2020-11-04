@@ -1,29 +1,70 @@
-<div style="background-color: #d9dd9b">
-  <mat-card style="background-color: #e8c50e">
-    <mat-card style="background-color: lightgray">
-      <table class="table table-hover">
-        <thead style="background-color: lightslategray">
-        <th>SL NO.</th>
-        <th>Model Name</th>
-        <th>Tag</th>
-        <th>Select For Billing</th>
-        </thead>
-        <tbody>
-        <tr *ngFor="let item of stockList; let indexOfElement = index">
-          <td>{{indexOfElement+1}}</td>
-          <td>{{item.model_number}}</td>
-          <td>{{item.tag | uppercase}}</td>
-          <td style="text-align: center">
-            <input type="checkbox" name="nameOfChoice" (click)="stockSelectionForBill(item)"  >
-          </td>
-        </tr>
-        </tbody>
-      </table>
-      <div style="text-align: center">
-        <button class="btn badge-info">Generate Bill</button>
+<div style="background-color: #d9dd9b" >
+  <mat-card style="background-color: #e8c50e" >
+    <mat-card style="background-color: lightgray" class="d-flex" >
+
+      <div class="col-7">
+        <div>
+          <mat-form-field class="example-full-width">
+            <input matInput placeholder="Enter Tag..." [(ngModel)]="searchTag" name="search" type="text" autofocus>
+          </mat-form-field>
+        </div>
+        <table class="table table-hover">
+          <thead style="background-color: lightslategray">
+          <th>SL NO.</th>
+          <th>Tag</th>
+          <th>Model Name</th>
+          <th>Size</th>
+          <th>Gold</th>
+          <th>Amount</th>
+          <th>Quantity</th>
+          <th>Select For Billing</th>
+          </thead>
+          <tbody>
+          <tr *ngFor="let indexOfElement = index; let item of stockList |filter: searchTag">
+            <td>{{indexOfElement+1}}</td>
+            <td>{{item.tag | uppercase}}</td>
+            <td>{{item.model_number}}</td>
+            <td>{{item.size}}</td>
+            <td>{{item.gold}}</td>
+            <td>{{item.amount}}</td>
+            <td>{{item.quantity}}</td>
+            <td style="text-align: center">
+              <input type="checkbox" name="nameOfChoice" (click)="stockSelectionForBill(item)"  >
+            </td>
+          </tr>
+          </tbody>
+        </table>
       </div>
+      <div class="col-5" style="text-align: center; background-color: #d9dd9b">
+        <h2>Stock Bill Entry</h2>
+        <div *ngIf="billDetailsData.length===0">
+        <h4>No Entry</h4>
+      </div>
+        <div  *ngIf="billDetailsData.length>0">
+          <table class="table table-hover">
+            <thead style="background-color: lightslategray">
+            <th>SL NO.</th>
+            <th>Tag</th>
+
+            </thead>
+            <tbody>
+            <tr *ngFor="let indexOfElement = index; let item of billDetailsData">
+              <td>{{indexOfElement+1}}</td>
+              <td>{{item.tag | uppercase}}</td>
+            </tr>
+            </tbody>
+          </table>
+          <button class="btn badge-info">Generate Bill</button>
+        </div>
+
+      </div>
+
     </mat-card>
+
+
+
   </mat-card>
+
 
 </div>
 <!--<div>-->

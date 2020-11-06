@@ -24,6 +24,10 @@ export class Stock{
   // for showing table
   tag?: string;
   gold?: string;
+  total?: number;
+  pure_gold?: number;
+  cost?: number;
+  isSet?: boolean;
   constructor() {
   }
 }

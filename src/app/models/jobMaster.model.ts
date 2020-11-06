@@ -23,6 +23,9 @@ export class JobMaster{
   person_name?: string;
   karigarh_name?: string;
   total_gold?: number;
+  total?: number;
+  pure_gold?: number;
+  cost?: number;
   constructor() {
   }
 }

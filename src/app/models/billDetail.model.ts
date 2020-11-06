@@ -32,6 +32,7 @@ export class BillDetail{
   cost?: number;
   job_master_id?: number;
   tag?: string;
+  isSet?: boolean;
 
 
   constructor() {

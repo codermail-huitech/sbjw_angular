@@ -13,7 +13,7 @@ import {StorageMap} from '@ngx-pwa/local-storage';
 })
 export class StockBillComponent implements OnInit {
   stockList: Stock[];
-  billMasteritem: BillMaster;
+  billMasterData: BillMaster;
   billDetailsData: BillDetail[] = [];
   total92Gold: number;
   totalGold: number;
@@ -21,7 +21,7 @@ export class StockBillComponent implements OnInit {
   totalCost: number;
   searchTag: string;
   stockBillContainer: any;
-  isSelectEnabled = true;
+  // isSelectEnabled = true;
 
   constructor(private  stockService: StockService, private  billService: BillService, private  storage: StorageMap) {
     this.stockList = this.stockService.getStockList();
@@ -35,6 +35,8 @@ export class StockBillComponent implements OnInit {
   ngOnInit(): void {
     this.stockService.getStockUpdateListener().subscribe((response) => {
       this.stockList = response;
+
+
       this.stockList.forEach(function(value) {
         const x = value.tag.split('-');
         // tslint:disable-next-line:radix
@@ -49,23 +51,59 @@ export class StockBillComponent implements OnInit {
     }, (error) => {
     });
   }
-
-
   stockSelectionForBill(item) {
 
     const index = this.billDetailsData.findIndex(x => x.id === item.id);
-    if (index >= 0) {
-      this.billDetailsData.splice(index, 1);
-      this.stockBillContainer = {
-        stockBillDetailsData: this.billDetailsData,
-      };
-    } else {
+    if (index === -1){
+
+      item.total = item.gold;
+      item.cost = item.amount;
+
+      item.pure_gold = parseFloat(((item.total * 92) / 100).toFixed(3));
+
+      this.total92Gold = this.total92Gold + Number(item.total);
+      this.totalGold = this.totalGold + Number(item.pure_gold);
+
       this.billDetailsData.push(item);
-      this.stockBillContainer = {
+      item.isSet = true;
+    }
+
+    // item.total = item.gold;
+    // item.cost = item.amount;
+    // console.log(item);
+
+    // item.pure_gold = parseFloat(((item.total * 92) / 100).toFixed(3));
+    //
+    // this.total92Gold = this.total92Gold + Number(item.total);
+    // this.totalGold = this.totalGold + Number(item.pure_gold);
+    //
+    // this.billDetailsData.push(item);
+    console.log(this.billDetailsData);
+    this.stockBillContainer = {
         stockBillDetailsData: this.billDetailsData,
       };
-    }
     this.storage.set('stockBillContainer', this.stockBillContainer).subscribe(() => {
     });
+  }
+
+  removeFromStockBillEntry(item){
+    console.log(this.billDetailsData);
+    const index = this.billDetailsData.findIndex(x => x.id === item.id);
+    this.total92Gold = this.total92Gold - Number(item.total);
+    this.totalGold = this.totalGold - Number(item.pure_gold);
+
+    this.billDetailsData.splice(index, 1);
+    item.isSet = false;
+    console.log(this.billDetailsData);
+    this.stockBillContainer = {
+        stockBillDetailsData: this.billDetailsData,
+      };
+    this.storage.set('stockBillContainer', this.stockBillContainer).subscribe(() => {
+    });
+  }
+
+  stockBillGenerate(){
+    console.log(this.billDetailsData);
+    this.billService.testBillSave(this.billDetailsData).subscribe();
   }
 }

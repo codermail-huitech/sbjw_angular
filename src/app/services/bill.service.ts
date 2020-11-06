@@ -166,6 +166,7 @@ export class BillService {
 
   saveBillMaster(billMasterData, billDetailsData){
     console.log("service");
+    console.log(billDetailsData);
     return this.http.post<{ success: number, data: BillMaster }>( GlobalVariable.BASE_API_URL + '/saveBillMaster' , {master : billMasterData, details: billDetailsData })
       .pipe(catchError(this._serverError), tap(((response: {success: number, data: BillMaster}) => {
 
@@ -176,9 +177,6 @@ export class BillService {
         // }
       })));
   }
-
-
-
   getStockGoldQuantity(data){
     return this.http.get<{ success: number, data: BillDetail }>( GlobalVariable.BASE_API_URL + '/getGoldquantity/' + data)
       .pipe(catchError(this._serverError), tap(((response: {success: number, data: BillDetail}) => {
@@ -188,6 +186,14 @@ export class BillService {
   getTotalGoldQuantity(data){
     return this.http.get<{ success: number, data: number }>( GlobalVariable.BASE_API_URL + '/getTotalGoldQuantity/' + data)
       .pipe(catchError(this._serverError), tap(((response: {success: number, data: number }) => {
+      })));
+  }
+
+  // test method for stock bill save
+
+  testBillSave(billDetailsData){
+    return this.http.post<{ success: number, data: BillDetail }>( GlobalVariable.BASE_API_URL + '/testBillSave' , {details: billDetailsData })
+      .pipe(catchError(this._serverError), tap(((response: {success: number, data: BillDetail}) => {
       })));
   }
 

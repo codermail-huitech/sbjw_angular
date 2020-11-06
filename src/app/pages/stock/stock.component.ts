@@ -70,13 +70,13 @@ export class StockComponent implements OnInit {
 
         this.stockService.getJobMasterDataUpdateListener().subscribe((response) => {
           this.jobMasterData = response;
-          this.billService.getTotalGoldQuantity(params.id).subscribe((response:{success: number, data: number }) => {
-            this.totalGold =  response.data ;
+          this.billService.getTotalGoldQuantity(params.id).subscribe((response:{success: number, data: any }) => {
+            this.totalGold =  response.data.data.toFixed(3);
             this.jobMasterContainer = {
               jobMasterData: this.jobMasterData,
               totalGold: this.totalGold
             };
-            console.log(this.jobMasterContainer);
+            // console.log(this.jobMasterContainer);
 
 
             this.stockForm.patchValue({
@@ -86,7 +86,7 @@ export class StockComponent implements OnInit {
               job_master_id: this.jobMasterContainer.jobMasterData[0].job_master_id,
               order_name: this.jobMasterContainer.jobMasterData[0].order_name,
               // // approx_gold: this.jobMasterData[0].approx_gold,
-              total_gold: this.jobMasterContainer.totalGold.data,
+              total_gold: this.jobMasterContainer.totalGold,
               quantity: this.jobMasterContainer.jobMasterData[0].quantity,
               price: this.jobMasterContainer.jobMasterData[0].price,
               size: this.jobMasterContainer.jobMasterData[0].size,
@@ -122,7 +122,7 @@ export class StockComponent implements OnInit {
       if ((this.stockForm.value.quantity % this.stockForm.value.division) === 0) {
         this.stockForm.patchValue({
           set_quantity: (this.stockForm.value.quantity / this.stockForm.value.division),
-          set_gold: (this.stockForm.value.approx_gold / this.stockForm.value.division).toFixed(3),
+          set_gold: (this.stockForm.value.total_gold / this.stockForm.value.division).toFixed(3),
           set_amount: (this.stockForm.value.amount / this.stockForm.value.division).toFixed(3),
           set_gross_weight: (this.stockForm.value.gross_weight / this.stockForm.value.division).toFixed(3),
         });
@@ -135,7 +135,7 @@ export class StockComponent implements OnInit {
         this.remainder = parseInt(String(this.stockForm.value.quantity % this.stockForm.value.division));
         this.stockForm.patchValue({
           set_quantity: this.divider,
-          set_gold: parseFloat(String((this.stockForm.value.approx_gold / this.stockForm.value.quantity) * this.divider)).toFixed(3),
+          set_gold: parseFloat(String((this.stockForm.value.total_gold / this.stockForm.value.quantity) * this.divider)).toFixed(3),
           set_amount: parseFloat(String((this.stockForm.value.amount / this.stockForm.value.quantity) * this.divider)).toFixed(3),
           set_gross_weight: parseFloat(String((this.stockForm.value.gross_weight / this.stockForm.value.quantity) * this.divider)).toFixed(3)
         });
@@ -149,14 +149,14 @@ export class StockComponent implements OnInit {
             order_name: this.stockForm.value.order_name,
             job_number: this.stockForm.value.job_number,
             job_master_id: this.stockForm.value.job_master_id,
-            approx_gold: this.stockForm.value.approx_gold,
+            total_gold: this.stockForm.value.total_gold,
             quantity: this.stockForm.value.quantity,
             price: this.stockForm.value.price,
             size: this.stockForm.value.size,
             material_id: this.stockForm.value.material_id,
             amount: this.stockForm.value.amount,
             set_quantity: this.stockForm.value.quantity - (this.divider * this.stockForm.value.division),
-            set_gold: parseFloat(String((this.stockForm.value.approx_gold / this.stockForm.value.quantity) * (this.stockForm.value.quantity - (this.divider * this.stockForm.value.division)))).toFixed(3),
+            set_gold: parseFloat(String((this.stockForm.value.total_gold / this.stockForm.value.quantity) * (this.stockForm.value.quantity - (this.divider * this.stockForm.value.division)))).toFixed(3),
             set_amount: parseFloat(String((this.stockForm.value.amount / this.stockForm.value.quantity) * (this.stockForm.value.quantity - (this.divider * this.stockForm.value.division)))).toFixed(3),
             set_gross_weight: parseFloat(String((this.stockForm.value.gross_weight / this.stockForm.value.quantity) * (this.stockForm.value.quantity - (this.divider * this.stockForm.value.division)))).toFixed(3)
           };
@@ -195,6 +195,7 @@ export class StockComponent implements OnInit {
           // this.stockService.getUpdatedStockCustomer();
           // this.stockService.getUpdatedStockRecord();
           this.jobService.getUpdatedFinishedJob();
+          this.stockService.getUpdatedStockList();
           this.stockForm.reset();
         }
     });

@@ -79,15 +79,18 @@ export class BillJobMasterDetailsComponent implements OnInit {
 
       this.billDetailsData.splice(index, 1);
     } else {
-      console.log('data');
-      console.log(data);
+
       this.billService.getTotalGoldQuantity(data.id).subscribe((response:{success: number, data: any}) => {
 
 
 
-        data.total = response.data.data;
-        data.pure_gold = ((data.total * 92) / 100).toFixed(3);
+        data.total = parseFloat(response.data.data.toFixed(3));
+        data.pure_gold = parseFloat(((data.total * 92) / 100).toFixed(3));
         data.cost = data.price * data.quantity;
+
+        // console.log('data');
+        // console.log(data);
+
 
         this.total92Gold = this.total92Gold + Number(data.total);
         this.totalGold = this.totalGold + Number(data.pure_gold);
@@ -95,7 +98,9 @@ export class BillJobMasterDetailsComponent implements OnInit {
         this.totalCost = this.totalCost + Number(data.cost);
         this.billDetailsData.push(data);
 
-        console.log('response');
+        // console.log('response');
+        // console.log(this.billDetailsData);
+        console.log('billDetailsData');
         console.log(this.billDetailsData);
       });
       // this.billService.getGoldQuantity(data.id).subscribe((response) => {

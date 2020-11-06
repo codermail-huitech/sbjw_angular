@@ -28,6 +28,7 @@ export class BillDetail{
   orderNumber?: string;
   karigarh_id?: number;
   customer_id?: number;
+  agent_id?: number;
   order_number?: string;
   cost?: number;
   job_master_id?: number;

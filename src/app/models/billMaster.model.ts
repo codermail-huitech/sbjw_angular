@@ -18,6 +18,7 @@ export class BillMaster{
   order_master_id?: number;
   karigarhId?: number;
   customerId?: number;
+  agent_id?: number;
   discount?: number;
   bill_number? :string ;
   constructor() {

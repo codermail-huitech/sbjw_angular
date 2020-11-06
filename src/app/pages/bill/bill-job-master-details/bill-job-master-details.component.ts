@@ -148,6 +148,7 @@ export class BillJobMasterDetailsComponent implements OnInit {
           orderDate: this.billDetailsData[0].date_of_order,
           karigarhId: this.billDetailsData[0].karigarh_id,
           customerId: this.billDetailsData[0].customer_id,
+          agent_id: this.billDetailsData[0].agent_id,
           billDate:  x.getFullYear() + '-' + parseInt(String(x.getMonth() + 1)) + '-' + x.getDate(),
           discount: 0
         };

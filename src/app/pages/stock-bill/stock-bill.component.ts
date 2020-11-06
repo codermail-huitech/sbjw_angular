@@ -104,6 +104,6 @@ export class StockBillComponent implements OnInit {
 
   stockBillGenerate(){
     console.log(this.billDetailsData);
-    this.billService.testBillSave(this.billDetailsData).subscribe();
+    // this.billService.testBillSave(this.billDetailsData).subscribe();
   }
 }

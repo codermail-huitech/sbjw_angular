@@ -62,29 +62,43 @@ export class CompletedBillDetailsComponent implements OnInit {
         this.finishedBillData = details;
       });
 
-    this.billService.showCompletedBillsDataSubUpdateListener()
-      .subscribe((details: BillDetail[]) => {
-        this.showBill = true;
-        this.billDetailsData = details;
+    this.billService.showCompletedBillsDataSubUpdateListener().subscribe((response)=>{
+      this.showBill = true;
+      this.billDetailsData = response;
+      for(let i = 0; i < this.billDetailsData.length; i++){
+        this.total92Gold = this.total92Gold + Number(this.billDetailsData[i].ginnie);
+        this.totalGold = this.totalGold + Number(this.billDetailsData[i].pure_gold);
+        this.totalQuantity = this.totalQuantity + Number(this.billDetailsData[i].quantity);
+        this.totalCost = this.totalCost + Number(this.billDetailsData[i].LC);
+      }
 
-        for(let i =0; i<this.billDetailsData.length; i++){
-          this.billService.getGoldQuantity(this.billDetailsData[i].job_master_id).subscribe((response)=>{
-            this.billDetailsData[i].total = response.data[0].total.toFixed(3);
-            // this.billDetailsData[i].pure_gold = ((this.billDetailsData[i].total * 92) / 100);
-            this.billDetailsData[i].pure_gold =Number((this.billDetailsData[i].total * 92 / 100).toFixed(3));
-            this.billDetailsData[i].cost = this.billDetailsData[i].price * this.billDetailsData[i].quantity;
+    });
 
-            this.total92Gold = this.total92Gold + Number(this.billDetailsData[i].total);
-            this.totalGold = this.totalGold + Number(this.billDetailsData[i].pure_gold);
-            this.totalQuantity = this.totalQuantity + Number(this.billDetailsData[i].quantity);
-            this.totalCost = this.totalCost + Number(this.billDetailsData[i].cost);
-          });
-
-        }
-        // console.log('test');
-        // console.log(this.billDetailsData);
-
-      });
+    // this.billService.showCompletedBillsDataSubUpdateListener()
+    //   .subscribe => {
+    //     this.showBill = true;
+    //
+    //
+    //
+    //
+    //     for(let i =0; i<this.billDetailsData.length; i++){
+    //       this.billService.getGoldQuantity(this.billDetailsData[i].job_master_id).subscribe((response)=>{
+    //         this.billDetailsData[i].total = response.data[0].total.toFixed(3);
+    //         // this.billDetailsData[i].pure_gold = ((this.billDetailsData[i].total * 92) / 100);
+    //         this.billDetailsData[i].pure_gold =Number((this.billDetailsData[i].total * 92 / 100).toFixed(3));
+    //         this.billDetailsData[i].cost = this.billDetailsData[i].price * this.billDetailsData[i].quantity;
+    //
+    //         this.total92Gold = this.total92Gold + Number(this.billDetailsData[i].total);
+    //         this.totalGold = this.totalGold + Number(this.billDetailsData[i].pure_gold);
+    //         this.totalQuantity = this.totalQuantity + Number(this.billDetailsData[i].quantity);
+    //         this.totalCost = this.totalCost + Number(this.billDetailsData[i].cost);
+    //       });
+    //
+    //     }
+    //     // console.log('test');
+    //     // console.log(this.billDetailsData);
+    //
+    //   });
 
   }
   // selectionForBill(data) {

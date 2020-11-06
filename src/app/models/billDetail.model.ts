@@ -33,6 +33,8 @@ export class BillDetail{
   job_master_id?: number;
   tag?: string;
   isSet?: boolean;
+  ginnie: number;
+  LC?: number;
 
 
   constructor() {

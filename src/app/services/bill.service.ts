@@ -24,13 +24,13 @@ export class BillService {
   completedBillOrderDetails : OrderDetail[] = [];
   finishedJobData : JobMaster[];
   finishedBillData : JobMaster[];
-  showCompletedBillsData : JobMaster[];
+  showCompletedBillsData : BillDetail[];
   private finishedJobsSub = new Subject<FinishedJobs[]>();
   private orderDetailsSub = new Subject<OrderDetail[]>();
   private completedBillOrderDetailsSub = new Subject<OrderDetail[]>();
   finishedJobDataSub = new Subject<JobMaster[]>();
   finishedBillDataSub = new Subject<JobMaster[]>();
-  showCompletedBillsDataSub = new Subject<JobMaster[]>();
+  showCompletedBillsDataSub = new Subject<BillDetail[]>();
   completedBillDataSub = new Subject<FinishedJobs[]>();
 
   getFinishedJobsSubUpdateListener(){
@@ -137,14 +137,26 @@ export class BillService {
   }
 
 
+  // showCompletedBills(data){
+  //   return this.http.get('http://127.0.0.1:8000/api/showCompletedBills/' + data)
+  //     .subscribe((response: {success: number, data: BillDetail[]})  => {
+  //       console.log('from service2');
+  //       console.log(response.data);
+  //       this.showCompletedBillsData = response.data;
+  //
+  //       this.showCompletedBillsDataSub.next([...this.showCompletedBillsData]);
+  //     });
+  // }
+
   showCompletedBills(data){
-    return this.http.post<ProductResponseData>('http://127.0.0.1:8000/api/showCompletedBills', data)
-      .subscribe((response: {success: number, data: JobMaster[]})  => {
-        const {data} = response;
-        this.showCompletedBillsData = data;
-        this.showCompletedBillsDataSub.next([...this.showCompletedBillsData]);
+    return this.http.get(GlobalVariable.BASE_API_URL + '/showCompletedBills/' + data)
+      .subscribe((response: {success: number, data: BillDetail[]}) => {
+           this.showCompletedBillsData = response.data;
+           this.showCompletedBillsDataSub.next([...this.showCompletedBillsData]);
       });
+
   }
+
 
 
 

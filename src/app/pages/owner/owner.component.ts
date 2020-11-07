@@ -14,9 +14,6 @@ export class OwnerComponent implements OnInit {
 
 
   constructor() {
-
-
-
   }
 
   ngOnInit(): void {
@@ -62,19 +59,15 @@ export class OwnerComponent implements OnInit {
     ];
 
     const totalYears = pilots.reduce((accumulator, pilot) => accumulator + pilot.years, 0);
-    console.log(totalYears);
 
     let empire = pilots.filter((pilot) => pilot.faction === 'Empire' && pilot.years === 30);
 
     empire = pilots.filter((pilot) => [22, 30].includes(pilot.years));
-    console.log(empire);
 
     const objArray = [ { foo: 1, bar: 2, baz: 9}, { foo: 3, bar: 4, baz: 10}, { foo: 5, bar: 6, baz: 20} ];
 
     const result2 = objArray.map(({ foo, baz }) => ({ foo, baz }));
 
-
-    console.log(result2);
   }
 
 }

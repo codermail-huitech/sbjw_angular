@@ -1,11 +1,8 @@
 <div>
   <mat-card class="ml-2 mt-2">
     <div class="form-container">
-      <!--      <button (click)="backFunction()">Back</button>-->
-<!--      <h2>Pan Return</h2>-->
       <form [formGroup] = jobTaskForm>
         <div class="container" fxLayout="column" fxLayout.xs="column" fxLayoutAlign="start" fxLayoutGap="10px" fxLayoutGap.xs="0">
-          <!--          <label class="m-2">Job Number: </label>-->
           <div class="container" fxLayout="row">
             <h2 class="m-3">Pan Return</h2>
             <h2 class="m-3" *ngIf="oneJobData.material_name">{{returnMaterial}}</h2>
@@ -21,7 +18,6 @@
         </div>
       </form>
       <div class="container" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="end" fxLayoutGap="10px" fxLayoutGap.xs="0" >
-        <!--          <button mat-button  mat-stroked-button (click)="testing()">show</button>-->
         <button mat-button  mat-stroked-button class="btn btn-primary" (click)="onSubmit()">Save</button>
         <button mat-button  mat-stroked-button class="btn btn-primary" (click)="getTotal()" >Get Detail</button>
       </div>

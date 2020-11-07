@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import {ActivatedRoute} from "@angular/router";
-import {JobTaskService} from "../../../../services/job-task.service";
-import {JobDetail} from "../../../../models/jobDetail.model";
-import {JobDetailComponent} from "../job-detail.component";
+import {ActivatedRoute} from '@angular/router';
+import {JobTaskService} from '../../../../services/job-task.service';
+import {JobDetail} from '../../../../models/jobDetail.model';
+import {JobDetailComponent} from '../job-detail.component';
 import { Input } from '@angular/core';
 
 @Component({
@@ -12,21 +12,18 @@ import { Input } from '@angular/core';
 })
 export class JobTransactionComponent implements OnInit {
 
-  jobMasterId : number;
-  jobTransactionData : JobDetail[];
+  jobMasterId: number;
+  jobTransactionData: JobDetail[];
 
-
-  constructor(private router : ActivatedRoute, private  jobTaskService : JobTaskService) { }
-
+  constructor(private router: ActivatedRoute, private  jobTaskService: JobTaskService) { }
   ngOnInit(): void {
     this.router.parent.params.subscribe(params => {
       this.jobMasterId = params.id;
-
     });
-    this.jobTaskService.getJobTransactionDataUpdateListener().subscribe((TransactionData : JobDetail[])=>{{
+    this.jobTaskService.getJobTransactionDataUpdateListener().subscribe((TransactionData: JobDetail[]) => {{
       this.jobTransactionData =  TransactionData;
-    }})
-    this.jobTaskService.getAllTransactions(this.jobMasterId).subscribe((response )=>{
+    }});
+    this.jobTaskService.getAllTransactions(this.jobMasterId).subscribe((response ) => {
       this.jobTransactionData =  response.data;
     });
   }

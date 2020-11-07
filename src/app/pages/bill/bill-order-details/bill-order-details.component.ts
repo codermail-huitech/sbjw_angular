@@ -12,7 +12,7 @@ export class BillOrderDetailsComponent implements OnInit {
   orderDetails: OrderDetail[];
   disableDetails: boolean;
 
-  constructor(private  route : ActivatedRoute, private billService : BillService) { }
+  constructor(private  route: ActivatedRoute, private billService: BillService) { }
 
   ngOnInit(): void {
     this.disableDetails = false;
@@ -23,8 +23,6 @@ export class BillOrderDetailsComponent implements OnInit {
     this.billService.getOrderDetailsSubUpdateListener()
       .subscribe((details: OrderDetail[]) => {
         this.orderDetails = details;
-        // console.log('bill_order_details');
-        // console.log(this.orderDetails );
       });
   }
   disablePage(){

@@ -1,6 +1,4 @@
-
 <div  fxLayout.xs="column"  fxLayout="row" fxLayoutAlign="space-between stretch" fxFlexFill id ="completed-bill-div" >
-
   <div  fxFlex="100" class="col" *ngIf="finishedBillData" [hidden]="showBill" id ="show-billNumber-div" >
     <table class="table">
       <thead>
@@ -8,7 +6,6 @@
         <th>SL No.</th>
         <th>Bill Number</th>
         <th>Status</th>
-        <!--        <th>Create Bill</th>-->
       </tr>
       </thead>
       <tbody>
@@ -16,16 +13,10 @@
         <td>{{indexOfelement+1}}</td>
         <td>{{data.bill_number}}</td>
         <td><button  class="btn btn-primary" (click)="getBillDetails(data.id)">View Bill</button></td>
-        <!--        <td>{{data.status}}</td>-->
-        <!--        <td>-->
-        <!--          <input type="checkbox" name="nameOfChoice" (click)="selectionForBill(data)" [disabled]="data.status == 'WORK IN PROGRESS'" >-->
-        <!--        </td>-->
       </tr>
       </tbody>
     </table>
   </div>
-  <!--  <div class="container" fxLayout fxLayout.xs="column" fxLayoutAlign="start" fxLayoutGap="30px" fxLayoutGap.xs="0">-->
-<!--  <div   class="container" id="bill-div" [hidden]="!showBill">-->
   <div   class="container" id="bill-div" [hidden]="!showBill" >
 
     <div style="text-align: right " >
@@ -38,7 +29,6 @@
       </button>
     </div>
     <div id="printBillDiv">
-      <!--    <div class="d-flex" *ngIf="billMasterData">-->
       <div style="align-content: center; text-align: center">
         <h2 style="text-align: center; font-weight:bold">SRIKRISHNA BANGLE JEWELLERY WORKSHOP</h2>
         <label style="font-weight: bold ; font-size: 13px ">সোনার পাত বসান ব্রোঞ্জ চুরি</label><br><br>
@@ -91,10 +81,6 @@
           <td style="padding: 2px; text-align: right">{{data.pure_gold}}</td>
           <td style="padding: 2px; text-align: right">{{data.quantity}}</td>
           <td style="padding: 2px; text-align: right">{{data.LC | currency:"&#8377;"}}</td>
-          <!--        <td>{{data.price * data.quantity}}</td>-->
-          <!--        <td>-->
-          <!--          <input type="checkbox" name="nameOfChoice" (click)="selectionForBill(data)" [disabled]="data.status == 'WORK IN PROGRESS'" >-->
-          <!--        </td>-->
         </tr>
         <hr>
         <tr style=" border-top : 1px solid black; border-collapse: collapse">
@@ -113,7 +99,6 @@
       <br><br>
       <div class="ml-2" *ngIf="totalCost"><b>Amount in Word:</b> Rupees {{convert(totalCost)}} only</div>
       <br><br>
-      <!--      <label style="">Party signature with ?, Date & Time</label>-->
       <div style="text-align: right">
         <label style="text-align:right ; margin-right: 7px; font-size: small ; font-weight: bold">Party signature with stamp, Date & Time</label><br>
         <label style="text-align:right ; margin-right: 7px; font-size: smaller">Received goods as per requirement &  in good condition</label>
@@ -122,11 +107,7 @@
       <br>
       <p style="text-align:left ; margin-right: 7px; font-size: smaller">শর্তাবলী: - আপনার যাবতীয় লেনদেন ও দেনাপাওনা সম্পূর্ণ ভাবে প্রোপরাইটার শ্রী বিবেকানন্দ ঘোষ এর সাথে সম্পর্ক যুক্ত |</p>
     </div>
-    <!--    <div>{{numberToWords.toWords(totalCost)}}</div>-->
-
   </div>
-  <!--  </div>-->
-
 </div>
 
 

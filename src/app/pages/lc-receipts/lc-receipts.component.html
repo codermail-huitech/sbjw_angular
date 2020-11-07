@@ -11,9 +11,6 @@
               </mat-option>
             </mat-select>
           </mat-form-field>
-
-
-          <!--          <div class="container" fxLayout="column" fxLayout.xs="column" fxLayoutAlign="start" fxLayoutGap="10px" fxLayoutGap.xs="0">-->
           <mat-form-field class="col-6">
             <mat-label>Agent</mat-label>
             <mat-select  formControlName="agent_id">
@@ -22,8 +19,6 @@
               </mat-option>
             </mat-select>
           </mat-form-field>
-          <!--          </div>-->
-
           <mat-form-field class="col-6">
             <mat-label> Date</mat-label>
             <input matInput
@@ -46,11 +41,7 @@
           <button class="btn btn-primary" (click)="onSubmit()" [disabled]="lcReceivedForm.invalid">Submit</button>
         </div>
       </mat-card>
-<!--      <pre>{{lcReceivedForm.value | json}}</pre>-->
     </mat-card>
-
-
-
   </div>
   <mat-card  class="col-7" style="background-color:darkcyan">
     <div *ngIf="lcReceiptList.length ===0" style="text-align: center">
@@ -74,8 +65,6 @@
           <th>Agent  Name</th>
           <th>Date</th>
           <th>L.C Received</th>
-
-
         </tr>
         </thead>
         <tbody>
@@ -85,12 +74,6 @@
           <td ><b>{{data.agent_name | uppercase}}</b></td>
           <td ><b>{{data.received_date | date :  "dd.MM.y" }}</b></td>
           <td style="text-align: right"><b>{{data.lc_received.toFixed(3) | currency:"&#8377;"}}</b></td>
-          <!--        <td>-->
-          <!--          <button  class="btn btn-primary"  style="text-align: center" (click)="fillGoldReceivedForm(data)" [disabled]="data.gold_received > 0" >-->
-          <!--             Make Entry-->
-          <!--          </button>-->
-          <!--        </td>-->
-
         </tr>
         </tbody>
       </table>

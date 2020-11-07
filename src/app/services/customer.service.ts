@@ -26,7 +26,6 @@ export class CustomerService implements OnDestroy{
   }
 
   getCustomerUpdateListener(){
-    console.log('customer listener called');
     return this.customerSub.asObservable();
   }
 
@@ -35,7 +34,6 @@ export class CustomerService implements OnDestroy{
     this.customerSub.next([...this.customerData]);
   }
   constructor(private http: HttpClient) {
-    console.log('customer service constructor called');
     this.http.get('http://127.0.0.1:8000/api/customers')
       .subscribe((response: {success: number, data: Customer[]}) => {
         // console.log(response);
@@ -63,7 +61,6 @@ export class CustomerService implements OnDestroy{
       pin : new FormControl(null, [Validators.pattern('^[0-9]*$'), Validators.maxLength(6)]),
       opening_balance_LC : new FormControl(0.00),
       opening_balance_Gold : new FormControl(0.00),
-
     });
 
   } // End of Controller
@@ -76,10 +73,6 @@ export class CustomerService implements OnDestroy{
         this.customerData.unshift(response.data);
         this.customerSub.next([...this.customerData]);
       }));
-      // .subscribe((response: {success: number, data: Customer})  => {
-      //   this.customerData.unshift(response.data);
-      //   this.customerSub.next([...this.customerData]);
-      // });
   }
   updateCustomer(customer){
     return this.http.patch<CustomerResponseData>('http://127.0.0.1:8000/api/customers/' + customer.id, customer)

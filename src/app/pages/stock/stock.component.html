@@ -2,7 +2,6 @@
   <div fxLayout="column" fxFlex="40" class="mr-1">
     <mat-card class="ml-2 mt-2">
       <div class="form-container" id = "stock-form">
-<!--        <pre>{{stockData | json}}</pre>-->
         <form [formGroup] = stockForm>
 
           <mat-form-field class="col-12">
@@ -44,19 +43,11 @@
           <div style="text-align: right">
             <button class="btn btn-primary" [hidden]="!stockForm.value.set_quantity" (click)="saveStock()" i>Submit</button>
           </div>
-
         </form>
-<!--       <div>-->
-<!--         <pre>{{stockForm.value |json}}</pre>-->
-<!--       </div>-->
-
-
       </div>
-
     </mat-card>
   </div>
   <div fxLayout="column" fxFlex="60" class="mr-1">
-<!--    <mat-card [hidden]="stockList.length === 0">-->
     <mat-card [hidden]="stockList.length === 0">
       <table class="table" id="my-table" id="stock-table-div">
         <thead>
@@ -79,10 +70,8 @@
             <td  style="text-align: right">{{stcoks.set_amount | currency:"&#8377;"}}</td>
           </tr>
         </tbody>
-
       </table>
     </mat-card>
-
   </div>
 </div>
 
@@ -109,13 +98,9 @@
           <td>{{item.quantity}}</td>
         </tr>
         </tbody>
-
       </table>
     </mat-card>
-
   </mat-card>
-
-
 </div>
 
 

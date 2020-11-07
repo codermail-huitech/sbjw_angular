@@ -15,7 +15,6 @@ import {FormControl} from "@angular/forms";
 export class BillComponent implements OnInit {
   public searchTerm: string;
   finshedJobs: FinishedJobs[] = [];
-  // finshedJobs: JobMaster[] = [];
   orderDetails: OrderDetail[];
 
   filter = new FormControl('');

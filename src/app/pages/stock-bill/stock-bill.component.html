@@ -31,7 +31,6 @@
             <td>{{item.amount}}</td>
             <td>{{item.quantity}}</td>
             <td style="text-align: center">
-<!--              <input type="checkbox" name="nameOfChoice" [disabled]="item.isSet" (click)="stockSelectionForBill(item)"  >-->
               <button mat-icon-button color="primary" aria-label="" [disabled]="item.isSet" (click)="stockSelectionForBill(item)" >
                 <mat-icon>add</mat-icon>
               </button>
@@ -61,24 +60,13 @@
                 <button mat-icon-button color="accent" aria-label="" (click)="removeFromStockBillEntry(item)" >
                   <mat-icon>delete</mat-icon>
                 </button>
-
               </td>
             </tr>
             </tbody>
           </table>
           <button class="btn badge-info" (click)="stockBillGenerate()">Generate Bill</button>
         </div>
-
       </div>
-
     </mat-card>
-
-
-
   </mat-card>
-
-
 </div>
-<!--<div>-->
-<!--  <pre>{{stockList | json}}</pre>-->
-<!--</div>-->

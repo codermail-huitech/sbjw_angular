@@ -46,11 +46,6 @@
         </div>
       </mat-card>
     </mat-card>
-
-
-
-
-
   </div>
 
     <mat-card  class="col-7" style="background-color: lightslategray">
@@ -75,8 +70,6 @@
             <th>Agent  Name</th>
             <th>Gold Received</th>
             <th>Date</th>
-
-
           </tr>
           </thead>
           <tbody>
@@ -86,12 +79,6 @@
             <td ><b>{{data.agent_name | uppercase}}</b></td>
             <td style="text-align: right"><b>{{data.gold_received.toFixed(3)}} g</b></td>
             <td ><b>{{data.received_date | date :  "dd.MM.y"}}</b></td>
-            <!--        <td>-->
-            <!--          <button  class="btn btn-primary"  style="text-align: center" (click)="fillGoldReceivedForm(data)" [disabled]="data.gold_received > 0" >-->
-            <!--             Make Entry-->
-            <!--          </button>-->
-            <!--        </td>-->
-
           </tr>
           </tbody>
         </table>
@@ -113,8 +100,5 @@
           </pagination-controls>
         </div>
       </div>
-
     </mat-card>
-
-
 </div>

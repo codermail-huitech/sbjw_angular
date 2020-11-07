@@ -21,9 +21,6 @@
                                      </mat-option>
                                    </mat-select>
                                  </mat-form-field>
-<!--                                 <mat-form-field class="col-6">-->
-<!--                                   <input matInput placeholder="Gross Weight" formControlName="gross_weight">-->
-<!--                                 </mat-form-field>-->
                                </div>
                                 <div class="container" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="start" fxLayoutGap="10px" fxLayoutGap.xs="0">
                                   <mat-form-field class="col-6">
@@ -48,12 +45,9 @@
                                 </mat-form-field>
                               </div>
                           </form>
-
                           <div class="container" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="end" fxLayoutGap="10px" fxLayoutGap.xs="0" >
-
                             <button mat-button (click)="onSubmit()" mat-stroked-button>Save</button>
                           </div>
-
                        </div>
                     </mat-card>
                 </div>
@@ -62,17 +56,14 @@
                     <div class="col-3"><button style="background-color: green" mat-button class="col-12" mat-stroked-button (click)="productShow()">{{showProduct==true? 'Show Order Master List':'Back'}}</button></div>
                   </div>
                   <div id="job-table-div" [hidden]="!showProduct">
-
                     <div class="container" fxLayout fxLayout.xs="column" fxLayoutAlign="start" fxLayoutGap="30px" fxLayoutGap.xs="0">
                       <mat-form-field class="example-full-width">
                         <input matInput placeholder="Search..." [(ngModel)]="searchTerm" name="search" type="text" autofocus>
                       </mat-form-field>
-
                       <mat-form-field class="example-full-width">
                         <input matInput placeholder="Items per page" [(ngModel)]="pageSize" name="PageSize" type="text">
                       </mat-form-field>
                     </div>
-
                     <table class="table" id="my-table">
                       <thead>
                       <tr>
@@ -155,7 +146,6 @@
                         <td>
                           <button mat-icon-button color="primary" [disabled]="details.status_id!=40" aria-label="Edit Product" (click)="placeJob(details)">
                             <mat-icon>done</mat-icon>
-
                           </button>
                         </td>
                         <td>
@@ -163,7 +153,6 @@
                             <mat-icon>delete</mat-icon>
                           </button>
                         </td>
-
                       </tr>
                       </tbody>
                     </table>

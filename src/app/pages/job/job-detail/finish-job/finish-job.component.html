@@ -1,11 +1,8 @@
 <div>
   <mat-card class="ml-2 mt-2">
     <div class="form-container">
-      <!--      <button (click)="backFunction()">Back</button>-->
-      <!--      <h2>Dal Return</h2>-->
       <form [formGroup] = jobMasterForm>
         <div class="container" fxLayout="column" fxLayout.xs="column" fxLayoutAlign="start" fxLayoutGap="10px" fxLayoutGap.xs="0">
-          <!--          <label class="m-2">Job Number: </label>-->
           <div class="container" fxLayout="row">
             <h2 class="m-3">Gross Weight</h2>
           </div>
@@ -13,23 +10,13 @@
             <mat-form-field class="col-2">
               <input matInput placeholder="Gross Weight" formControlName="gross_weight">
             </mat-form-field>
-<!--            <mat-form-field class="col-2">-->
-<!--              <input  style ="text-align: right;" matInput placeholder="Quantity" formControlName="return_quantity">-->
-<!--            </mat-form-field>-->
           </div>
         </div>
       </form>
       <div class="container" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="end" fxLayoutGap="10px" fxLayoutGap.xs="0" >
-        <!--          <button mat-button  mat-stroked-button (click)="testing()">show</button>-->
         <button mat-button  mat-stroked-button class="btn btn-primary" (click)="onSubmit()" >Save</button><br><br><br>
-<!--        <button mat-button  mat-stroked-button class="btn btn-primary"  >Get Detail</button>-->
-
       </div>
-<!--      <label style="color: red; ">** You will be redirected to the previous page after save</label>-->
-
     </div>
-
-
   </mat-card>
 </div>
 

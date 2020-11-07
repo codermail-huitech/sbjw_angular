@@ -13,9 +13,6 @@ import {SncakBarComponent} from '../../../common/sncak-bar/sncak-bar.component';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {ConfirmationDialogService} from '../../../common/confirmation-dialog/confirmation-dialog.service';
 
-
-
-
 @Component({
   selector: 'app-customer-list',
   templateUrl: './customer-list.component.html',
@@ -49,18 +46,10 @@ export class CustomerListComponent implements OnInit {
       td: {border: '1px solid red', margin: '0px', padding: '3px'}
   };
 
-  clickExport(): void {
-    // this.excelService.exportAsExcelFile(this.data, 'sample');
-  }
-
   ngOnInit(): void {
-    console.log('Customer list ONIT works');
     this.customerData = this.customerService.getCustomers();
-    console.log('First time CustomerData will be blank');
-    console.log(this.customerData);
     this.customerService.getCustomerUpdateListener()
       .subscribe((customers: Customer[]) => {
-        console.log('observable returned, now CustomerData will not be blank');
         this.customerData = customers;
       });
   }
@@ -97,10 +86,7 @@ export class CustomerListComponent implements OnInit {
     const headers = ['person_name', 'email', 'mobile1'];
     // you can use this following code instead of alasql, customerData has morefield but you can select some of them
     const selectedCustomer = this.customerData.map(({ person_name, email, mobile1 }) => ({ person_name, email, mobile1 }));
-    // we can filter the array
-    // selectedCustomer = selectedCustomer.filter((pilot) => pilot.email === 'feeney.anastasia@konopelski.com');
 
-    console.log(selectedCustomer);
     (doc as any).autoTable({
     //  head: headers,
       body: selectedCustomer,
@@ -130,10 +116,6 @@ export class CustomerListComponent implements OnInit {
   exporttoExcel(){
     // tslint:disable-next-line:prefer-const
     let headers = {person_name : 'Customer Name', email: 'Email', mobile1: 'contact'};
-    // const selectedCustomer = alasql('select person_name as Customer, email, mobile1 as Contact from ?', [this.customerData]);
-    // tslint:disable-next-line:max-line-length
-    // const selectedCustomer = this.customerData.map(({person_name as Customer, email, mobile1}) = > ({person_name as Customer, email, mobile1}));
-
 
     const selectedCustomer = this.customerData.map(({ person_name, email, mobile1 }) => ({ person_name, email, mobile1 }));
     this.excelService.exportAsExcelFile(selectedCustomer, 'testing');
@@ -156,8 +138,6 @@ export class CustomerListComponent implements OnInit {
             }
             this.currentError = null;
           }, (error) => {
-            console.log('error occured ');
-            console.log(error);
             this.currentError = error;
             this._snackBar.openFromComponent(SncakBarComponent, {
               duration: 4000, data: {message: error.message}

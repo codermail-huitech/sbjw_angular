@@ -1,18 +1,5 @@
-
-<!--<div style="background-color: white">-->
-<!--  <h1>JOb </h1>-->
-<!--  <pre>{{id}}</pre>-->
-<!--  <pre>{{oneJobData | json}}</pre>-->
-<!--</div>-->
 <div fxLayout.xs="column" fxLayout="row" fxLayoutAlign="space-between stretch" fxFlexFill id="jobDetail-div">
-
-
   <div fxLayout="row" fxFlex="40" class="mr-1" id ="jobBill-div">
-<!--    <button-->
-<!--      mat-stroked-button-->
-<!--      [printStyle]="printDivStyle"-->
-<!--      printSectionId="bill-div"-->
-<!--      ngxPrint><mat-icon>print</mat-icon></button>-->
     <div fxLayout="column" fxFlex="20" ></div>
     <div fxLayout="column" fxFlex="60" style="background-color: white" id="bill-div" >
       <div class="row">
@@ -39,7 +26,6 @@
       <div id="printSummery">
       <mat-card class="ml-2 mt-2">
         <div class="form-container">
-
           <div class="container" *ngIf="oneJobData" fxLayout="column" fxLayout.xs="column" fxLayoutAlign="start" fxLayoutGap="10px" fxLayoutGap.xs="0">
             <label style="text-align: center"><b>Job ID : {{oneJobData.job_number}}</b></label>
             <label>Challan No : &nbsp;{{oneJobData.order_number}}</label>
@@ -102,10 +88,7 @@
         </div>
       </mat-card>
       </div>
-<!--      <div [hidden]="!showTransactionDiv">-->
       <div  class="col-12">
-<!--        <router-outlet ></router-outlet>-->
-<!--        <pre>{{jobTransactionData | json}}</pre>-->
         <div id ="job-transaction-table-div">
           <table class="table" style="" id="my-table">
             <thead>
@@ -123,17 +106,11 @@
               <td colspan="2"> </td>
               <td colspan="6">NO TRANSACTION TO SHOW</td>
             </tr>
-
             </tbody>
-
           </table>
-
         </div>
-
-
       </div>
     </div>
-<!--    <div fxLayout="column" fxFlex="20"></div>-->
     </div>
 
   </div>
@@ -148,11 +125,8 @@
       <button type="button" class="btn btn-primary"  [hidden]="oneJobData.status_id==100" [routerLink]="['./panReturn']">Pan Return</button>
       <button type="button" class="btn btn-warning"  [hidden]="oneJobData.status_id==100" [routerLink]="['./nitricReturn']">Nitric Return</button>
       <button type="button" class="btn btn-primary"  [hidden]="oneJobData.status_id==100" [routerLink]="['./bronzeSubmit']">Bronze Submit</button>
-<!--      <button type="button" class="btn btn-primary"><a href="job_transaction/{{oneJobData.id}}">Transaction Details</a></button>-->
       <button type="button" class="btn btn-warning" [routerLink]="['./job_transaction']">Details</button>
       <button type="button" class="btn btn-primary"  [hidden]="oneJobData.status_id==100"   [routerLink]="['./job_finish']">Finish</button>
-
-<!--      <a [routerLink]="['./tracks']">Tracks</a> |-->
     </div>
     <div>
       <router-outlet ></router-outlet>

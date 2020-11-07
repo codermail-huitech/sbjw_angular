@@ -64,6 +64,7 @@ import { GoldReceiptsComponent } from './pages/gold-receipts/gold-receipts.compo
 import { LcReceiptsComponent } from './pages/lc-receipts/lc-receipts.component';
 import { StockComponent } from './pages/stock/stock.component';
 import { StockBillComponent } from './pages/stock-bill/stock-bill.component';
+import { AgentComponent } from './pages/agent/agent.component';
 
 
 @NgModule({
@@ -108,7 +109,8 @@ import { StockBillComponent } from './pages/stock-bill/stock-bill.component';
     GoldReceiptsComponent,
     LcReceiptsComponent,
     StockComponent,
-    StockBillComponent
+    StockBillComponent,
+    AgentComponent
 
   ],
   imports: [

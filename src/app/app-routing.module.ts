@@ -32,10 +32,12 @@ import {GoldReceiptsComponent} from "./pages/gold-receipts/gold-receipts.compone
 import {LcReceiptsComponent} from "./pages/lc-receipts/lc-receipts.component";
 import {StockComponent} from './pages/stock/stock.component';
 import {StockBillComponent} from './pages/stock-bill/stock-bill.component';
+import {AgentComponent} from './pages/agent/agent.component';
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
   {path: 'customer', canActivate:  [AuthGuardService], component: CustomerComponent},
+  {path: 'agent', canActivate:  [AuthGuardService], component: AgentComponent},
   {path: 'product', canActivate:  [AuthGuardService], component: ProductComponent},
   {path: 'rate', canActivate:  [AuthGuardService], component: RateComponent},
   {path: 'auth', component: AuthComponent},

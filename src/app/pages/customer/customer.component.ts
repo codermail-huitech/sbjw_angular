@@ -24,13 +24,10 @@ export class CustomerComponent implements OnInit {
   showDeveloperDiv = true;
 
   constructor(public customerService: CustomerService, private http: HttpClient, private _snackBar: MatSnackBar) {
-    console.log('Customer Component calls');
     this.showDeveloperDiv = false;
   }
 
   onCustomerInsert(){
-    // this.customerService.setData({id: 1061, name: 'Sujata Barai Station Para', address: 'Station Para', phone: '9232458905'});
-    // tslint:disable-next-line:max-line-length
     this.http.post('https://angular-test-db-67686.firebaseio.com/customers.json',
       {name: 'Sandip Dhara', address: 'Barrackpore Shibtala', phone: '5236458905'})
       .subscribe((response) => {
@@ -43,12 +40,7 @@ export class CustomerComponent implements OnInit {
      // this.customerService.getCustomerUpdateListener();
   }
 
-  onGetCustomers() {
-    // tslint:disable-next-line:no-unused-expression
-  }
-
   onSubmit() {
-    console.log(this.customerForm.value);
     this.customerService.saveCustomer(this.customerForm.value).subscribe((response: {success: number, data: Customer}) => {
       if (response.data){
         Swal.fire(
@@ -57,7 +49,6 @@ export class CustomerComponent implements OnInit {
           'success'
         );
         this.customers.unshift(response.data);
-
       }
     });
   }
@@ -87,19 +78,13 @@ export class CustomerComponent implements OnInit {
           'Customer Updated',
           'success'
         );
-        // this._snackBar.openFromComponent(SncakBarComponent, {
-        //   duration: 4000, data: {message: 'Hello World!'}
-        // });
       }
       this.currentEerror = null;
     }, (error) => {
-      console.log('error occured ');
-      console.log(error);
       this.currentEerror = error;
       this._snackBar.openFromComponent(SncakBarComponent, {
         duration: 4000, data: {message: error.message}
       });
     });
-
   }
 }

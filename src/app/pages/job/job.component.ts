@@ -32,7 +32,6 @@ export class JobComponent implements OnInit {
   minDate = new Date(2010, 11, 2);
   maxDate = new Date(2021, 3, 2);
   pipe = new DatePipe('en-US');
-  isEditEnabled = true;
 
   public searchTerm: string;
   filter = new FormControl('');
@@ -40,14 +39,11 @@ export class JobComponent implements OnInit {
   pageSize: number;
   p = 1;
 
-
   constructor(private productService: ProductService, private _snackBar: MatSnackBar, private confirmationDialogService: ConfirmationDialogService, private jobService: JobService, private orderService: OrderService) {
     this.products = this.productService.getProducts();
     this.karigarhData = this.jobService.getAllKarigarhs();
-
     this.page = 1;
     this.pageSize = 15;
-
   }
 
   ngOnInit(): void {
@@ -60,8 +56,6 @@ export class JobComponent implements OnInit {
     });
     this.orderService.getOrderUpdateListener().subscribe((responseProducts: OrderMaster[]) => {
       this.orderMasterData = responseProducts;
-      console.log("job component");
-      console.log (responseProducts);
     });
     this.productService.getProductUpdateListener()
       .subscribe((responseProducts: Product[]) => {
@@ -70,7 +64,6 @@ export class JobComponent implements OnInit {
     this.orderService.getMaterialUpdateListener()
       .subscribe((material: Material[]) => {
         this.materialList = material;
-        console.log(this.materialList);
       });
     this.materialList = this.orderService.getMaterials();
   }
@@ -89,68 +82,44 @@ export class JobComponent implements OnInit {
   }
 
   placeJob(details) {
-    console.log("details");
-    console.log(details);
-    // console.log("materials");
-    // console.log(this.materialList);
     const index = this.materialList.findIndex(x => x.id === details.material_id);
     this.jobMasterForm.patchValue({
-      // id: details.order_master_id,
       model_number: details.model_number,
       order_details_id: details.id,
       material_name: this.materialList[index].material_name
     });
     this.jobDetailsForm.patchValue({material_id: details.material_id, id: details.id});
-    // this.jobDetailsForm.value.id = details.id;
-    // console.log('job details form');
-    // console.log(this.jobDetailsForm.value);
   }
 
   onSubmit() {
-    console.log('component');
-    console.log(this.jobMasterForm.value);
-
     this.confirmationDialogService.confirm('Please confirm..', 'Do you really want to send order to job ?')
       .then((confirmed) => {
-
         if (confirmed) {
-
           this.jobMasterForm.value.date = this.pipe.transform(this.jobMasterForm.value.date, 'yyyy-MM-dd');
           const user = JSON.parse(localStorage.getItem('user'));
           this.jobDetailsForm.value.employee_id = user.id;
-          // console.log(this.jobDetailsForm.value);
           let saveObserable = new Observable<any>();
           saveObserable = this.jobService.saveJob();
           saveObserable.subscribe((response) => {
             if (response.success === 1) {
               const index = this.orderDetails.findIndex(x => x.id === this.jobDetailsForm.value.id);
               this.orderDetails[index].status_id = 1;
-              // this.isEditEnabled = false;
               this.jobMasterForm.reset();
               this.jobDetailsForm.reset();
-
               this.jobService.getSavedJobsUpdateListener().subscribe();
               Swal.fire(
                 'Saved!',
                 'Order has been sent to job',
                 'success'
               );
-              // this._snackBar.openFromComponent(SncakBarComponent, {
-              //   duration: 4000, data: {message: 'Job Saved'}
-              // });
             }
           }, (error) => {
-            console.log('error occured ');
-            console.log(error);
             this._snackBar.openFromComponent(SncakBarComponent, {
               duration: 4000, data: {message: error.message}
             });
           });
         }
-
-
       })
-
       .catch(() => {
         console.log('User dismissed the dialog (e.gf., by using ESC, clicking the cross icon, or clicking outside the dialog)');
       });

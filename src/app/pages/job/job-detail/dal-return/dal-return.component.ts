@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import {JobTaskService} from "../../../../services/job-task.service";
-import {FormGroup} from "@angular/forms";
-import {JobMaster} from "../../../../models/jobMaster.model";
-import {ActivatedRoute} from "@angular/router";
-import {Material} from "../../../../models/material.model";
+import {JobTaskService} from '../../../../services/job-task.service';
+import {FormGroup} from '@angular/forms';
+import {JobMaster} from '../../../../models/jobMaster.model';
+import {ActivatedRoute} from '@angular/router';
+import {Material} from '../../../../models/material.model';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import {SncakBarComponent} from "../../../../common/sncak-bar/sncak-bar.component";
-import {JobDetail} from "../../../../models/jobDetail.model";
+import {SncakBarComponent} from '../../../../common/sncak-bar/sncak-bar.component';
+import {JobDetail} from '../../../../models/jobDetail.model';
 
 
 @Component({
@@ -16,35 +16,35 @@ import {JobDetail} from "../../../../models/jobDetail.model";
 })
 export class DalReturnComponent implements OnInit {
 
-  jobMasterId : number;
+  jobMasterId: number;
   jobTaskForm: FormGroup;
-  savedJobsData : JobMaster[];
-  oneJobData : JobMaster;
-  materialData : Material[] ;
-  returnMaterial : string;
+  savedJobsData: JobMaster[];
+  oneJobData: JobMaster;
+  materialData: Material[] ;
+  returnMaterial: string;
   public currentError: any;
   showJobTaskData = false;
-  jobTaskData : JobDetail[];
-  total : number;
+  jobTaskData: JobDetail[];
+  total: number;
 
-  constructor(private jobTaskService: JobTaskService,private router: ActivatedRoute,private _snackBar: MatSnackBar) { }
+  constructor(private jobTaskService: JobTaskService, private router: ActivatedRoute, private _snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
     this.total = 0;
     this.jobTaskForm = this.jobTaskService.jobTaskForm;
     this.savedJobsData = this.jobTaskService.getAllJobList();
-    this.router.parent.params.subscribe(params =>{
-      this.jobMasterId=params.id;
+    this.router.parent.params.subscribe(params => {
+      this.jobMasterId = params.id;
     });
     const index = this.savedJobsData.findIndex(x => x.id == this.jobMasterId);
     this.oneJobData = this.savedJobsData[index];
     this.jobTaskService.getMaterialDataUpdateListener().subscribe((response) => {
       this.materialData = response;
     });
-    this.materialData=this.jobTaskService.getMaterials();
-    const matIndex=this.materialData.findIndex(x =>x.main_material_id == this.oneJobData.material_id);
+    this.materialData = this.jobTaskService.getMaterials();
+    const matIndex = this.materialData.findIndex(x => x.main_material_id == this.oneJobData.material_id);
     this.jobTaskForm.patchValue({material_name: this.materialData[matIndex].material_name});
-    this.returnMaterial =this.materialData[matIndex].material_name;
+    this.returnMaterial = this.materialData[matIndex].material_name;
     this.jobTaskService.getJobTaskDataUpdateListener().subscribe((response) => {
       this.jobTaskData = response;
     });
@@ -52,25 +52,22 @@ export class DalReturnComponent implements OnInit {
   }
 
   onSubmit(){
-    if(this.jobTaskForm.value.return_quantity === null){
+    if (this.jobTaskForm.value.return_quantity === null){
       this._snackBar.openFromComponent(SncakBarComponent, {
         duration: 4000, data: {message: 'Please enter quantity before submit'}
       });
     }else {
       this.router.parent.params.subscribe(params => {
-
         this.jobMasterId = params.id;
-
       });
       this.savedJobsData = this.jobTaskService.getAllJobList();
-      const index = this.savedJobsData.findIndex(x => x.id == this.jobMasterId);
+      const index = this.savedJobsData.findIndex(x => x.id === this.jobMasterId);
       this.oneJobData = this.savedJobsData[index];
-
 
       this.jobTaskService.getMaterialDataUpdateListener().subscribe((response) => {
         this.materialData = response;
       });
-      const matIndex = this.materialData.findIndex(x => x.main_material_id == this.oneJobData.material_id);
+      const matIndex = this.materialData.findIndex(x => x.main_material_id === this.oneJobData.material_id);
 
       const user = JSON.parse(localStorage.getItem('user'));
       this.jobTaskForm.patchValue({
@@ -93,7 +90,7 @@ export class DalReturnComponent implements OnInit {
           this.jobTaskService.jobTaskData().subscribe((response) => {
             this.jobTaskData = response.data;
           });
-          this.jobTaskForm.controls['return_quantity'].reset();
+          this.jobTaskForm.controls.return_quantity.reset();
         }
         this.currentError = null;
 
@@ -106,27 +103,25 @@ export class DalReturnComponent implements OnInit {
         });
       });
     }
-
   }
   getTotal(){
-    this.total=0;
+    this.total = 0;
     this.showJobTaskData = true;
-    this.router.parent.params.subscribe(params =>{
-      this.jobMasterId=params.id;
+    this.router.parent.params.subscribe(params => {
+      this.jobMasterId = params.id;
     });
     this.savedJobsData = this.jobTaskService.getAllJobList();
-    const index = this.savedJobsData.findIndex(x => x.id == this.jobMasterId);
+    const index = this.savedJobsData.findIndex(x => x.id === this.jobMasterId);
     this.oneJobData = this.savedJobsData[index];
     const user = JSON.parse(localStorage.getItem('user'));
-    // this.jobTaskForm.patchValue({ job_Task_id:1, material_name: this.oneJobData.material_name, material_id: this.oneJobData.material_id,id:this.jobMasterId, size:this.oneJobData.size,employee_id: user.id });
-    this.jobTaskForm.patchValue({ job_Task_id:4, material_id: this.oneJobData.material_id,id:this.jobMasterId, size:this.oneJobData.size,employee_id: user.id });
+    // tslint:disable-next-line:max-line-length
+    this.jobTaskForm.patchValue({ job_Task_id: 4, material_id: this.oneJobData.material_id, id: this.jobMasterId, size: this.oneJobData.size, employee_id: user.id });
     this.jobTaskService.jobTaskData().subscribe((response) => {
       this.jobTaskData = response.data;
-      for(let i=0;i<this.jobTaskData.length;i++){
-        this.total=this.total+this.jobTaskData[i].material_quantity;
+      // tslint:disable-next-line:prefer-for-of
+      for (let i = 0; i < this.jobTaskData.length; i++){
+        this.total = this.total + this.jobTaskData[i].material_quantity;
       }
     });
   }
-
-
 }

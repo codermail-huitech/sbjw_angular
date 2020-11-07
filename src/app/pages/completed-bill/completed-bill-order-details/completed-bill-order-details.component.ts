@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {OrderDetail} from "../../../models/orderDetail.model";
-import {ActivatedRoute} from "@angular/router";
-import {BillService} from "../../../services/bill.service";
+import {OrderDetail} from '../../../models/orderDetail.model';
+import {ActivatedRoute} from '@angular/router';
+import {BillService} from '../../../services/bill.service';
 
 @Component({
   selector: 'app-completed-bill-order-details',
@@ -11,24 +11,16 @@ import {BillService} from "../../../services/bill.service";
 export class CompletedBillOrderDetailsComponent implements OnInit {
   orderDetails: OrderDetail[];
   disableDetails: boolean;
-  constructor(private  route : ActivatedRoute, private billService : BillService) { }
+  constructor(private  route: ActivatedRoute, private billService: BillService) { }
 
   ngOnInit(): void {
     this.disableDetails = false;
     this.route.params.subscribe(params => {
-      // console.log(params['id']);
-      this.billService.getCompletedBIllDetails(params['id']);
-
-      // this.billService.getCompletedBillOrderDetailsSubUpdateListener()
-      //   .subscribe((details: OrderDetail[]) => {
-      //     this.orderDetails = details;
-      //     console.log(details);
-      //   });
+      this.billService.getCompletedBIllDetails(params.id);
     });
     this.billService.getCompletedBillOrderDetailsSubUpdateListener()
       .subscribe((details: OrderDetail[]) => {
-        this.orderDetails=details;
-        console.log(details);
+        this.orderDetails = details;
       });
   }
   disablePage(){

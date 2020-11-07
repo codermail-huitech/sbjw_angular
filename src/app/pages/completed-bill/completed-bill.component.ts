@@ -23,7 +23,6 @@ export class CompletedBillComponent implements OnInit {
     this.pageSize = 15;
   }
 
-
   ngOnInit(): void {
     this.billService.getCompletedBillDataSubUpdateListener().subscribe((finishedJobs) => {
       this.finshedJobs = finishedJobs;

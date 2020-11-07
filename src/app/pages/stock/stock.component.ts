@@ -31,8 +31,6 @@ export class StockComponent implements OnInit {
   divider: number;
   remainder: number;
   totalGold: number;
-  // totalAraay: number;
-  // stockCustomerList: Customer[];
   filterResult: any;
   showStockList = false;
 
@@ -62,11 +60,6 @@ export class StockComponent implements OnInit {
       }
       else{
         this.stockService.getRecordByJobMasterId(params.id);
-        // this.billService.getTotalGoldQuantity(params.id).subscribe((response:{success: number, data: number }) => {
-        //   this.totalGold =  response.data ;
-        //
-        //
-        // });
 
         this.stockService.getJobMasterDataUpdateListener().subscribe((response) => {
           this.jobMasterData = response;
@@ -76,8 +69,6 @@ export class StockComponent implements OnInit {
               jobMasterData: this.jobMasterData,
               totalGold: this.totalGold
             };
-            // console.log(this.jobMasterContainer);
-
 
             this.stockForm.patchValue({
               person_name: this.jobMasterContainer.jobMasterData[0].person_name,
@@ -96,25 +87,9 @@ export class StockComponent implements OnInit {
             });
           });
 
-          // this.stockForm.patchValue({
-          //   person_name: this.jobMasterData[0].person_name,
-          //   job_number: this.jobMasterData[0].job_number,
-          //   order_details_id: this.jobMasterData[0].order_details_id,
-          //   job_master_id: this.jobMasterData[0].job_master_id,
-          //   order_name: this.jobMasterData[0].order_name,
-          //   // approx_gold: this.jobMasterData[0].approx_gold,
-          //   total_gold: this.totalGold,
-          //   quantity: this.jobMasterData[0].quantity,
-          //   price: this.jobMasterData[0].price,
-          //   size: this.jobMasterData[0].size,
-          //   material_id: this.jobMasterData[0].material_id,
-          //   gross_weight: this.jobMasterData[0].gross_weight,
-          //   amount: this.jobMasterData[0].price * this.jobMasterData[0].quantity,
-          // });
         });
       }
     });
-
   }
 
   calculateDivision() {
@@ -176,13 +151,11 @@ export class StockComponent implements OnInit {
   }
 
   saveStock(){
-    // console.log("save");
     // tslint:disable-next-line:radix
     this.stockList = Array(parseInt(this.stockForm.value.division)).fill(this.stockForm.value);
     if (this.tempStock){
       this.stockList.push(this.tempStock);
     }
-    // console.log(this.stockList);
     this.stockService.saveStock(this.stockList).subscribe((response: {success: number, data: Stock})  => {
         if (response.data) {
           Swal.fire(
@@ -190,16 +163,10 @@ export class StockComponent implements OnInit {
             'Submitted in Stock',
             'success'
           );
-          // const index = this.filterResult.findIndex(x => x.id === this.stockForm.value.job_master_id);
-          // this.filterResult.splice(index,1);
-          // this.stockService.getUpdatedStockCustomer();
-          // this.stockService.getUpdatedStockRecord();
           this.jobService.getUpdatedFinishedJob();
           this.stockService.getUpdatedStockList();
           this.stockForm.reset();
         }
     });
-
   }
-
 }

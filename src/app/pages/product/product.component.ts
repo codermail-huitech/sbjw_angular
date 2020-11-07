@@ -31,15 +31,11 @@ export class ProductComponent implements OnInit {
   pageSize = 15;
   filter = new FormControl('');
   p = 1;
-  //testing purpose......
-
   // tslint:disable-next-line:max-line-length
   constructor(private productService: ProductService, private priceCodeService: PriceCodeService, private productCategoryService: ProductCategoryService, private  snackBar: MatSnackBar, private confirmationDialogService: ConfirmationDialogService) {
-
   }
 
   ngOnInit(): void {
-
     this.productForm = this.productService.productForm;
     this.products = this.productService.getProducts();
     this.productService.getProductUpdateListener().subscribe((responseProducts: Product[]) => {
@@ -60,7 +56,6 @@ export class ProductComponent implements OnInit {
   }
 
   populateFormByCurrentProduct(product: Product){
-    console.log(product);
     this.productService.fillFormByUpdatebaleData(product);
   }
 
@@ -85,7 +80,6 @@ export class ProductComponent implements OnInit {
       });
     });
   }
-
 
   public deleteCurrentProduct(product: Product) {
     this.confirmationDialogService.confirm('Please confirm..', 'Do you really want to delete customer ?')
@@ -114,5 +108,4 @@ export class ProductComponent implements OnInit {
         console.log('User dismissed the dialog (e.g., by using ESC, clicking the cross icon, or clicking outside the dialog)');
       });
   }
-
 }

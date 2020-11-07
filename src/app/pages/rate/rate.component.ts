@@ -45,14 +45,9 @@ export class RateComponent implements OnInit {
       this.customerCategories = response;
     });
 
-    // this.rateData = this.rateService.gettingRateData();
-    // console.log("rates component");
-    // console.log(this.rateData);
-
   }
 
   onSubmit(){
-    console.log(this.rateForm.value);
     this.rateService.saveRate().subscribe((response: {success: number, data: Rate}) => {
       if (response.data){
         Swal.fire(
@@ -68,7 +63,6 @@ export class RateComponent implements OnInit {
   }
 
   deleteRate(rateData){
-
     Swal.fire({
       title: 'Are you sure?',
       text: 'Item will be deleted from rate list',
@@ -79,7 +73,7 @@ export class RateComponent implements OnInit {
     }).then((result) => {
       if (result.value) {
         this.rateService.deleteRate(rateData.id).subscribe((response: {success: number, data: Rate} ) => {
-          if(response.data){
+          if (response.data){
             const index = this.rateData.findIndex(x => x.id === response.data.id);
             this.rateData.splice(index, 1);
             Swal.fire(

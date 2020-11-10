@@ -81,7 +81,7 @@
               <button mat-button  mat-stroked-button >
                 Clear
               </button>
-              <button mat-button  mat-stroked-button [disabled]="!agentForm.valid" >
+              <button mat-button  mat-stroked-button [disabled]="!agentForm.valid || agentForm.value.id" >
                 Save
               </button>
               <button mat-button type="button"  mat-stroked-button  [disabled]="!agentForm.dirty" (click)="updateAgent()">

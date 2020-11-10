@@ -47,11 +47,11 @@
               </tr>
               <tr>
                 <td colspan="2" class="col-6">M.C. :</td>
-                <td colspan="2" class="col-6">Gold : {{totalData[0] ? totalData[0].total.toFixed(3) : 0}} </td>
+                <td colspan="2" class="col-6">Gold : {{tempTotalData[0] ? tempTotalData[0].toFixed(3) : 0}} </td>
               </tr>
               <tr>
                 <td colspan="2" class="col-6">H.M.C :</td>
-                <td colspan="2" class="col-6">RGW- :{{totalData[1] ? totalData[1].total.toFixed(3) : 0}}</td>
+                <td colspan="2" class="col-6">RGW- :{{tempTotalData[1] ? tempTotalData[1].toFixed(3) : 0}}</td>
               </tr>
               <tr>
                 <td colspan="2" class="col-6">H.C. :</td>
@@ -59,14 +59,14 @@
               </tr>
               <tr>
                 <td colspan="2" class="col-6">Polish :</td>
-                <td colspan="2" class="col-6">NGR- : {{totalData[6] ? totalData[6].total.toFixed(3) : 0}}</td>
+                <td colspan="2" class="col-6">NGR- : {{tempTotalData[6] ? tempTotalData[6].toFixed(3) : 0}}</td>
               </tr>
               <tr>
-                <td colspan="2" class="col-6">Dal: {{totalData[2] ? totalData[2].total.toFixed(3) : 0}}</td>
-                <td colspan="2" class="col-6">Pan+ : {{totalData[4] ? totalData[4].total.toFixed(3) : 0}}</td>
+                <td colspan="2" class="col-6">Dal: {{tempTotalData[2] ? tempTotalData[2].toFixed(3) : 0}}</td>
+                <td colspan="2" class="col-6">Pan+ : {{tempTotalData[4] ? tempTotalData[4].toFixed(3) : 0}}</td>
               </tr>
               <tr>
-                <td colspan="2" class="col-6">Bnz : {{totalData[7] ? totalData[7].total.toFixed(3) : 0}}</td>
+                <td colspan="2" class="col-6">Bnz : {{tempTotalData[7] ? tempTotalData[7].toFixed(3) : 0}}</td>
                 <td colspan="2" class="col-6">PLoss+ :{{oneJobData.p_loss}}</td>
               </tr>
               <tr>
@@ -88,7 +88,7 @@
         </div>
       </mat-card>
       </div>
-      <div  class="col-12">
+      <div *ngIf="jobTransactionData?.length" class="col-12">
         <div id ="job-transaction-table-div">
           <table class="table" style="" id="my-table">
             <thead>
@@ -98,11 +98,13 @@
             </tr>
             </thead>
             <tbody>
-            <tr *ngFor="let item of jobTransactionData ; let indexOfelement = index;" [hidden]="jobTransactionData.length === 0">
+            <tr *ngFor="let item of jobTransactionData ; let indexOfelement = index;">
               <td colspan="2">{{indexOfelement+1}}</td>
               <td colspan="6">{{item.material_quantity.toFixed(3)}}gm {{item.task_name}}ed by {{item.person_name}} on {{item.date}} at {{item.time}} &nbsp;&nbsp;&nbsp;{{((indexOfelement+1)==1)? "[JOB STARTED]": " "}}</td>
             </tr>
-            <tr [hidden]="!(jobTransactionData.length === 0)">
+<!--            <tr [hidden]="!(jobTransactionData.length === 0)">-->
+            <tr *ngIf="!jobTransactionData?.length">
+
               <td colspan="2"> </td>
               <td colspan="6">NO TRANSACTION TO SHOW</td>
             </tr>
@@ -112,6 +114,7 @@
       </div>
     </div>
     </div>
+
 
   </div>
 
@@ -131,9 +134,9 @@
     <div>
       <router-outlet ></router-outlet>
     </div>
-    <div>
-
-    </div>
+<!--    <div>-->
+<!--      <pre>{{totalData | json}}</pre>-->
+<!--    </div>-->
   </div>
 
 </div>

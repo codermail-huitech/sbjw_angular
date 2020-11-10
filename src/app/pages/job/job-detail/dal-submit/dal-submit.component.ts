@@ -30,7 +30,7 @@ export class DalSubmitComponent implements OnInit {
     this.total = 0;
     this.jobTaskForm = this.jobTaskService.jobTaskForm;
     this.router.parent.params.subscribe(params => {
-      this.jobMasterId = params.id;
+      this.jobMasterId = parseInt(params.id);
     });
     this.savedJobsData = this.jobTaskService.getAllJobList();
     const index = this.savedJobsData.findIndex(x => x.id === this.jobMasterId);
@@ -47,7 +47,7 @@ export class DalSubmitComponent implements OnInit {
       });
     }else {
       this.router.parent.params.subscribe(params => {
-        this.jobMasterId = params.id;
+        this.jobMasterId = parseInt(params.id);
       });
       this.savedJobsData = this.jobTaskService.getAllJobList();
       const index = this.savedJobsData.findIndex(x => x.id === this.jobMasterId);

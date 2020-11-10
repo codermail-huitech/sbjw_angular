@@ -12,10 +12,11 @@ export class Agent{
   po: string;
   area: string;
   pin: string;
+  id: number;
   // constructor(public id: number, public person_name: string, public email: string, public customer_category_id: number) {
   //     this.person_type_id = 7;
   // }
-  id: number;
+
   constructor(){
 
   }

@@ -36,7 +36,7 @@ export class GoldSubmitComponent implements OnInit {
     this.total = 0;
     this.jobTaskForm = this.jobTaskService.jobTaskForm;
     this.router.parent.params.subscribe(params => {
-      this.jobMasterId = params.id;
+      this.jobMasterId = parseInt(params.id);
     });
     this.savedJobsData = this.jobTaskService.getAllJobList();
     const index = this.savedJobsData.findIndex(x => x.id === this.jobMasterId);
@@ -51,10 +51,10 @@ export class GoldSubmitComponent implements OnInit {
       });
     }else{
       this.router.parent.params.subscribe(params => {
-        this.jobMasterId = params.id;
+        this.jobMasterId = parseInt(params.id);
       });
       this.savedJobsData = this.jobTaskService.getAllJobList();
-      const index = this.savedJobsData.findIndex(x => x.id == this.jobMasterId);
+      const index = this.savedJobsData.findIndex(x => x.id === this.jobMasterId);
       this.oneJobData = this.savedJobsData[index];
       const user = JSON.parse(localStorage.getItem('user'));
       this.jobTaskForm.patchValue({ job_Task_id: 1, material_id: this.oneJobData.material_id, id: this.jobMasterId, size: this.oneJobData.size, employee_id: user.id });

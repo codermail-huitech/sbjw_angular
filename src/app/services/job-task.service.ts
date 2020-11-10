@@ -102,7 +102,6 @@ export class JobTaskService implements OnDestroy{
     this.http.get(GlobalVariable.BASE_API_URL + '/savedJobs')
       .subscribe((response: {success: number, data: JobMaster[]}) => {
         const {data} = response;
-        this.savedJobsList = data;
         this.savedJobsSub.next([...this.savedJobsList]);
       });
 
@@ -148,6 +147,16 @@ export class JobTaskService implements OnDestroy{
         const {data} = response;
         this.savedJobsList = data;
         this.savedJobsSub.next([...this.savedJobsList]);
+      });
+
+  }
+
+  getUpdatedFinishedJobs(){
+    this.http.get(GlobalVariable.BASE_API_URL + '/finishedJobs')
+      .subscribe((response: {success: number, data: JobMaster[]}) => {
+        const {data} = response;
+        this.finishedJobsList = data;
+        this.finishedJobsSub.next([...this.finishedJobsList]);
       });
 
   }
@@ -199,6 +208,15 @@ export class JobTaskService implements OnDestroy{
         this.totalData = data;
         this.totalDataSub.next([...this.totalData]);
       })));
+  }
+
+  getTotalData(){
+    this.http.post( GlobalVariable.BASE_API_URL + '/getTotal', { data : this.jobTaskForm.value})
+      .subscribe((response: {success: number, data: JobDetail[]}) => {
+        const {data} = response;
+        this.totalData = data;
+        this.totalDataSub.next([...this.totalData]);
+      });
   }
 
   getAllTransactions(data){

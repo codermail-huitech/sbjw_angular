@@ -1,5 +1,5 @@
-<div id ="job-transaction-table-div" >
-  <table class="table" id="my-table">
+<div id ="job-transaction-table-div" *ngIf="jobTransactionData?.length">
+  <table class="table" id="my-table" >
     <thead>
     <tr>
       <th>SL. NO</th>
@@ -7,15 +7,16 @@
     </tr>
     </thead>
     <tbody>
-    <tr *ngFor="let item of jobTransactionData ; let indexOfelement = index;" [hidden]="jobTransactionData.length === 0">
+    <tr *ngFor="let item of jobTransactionData ; let indexOfelement = index;">
+<!--    <tr *ngFor="let item of jobTransactionData ; let indexOfelement = index;" [hidden]="jobTransactionData.length === 0">-->
       <td>{{indexOfelement+1}}</td>
       <td>{{item.material_quantity.toFixed(3)}}gm {{item.task_name}}ed by {{item.person_name}} on {{item.date}} at {{item.time}} &nbsp;&nbsp;&nbsp;{{((indexOfelement+1)==1)? "[JOB STARTED]": " "}}</td>
     </tr>
     <tr [hidden]="!(jobTransactionData.length === 0)">
-      <td> </td>
       <td>NO TRANSACTION TO SHOW</td>
-    </tr>
     </tbody>
   </table>
 </div>
+
+
 

@@ -28,6 +28,7 @@ export class Stock{
   pure_gold?: number;
   cost?: number;
   isSet?: boolean;
+  agent_id?: number;
   constructor() {
   }
 }

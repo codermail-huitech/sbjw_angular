@@ -44,8 +44,8 @@ const routes: Routes = [
   {path: 'owner', canActivate:  [AuthGuardService], component: OwnerComponent},
   {path: 'order', canActivate:  [AuthGuardService], component: OrderComponent},
   {path: 'job', canActivate:  [AuthGuardService], component: JobComponent},
-  {path: 'job_task',canActivate : [AuthGuardService], component: JobTaskComponent},
-  {path: 'job_detail/:id',canActivate : [AuthGuardService], component: JobDetailComponent,
+  {path: 'job_task', canActivate : [AuthGuardService], component: JobTaskComponent},
+  {path: 'job_detail/:id', canActivate : [AuthGuardService], component: JobDetailComponent,
     children: [
       {path: '', component: JobTransactionComponent},
       {path: 'goldSubmit', component: GoldSubmitComponent},
@@ -61,7 +61,7 @@ const routes: Routes = [
       // {path: 'albums', component: ArtistAlbumListComponent},
     ]
   },
-  {path: 'bill',canActivate : [AuthGuardService], component: BillComponent},
+  {path: 'bill', canActivate : [AuthGuardService], component: BillComponent},
   {path: 'bill_order_details/:id', canActivate:  [AuthGuardService], component: BillOrderDetailsComponent,
     children: [
       {path: 'bill_jobMaster_details/:id', component: BillJobMasterDetailsComponent}

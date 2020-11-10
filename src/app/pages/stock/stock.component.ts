@@ -84,6 +84,7 @@ export class StockComponent implements OnInit {
               material_id: this.jobMasterContainer.jobMasterData[0].material_id,
               gross_weight: this.jobMasterContainer.jobMasterData[0].gross_weight,
               amount: this.jobMasterContainer.jobMasterData[0].price * this.jobMasterContainer.jobMasterData[0].quantity,
+              agent_id: this.jobMasterContainer.jobMasterData[0].agent_id,
             });
           });
 
@@ -130,6 +131,7 @@ export class StockComponent implements OnInit {
             size: this.stockForm.value.size,
             material_id: this.stockForm.value.material_id,
             amount: this.stockForm.value.amount,
+            agent_id: this.stockForm.value.agent_id,
             set_quantity: this.stockForm.value.quantity - (this.divider * this.stockForm.value.division),
             set_gold: parseFloat(String((this.stockForm.value.total_gold / this.stockForm.value.quantity) * (this.stockForm.value.quantity - (this.divider * this.stockForm.value.division)))).toFixed(3),
             set_amount: parseFloat(String((this.stockForm.value.amount / this.stockForm.value.quantity) * (this.stockForm.value.quantity - (this.divider * this.stockForm.value.division)))).toFixed(3),

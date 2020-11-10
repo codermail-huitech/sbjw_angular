@@ -58,6 +58,7 @@ export class StockService {
       set_quantity : new FormControl(null, [Validators.required]),
       set_amount : new FormControl(null, [Validators.required]),
       set_gross_weight : new FormControl(null, [Validators.required]),
+      agent_id : new FormControl(null, [Validators.required]),
       // tag : new FormControl(null, [Validators.required])
     });
     this.http.get(GlobalVariable.BASE_API_URL + '/getStockList').subscribe((response: {success: number, data: Stock[]})=>{

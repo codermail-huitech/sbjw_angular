@@ -36,8 +36,9 @@ export class GoldReturnComponent implements OnInit {
     this.jobTaskForm = this.jobTaskService.jobTaskForm;
     this.savedJobsData = this.jobTaskService.getAllJobList();
     this.router.parent.params.subscribe(params => {
-      this.jobMasterId = params.id;
+      this.jobMasterId = parseInt(params.id);
     });
+    this.savedJobsData = this.jobTaskService.getAllJobList();
     const index = this.savedJobsData.findIndex(x => x.id === this.jobMasterId);
     this.oneJobData = this.savedJobsData[index];
 
@@ -60,7 +61,7 @@ export class GoldReturnComponent implements OnInit {
       });
     }else {
       this.router.parent.params.subscribe(params => {
-        this.jobMasterId = params.id;
+        this.jobMasterId = parseInt(params.id);
       });
       this.savedJobsData = this.jobTaskService.getAllJobList();
       const index = this.savedJobsData.findIndex(x => x.id === this.jobMasterId);

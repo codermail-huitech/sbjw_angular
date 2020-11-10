@@ -30,9 +30,11 @@ export class JobDetailComponent implements OnInit {
   totalData: JobDetail[];
   showTransactionDiv = false;
   jobTransactionData: JobDetail[];
+  tempTotalData = [0, 0 , 0 , 0 , 0 , 0, 0, 0];
 
 
-  constructor(private route: ActivatedRoute, private jobTaskService: JobTaskService, private orderService: OrderService, private authService: AuthService, private jobService: JobService) {
+  constructor(private route: ActivatedRoute , private  jobTaskService: JobTaskService , private  jobService: JobService , private  orderService: OrderService) {
+    this.karigarhData = this.jobService.getAllKarigarhs();
   }
 
   printDivStyle = {
@@ -44,78 +46,87 @@ export class JobDetailComponent implements OnInit {
   };
 
   ngOnInit(): void {
+
     this.showTransactionDiv = true;
     this.jobTaskForm = this.jobTaskService.jobTaskForm;
+
     this.route.params.subscribe(params => {
       this.showTransactionDiv = false;
-      this.id = params.id;
-      this.jobTaskForm.patchValue({id : params.id });
-      this.savedJobsData = this.jobTaskService.getAllJobList();
-      const index = this.savedJobsData.findIndex(x => x.id === this.id);
-      if (index === -1){
-        this.jobTaskService.getFinishedJobsUpdateListener().subscribe((jobData: JobMaster[]) => {
-          this.savedJobsData = jobData;
-          const index = this.savedJobsData.findIndex(x => x.id == this.id);
-          this.oneJobData = this.savedJobsData[index];
-          this.jobTaskForm.patchValue({id : this.id});
-          this.jobTaskForm.value.id = this.oneJobData.id;
-          this.job_number = this.oneJobData.job_number;
-        });
-        this.savedJobsData = this.jobTaskService.getFinishedJobList();
+      this.id = parseInt(params.id);
+      this.jobTaskForm.patchValue({id: params.id});
+      this.jobTaskService.getUpdatedSavedJobs();
+      this.jobTaskService.getUpdatedFinishedJobs();
+      this.jobTaskService.getSavedJobsUpdateListener().subscribe((response) => {
+        this.savedJobsData = response;
         const index = this.savedJobsData.findIndex(x => x.id === this.id);
-        this.oneJobData = this.savedJobsData[index];
-      }else{
-        this.oneJobData = this.savedJobsData[index];
-      }
-
-      this.karigarhData = this.jobService.getAllKarigarhs();
-      const karigarhIndex = this.karigarhData.findIndex(x => x.id === this.oneJobData.karigarh_id);
-      if (this.karigarhData[karigarhIndex].person_name){
-        this.karigarhName = this.karigarhData[karigarhIndex].person_name;
-      }
-
-    });
-
-    this.jobTaskForm = this.jobTaskService.jobTaskForm;
-
-    this.jobTaskService.getSavedJobsUpdateListener().subscribe((jobData: JobMaster[]) => {
-      this.savedJobsData = jobData;
-      const index = this.savedJobsData.findIndex(x => x.id === this.id);
-      this.oneJobData = this.savedJobsData[index];
-
-      this.jobTaskForm.patchValue({id : this.id});
-      this.jobTaskForm.value.id = this.oneJobData.id;
-      this.job_number = this.oneJobData.job_number;
-    });
-
-    this.orderService.getMaterialUpdateListener()
-      .subscribe((material: Material[]) => {
-        this.materialList = material;
+        if (index === -1){
+          this.jobTaskService.getFinishedJobsUpdateListener().subscribe((response) => {
+            this.savedJobsData = response;
+            const index = this.savedJobsData.findIndex(x => x.id === this.id);
+            this.oneJobData = this.savedJobsData[index];
+            this.jobTaskForm.patchValue({id: this.oneJobData.id});
+            this.jobTaskForm.value.id = this.oneJobData.id;
+            this.job_number = this.oneJobData.job_number;
+          });
+        }
+        else{
+          this.oneJobData = this.savedJobsData[index];
+          this.jobTaskForm.patchValue({id: this.oneJobData.id});
+          this.job_number = this.oneJobData.job_number;
+        }
+      });
+      this.userData = JSON.parse(localStorage.getItem('user'));
+      this.orderService.getMaterialUpdateListener().subscribe((response) => {
+        this.materialList = response;
         const index = this.materialList.findIndex(x => x.id === this.oneJobData.material_id);
-        const f = this.materialList[index];
-        this.jobTaskForm.patchValue({material_name : f.material_name, size: this.oneJobData.size});
+        const materialData = this.materialList[index];
+        this.jobTaskForm.patchValue({material_name: materialData.material_name , size: this.oneJobData.size});
+      });
+      this.jobService.getKarigarhUpdateListener().subscribe((response) => {
+        this.karigarhData = response;
+        const index = this.karigarhData.findIndex(x => x.id === this.oneJobData.karigarh_id);
+        this.karigarhName = this.karigarhData[index].person_name;
+        // console.log(this.karigarhName);
+      });
+       this.jobTaskService.getTotalData();
+      this.jobTaskService.getTotal().subscribe((response) => {
+        this.totalData = response.data;
+        for (let i = 1; i <= 8; i ++){
+          const index = this.totalData.findIndex(x => x.id === i);
+          if (index >= 0)
+          {
+            this.tempTotalData[i - 1] = this.totalData[index].total;
+          }
+          else{
+            this.tempTotalData[i - 1] = 0;
+          }
+        }
+      });
+      this.jobTaskService.getTotalDataUpdateListener().subscribe((response) => {
+        this.totalData = response;
+        for (let i = 1; i <= 8; i ++){
+          const index = this.totalData.findIndex(x => x.id === i);
+          if (index >= 0)
+          {
+            this.tempTotalData[i - 1] = this.totalData[index].total;
+          }
+          else{
+            this.tempTotalData[i - 1] = 0;
+          }
+        }
+      });
+      this.jobTaskService.getJobTransactionDataUpdateListener().subscribe((response) => {
+        this.jobTransactionData = response;
+      });
+      this.jobTaskService.getAllTransactions(this.id).subscribe((response) => {
+        this.jobTransactionData = response.data;
       });
 
-    this.jobService.getKarigarhUpdateListener().subscribe((karigarhData: Karigarh[]) => {
-      this.karigarhData = karigarhData;
-      const karigarhIndex = this.karigarhData.findIndex(x => x.id === this.oneJobData.karigarh_id);
-      if (this.karigarhData[karigarhIndex].person_name){
-        this.karigarhName = this.karigarhData[karigarhIndex].person_name;
-      }
-    });
-    this.userData = JSON.parse(localStorage.getItem('user'));
-    this.jobTaskService.getTotal().subscribe((response) => {
-      this.totalData = response.data;
-    });
-    this.jobTaskService.getTotalDataUpdateListener().subscribe((response) => {
-      this.totalData = response;
+
     });
 
-    this.jobTaskService.getJobTransactionDataUpdateListener().subscribe((TransactionData: JobDetail[]) => {{
-      this.jobTransactionData =  TransactionData;
-    }});
-    this.jobTaskService.getAllTransactions(this.id).subscribe((response ) => {
-      this.jobTransactionData =  response.data;
-    });
+
+
+
   }
 }

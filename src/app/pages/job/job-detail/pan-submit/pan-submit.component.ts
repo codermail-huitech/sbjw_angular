@@ -28,10 +28,10 @@ export class PanSubmitComponent implements OnInit {
     this.total = 0;
     this.jobTaskForm = this.jobTaskService.jobTaskForm;
     this.router.parent.params.subscribe(params =>{
-      this.jobMasterId=params.id;
+      this.jobMasterId=parseInt(params.id);
     });
     this.savedJobsData = this.jobTaskService.getAllJobList();
-    const index = this.savedJobsData.findIndex(x => x.id == this.jobMasterId);
+    const index = this.savedJobsData.findIndex(x => x.id === this.jobMasterId);
     this.oneJobData = this.savedJobsData[index];
     this.jobTaskForm.patchValue({material_name: this.oneJobData.material_name});
     this.jobTaskService.getJobTaskDataUpdateListener().subscribe((response) => {
@@ -47,12 +47,10 @@ export class PanSubmitComponent implements OnInit {
       });
     }else {
       this.router.parent.params.subscribe(params => {
-
-        this.jobMasterId = params.id;
-
+        this.jobMasterId = parseInt(params.id);
       });
       this.savedJobsData = this.jobTaskService.getAllJobList();
-      const index = this.savedJobsData.findIndex(x => x.id == this.jobMasterId);
+      const index = this.savedJobsData.findIndex(x => x.id === this.jobMasterId);
       this.oneJobData = this.savedJobsData[index];
       const user = JSON.parse(localStorage.getItem('user'));
       this.jobTaskForm.patchValue({

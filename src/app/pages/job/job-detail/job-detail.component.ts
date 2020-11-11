@@ -74,6 +74,19 @@ export class JobDetailComponent implements OnInit {
           this.jobTaskForm.patchValue({id: this.oneJobData.id});
           this.job_number = this.oneJobData.job_number;
         }
+        this.karigarhData = this.jobService.getAllKarigarhs();
+        this.jobService.getKarigarhUpdateListener().subscribe((response) => {
+          this.karigarhData = response;
+          // console.log("karigarh data");
+          // console.log(this.karigarhData);
+          const index = this.karigarhData.findIndex(x => x.id === this.oneJobData.karigarh_id);
+          this.karigarhName = this.karigarhData[index].person_name;
+          // console.log(this.karigarhName);
+        });
+        if (this.karigarhData && this.oneJobData){
+          const index = this.karigarhData.findIndex(x => x.id === this.oneJobData.karigarh_id);
+          this.karigarhName = this.karigarhData[index].person_name;
+        }
       });
       this.userData = JSON.parse(localStorage.getItem('user'));
       this.orderService.getMaterialUpdateListener().subscribe((response) => {
@@ -82,12 +95,24 @@ export class JobDetailComponent implements OnInit {
         const materialData = this.materialList[index];
         this.jobTaskForm.patchValue({material_name: materialData.material_name , size: this.oneJobData.size});
       });
-      this.jobService.getKarigarhUpdateListener().subscribe((response) => {
-        this.karigarhData = response;
-        const index = this.karigarhData.findIndex(x => x.id === this.oneJobData.karigarh_id);
-        this.karigarhName = this.karigarhData[index].person_name;
-        // console.log(this.karigarhName);
-      });
+      // this.karigarhData = this.jobService.getAllKarigarhs();
+      // this.jobService.getKarigarhUpdateListener().subscribe((response) => {
+      //   this.karigarhData = response;
+      //   // console.log("karigarh data");
+      //   // console.log(this.karigarhData);
+      //   const index = this.karigarhData.findIndex(x => x.id === this.oneJobData.karigarh_id);
+      //   this.karigarhName = this.karigarhData[index].person_name;
+      //   // console.log(this.karigarhName);
+      // });
+      // console.log("component");
+      // console.log(this.oneJobData);
+      // if (this.oneJobData){
+      //   // const index = this.karigarhData.findIndex(x => x.id === this.oneJobData.karigarh_id);
+      //   // this.karigarhName = this.karigarhData[index].person_name;
+      //   console.log("component");
+      //   console.log(this.karigarhData);
+      // }
+      // console.log(this.karigarhData);
        this.jobTaskService.getTotalData();
       this.jobTaskService.getTotal().subscribe((response) => {
         this.totalData = response.data;

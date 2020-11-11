@@ -70,6 +70,8 @@ export class JobService {
       .subscribe((response: {success: number, data: Karigarh[]}) => {
         const {data} = response;
         this.karigarhData = data;
+        console.log("karigarh data");
+        console.log(this.karigarhData);
         // console.log(this.karigarhData);
         this.karigarhSub.next([...this.karigarhData]);
       });

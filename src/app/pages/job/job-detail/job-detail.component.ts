@@ -56,6 +56,10 @@ export class JobDetailComponent implements OnInit {
       this.jobTaskForm.patchValue({id: params.id});
       this.jobTaskService.getUpdatedSavedJobs();
       this.jobTaskService.getUpdatedFinishedJobs();
+      this.karigarhData = this.jobService.getAllKarigarhs();
+      this.jobService.getKarigarhUpdateListener().subscribe((response) => {
+        this.karigarhData = response;
+      });
       this.jobTaskService.getSavedJobsUpdateListener().subscribe((response) => {
         this.savedJobsData = response;
         const index = this.savedJobsData.findIndex(x => x.id === this.id);
@@ -67,6 +71,8 @@ export class JobDetailComponent implements OnInit {
             this.jobTaskForm.patchValue({id: this.oneJobData.id});
             this.jobTaskForm.value.id = this.oneJobData.id;
             this.job_number = this.oneJobData.job_number;
+            const index1 = this.karigarhData.findIndex(x => x.id === this.oneJobData.karigarh_id);
+            this.karigarhName = this.karigarhData[index1].person_name;
           });
         }
         else{
@@ -74,15 +80,6 @@ export class JobDetailComponent implements OnInit {
           this.jobTaskForm.patchValue({id: this.oneJobData.id});
           this.job_number = this.oneJobData.job_number;
         }
-        this.karigarhData = this.jobService.getAllKarigarhs();
-        this.jobService.getKarigarhUpdateListener().subscribe((response) => {
-          this.karigarhData = response;
-          // console.log("karigarh data");
-          // console.log(this.karigarhData);
-          const index = this.karigarhData.findIndex(x => x.id === this.oneJobData.karigarh_id);
-          this.karigarhName = this.karigarhData[index].person_name;
-          // console.log(this.karigarhName);
-        });
         if (this.karigarhData && this.oneJobData){
           const index = this.karigarhData.findIndex(x => x.id === this.oneJobData.karigarh_id);
           this.karigarhName = this.karigarhData[index].person_name;

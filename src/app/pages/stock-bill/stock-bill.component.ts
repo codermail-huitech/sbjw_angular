@@ -99,4 +99,7 @@ export class StockBillComponent implements OnInit {
     console.log(this.billDetailsData);
     // this.billService.testBillSave(this.billDetailsData).subscribe();
   }
+  ViewBill(){
+
+  }
 }

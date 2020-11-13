@@ -17,6 +17,8 @@ export class Customer{
   job_number ?: string;
   order_details_id ?: number;
   job_master_id ?: number;
+  // bill_date is for testing
+  bill_date?: string;
   constructor(public id: number, public person_name: string, public email: string, public customer_category_id: number) {
       this.person_type_id = 10;
   }

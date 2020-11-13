@@ -63,7 +63,7 @@ export class BillJobMasterDetailsComponent implements OnInit {
   }
 
   selectionForBill(data) {
-    const index = this.billDetailsData.findIndex(x => x.id === data.id)
+    const index = this.billDetailsData.findIndex(x => x.id === data.id);
     if (index >= 0) {
       this.total92Gold = this.total92Gold - Number(data.total);
       this.totalGold = this.totalGold - Number(data.pure_gold);

@@ -7,6 +7,7 @@ import {BillDetail} from '../../models/billDetail.model';
 import {StorageMap} from '@ngx-pwa/local-storage';
 import {CustomerService} from '../../services/customer.service';
 import {Customer} from '../../models/customer.model';
+import toWords from 'number-to-words/src/toWords';
 
 @Component({
   selector: 'app-stock-bill',
@@ -40,6 +41,11 @@ export class StockBillComponent implements OnInit {
 
 
   ngOnInit(): void {
+    this.total92Gold = 0;
+    this.totalGold = 0;
+    this.totalQuantity = 0;
+    this.totalCost = 0;
+
 
     this.customerData = this.customerService.getCustomers();
     this.customerService.getCustomerUpdateListener()
@@ -49,23 +55,64 @@ export class StockBillComponent implements OnInit {
 
     this.stockService.getStockUpdateListener().subscribe((response) => {
       this.stockList = response;
+      // console.log(this.stockList);
       // tslint:disable-next-line:only-arrow-functions
       this.stockList.forEach(function(value) {
         const x = value.tag.split('-');
         // tslint:disable-next-line:radix
         value.tag = (parseInt(x[1]).toString(16) + '-' + parseInt(x[2]).toString(16) + '-' + parseInt(x[3]));
       });
+
+
+      this.storage.get('stockBillContainer').subscribe((stockBillContainer: any) => {
+        if (stockBillContainer) {
+          this.total92Gold = 0;
+          this.totalGold = 0;
+          this.totalQuantity = 0;
+          this.totalCost = 0;
+
+          this.billDetailsData = stockBillContainer.stockBillDetailsData;
+          // tslint:disable-next-line:prefer-for-of
+          // for (let i = 0; i < this.billDetailsData.length; i++ ){
+          //   const index = this.stockList.findIndex(x => x.id === this.billDetailsData[i].id);
+          //   this.stockList[i].isSet = true;
+          //   console.log(this.stockList[i]);
+          //
+          //   // this.stockList[i].total = Number(this.stockList[i].gold);
+          //   // this.stockList[i].cost = this.stockList[i].amount;
+          //
+          //   const pure_gold = parseFloat(((this.billDetailsData[i].total * 92) / 100).toFixed(3));
+          //   this.total92Gold = this.total92Gold + Number(this.billDetailsData[i].total);
+          //   this.totalGold = this.totalGold + Number(pure_gold);
+          //   this.totalQuantity = this.totalQuantity + Number(this.billDetailsData[i].quantity);
+          //   this.totalCost = this.totalCost + this.billDetailsData[i].amount;
+          // }
+        }
+      }, (error) => {
+      });
+
     });
 
-    this.storage.get('stockBillContainer').subscribe((stockBillContainer: any) => {
-      if (stockBillContainer) {
-        this.billDetailsData = stockBillContainer.stockBillDetailsData;
-      }
-    }, (error) => {
-    });
+
+    // this.stockList = this.stockService.getStockList();
+    // this.storage.get('stockBillContainer').subscribe((stockBillContainer: any) => {
+    //   if (stockBillContainer) {
+    //     this.billDetailsData = stockBillContainer.stockBillDetailsData;
+    //     console.log('stockBillContainer');
+    //     console.log(this.stockList);
+    //     // this.billDetailsData.forEach(function(value) {
+    //     //
+    //     // });
+    //   }
+    // }, (error) => {
+    // });
   }
-  stockSelectionForBill(item) {
 
+  convert(value){
+    return toWords(value);
+  }
+
+  stockSelectionForBill(item) {
     const index = this.billDetailsData.findIndex(x => x.id === item.id);
     if (index === -1){
 
@@ -77,24 +124,26 @@ export class StockBillComponent implements OnInit {
 
       this.total92Gold = this.total92Gold + Number(item.total);
       this.totalGold = this.totalGold + Number(item.pure_gold);
+      this.totalQuantity = this.totalQuantity + Number(item.quantity);
+      this.totalCost = this.totalCost + item.amount;
 
       this.billDetailsData.push(item);
       item.isSet = true;
     }
 
-    item.total = item.gold;
-    item.cost = item.amount;
-    console.log(item);
-
-    item.pure_gold = parseFloat(((item.total * 92) / 100).toFixed(3));
-
-    this.total92Gold = this.total92Gold + Number(item.total);
-    this.totalGold = this.totalGold + Number(item.pure_gold);
-
-    // this.billDetailsData.push(item);
-    console.log(this.billDetailsData);
-    console.log(this.total92Gold);
-    console.log(this.totalGold);
+    // item.total = item.gold;
+    // item.cost = item.amount;
+    // console.log(item);
+    //
+    // item.pure_gold = parseFloat(((item.total * 92) / 100).toFixed(3));
+    //
+    // this.total92Gold = this.total92Gold + Number(item.total);
+    // this.totalGold = this.totalGold + Number(item.pure_gold);
+    //
+    // // this.billDetailsData.push(item);
+    // console.log(this.billDetailsData);
+    // console.log(this.total92Gold);
+    // console.log(this.totalGold);
 
     this.stockBillContainer = {
         stockBillDetailsData: this.billDetailsData,
@@ -106,12 +155,15 @@ export class StockBillComponent implements OnInit {
   removeFromStockBillEntry(item){
     console.log(this.billDetailsData);
     const index = this.billDetailsData.findIndex(x => x.id === item.id);
+    const stockListIndex = this.stockList.findIndex(x => x.id === item.id);
     this.total92Gold = this.total92Gold - Number(item.total);
     this.totalGold = this.totalGold - Number(item.pure_gold);
+    this.totalQuantity = this.totalQuantity - Number(item.quantity);
+    this.totalCost = this.totalCost - item.amount;
 
     this.billDetailsData.splice(index, 1);
-    item.isSet = false;
-    console.log(this.billDetailsData);
+    this.stockList[stockListIndex].isSet = false;
+    // console.log(this.billDetailsData);
     this.stockBillContainer = {
         stockBillDetailsData: this.billDetailsData,
       };
@@ -134,6 +186,12 @@ export class StockBillComponent implements OnInit {
     // let date = "2020-12-20";
     data.bill_date = "2020-12-20";
     this.selectedCustomerData = data;
+    // this.stockBillCustomerContainer = {
+    //   stockBillDetailsCustomer: this.selectedCustomerData,
+    // };
+    // this.storage.set('stockBillContainer', this.stockBillContainer).subscribe(() => {
+    // });
+
     console.log(this.selectedCustomerData);
   }
   // getDate(date){

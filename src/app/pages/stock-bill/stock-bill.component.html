@@ -64,7 +64,7 @@
 <!--          </mat-form-field>-->
         </div>
         <div *ngIf="billDetailsData.length===0">
-        <h4>No Entry</h4>
+        <h4>No Entry {{billDetailsData.length}}</h4>
       </div>
         <div  *ngIf="billDetailsData.length>0">
           <table class="table table-hover">
@@ -186,7 +186,7 @@
             <td style="padding: 2px; text-align: right">{{data.total}}</td>
             <td style="padding: 2px; text-align: right">{{data.pure_gold}}</td>
             <td style="padding: 2px; text-align: right">{{data.quantity}}</td>
-            <td style="padding: 2px; text-align: right">{{data.LC | currency:"&#8377;"}}</td>
+            <td style="padding: 2px; text-align: right">{{data.amount | currency:"&#8377;"}}</td>
           </tr>
           <hr>
           <tr style=" border-top : 1px solid black; border-collapse: collapse">
@@ -195,15 +195,15 @@
             <td><b>Total</b></td>
             <td></td>
             <td></td>
-<!--            <td style="padding: 2px; text-align: right"><b>{{total92Gold.toFixed(3)}} g</b></td>-->
-<!--            <td style="padding: 2px; text-align: right"><b>{{totalGold.toFixed(3)}} g</b></td>-->
-<!--            <td style="padding: 2px; text-align: right"><b>{{totalQuantity}}</b></td>-->
-<!--            <td style="padding: 2px; text-align: right"> <b>{{totalCost | currency:"&#8377;"}}</b></td>-->
+            <td style="padding: 2px; text-align: right"><b>{{total92Gold.toFixed(3)}} g</b></td>
+            <td style="padding: 2px; text-align: right"><b>{{totalGold.toFixed(3)}} g</b></td>
+            <td style="padding: 2px; text-align: right"><b>{{totalQuantity}}</b></td>
+            <td style="padding: 2px; text-align: right"> <b>{{totalCost | currency:"&#8377;"}}</b></td>
           </tr>
           </tbody>
         </table>
         <br><br>
-        <div class="ml-2" *ngIf="totalCost"><b>Amount in Word:</b> Rupees  only</div>
+        <div class="ml-2" *ngIf="totalCost"><b>Amount in Word:</b> Rupees {{convert(totalCost)}} only</div>
         <br><br>
         <div style="text-align: right">
           <label style="text-align:right ; margin-right: 7px; font-size: small ; font-weight: bold">Party signature with stamp, Date & Time</label><br>
@@ -213,6 +213,7 @@
         <br>
         <p style="text-align:left ; margin-right: 7px; font-size: smaller">শর্তাবলী: - আপনার যাবতীয় লেনদেন ও দেনাপাওনা সম্পূর্ণ ভাবে প্রোপরাইটার শ্রী বিবেকানন্দ ঘোষ এর সাথে সম্পর্ক যুক্ত |</p>
       </div>
+      <button (click)="stockBillGenerate()">Save</button>
     </div>
   </div>
 

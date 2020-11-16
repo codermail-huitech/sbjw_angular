@@ -82,17 +82,20 @@ export class StockBillComponent implements OnInit {
       item.isSet = true;
     }
 
-    // item.total = item.gold;
-    // item.cost = item.amount;
-    // console.log(item);
+    item.total = item.gold;
+    item.cost = item.amount;
+    console.log(item);
 
-    // item.pure_gold = parseFloat(((item.total * 92) / 100).toFixed(3));
-    //
-    // this.total92Gold = this.total92Gold + Number(item.total);
-    // this.totalGold = this.totalGold + Number(item.pure_gold);
-    //
+    item.pure_gold = parseFloat(((item.total * 92) / 100).toFixed(3));
+
+    this.total92Gold = this.total92Gold + Number(item.total);
+    this.totalGold = this.totalGold + Number(item.pure_gold);
+
     // this.billDetailsData.push(item);
     console.log(this.billDetailsData);
+    console.log(this.total92Gold);
+    console.log(this.totalGold);
+
     this.stockBillContainer = {
         stockBillDetailsData: this.billDetailsData,
       };

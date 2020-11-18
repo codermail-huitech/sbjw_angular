@@ -1,0 +1,138 @@
+<div style="background-color: #d9dd9b">
+  <mat-card style="background-color: #e8c50e" >
+    <mat-card style="background-color: lightgray" class="d-flex" >
+
+      <div class="col-9">
+        <div>
+          <!--          <mat-form-field class="example-full-width">-->
+          <!--            <input matInput placeholder="Enter Tag..." [(ngModel)]="searchTag" name="search" type="text" autofocus>-->
+          <!--          </mat-form-field>-->
+        </div>
+        <table class="table table-hover">
+          <thead style="background-color: lightslategray">
+          <th>SL NO.</th>
+          <th>Tag</th>
+          <th>Model Name</th>
+          <th>Size</th>
+          <th>Gold</th>
+          <th>Gross Weight</th>
+          <th>Amount</th>
+          <th>Quantity</th>
+          <th>Add For Billing</th>
+          </thead>
+          <tbody>
+<!--          <tr *ngFor="let indexOfElement = index; let item of stockList |filter: searchTag">-->
+          <tr *ngFor="let indexOfElement = index; let item of stockList">
+            <td>{{indexOfElement+1}}</td>
+            <td>{{item.tag | uppercase}}</td>
+            <td>{{item.model_number}}</td>
+            <td>{{item.size}}</td>
+            <td>{{item.gold}}</td>
+            <td>{{item.gross_weight}}</td>
+            <td>{{item.amount}}</td>
+            <td>{{item.quantity}}</td>
+            <td style="text-align: center">
+              <button mat-icon-button color="primary" aria-label="" [disabled]="item.isSet" (click)="stockSelection(item)" >
+                <mat-icon>add</mat-icon>
+              </button>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="col-3" style="text-align: center; background-color: #d9dd9b">
+        <h2>Stock Bill Entry</h2>
+<!--        <div class="container" fxLayout="column" fxLayout.xs="column" fxLayoutAlign="start" fxLayoutGap="10px" fxLayoutGap.xs="0">-->
+<!--          <mat-form-field *ngIf="customerData">-->
+<!--            <mat-label>Customer</mat-label>-->
+<!--            <mat-select  [ngModel]="selectedCustomerData.id">-->
+<!--              <mat-option *ngFor="let customer of customerData" [value]="customer.id" (blur)="customerSelected(customer)">-->
+<!--                {{customer.person_name}}-->
+<!--              </mat-option>-->
+<!--            </mat-select>-->
+<!--          </mat-form-field>-->
+<!--          <mat-form-field fxFlex="30">-->
+<!--            <mat-label> Stock Bill Date</mat-label>-->
+<!--            <input matInput-->
+<!--                   [(ngModel)]="selectedCustomerData.bill_date"-->
+<!--                   [matDatepicker]="picker1"-->
+<!--                   (blur)="getDate(bill_date)"-->
+<!--                   [min]="minDate"-->
+<!--                   [max]="maxDate">-->
+<!--            <mat-datepicker-toggle matSuffix [for]="picker1" (blur)="getDate(bill_date)">-->
+<!--              <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>-->
+<!--            </mat-datepicker-toggle>-->
+<!--            <mat-datepicker #picker1></mat-datepicker>-->
+<!--          </mat-form-field>-->
+<!--          &lt;!&ndash;          {{selectedCustomerData.bill_date}}&ndash;&gt;-->
+<!--        </div>-->
+        <!--        <div *ngIf="billDetailsData.length == 0">-->
+        <!--          <h4>No Entry </h4>-->
+        <!--        </div>-->
+        <!--        <div *ngIf="!stockBillContainer">-->
+        <!--          <h4>No Entry </h4>-->
+        <!--        </div>-->
+<!--        <div  *ngIf="billDetailsData.length>0">-->
+<!--          &lt;!&ndash;        <div>&ndash;&gt;-->
+          <table class="table table-hover">
+            <thead style="background-color: lightslategray">
+            <th>SL NO.</th>
+            <th>Tag</th>
+            <th>Delete</th>
+
+            </thead>
+            <tbody>
+            <tr *ngFor="let indexOfElement = index; let item of billDetailsData">
+              <td>{{indexOfElement+1}}</td>
+              <td>{{item.tag | uppercase}}</td>
+              <td>
+                <button mat-icon-button color="accent" aria-label="" (click)="removeFromStockBillEntry(item)" >
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+<!--          &lt;!&ndash;          <button class="btn badge-info" (click)="stockBillGenerate()">Generate Bill</button>&ndash;&gt;-->
+<!--          <button class="btn badge-info" (click)="ViewBill()">View  Bill</button>&nbsp;&nbsp;&nbsp;-->
+<!--          <button class="btn badge-info" (click)="clearStorage()">clear Storage</button>-->
+
+<!--        </div>-->
+      </div>
+    </mat-card>
+  </mat-card>
+</div>
+
+
+
+
+
+
+
+
+<div [hidden]="billView" style="background-color: white">
+
+  <!--  <div  fxLayout.xs="column"  fxLayout="row" fxLayoutAlign="space-between stretch" fxFlexFill id ="completed-bill-div" >-->
+  <!--    <div  fxFlex="100" class="col" id ="show-billNumber-div" >-->
+  <!--      <table class="table">-->
+  <!--        <thead>-->
+  <!--        <tr>-->
+  <!--          <th>SL No.</th>-->
+  <!--          <th>Bill Number</th>-->
+  <!--          <th>Status</th>-->
+  <!--        </tr>-->
+  <!--        </thead>-->
+  <!--        <tbody>-->
+  <!--        <tr  *ngFor="let data of finishedBillData; let indexOfelement = index" >-->
+  <!--          <td>{{indexOfelement+1}}</td>-->
+  <!--          <td>{{data.bill_number}}</td>-->
+  <!--          <td><button  class="btn btn-primary" (click)="getBillDetails(data.id)">View Bill</button></td>-->
+  <!--        </tr>-->
+  <!--        </tbody>-->
+  <!--      </table>-->
+  <!--    </div>-->
+
+
+
+</div>
+

@@ -65,6 +65,7 @@ import { LcReceiptsComponent } from './pages/lc-receipts/lc-receipts.component';
 import { StockComponent } from './pages/stock/stock.component';
 import { StockBillComponent } from './pages/stock-bill/stock-bill.component';
 import { AgentComponent } from './pages/agent/agent.component';
+import { AgentAllocationComponent } from './pages/agent-allocation/agent-allocation.component';
 
 
 @NgModule({
@@ -110,7 +111,8 @@ import { AgentComponent } from './pages/agent/agent.component';
     LcReceiptsComponent,
     StockComponent,
     StockBillComponent,
-    AgentComponent
+    AgentComponent,
+    AgentAllocationComponent
 
   ],
   imports: [

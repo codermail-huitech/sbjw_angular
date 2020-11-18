@@ -33,6 +33,7 @@ import {LcReceiptsComponent} from "./pages/lc-receipts/lc-receipts.component";
 import {StockComponent} from './pages/stock/stock.component';
 import {StockBillComponent} from './pages/stock-bill/stock-bill.component';
 import {AgentComponent} from './pages/agent/agent.component';
+import {AgentAllocationComponent} from './pages/agent-allocation/agent-allocation.component';
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -79,6 +80,7 @@ const routes: Routes = [
   {path: 'stock/:id', canActivate: [AuthGuardService], component: StockComponent },
   {path: 'stock', canActivate: [AuthGuardService], component: StockComponent },
   {path: 'stockBill', canActivate: [AuthGuardService], component: StockBillComponent },
+  {path: 'agentAllocation', canActivate: [AuthGuardService], component: AgentAllocationComponent },
 ];
 
 @NgModule({

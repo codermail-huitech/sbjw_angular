@@ -39,9 +39,9 @@
         <hr>
       </div>
       <div fxLayout="row" *ngIf="billDetailsData.length" style="justify-content: space-between">
-        <div class="col-4" style="font-size: x-small">
+        <div class="col-4" >
           <label>Customer Name & Address : </label><br>
-          <label style="font-weight: bolder; font-size: medium">{{billDetailsData[0].person_name}}</label><br>
+          <label style="font-weight: bolder;  font-size: larger">{{billDetailsData[0].person_name}}</label><br>
           <label>{{billDetailsData[0].address1}}</label><br>
           <label>{{billDetailsData[0].city}} &nbsp;,&nbsp;{{billDetailsData[0].area}}</label><br>
           <label>pin code:-&nbsp;{{billDetailsData[0].pin}}</label><br>
@@ -49,7 +49,7 @@
           <label>{{billDetailsData[0].mobile1}}</label><br>
         </div>
         <div class="col-4"></div>
-        <div class="col-4" style="font-size: x-small"><br>
+        <div class="col-4"><br>
           <label><b>Bill Number : {{billDetailsData[0].bill_number}}</b></label><br>
           <label><b>Bill Date : {{billDetailsData[0].bill_date}}</b></label><br>
           <label>Order Number :</label><br>

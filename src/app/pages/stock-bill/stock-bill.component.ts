@@ -8,6 +8,7 @@ import {StorageMap} from '@ngx-pwa/local-storage';
 import {CustomerService} from '../../services/customer.service';
 import {Customer} from '../../models/customer.model';
 import toWords from 'number-to-words/src/toWords';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-stock-bill',
@@ -30,9 +31,38 @@ export class StockBillComponent implements OnInit {
   selectedCustomerData: Customer;
   minDate = new Date(2010, 11, 2);
   maxDate = new Date(2021, 3, 2);
+  bill_date: string;
 
   constructor(private customerService: CustomerService, private  stockService: StockService, private  billService: BillService, private  storage: StorageMap) {
     this.stockList = this.stockService.getStockList();
+    this.customerData = this.customerService.getCustomers();
+    // this.selectedCustomerData = this.customerData[0];
+    this.storage.get('stockBillContainer').subscribe((stockBillContainer: any) => {
+      if (stockBillContainer){
+        // console.log(stockBillContainer);
+        if  (stockBillContainer.stockBillDetailsData) {
+          this.billDetailsData = stockBillContainer.stockBillDetailsData;
+        }
+        if (stockBillContainer.stockBillCustomer){
+          this.selectedCustomerData  = stockBillContainer.stockBillCustomer;
+        }
+
+        for (let i = 0; i < this.billDetailsData.length; i++ ){
+          const index = this.stockList.findIndex(x => x.id === this.billDetailsData[i].id);
+          this.stockList[index].isSet = true;
+          // console.log(this.stockList[index]);
+
+          // this.stockList[i].total = Number(this.stockList[i].gold);
+          // this.stockList[i].cost = this.stockList[i].amount;
+
+          const pure_gold = parseFloat(((this.billDetailsData[i].total * 92) / 100).toFixed(3));
+          this.total92Gold = this.total92Gold + Number(this.billDetailsData[i].total);
+          this.totalGold = this.totalGold + Number(pure_gold);
+          this.totalQuantity = this.totalQuantity + Number(this.billDetailsData[i].quantity);
+          this.totalCost = this.totalCost + this.billDetailsData[i].amount;
+        }
+      }
+    });
   }
   printDivStyle = {
     table: {'border-collapse': 'collapse', 'width' : '100%' },
@@ -54,7 +84,7 @@ export class StockBillComponent implements OnInit {
       .subscribe((customers: Customer[]) => {
         this.customerData = customers;
         this.selectedCustomerData = this.customerData[0];
-        console.log(this.selectedCustomerData);
+        // console.log(this.selectedCustomerData);
       });
 
     this.stockService.getStockUpdateListener().subscribe((response) => {
@@ -71,7 +101,8 @@ export class StockBillComponent implements OnInit {
       this.storage.get('stockBillContainer').subscribe((stockBillContainer: any) => {
         // this.customerData = stockBillContainer.stockBillCustomer;
       // public fields: Object = { text: 'Country.Name', value: 'Code.Id' };
-        console.log(stockBillContainer.stockBillCustomer);
+        console.log('stockBillContainer');
+        console.log(stockBillContainer);
         if (stockBillContainer) {
           this.total92Gold = 0;
           this.totalGold = 0;
@@ -89,8 +120,8 @@ export class StockBillComponent implements OnInit {
           // tslint:disable-next-line:prefer-for-of
           for (let i = 0; i < this.billDetailsData.length; i++ ){
             const index = this.stockList.findIndex(x => x.id === this.billDetailsData[i].id);
-            this.stockList[i].isSet = true;
-            console.log(this.stockList[i]);
+            this.stockList[index].isSet = true;
+            // console.log(this.stockList[index]);
 
             // this.stockList[i].total = Number(this.stockList[i].gold);
             // this.stockList[i].cost = this.stockList[i].amount;
@@ -149,7 +180,7 @@ export class StockBillComponent implements OnInit {
       this.totalCost = this.totalCost + item.amount;
 
       this.billDetailsData.push(item);
-      console.log(this.billDetailsData);
+      // console.log(this.billDetailsData);
       item.isSet = true;
     }
 
@@ -172,6 +203,7 @@ export class StockBillComponent implements OnInit {
 
     this.stockBillContainer = {
         stockBillDetailsData: this.billDetailsData,
+        stockBillCustomer: this.selectedCustomerData,
       };
     this.storage.set('stockBillContainer', this.stockBillContainer).subscribe(() => {
     });
@@ -181,8 +213,9 @@ export class StockBillComponent implements OnInit {
   //   localStorage.removeItem('stockBillContainer');
   // }
 
+
   removeFromStockBillEntry(item){
-    console.log(this.billDetailsData);
+    // console.log(this.billDetailsData);
     const index = this.billDetailsData.findIndex(x => x.id === item.id);
     const stockListIndex = this.stockList.findIndex(x => x.id === item.id);
     this.total92Gold = this.total92Gold - Number(item.total);
@@ -195,25 +228,37 @@ export class StockBillComponent implements OnInit {
     // console.log(this.billDetailsData);
     this.stockBillContainer = {
         stockBillDetailsData: this.billDetailsData,
+        stockBillCustomer: this.selectedCustomerData,
       };
     this.storage.set('stockBillContainer', this.stockBillContainer).subscribe(() => {
     });
   }
 
   stockBillGenerate(){
-    console.log(this.billDetailsData);
+    // console.log(this.billDetailsData);
+    Swal.fire({
+      title: 'Do you want to generate bill ?',
+      text: 'Bill  will be generated',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, save it!',
+      cancelButtonText: 'No, cancel it'
+    }).then((result) => {
+      // this.billService.testBillSave(this.billDetailsData).subscribe();
+    });
     // this.billService.testBillSave(this.billDetailsData).subscribe();
   }
   ViewBill(){
     this.billView = false;
-    console.log(this.billDetailsData);
+    // console.log(this.billDetailsData);
   }
   backBtn(){
     this.billView = true;
   }
   customerSelected(data){
     // let date = "2020-12-20";
-    data.bill_date = "2020-12-20";
+    // data.bill_date = "2020-12-20";
+    data.bill_date = this.selectedCustomerData.bill_date;
     this.selectedCustomerData = data;
     this.stockBillContainer = {
       stockBillDetailsData: this.billDetailsData,
@@ -222,7 +267,7 @@ export class StockBillComponent implements OnInit {
     this.storage.set('stockBillContainer', this.stockBillContainer).subscribe(() => {
     });
 
-    console.log(this.stockBillContainer);
+    // console.log(this.stockBillContainer);
   }
   getDate(date){
     console.log(date);

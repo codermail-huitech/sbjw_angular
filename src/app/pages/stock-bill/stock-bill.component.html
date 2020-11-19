@@ -4,11 +4,54 @@
 
       <div class="col-9">
         <div>
-<!--          <mat-form-field class="example-full-width">-->
-<!--            <input matInput placeholder="Enter Tag..." [(ngModel)]="searchTag" name="search" type="text" autofocus>-->
-<!--          </mat-form-field>-->
+          <mat-form-field class="example-full-width">
+            <input matInput placeholder="Enter Tag..." [(ngModel)]="searchTag" name="search" type="text" autofocus>
+          </mat-form-field>
+<!--        </div>-->
+        &nbsp;&nbsp;&nbsp;
+<!--        <div>-->
+
+          <mat-form-field *ngIf="agentData" class ="col-4">
+            <mat-label>Enter Agent</mat-label>
+            <mat-select [ngModel]="agentData[0].id">
+              <mat-option *ngFor="let agent of agentData"  [value]="agent.id" (blur)="getStockListByAgentName(agent.id)" >
+                {{agent.person_name}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
         </div>
-        <table class="table table-hover">
+
+<!--        <table class="table table-hover">-->
+<!--          <thead style="background-color: lightslategray">-->
+<!--          <th>SL NO.</th>-->
+<!--          <th>Tag</th>-->
+<!--          <th>Model Name</th>-->
+<!--          <th>Size</th>-->
+<!--          <th>Gold</th>-->
+<!--          <th>Gross Weight</th>-->
+<!--          <th>Amount</th>-->
+<!--          <th>Quantity</th>-->
+<!--          <th>Add For Billing</th>-->
+<!--          </thead>-->
+<!--          <tbody>-->
+<!--          <tr *ngFor="let indexOfElement = index; let item of stockList |filter: searchTag ">-->
+<!--            <td>{{indexOfElement+1}}</td>-->
+<!--            <td>{{item.tag | uppercase}}</td>-->
+<!--            <td>{{item.model_number}}</td>-->
+<!--            <td>{{item.size}}</td>-->
+<!--            <td>{{item.gold}}</td>-->
+<!--            <td>{{item.gross_weight}}</td>-->
+<!--            <td>{{item.amount}}</td>-->
+<!--            <td>{{item.quantity}}</td>-->
+<!--            <td style="text-align: center">-->
+<!--              <button mat-icon-button color="primary" aria-label="" [disabled]="item.isSet" (click)="stockSelectionForBill(item)" >-->
+<!--                <mat-icon>add</mat-icon>-->
+<!--              </button>-->
+<!--            </td>-->
+<!--          </tr>-->
+<!--          </tbody>-->
+<!--        </table>-->
+        <table class="table table-hover" *ngIf="tempStockList ">
           <thead style="background-color: lightslategray">
           <th>SL NO.</th>
           <th>Tag</th>
@@ -21,7 +64,7 @@
           <th>Add For Billing</th>
           </thead>
           <tbody>
-          <tr *ngFor="let indexOfElement = index; let item of stockList |filter: searchTag">
+          <tr *ngFor="let indexOfElement = index; let item of tempStockList |filter: searchTag ">
             <td>{{indexOfElement+1}}</td>
             <td>{{item.tag | uppercase}}</td>
             <td>{{item.model_number}}</td>
@@ -36,20 +79,20 @@
               </button>
             </td>
           </tr>
-          </tbody><mat-form-field *ngIf="customerData">
-          <mat-label>Customer</mat-label>
-          <mat-select  [ngModel]="selectedCustomerData.id">
-            <mat-option *ngFor="let customer of customerData" [value]="customer.id" (blur)="customerSelected(customer)">
-              {{customer.person_name}}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
+          </tbody>
         </table>
       </div>
       <div class="col-3" style="text-align: center; background-color: #d9dd9b">
         <h2>Stock Bill Entry</h2>
         <div class="container" fxLayout="column" fxLayout.xs="column" fxLayoutAlign="start" fxLayoutGap="10px" fxLayoutGap.xs="0">
-
+          <mat-form-field *ngIf="customerData">
+            <mat-label>Customer</mat-label>
+            <mat-select [(ngModel)]="selectedCustomerData.id">
+              <mat-option *ngFor="let customer of customerData"  [value]="customer.id" (blur)="customerSelected(customer)" >
+                {{customer.person_name}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
           <mat-form-field fxFlex="30">
             <mat-label> Stock Bill Date</mat-label>
             <input matInput
@@ -173,7 +216,7 @@
               <div class="col-4"></div>
               <div class="col-4"><br>
                 <label><b>Bill Number : {{billDetailsData[0].bill_number}}</b></label><br>
-                <label><b>Bill Date : {{selectedCustomerData.bill_date}}</b></label><br>
+                <label><b>Bill Date : {{selectedCustomerData.bill_date | date :  "dd.MM.y"}}</b></label><br>
                 <label>Order Number :</label><br>
                 <label>Order Date :</label><br>
               </div>

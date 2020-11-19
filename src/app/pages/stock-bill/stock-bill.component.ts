@@ -9,6 +9,9 @@ import {CustomerService} from '../../services/customer.service';
 import {Customer} from '../../models/customer.model';
 import toWords from 'number-to-words/src/toWords';
 import Swal from 'sweetalert2';
+import {DatePipe} from '@angular/common';
+import {AgentService} from '../../services/agent.service';
+import {Agent} from '../../models/agent.model';
 
 @Component({
   selector: 'app-stock-bill',
@@ -25,6 +28,7 @@ export class StockBillComponent implements OnInit {
   totalQuantity: number;
   totalCost: number;
   searchTag: string;
+  agentName: string;
   stockBillContainer: any;
   billView = true ;
   customerData: Customer[];
@@ -32,14 +36,20 @@ export class StockBillComponent implements OnInit {
   minDate = new Date(2010, 11, 2);
   maxDate = new Date(2021, 3, 2);
   bill_date: string;
+  pipe = new DatePipe('en-US');
+  agentData: Agent[];
+  tempStockList: Stock[];
 
-  constructor(private customerService: CustomerService, private  stockService: StockService, private  billService: BillService, private  storage: StorageMap) {
+  now = Date.now();
+
+  constructor(private customerService: CustomerService, private  stockService: StockService, private  billService: BillService, private  storage: StorageMap,private agentService: AgentService) {
     this.stockList = this.stockService.getStockList();
     this.customerData = this.customerService.getCustomers();
-    // this.selectedCustomerData = this.customerData[0];
+    // this.agentData = this.agentService.getAgentList();
+    this.selectedCustomerData = this.customerData[0];
     this.storage.get('stockBillContainer').subscribe((stockBillContainer: any) => {
       if (stockBillContainer){
-        // console.log(stockBillContainer);
+        console.log(stockBillContainer);
         if (stockBillContainer.stockBillDetailsData) {
           this.billDetailsData = stockBillContainer.stockBillDetailsData;
         }
@@ -86,6 +96,14 @@ export class StockBillComponent implements OnInit {
         this.selectedCustomerData = this.customerData[0];
         // console.log(this.selectedCustomerData);
       });
+    this.agentService.getAgentUpdateListener()
+      .subscribe((response) => {
+        this.agentData = response;
+        console.log('agentData');
+        console.log(this.agentData);
+      });
+
+
 
     this.stockService.getStockUpdateListener().subscribe((response) => {
       this.stockList = response;
@@ -96,13 +114,14 @@ export class StockBillComponent implements OnInit {
         // tslint:disable-next-line:radix
         value.tag = (parseInt(x[1]).toString(16) + '-' + parseInt(x[2]).toString(16) + '-' + parseInt(x[3]));
       });
+      this.tempStockList = this.stockList.filter(x => x.agent_id === 2);
 
 
       this.storage.get('stockBillContainer').subscribe((stockBillContainer: any) => {
         // this.customerData = stockBillContainer.stockBillCustomer;
       // public fields: Object = { text: 'Country.Name', value: 'Code.Id' };
-        console.log('stockBillContainer');
-        console.log(stockBillContainer);
+      //   console.log('stockBillContainer');
+      //   console.log(stockBillContainer);
         if (stockBillContainer) {
           this.total92Gold = 0;
           this.totalGold = 0;
@@ -275,8 +294,13 @@ export class StockBillComponent implements OnInit {
   customerSelected(data){
     // let date = "2020-12-20";
     // data.bill_date = "2020-12-20";
+
     data.bill_date = this.selectedCustomerData.bill_date;
+    // data.bill_date = this.pipe.transform(this.selectedCustomerData.bill_date, 'yyyy-MM-dd');
+    // console.log('bill_date');
+    // console.log( data.bill_date);
     this.selectedCustomerData = data;
+    // this.selectedCustomerData.bill_date = this.pipe.transform(this.selectedCustomerData.bill_date, 'yyyy-MM-dd');
     this.stockBillContainer = {
       stockBillDetailsData: this.billDetailsData,
       stockBillCustomer: this.selectedCustomerData,
@@ -288,5 +312,11 @@ export class StockBillComponent implements OnInit {
   }
   getDate(date){
     console.log(date);
+  }
+  getStockListByAgentName(item){
+    // console.log(item);
+
+    this. tempStockList = this.stockList.filter(x => x.agent_id === item);
+    console.log(this.tempStockList);
   }
 }

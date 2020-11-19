@@ -70,4 +70,7 @@ export class AgentService {
   updateAgent(){
     return this.http.patch<AgentResponseData>('http://127.0.0.1:8000/api/agents/' + this.agentForm.value.id, this.agentForm.value);
   }
+  getAgentList(){
+    return [...this.agentData];
+  }
 }

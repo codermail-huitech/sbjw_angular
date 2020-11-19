@@ -19,6 +19,7 @@ export class AgentAllocationComponent implements OnInit {
 
   constructor(private stockService: StockService, private agentService: AgentService) {
     this.stockList = this.stockService.getStockList();
+    // this.agentData = this.agentService.getAgentList();
   }
 
   ngOnInit(): void {

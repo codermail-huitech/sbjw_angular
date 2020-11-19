@@ -46,15 +46,11 @@ export class AgentAllocationComponent implements OnInit {
   }
 
   updateStockAgent(){
-    console.log("working");
-    console.log(this.agentID);
     this.stockService.updateStockByAgent(this.billDetailsData, this.agentID);
   }
 
   searchStocks(){
-    const a = this.stockList.filter(x => x.agent_id === this.agentID);
-    // @ts-ignore
-    // this.billDetailsData.push(a);
+    this.billDetailsData =  this.stockList.filter(x => x.agent_id === this.agentID);
   }
 
   setAgent(data){
@@ -62,16 +58,21 @@ export class AgentAllocationComponent implements OnInit {
   }
 
   stockSelection(data){
-    console.log(data);
+    // @ts-ignore
     this.billDetailsData.push(data);
-    const index = this.stockList.findIndex(x => x.id === data.id );
+    const index = this.stockList.findIndex(x => x.id === data.id);
     this.stockList[index].isSet = true;
   }
+
   removeFromStockBillEntry(data){
     const index = this.billDetailsData.findIndex(x => x.id === data.id );
-    this.billDetailsData.splice(index, 1);
     const stockIndex = this.stockList.findIndex(x => x.id === data.id );
     this.stockList[stockIndex].isSet = false;
+    // @ts-ignore
+    if (this.billDetailsData[index] !== 2){
+      this.stockService.updateStockByDefaultAgent(this.billDetailsData, this.agentID);
+      this.billDetailsData.splice(index, 1);
+    }
   }
 
 }

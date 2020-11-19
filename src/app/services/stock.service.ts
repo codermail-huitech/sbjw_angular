@@ -121,6 +121,13 @@ export class StockService {
       });
   }
 
+  updateStockByDefaultAgent(stockArray, AgentID){
+    return this.http.post(GlobalVariable.BASE_API_URL + '/updateStockByDefaultAgentId/', {stockList: stockArray, agentId: AgentID})
+      .subscribe((response: {success: number, data: Stock[]}) => {
+        console.log(response);
+      });
+  }
+
   // getStockList(){
   //   this.http.get(GlobalVariable.BASE_API_URL + '/getStockList').subscribe((response: {success: number, data: Stock[]})=>{
   //       this.stockData = response.data;

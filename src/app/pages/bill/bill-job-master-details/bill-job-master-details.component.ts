@@ -32,7 +32,7 @@ export class BillJobMasterDetailsComponent implements OnInit {
   totalCost: number;
   x: FinishedJobs[];
 
-  constructor(private  route: ActivatedRoute, private billService: BillService , private  goldReceiptService : GoldReceiptService, private stockService: StockService) {
+  constructor(private  route: ActivatedRoute, private billService: BillService , private  goldReceiptService: GoldReceiptService, private stockService: StockService) {
   }
 
   printDivStyle = {

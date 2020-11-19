@@ -16,6 +16,7 @@ export class Agent{
   // constructor(public id: number, public person_name: string, public email: string, public customer_category_id: number) {
   //     this.person_type_id = 7;
   // }
+  person_name?: any;
 
   constructor(){
 

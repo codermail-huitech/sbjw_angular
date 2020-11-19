@@ -4,9 +4,9 @@
 
       <div class="col-9">
         <div>
-          <!--          <mat-form-field class="example-full-width">-->
-          <!--            <input matInput placeholder="Enter Tag..." [(ngModel)]="searchTag" name="search" type="text" autofocus>-->
-          <!--          </mat-form-field>-->
+                    <mat-form-field class="example-full-width">
+                      <input matInput placeholder="Enter Tag..." [(ngModel)]="searchTerm" name="search" type="text" autofocus>
+                    </mat-form-field>
         </div>
         <table class="table table-hover">
           <thead style="background-color: lightslategray">
@@ -22,7 +22,7 @@
           </thead>
           <tbody>
 <!--          <tr *ngFor="let indexOfElement = index; let item of stockList |filter: searchTag">-->
-          <tr *ngFor="let indexOfElement = index; let item of stockList">
+          <tr *ngFor="let indexOfElement = index; let item of stockList | filter:searchTerm">
             <td>{{indexOfElement+1}}</td>
             <td>{{item.tag | uppercase}}</td>
             <td>{{item.model_number}}</td>
@@ -42,15 +42,15 @@
       </div>
       <div class="col-3" style="text-align: center; background-color: #d9dd9b">
         <h2>Stock Bill Entry</h2>
-<!--        <div class="container" fxLayout="column" fxLayout.xs="column" fxLayoutAlign="start" fxLayoutGap="10px" fxLayoutGap.xs="0">-->
-<!--          <mat-form-field *ngIf="customerData">-->
-<!--            <mat-label>Customer</mat-label>-->
-<!--            <mat-select  [ngModel]="selectedCustomerData.id">-->
-<!--              <mat-option *ngFor="let customer of customerData" [value]="customer.id" (blur)="customerSelected(customer)">-->
-<!--                {{customer.person_name}}-->
-<!--              </mat-option>-->
-<!--            </mat-select>-->
-<!--          </mat-form-field>-->
+        <div class="container" fxLayout="column" fxLayout.xs="column" fxLayoutAlign="start" fxLayoutGap="10px" fxLayoutGap.xs="0">
+          <mat-form-field *ngIf="agentData">
+            <mat-label>Agent</mat-label>
+            <mat-select>
+              <mat-option *ngFor="let agent of agentData" [value]="agent.id" (blur)="setAgent(agent.id)">
+                {{agent.person_name}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
 <!--          <mat-form-field fxFlex="30">-->
 <!--            <mat-label> Stock Bill Date</mat-label>-->
 <!--            <input matInput-->
@@ -64,8 +64,8 @@
 <!--            </mat-datepicker-toggle>-->
 <!--            <mat-datepicker #picker1></mat-datepicker>-->
 <!--          </mat-form-field>-->
-<!--          &lt;!&ndash;          {{selectedCustomerData.bill_date}}&ndash;&gt;-->
-<!--        </div>-->
+          <!--          {{selectedCustomerData.bill_date}}-->
+        </div>
         <!--        <div *ngIf="billDetailsData.length == 0">-->
         <!--          <h4>No Entry </h4>-->
         <!--        </div>-->
@@ -94,7 +94,9 @@
             </tbody>
           </table>
 <!--          &lt;!&ndash;          <button class="btn badge-info" (click)="stockBillGenerate()">Generate Bill</button>&ndash;&gt;-->
-<!--          <button class="btn badge-info" (click)="ViewBill()">View  Bill</button>&nbsp;&nbsp;&nbsp;-->
+          <button class="btn badge-info" (click)="updateStockAgent()">Save</button>&nbsp;&nbsp;&nbsp;
+          <button class="btn badge-info" (click)="searchStocks()">Search</button>&nbsp;&nbsp;&nbsp;
+
 <!--          <button class="btn badge-info" (click)="clearStorage()">clear Storage</button>-->
 
 <!--        </div>-->
@@ -110,7 +112,7 @@
 
 
 
-<div [hidden]="billView" style="background-color: white">
+<!--<div [hidden]="billView" style="background-color: white">-->
 
   <!--  <div  fxLayout.xs="column"  fxLayout="row" fxLayoutAlign="space-between stretch" fxFlexFill id ="completed-bill-div" >-->
   <!--    <div  fxFlex="100" class="col" id ="show-billNumber-div" >-->
@@ -134,5 +136,5 @@
 
 
 
-</div>
+<!--</div>-->
 

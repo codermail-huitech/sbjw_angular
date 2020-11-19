@@ -99,6 +99,8 @@ export class StockService {
     });
   }
 
+
+
   // getStockCustomer(){
   //   return [...this.stockCustomers];
   // }
@@ -110,6 +112,13 @@ export class StockService {
           this.jobMasterDataSub.next([...this.jobMasterData]);
        });
 
+  }
+
+  updateStockByAgent(stockArray, AgentID){
+    return this.http.post(GlobalVariable.BASE_API_URL + '/updateStockByAgentId/', {stockList: stockArray, agentId: AgentID})
+      .subscribe((response: {success: number, data: Stock[]}) => {
+        console.log(response);
+      });
   }
 
   // getStockList(){

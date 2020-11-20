@@ -8,9 +8,9 @@
             <input matInput placeholder="Enter Tag..." [(ngModel)]="searchTag" name="search" type="text" autofocus>
           </mat-form-field>
 
-          <mat-form-field class="example-full-width">
-            <input matInput placeholder="Items per page" [(ngModel)]="pageSize" name="PageSize" type="text">
-          </mat-form-field>
+<!--          <mat-form-field class="example-full-width">-->
+<!--            <input matInput placeholder="Items per page" [(ngModel)]="pageSize" name="PageSize" type="text">-->
+<!--          </mat-form-field>-->
 <!--        </div>-->
         &nbsp;&nbsp;&nbsp;
 <!--        <div>-->
@@ -89,7 +89,7 @@
           <pagination-controls (pageChange)="p = $event"></pagination-controls>
           <pagination-controls  id="some_id"
                                 (pageChange)="p=($event)"
-                                maxSize="5"
+                                maxSize="10"
                                 directionLinks="true"
                                 autoHide="true"
                                 responsive="true"
@@ -107,8 +107,8 @@
           <mat-form-field *ngIf="customerData">
             <mat-label>Customer</mat-label>
 <!--            <mat-select [(ngModel)]="selectedCustomerData.id">-->
-            <mat-select>
-              <mat-option *ngFor="let customer of customerData"  [value]="customer.id" (blur)="customerSelected(customer)" >
+            <mat-select [(ngModel)]="selectedCustomerData.id">
+              <mat-option *ngFor="let customer of customerData"    [value]="customer.id" (blur)="customerSelected(customer)" >
                 {{customer.person_name}}
               </mat-option>
             </mat-select>
@@ -116,12 +116,12 @@
           <mat-form-field fxFlex="30">
             <mat-label> Stock Bill Date</mat-label>
             <input matInput
-                   [(ngModel)]="bill_date"
+                   [(ngModel)]="selectedCustomerData.bill_date"
+                   (ngModelChange)="selectDate(selectedCustomerData.bill_date)"
                    [matDatepicker]="picker1"
-                   (blur)="getDate(bill_date)"
                    [min]="minDate"
                    [max]="maxDate">
-            <mat-datepicker-toggle matSuffix [for]="picker1" (blur)="getDate(bill_date)">
+            <mat-datepicker-toggle matSuffix [for]="picker1">
               <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
             </mat-datepicker-toggle>
             <mat-datepicker #picker1></mat-datepicker>

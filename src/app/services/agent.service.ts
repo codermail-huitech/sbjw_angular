@@ -59,6 +59,16 @@ export class AgentService {
     this.agentForm.setValue(data);
   }
 
+  getLatestAgent(){
+    this.http.get('http://127.0.0.1:8000/api/agents')
+      .subscribe((response: {success: number, data: Agent[]}) => {
+        // @ts-ignore
+        const {data} = response;
+        this.agentData = data;
+        this.agentSub.next([...this.agentData]);
+      });
+  }
+
   saveAgent(){
     return this.http.post<AgentResponseData>('http://127.0.0.1:8000/api/agents', this.agentForm.value);
   }

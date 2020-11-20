@@ -23,6 +23,7 @@ export class AgentComponent implements OnInit {
     this.agentService.getAgentUpdateListener().subscribe((response) => {
       this.agentData = response;
     });
+    this.agentData = this.agentService.getAgentList();
   }
 
   onSubmit(){

@@ -9,7 +9,7 @@ import {CustomerService} from '../../services/customer.service';
 import {Customer} from '../../models/customer.model';
 import toWords from 'number-to-words/src/toWords';
 import Swal from 'sweetalert2';
-import {DatePipe} from '@angular/common';
+import {DatePipe, formatDate} from '@angular/common';
 import {AgentService} from '../../services/agent.service';
 import {Agent} from '../../models/agent.model';
 
@@ -39,12 +39,13 @@ export class StockBillComponent implements OnInit {
   pipe = new DatePipe('en-US');
   agentData: Agent[]  ;
   tempStockList: Stock[];
+  date = new Date();
 
   page: number;
   pageSize: number;
   p = 1;
 
-  now = Date.now();
+  // now = Date.now();
 
   constructor(private customerService: CustomerService, private  stockService: StockService, private  billService: BillService, private  storage: StorageMap, private agentService: AgentService) {
     console.log('constructor invoked');
@@ -52,7 +53,7 @@ export class StockBillComponent implements OnInit {
     this.stockList = this.stockService.getStockList();
     this.tempStockList = this.stockList.filter(x => x.agent_id === 2);
     this.page = 1;
-    this.pageSize = 15;
+    this.pageSize = 10;
     this.storage.get('stockBillContainer').subscribe((stockBillContainer: any) => {
       if (stockBillContainer){
         console.log(stockBillContainer);
@@ -92,9 +93,8 @@ export class StockBillComponent implements OnInit {
     this.totalGold = 0;
     this.totalQuantity = 0;
     this.totalCost = 0;
-    this.bill_date = '20/11/2020';
-
-    console.log('ngOnInit invoked');
+    // this.bill_date = '20/11/2020';
+    // this.bill_date = '2020-11-20';
 
     this.stockService.getStockUpdateListener().subscribe((response) => {
       this.stockList = response;
@@ -147,6 +147,11 @@ export class StockBillComponent implements OnInit {
       .subscribe((customers: Customer[]) => {
         this.customerData = customers;
         this.selectedCustomerData = this.customerData[0];
+        // this.selectedCustomerData.bill_date = '2010-11-02';
+        this.selectedCustomerData.bill_date = this.date.getFullYear() + '-' + (this.date.getMonth() + 1) + '-' + this.date.getDate();;
+        // console.log(formatDate(this.date.getDate(), 'yyyy-MM-dd', 'en'));
+        // this.selectedCustomerData.bill_date = this. datepipe. transform(this.date, 'yyyy-MM-dd');
+        // console.log(this.date);
       });
 
     this.agentService.getAgentUpdateListener()
@@ -179,12 +184,6 @@ export class StockBillComponent implements OnInit {
   }
 
   stockSelectionForBill(item) {
-
-
-    // this.billDetailsData.push(item);
-    // console.log(this.billDetailsData);
-
-
     const index = this.billDetailsData.findIndex(x => x.id === item.id);
     if (index === -1){
 
@@ -237,6 +236,8 @@ export class StockBillComponent implements OnInit {
     // for (let i = 0 ; i < this.stockList.length ; i ++){
     //   this.stockList[i].isSet = false;
     // }
+    this.selectedCustomerData = this.customerData[0];
+    this.selectedCustomerData.bill_date = this.date.getFullYear() + '-' + (this.date.getMonth() + 1) + '-' + this.date.getDate();
 
     this.stockBillContainer = {
       stockBillDetailsData: null,
@@ -294,13 +295,10 @@ export class StockBillComponent implements OnInit {
   customerSelected(data){
     // let date = "2020-12-20";
     // data.bill_date = "2020-12-20";
+    console.log(this.selectedCustomerData.bill_date);
 
     data.bill_date = this.selectedCustomerData.bill_date;
-    // data.bill_date = this.pipe.transform(this.selectedCustomerData.bill_date, 'yyyy-MM-dd');
-    // console.log('bill_date');
-    // console.log( data.bill_date);
     this.selectedCustomerData = data;
-    // this.selectedCustomerData.bill_date = this.pipe.transform(this.selectedCustomerData.bill_date, 'yyyy-MM-dd');
     this.stockBillContainer = {
       stockBillDetailsData: this.billDetailsData,
       stockBillCustomer: this.selectedCustomerData,
@@ -310,13 +308,20 @@ export class StockBillComponent implements OnInit {
 
     // console.log(this.stockBillContainer);
   }
-  getDate(date){
-    console.log(date);
-  }
+
   getStockListByAgentName(item){
     console.log(item);
     console.log(this.stockList);
     this. tempStockList = this.stockList.filter(x => x.agent_id === item);
     // console.log(this.tempStockList);
+  }
+  selectDate(item){
+    this.selectedCustomerData.bill_date = item;
+    this.stockBillContainer = {
+      stockBillDetailsData: this.billDetailsData,
+      stockBillCustomer: this.selectedCustomerData,
+    };
+    this.storage.set('stockBillContainer', this.stockBillContainer).subscribe(() => {
+    });
   }
 }

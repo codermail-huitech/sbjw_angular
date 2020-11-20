@@ -115,17 +115,11 @@ export class StockService {
   }
 
   updateStockByAgent(stockArray, AgentID){
-    return this.http.post(GlobalVariable.BASE_API_URL + '/updateStockByAgentId', {stockList: stockArray, agentId: AgentID})
-      .subscribe((response: {success: number, data: Stock[]}) => {
-        console.log(response);
-      });
+    return this.http.post(GlobalVariable.BASE_API_URL + '/updateStockByAgentId', {stockList: stockArray, agentId: AgentID});
   }
 
   updateStockByDefaultAgent(stockArray, AgentID){
-    return this.http.post(GlobalVariable.BASE_API_URL + '/updateStockByDefaultAgentId', {stockList: stockArray, agentId: AgentID})
-      .subscribe((response: {success: number, data: Stock[]}) => {
-        console.log(response);
-      });
+    return this.http.post(GlobalVariable.BASE_API_URL + '/updateStockByDefaultAgentId', {stockList: stockArray, agentId: AgentID});
   }
 
   // getStockList(){

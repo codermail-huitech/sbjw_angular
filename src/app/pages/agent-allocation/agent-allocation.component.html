@@ -22,7 +22,7 @@
           </thead>
           <tbody>
 <!--          <tr *ngFor="let indexOfElement = index; let item of stockList |filter: searchTag">-->
-          <tr *ngFor="let indexOfElement = index; let item of stockList | filter:searchTerm">
+          <tr *ngFor="let indexOfElement = index; let item of stockList | filter:searchTerm |  paginate: { itemsPerPage: 10, currentPage: p };">
             <td>{{indexOfElement+1}}</td>
             <td>{{item.tag | uppercase}}</td>
             <td>{{item.model_number}}</td>
@@ -39,6 +39,21 @@
           </tr>
           </tbody>
         </table>
+        <div fxLayout.xs="column" fxLayout="column" fxFlexFill>
+          <pagination-controls (pageChange)="p = $event"></pagination-controls>
+          <pagination-controls  id="some_id"
+                                (pageChange)="p=($event)"
+                                maxSize="10"
+                                directionLinks="true"
+                                autoHide="true"
+                                responsive="true"
+                                previousLabel="Previous"
+                                nextLabel="Next"
+                                screenReaderPaginationLabel="Pagination"
+                                screenReaderPageLabel="page"
+                                screenReaderCurrentLabel="You're on page">
+          </pagination-controls>
+        </div>
       </div>
       <div class="col-3" style="text-align: center; background-color: #d9dd9b">
         <h2>Stocks Under Agent </h2>
@@ -78,17 +93,27 @@
             <thead style="background-color: lightslategray">
             <th>SL NO.</th>
             <th>Tag</th>
-            <th>Delete</th>
+            <th [hidden]="showCheckbox">Delete</th>
+            <th  [hidden]="!showCheckbox">Select &nbsp;
+              <input type="checkbox" (click)="selectAll()">
+            </th>
+<!--            <th  [hidden]="!showCheckbox">-->
+<!--              <button class="btn btn-info">Select All</button>-->
+<!--            </th>-->
+
 
             </thead>
             <tbody>
             <tr *ngFor="let indexOfElement = index; let item of billDetailsData">
               <td>{{indexOfElement+1}}</td>
               <td>{{item.tag | uppercase}}</td>
-              <td>
+              <td [hidden]="showCheckbox" >
                 <button mat-icon-button color="accent" aria-label="" (click)="removeFromStockBillEntry(item)" >
                   <mat-icon>delete</mat-icon>
                 </button>
+              </td>
+              <td [hidden]="!showCheckbox" >
+                <input type="checkbox" (click)="deallocateAgent(item)" [checked]="isChecked">
               </td>
             </tr>
             </tbody>

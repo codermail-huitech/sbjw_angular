@@ -37,16 +37,22 @@ export class StockBillComponent implements OnInit {
   maxDate = new Date(2021, 3, 2);
   bill_date: string;
   pipe = new DatePipe('en-US');
-  agentData: Agent[];
+  agentData: Agent[]  ;
   tempStockList: Stock[];
+
+  page: number;
+  pageSize: number;
+  p = 1;
 
   now = Date.now();
 
-  constructor(private customerService: CustomerService, private  stockService: StockService, private  billService: BillService, private  storage: StorageMap,private agentService: AgentService) {
-    this.stockList = this.stockService.getStockList();
-    this.customerData = this.customerService.getCustomers();
+  constructor(private customerService: CustomerService, private  stockService: StockService, private  billService: BillService, private  storage: StorageMap, private agentService: AgentService) {
+    console.log('constructor invoked');
     // this.agentData = this.agentService.getAgentList();
-    this.selectedCustomerData = this.customerData[0];
+    this.stockList = this.stockService.getStockList();
+    this.tempStockList = this.stockList.filter(x => x.agent_id === 2);
+    this.page = 1;
+    this.pageSize = 15;
     this.storage.get('stockBillContainer').subscribe((stockBillContainer: any) => {
       if (stockBillContainer){
         console.log(stockBillContainer);
@@ -86,29 +92,13 @@ export class StockBillComponent implements OnInit {
     this.totalGold = 0;
     this.totalQuantity = 0;
     this.totalCost = 0;
+    this.bill_date = '20/11/2020';
 
-
-
-    this.customerData = this.customerService.getCustomers();
-    this.customerService.getCustomerUpdateListener()
-      .subscribe((customers: Customer[]) => {
-        this.customerData = customers;
-        this.selectedCustomerData = this.customerData[0];
-        // console.log(this.selectedCustomerData);
-      });
-    this.agentService.getAgentUpdateListener()
-      .subscribe((response) => {
-        this.agentData = response;
-        console.log('agentData');
-        console.log(this.agentData);
-      });
-
-
+    console.log('ngOnInit invoked');
 
     this.stockService.getStockUpdateListener().subscribe((response) => {
       this.stockList = response;
-      // console.log(this.stockList);
-      // tslint:disable-next-line:only-arrow-functions
+      console.log(this.stockList);
       this.stockList.forEach(function(value) {
         const x = value.tag.split('-');
         // tslint:disable-next-line:radix
@@ -118,10 +108,6 @@ export class StockBillComponent implements OnInit {
 
 
       this.storage.get('stockBillContainer').subscribe((stockBillContainer: any) => {
-        // this.customerData = stockBillContainer.stockBillCustomer;
-      // public fields: Object = { text: 'Country.Name', value: 'Code.Id' };
-      //   console.log('stockBillContainer');
-      //   console.log(stockBillContainer);
         if (stockBillContainer) {
           this.total92Gold = 0;
           this.totalGold = 0;
@@ -133,10 +119,7 @@ export class StockBillComponent implements OnInit {
             for (let i = 0; i < this.billDetailsData.length; i++ ){
               const index = this.stockList.findIndex(x => x.id === this.billDetailsData[i].id);
               this.stockList[index].isSet = true;
-              // console.log(this.stockList[index]);
 
-              // this.stockList[i].total = Number(this.stockList[i].gold);
-              // this.stockList[i].cost = this.stockList[i].amount;
 
               const pure_gold = parseFloat(((this.billDetailsData[i].total * 92) / 100).toFixed(3));
               this.total92Gold = this.total92Gold + Number(this.billDetailsData[i].total);
@@ -145,12 +128,11 @@ export class StockBillComponent implements OnInit {
               this.totalCost = this.totalCost + this.billDetailsData[i].amount;
             }
           }
-          // this.selectedCustomerData =  stockBillContainer.stockBillCustomer;
+
           if (stockBillContainer.stockBillCustomer){
             this.selectedCustomerData =  stockBillContainer.stockBillCustomer;
           }
-          // console.log(stockBillContainer.stockBillCustomer);
-          // tslint:disable-next-line:prefer-for-of
+
 
         }
       }, (error) => {
@@ -158,6 +140,24 @@ export class StockBillComponent implements OnInit {
       // localStorage.removeItem('stockBillContainer');
 
     });
+
+    this.customerData = this.customerService.getCustomers();
+    // this.agentData = this.agentService.getAgentList();
+    this.customerService.getCustomerUpdateListener()
+      .subscribe((customers: Customer[]) => {
+        this.customerData = customers;
+        this.selectedCustomerData = this.customerData[0];
+      });
+
+    this.agentService.getAgentUpdateListener()
+      .subscribe((response) => {
+        this.agentData = response;
+        console.log('agentData');
+        console.log(this.agentData);
+      });
+    this.agentData = this.agentService.getAgentList();
+
+
 
 
     // this.stockList = this.stockService.getStockList();
@@ -314,9 +314,9 @@ export class StockBillComponent implements OnInit {
     console.log(date);
   }
   getStockListByAgentName(item){
-    // console.log(item);
-
+    console.log(item);
+    console.log(this.stockList);
     this. tempStockList = this.stockList.filter(x => x.agent_id === item);
-    console.log(this.tempStockList);
+    // console.log(this.tempStockList);
   }
 }

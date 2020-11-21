@@ -38,6 +38,13 @@ export class StockComponent implements OnInit {
 
   constructor(private stockService: StockService, private router: ActivatedRoute ,  private  jobService: JobService, private billService:BillService ) {
     this.stockData = this.stockService.getStockList();
+    // if (this.stockData){
+    //   this.stockData.forEach(function(value) {
+    //     const x = value.tag.split('-');
+    //     // tslint:disable-next-line:radix
+    //     value.tag = (parseInt(x[1]).toString(16) + '-' + parseInt(x[2]).toString(16) + '-' + parseInt(x[3]));
+    //   });
+    // }
   }
 
   ngOnInit(): void {

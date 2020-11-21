@@ -118,8 +118,8 @@ export class StockService {
     return this.http.post(GlobalVariable.BASE_API_URL + '/updateStockByAgentId', {stockList: stockArray, agentId: AgentID});
   }
 
-  updateStockByDefaultAgent(stockArray, AgentID){
-    return this.http.post(GlobalVariable.BASE_API_URL + '/updateStockByDefaultAgentId', {stockList: stockArray, agentId: AgentID});
+  updateStockByDefaultAgent(stockArray){
+    return this.http.post(GlobalVariable.BASE_API_URL + '/updateStockByDefaultAgentId', {stockList: stockArray});
   }
 
   // getStockList(){

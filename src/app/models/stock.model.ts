@@ -29,6 +29,7 @@ export class Stock{
   cost?: number;
   isSet?: boolean;
   agent_id?: number;
+  in_stock?: number;
   constructor() {
   }
 }

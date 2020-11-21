@@ -51,12 +51,18 @@ export class StockBillComponent implements OnInit {
     console.log('constructor invoked');
     // this.agentData = this.agentService.getAgentList();
     this.stockList = this.stockService.getStockList();
+    // if (this.stockList){
+    //   this.stockList.forEach(function(value) {
+    //     const x = value.tag.split('-');
+    //     // tslint:disable-next-line:radix
+    //     value.tag = (parseInt(x[1]).toString(16) + '-' + parseInt(x[2]).toString(16) + '-' + parseInt(x[3]));
+    //   });
+    // }
     this.tempStockList = this.stockList.filter(x => x.agent_id === 2);
     this.page = 1;
     this.pageSize = 10;
     this.storage.get('stockBillContainer').subscribe((stockBillContainer: any) => {
       if (stockBillContainer){
-        console.log(stockBillContainer);
         if (stockBillContainer.stockBillDetailsData) {
           this.billDetailsData = stockBillContainer.stockBillDetailsData;
         }
@@ -98,7 +104,6 @@ export class StockBillComponent implements OnInit {
 
     this.stockService.getStockUpdateListener().subscribe((response) => {
       this.stockList = response;
-      console.log(this.stockList);
       this.stockList.forEach(function(value) {
         const x = value.tag.split('-');
         // tslint:disable-next-line:radix

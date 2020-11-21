@@ -4,6 +4,7 @@ import {AgentService} from '../../services/agent.service';
 import {Stock} from '../../models/stock.model';
 import {Agent} from '../../models/agent.model';
 import Swal from 'sweetalert2';
+import {delay} from 'rxjs/operators';
 
 @Component({
   selector: 'app-agent-allocation',
@@ -53,6 +54,7 @@ export class AgentAllocationComponent implements OnInit {
 
     this.agentService.getAgentUpdateListener().subscribe((response) => {
       this.agentData = response;
+      // console.log(this.agentID);
     });
     this.agentData = this.agentService.getAgentList();
 
@@ -76,7 +78,9 @@ export class AgentAllocationComponent implements OnInit {
 
   searchStocks(){
     this.showCheckbox = true;
-    this.billDetailsData =  this.stockList.filter(x => x.agent_id === this.agentID);
+    // this.billDetailsData =  this.stockList.filter(x => x.agent_id === this.agentID);
+    const tempStock =  this.stockList.filter(x => x.agent_id === this.agentID);
+    this.billDetailsData = tempStock.filter(x => x.in_stock === 1);
   }
 
   setAgent(data){
@@ -90,16 +94,46 @@ export class AgentAllocationComponent implements OnInit {
     }else{
       this.stockDeallocation.splice(index,1);
     }
-    console.log(this.stockDeallocation);
+  }
+
+  deallocateAgents(){
+    this.stockService.updateStockByDefaultAgent(this.stockDeallocation)
+      .subscribe((response: {success: number, data: Stock[]}) => {
+        if (response.data){
+          // this.billDetailsData.splice(index, 1);
+          this.stockService.getUpdatedStockList();
+          this.isChecked = false;
+          for ( let i = 0; i < this.stockDeallocation.length; i++){
+            const index = this.billDetailsData.findIndex(x => x.id === this.stockDeallocation[i].id);
+            this.billDetailsData.splice(index,1);
+          }
+          // this.billDetailsData =  this.stockList.filter(x => x.agent_id === this.agentID);
+          // delay(1000);
+          // this.searchStocks();
+        }
+      });
   }
 
   selectAll(){
-    this.stockDeallocation = [...this.billDetailsData];
-    this.isChecked = true;
-    console.log(this.stockDeallocation);
+    if (this.isChecked === false) {
+      this.stockDeallocation = [...this.billDetailsData];
+      this.isChecked = true;
+    }else{
+      this.stockDeallocation = [];
+      this.isChecked = false;
+    }
   }
 
+  // isCheckedFunction(item){
+  //   console.log(item);
+  // }
+
   stockSelection(data){
+    this.stockDeallocation = [];
+    // @ts-ignore
+    if (this.showCheckbox === true){
+      this.billDetailsData = [];
+    }
     this.showCheckbox = false;
     // @ts-ignore
     this.billDetailsData.push(data);
@@ -112,17 +146,17 @@ export class AgentAllocationComponent implements OnInit {
     const stockIndex = this.stockList.findIndex(x => x.id === data.id );
     this.stockList[stockIndex].isSet = false;
     // @ts-ignore
-    if (this.billDetailsData[index].agent_id !== 2){
-      this.stockService.updateStockByDefaultAgent(this.billDetailsData, this.agentID)
-        .subscribe((response: {success: number, data: Stock[]}) => {
-        if (response.data){
-          this.billDetailsData.splice(index, 1);
-          this.stockService.getUpdatedStockList();
-        }
-      });
-    }else{
-      this.billDetailsData.splice(index, 1);
-    }
+    // if (this.billDetailsData[index].agent_id !== 2){
+      // this.stockService.updateStockByDefaultAgent(this.billDetailsData, this.agentID)
+      //   .subscribe((response: {success: number, data: Stock[]}) => {
+      //   if (response.data){
+      //     this.billDetailsData.splice(index, 1);
+      //     this.stockService.getUpdatedStockList();
+      //   }
+      // });
+    // }else{
+    this.billDetailsData.splice(index, 1);
+    // }
   }
 
 }

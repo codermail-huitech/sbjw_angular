@@ -94,7 +94,7 @@
             <th>SL NO.</th>
             <th>Tag</th>
             <th [hidden]="showCheckbox">Delete</th>
-            <th  [hidden]="!showCheckbox">Select All &nbsp;
+            <th [hidden]="!showCheckbox">Select All &nbsp;
               <input type="checkbox" (click)="selectAll()" [checked]="stockDeallocation.length === billDetailsData.length">
             </th>
 <!--            <th  [hidden]="!showCheckbox">-->
@@ -122,7 +122,7 @@
 <!--          &lt;!&ndash;          <button class="btn badge-info" (click)="stockBillGenerate()">Generate Bill</button>&ndash;&gt;-->
           <button class="btn badge-info" [disabled]="agentID === undefined" (click)="updateStockAgent()" [hidden]="showCheckbox || billDetailsData.length === 0">Save</button>&nbsp;&nbsp;&nbsp;
           <button class="btn badge-info" (click)="deallocateAgents()" [disabled]="stockDeallocation.length === 0" [hidden]="!showCheckbox">Deallocate</button>&nbsp;&nbsp;&nbsp;
-          <button class="btn badge-info" (click)="searchStocks()">Search</button>&nbsp;&nbsp;&nbsp;
+          <button class="btn badge-info" (click)="searchStocks()" [disabled]="agentID === undefined" >Search</button>&nbsp;&nbsp;&nbsp;
 
 <!--          <button class="btn badge-info" (click)="clearStorage()">clear Storage</button>-->
 

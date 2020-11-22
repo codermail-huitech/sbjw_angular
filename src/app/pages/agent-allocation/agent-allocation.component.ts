@@ -4,6 +4,7 @@ import {AgentService} from '../../services/agent.service';
 import {Stock} from '../../models/stock.model';
 import {Agent} from '../../models/agent.model';
 import Swal from 'sweetalert2';
+import {MatSnackBar} from '@angular/material/snack-bar';
 import {delay} from 'rxjs/operators';
 
 @Component({
@@ -23,9 +24,10 @@ export class AgentAllocationComponent implements OnInit {
   p = 1;
   showCheckbox = false;
   stockDeallocation: Stock[] = [];
+  tempStorageBillDetailsData: Stock[] = [];
   isChecked = false;
 
-  constructor(private stockService: StockService, private agentService: AgentService) {
+  constructor(private stockService: StockService, private agentService: AgentService, private _snackBar: MatSnackBar) {
     this.stockList = this.stockService.getStockList();
     this.page = 1;
     this.pageSize = 10;
@@ -54,10 +56,8 @@ export class AgentAllocationComponent implements OnInit {
 
     this.agentService.getAgentUpdateListener().subscribe((response) => {
       this.agentData = response;
-      // console.log(this.agentID);
     });
     this.agentData = this.agentService.getAgentList();
-
   }
 
   updateStockAgent(){
@@ -78,9 +78,17 @@ export class AgentAllocationComponent implements OnInit {
 
   searchStocks(){
     this.showCheckbox = true;
-    // this.billDetailsData =  this.stockList.filter(x => x.agent_id === this.agentID);
     const tempStock =  this.stockList.filter(x => x.agent_id === this.agentID);
-    this.billDetailsData = tempStock.filter(x => x.in_stock === 1);
+    // this.billDetailsData = tempStock.filter(x => x.in_stock === 1);
+    const tempData = tempStock.filter(x => x.in_stock === 1);
+    if (tempData.length === 0){
+      this._snackBar.open('No stock allocated to this agent', '', {
+        duration: 2000,
+      });
+      this.showCheckbox = false;
+    }else{
+      this.billDetailsData = tempData;
+    }
   }
 
   setAgent(data){
@@ -100,16 +108,17 @@ export class AgentAllocationComponent implements OnInit {
     this.stockService.updateStockByDefaultAgent(this.stockDeallocation)
       .subscribe((response: {success: number, data: Stock[]}) => {
         if (response.data){
-          // this.billDetailsData.splice(index, 1);
           this.stockService.getUpdatedStockList();
           this.isChecked = false;
+          // tslint:disable-next-line:prefer-for-of
           for ( let i = 0; i < this.stockDeallocation.length; i++){
             const index = this.billDetailsData.findIndex(x => x.id === this.stockDeallocation[i].id);
             this.billDetailsData.splice(index,1);
+            // console.log(this.billDetailsData.length);
+            if (this.billDetailsData.length === 0){
+              this.showCheckbox = false;
+            }
           }
-          // this.billDetailsData =  this.stockList.filter(x => x.agent_id === this.agentID);
-          // delay(1000);
-          // this.searchStocks();
         }
       });
   }
@@ -129,14 +138,21 @@ export class AgentAllocationComponent implements OnInit {
   // }
 
   stockSelection(data){
+    this.tempStorageBillDetailsData.push(data);
     this.stockDeallocation = [];
     // @ts-ignore
     if (this.showCheckbox === true){
       this.billDetailsData = [];
+      console.log(this.showCheckbox);
+      // if (this.tempStorageBillDetailsData.length !== 0){
+      this.billDetailsData = [...this.tempStorageBillDetailsData];
+      // }
+    }else{
+      this.billDetailsData.push(data);
     }
     this.showCheckbox = false;
     // @ts-ignore
-    this.billDetailsData.push(data);
+    // this.billDetailsData.push(data);
     const index = this.stockList.findIndex(x => x.id === data.id);
     this.stockList[index].isSet = true;
   }

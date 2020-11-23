@@ -39,8 +39,9 @@ export class AgentAllocationComponent implements OnInit {
     this.isChecked = false;
     this.stockService.getStockUpdateListener().subscribe((response) => {
       this.stockList = response;
+      // const tempData = this.stockList.filter(x => x.in_stock === 1);
       this.stockList.forEach(function(value){
-        if (value.agent_id === 2) {
+        if (value.agent_id === 2 && value.in_stock === 1) {
           value.isSet = false;
         }else{
           value.isSet = true;

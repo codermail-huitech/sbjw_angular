@@ -17,9 +17,11 @@ import {StockService} from '../../../../services/stock.service';
 export class FinishJobComponent implements OnInit {
   jobMasterForm: FormGroup;
   id: number;
+  isSubmitEnabled = true;
   constructor(private route: ActivatedRoute , private jobService: JobService, private _snackBar: MatSnackBar, private  billService: BillService, private  jobTaskService: JobTaskService, private  stockService: StockService) { }
 
   ngOnInit(): void {
+    this.isSubmitEnabled = true;
     this.jobMasterForm = this.jobService.jobMasterForm;
   }
   onSubmit(){
@@ -46,6 +48,7 @@ export class FinishJobComponent implements OnInit {
             'The job has been finished',
             'success'
           );
+          this.isSubmitEnabled  = false;
           this.jobMasterForm.controls.gross_weight.reset();
         }
       }, (error) => {

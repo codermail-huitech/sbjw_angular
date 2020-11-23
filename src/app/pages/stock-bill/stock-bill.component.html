@@ -203,7 +203,7 @@
               Back
             </button>
           </div>
-          <div style="text-align: right " [hidden]="!billDetailsData[0].bill_number" >
+          <div style="text-align: right " [hidden]="!billMasterData.bill_number">
             <button
               mat-stroked-button
               class="btn-primary"
@@ -235,7 +235,10 @@
               </div>
               <div class="col-4"></div>
               <div class="col-4"><br>
-                <label><b>Bill Number : {{billDetailsData[0].bill_number}}</b></label><br>
+<!--                <pre>{{billMasterData.billNumber | json }}</pre>-->
+<!--                <label><b>Bill Number : {{(billMasterData.bill_number !== undefined)? billMasterData.billNumber : ' '}}</b></label><br>-->
+                <label><b>Bill Number : {{billMasterData.bill_number}}</b></label><br>
+<!--                <label><b>Bill Number : hfghf </b></label><br>-->
                 <label><b>Bill Date : {{selectedCustomerData.bill_date | date :  "dd.MM.y"}}</b></label><br>
                 <label>Order Number :</label><br>
                 <label>Order Date :</label><br>
@@ -293,7 +296,7 @@
             <br>
             <p style="text-align:left ; margin-right: 7px; font-size: smaller">শর্তাবলী: - আপনার যাবতীয় লেনদেন ও দেনাপাওনা সম্পূর্ণ ভাবে প্রোপরাইটার শ্রী বিবেকানন্দ ঘোষ এর সাথে সম্পর্ক যুক্ত |</p>
           </div>
-          <div style="text-align: center" [hidden]="billDetailsData[0].bill_number">
+          <div style="text-align: center" [hidden]="billMasterData.bill_number">
             <button   mat-stroked-button class="btn btn-info " (click)="stockBillGenerate()">Save</button>
             <br><br><br>
           </div>

@@ -20,7 +20,7 @@ export class BillMaster{
   customerId?: number;
   agent_id?: number;
   discount?: number;
-  bill_number? :string ;
+  bill_number?: string ;
   constructor() {
   }
 }

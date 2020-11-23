@@ -30,6 +30,7 @@ export class Stock{
   isSet?: boolean;
   agent_id?: number;
   in_stock?: number;
+  // bill_number?: string;
   constructor() {
   }
 }

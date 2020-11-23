@@ -89,6 +89,7 @@
         <!--        </div>-->
 <!--        <div  *ngIf="billDetailsData.length>0">-->
 <!--          &lt;!&ndash;        <div>&ndash;&gt;-->
+        <div style="overflow-y: scroll; height: 70vh">
           <table class="table table-hover">
             <thead style="background-color: lightslategray">
             <th>SL NO.</th>
@@ -119,6 +120,7 @@
             </tr>
             </tbody>
           </table>
+        </div>
 <!--          &lt;!&ndash;          <button class="btn badge-info" (click)="stockBillGenerate()">Generate Bill</button>&ndash;&gt;-->
           <button class="btn badge-info" [disabled]="agentID === undefined" (click)="updateStockAgent()" [hidden]="showCheckbox || billDetailsData.length === 0">Save</button>&nbsp;&nbsp;&nbsp;
           <button class="btn badge-info" (click)="deallocateAgents()" [disabled]="stockDeallocation.length === 0" [hidden]="!showCheckbox">Deallocate</button>&nbsp;&nbsp;&nbsp;

@@ -128,9 +128,9 @@
           </mat-form-field>
 <!--          {{selectedCustomerData.bill_date}}-->
         </div>
-<!--        <div *ngIf="billDetailsData.length == 0">-->
-<!--          <h4>No Entry </h4>-->
-<!--        </div>-->
+        <div *ngIf="billDetailsData.length === 0">
+          <h1 style="color: darkred ; font-family: 'Berlin Sans FB';"><i>NO DATA</i> </h1>
+        </div>
 <!--        <div *ngIf="!stockBillContainer">-->
 <!--          <h4>No Entry </h4>-->
 <!--        </div>-->
@@ -158,6 +158,7 @@
 <!--          <button class="btn badge-info" (click)="stockBillGenerate()">Generate Bill</button>-->
           <button class="btn badge-info" (click)="ViewBill()">View  Bill</button>&nbsp;&nbsp;&nbsp;
           <button class="btn badge-info" (click)="clearStorage()">clear Storage</button>
+<!--          <button class="btn badge-info" (click)="testLoop()">test</button>-->
 
         </div>
       </div>
@@ -296,6 +297,9 @@
             <br>
             <p style="text-align:left ; margin-right: 7px; font-size: smaller">শর্তাবলী: - আপনার যাবতীয় লেনদেন ও দেনাপাওনা সম্পূর্ণ ভাবে প্রোপরাইটার শ্রী বিবেকানন্দ ঘোষ এর সাথে সম্পর্ক যুক্ত |</p>
           </div>
+          <div></div>
+          <div></div>
+          <div></div>
           <div style="text-align: center" [hidden]="billMasterData.bill_number">
             <button   mat-stroked-button class="btn btn-info " (click)="stockBillGenerate()">Save</button>
             <br><br><br>

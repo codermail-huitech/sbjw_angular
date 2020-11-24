@@ -251,17 +251,25 @@ export class StockBillComponent implements OnInit {
     // for (let i = 0 ; i < this.stockList.length ; i ++){
     //   this.stockList[i].isSet = false;
     // }
-    this.selectedCustomerData = this.customerData[0];
-    this.selectedCustomerData.bill_date = this.date.getFullYear() + '-' + (this.date.getMonth() + 1) + '-' + this.date.getDate();
+    // this.selectedCustomerData = this.customerData[0];
+    // this.selectedCustomerData.bill_date = this.date.getFullYear() + '-' + (this.date.getMonth() + 1) + '-' + this.date.getDate();
+    //
+    // this.stockBillContainer = {
+    //   stockBillDetailsData: null,
+    //   stockBillCustomer: null,
+    // };
+    // this.storage.set('stockBillContainer', this.stockBillContainer).subscribe(() => {
+    // });
+    // this.billDetailsData = [];
+    // this.selectedCustomerData = null;
 
-    this.stockBillContainer = {
-      stockBillDetailsData: null,
-      stockBillCustomer: null,
-    };
-    this.storage.set('stockBillContainer', this.stockBillContainer).subscribe(() => {
-    });
+
     this.billDetailsData = [];
-    this.selectedCustomerData = null;
+    this.stockBillContainer = null;
+    for(let i = 0 ; i < this.tempStockList.length ; i ++){
+        this.tempStockList[i].isSet = false;
+      }
+    this.storage.delete('stockBillContainer').subscribe();
 
   }
 
@@ -306,14 +314,21 @@ export class StockBillComponent implements OnInit {
 
       this.billService.saveBillMaster(this.billMasterData, this.billDetailsData).subscribe((response) => {
         if (response.data){
-          // console.log(response.data);
+          Swal.fire({
+            title: 'Saved',
+            text: 'Bill  has been generated',
+            icon: 'success',
+          });
           this.billMasterData.bill_number = response.data.bill_number;
-          // this.stockBillContainer = null;
-          // this.stockService.getUpdatedStockList();
           for(let i = 0; i < this.billDetailsData.length; i++){
-            const index = this.stockList.findIndex(x => x.id === this.billDetailsData[i].id);
-            this.stockList.splice(index,1);
+            const index = this.tempStockList.findIndex(x => x.id === this.billDetailsData[i].id);
+            this.tempStockList.splice(index,1);
           }
+
+          // this.billDetailsData = [];
+          this.stockBillContainer = null;
+          this.storage.delete('stockBillContainer').subscribe();
+          this.stockService.getUpdatedStockList();
         }
       });
     });
@@ -326,6 +341,9 @@ export class StockBillComponent implements OnInit {
   }
   backBtn(){
     this.billView = true;
+    if (this.billMasterData.bill_number){
+      window.location.href = '/stockBill';
+    }
   }
   customerSelected(data){
     // let date = "2020-12-20";
@@ -361,5 +379,11 @@ export class StockBillComponent implements OnInit {
     this.storage.set('stockBillContainer', this.stockBillContainer).subscribe(() => {
     });
     // console.log(this.stockBillContainer);
+  // }
+  // testLoop(){
+  //   this.billDetailsData.forEach(function(value){
+  //     const index = this.tempStockList.findIndex(x => x.id === value.id);
+  //     console.log(index);
+  //   });
   }
 }

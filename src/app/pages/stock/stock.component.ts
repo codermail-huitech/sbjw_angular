@@ -59,6 +59,7 @@ export class StockComponent implements OnInit {
         // tslint:disable-next-line:radix
         value.tag = (parseInt(x[1]).toString(16) + '-' + parseInt(x[2]).toString(16) + '-' + parseInt(x[3]));
       });
+      console.log(this.stockData);
     });
 
     this.router.params.subscribe((params) => {

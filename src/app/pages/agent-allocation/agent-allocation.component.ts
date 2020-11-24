@@ -71,6 +71,7 @@ export class AgentAllocationComponent implements OnInit {
             icon: 'success',
           });
           this.billDetailsData = [];
+          this.tempStorageBillDetailsData = [];
           // this.agentService.getLatestAgent();
           this.stockService.getUpdatedStockList();
         }

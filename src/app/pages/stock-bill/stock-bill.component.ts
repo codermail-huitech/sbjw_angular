@@ -28,7 +28,7 @@ export class StockBillComponent implements OnInit {
   totalQuantity: number;
   totalCost: number;
   searchTag: string;
-  agentName: string;
+  // agentName: string;
   stockBillContainer: any;
   billView = true ;
   customerData: Customer[];

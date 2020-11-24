@@ -342,8 +342,15 @@ export class StockBillComponent implements OnInit {
   backBtn(){
     this.billView = true;
     if (this.billMasterData.bill_number){
-      window.location.href = '/stockBill';
+    //   window.location.href = '/stockBill';
+      this.billDetailsData = [];
+      this.billMasterData = {};
+      // customer is not initalising
+      this.selectedCustomerData = this.customerData[0];
+      this.selectedCustomerData.bill_date = this.date.getFullYear() + '-' + (this.date.getMonth() + 1) + '-' + this.date.getDate();
+      this.storage.delete('stockBillContainer').subscribe();
     }
+
   }
   customerSelected(data){
     // let date = "2020-12-20";

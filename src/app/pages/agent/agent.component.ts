@@ -37,6 +37,7 @@ export class AgentComponent implements OnInit {
           'success'
         );
         this.agentForm.reset();
+        this.agentService.getLatestAgent();
       }
     });
   }

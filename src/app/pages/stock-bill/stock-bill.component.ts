@@ -50,15 +50,19 @@ export class StockBillComponent implements OnInit {
   constructor(private customerService: CustomerService, private  stockService: StockService, private  billService: BillService, private  storage: StorageMap, private agentService: AgentService) {
     console.log('constructor invoked');
     // this.agentData = this.agentService.getAgentList();
+    this.customerData = this.customerService.getCustomers();
+    this.selectedCustomerData = this.customerData[0];
     this.stockList = this.stockService.getStockList();
-    // if (this.stockList){
-    //   this.stockList.forEach(function(value) {
-    //     const x = value.tag.split('-');
-    //     // tslint:disable-next-line:radix
-    //     value.tag = (parseInt(x[1]).toString(16) + '-' + parseInt(x[2]).toString(16) + '-' + parseInt(x[3]));
-    //   });
-    // }
+    if (this.stockList){
+      this.stockList.forEach(function(value) {
+        value.isSet = false;
+        const x = value.tag.split('-');
+        // tslint:disable-next-line:radix
+        value.tag = (parseInt(x[1]).toString(16) + '-' + parseInt(x[2]).toString(16) + '-' + parseInt(x[3]));
+      });
+    }
     this.tempStockList = this.stockList.filter(x => x.agent_id === 2);
+    console.log(this.tempStockList);
     this.page = 1;
     this.pageSize = 10;
     this.storage.get('stockBillContainer').subscribe((stockBillContainer: any) => {
@@ -99,8 +103,12 @@ export class StockBillComponent implements OnInit {
     this.totalGold = 0;
     this.totalQuantity = 0;
     this.totalCost = 0;
+
+
+
     // this.bill_date = '20/11/2020';
     // this.bill_date = '2020-11-20';
+
 
     this.billMasterData = {
       billNumber : null,
@@ -113,6 +121,7 @@ export class StockBillComponent implements OnInit {
     this.stockService.getStockUpdateListener().subscribe((response) => {
       this.stockList = response;
       this.stockList.forEach(function(value) {
+        value.isSet = false;
         const x = value.tag.split('-');
         // tslint:disable-next-line:radix
         value.tag = (parseInt(x[1]).toString(16) + '-' + parseInt(x[2]).toString(16) + '-' + parseInt(x[3]));
@@ -372,9 +381,10 @@ export class StockBillComponent implements OnInit {
   getStockListByAgentName(item){
     console.log(item);
     console.log(this.stockList);
-    this. tempStockList = this.stockList.filter(x => x.agent_id === item);
-    // console.log(this.tempStockList);
+    this.tempStockList = this.stockList.filter(x => x.agent_id === item.id);
+    console.log(this.tempStockList);
   }
+
   selectDate(item){
     const date =  item.getFullYear() + '-' + parseInt(String(item.getMonth() + 1)) + '-' + item.getDate();
 

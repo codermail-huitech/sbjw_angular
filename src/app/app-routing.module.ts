@@ -79,8 +79,8 @@ const routes: Routes = [
   {path: 'lc_receipt', canActivate: [AuthGuardService], component: LcReceiptsComponent},
   {path: 'stock/:id', canActivate: [AuthGuardService], component: StockComponent },
   {path: 'stock', canActivate: [AuthGuardService], component: StockComponent },
-  {path: 'stockBill', canActivate: [AuthGuardService], component: StockBillComponent },
   {path: 'agentAllocation', canActivate: [AuthGuardService], component: AgentAllocationComponent },
+  {path: 'stockBill', canActivate: [AuthGuardService], component: StockBillComponent },
 ];
 
 @NgModule({

@@ -18,7 +18,7 @@ export class AgentAllocationComponent implements OnInit {
   stockList: Stock[];
   billDetailsData: Stock[] = [];
   agentData: Agent[];
-  agentID: number;
+  singleAgent: Agent;
   page: number;
   pageSize: number;
   p = 1;
@@ -48,21 +48,22 @@ export class AgentAllocationComponent implements OnInit {
         }
       });
       // tslint:disable-next-line:only-arrow-functions
-      this.stockList.forEach(function(value) {
-        const x = value.tag.split('-');
-        // tslint:disable-next-line:radix
-        value.tag = (parseInt(x[1]).toString(16) + '-' + parseInt(x[2]).toString(16) + '-' + parseInt(x[3]));
-      });
+      // this.stockList.forEach(function(value) {
+      //   const x = value.tag.split('-');
+      //   // tslint:disable-next-line:radix
+      //   value.tag = (parseInt(x[1]).toString(16) + '-' + parseInt(x[2]).toString(16) + '-' + parseInt(x[3]));
+      // });
     });
 
     this.agentService.getAgentUpdateListener().subscribe((response) => {
       this.agentData = response;
+      this.singleAgent = this.agentData[0];
     });
     this.agentData = this.agentService.getAgentList();
   }
 
   updateStockAgent(){
-    this.stockService.updateStockByAgent(this.billDetailsData, this.agentID)
+    this.stockService.updateStockByAgent(this.billDetailsData, this.singleAgent.id)
       .subscribe((response: {success: number, data: Stock[]}) => {
         if (response.data){
           Swal.fire({
@@ -80,7 +81,7 @@ export class AgentAllocationComponent implements OnInit {
 
   searchStocks(){
     this.showCheckbox = true;
-    const tempStock =  this.stockList.filter(x => x.agent_id === this.agentID);
+    const tempStock =  this.stockList.filter(x => x.agent_id === this.singleAgent.id);
     // this.billDetailsData = tempStock.filter(x => x.in_stock === 1);
     const tempData = tempStock.filter(x => x.in_stock === 1);
     if (tempData.length === 0){
@@ -94,16 +95,17 @@ export class AgentAllocationComponent implements OnInit {
   }
 
   setAgent(data){
-    this.agentID = data;
+    this.singleAgent = data;
+    // this.singleAgent = data;
   }
 
   deallocateAgent(item){
     const index = this.stockDeallocation.findIndex(x => x.id === item.id);
-    if (index === -1){
-      this.stockDeallocation.push(item);
-    }else{
-      this.stockDeallocation.splice(index,1);
-    }
+    // if (index === -1){
+    //   this.stockDeallocation.push(item);
+    // }else{
+    this.stockDeallocation.splice(index,1);
+    // }
   }
 
   deallocateAgents(){
@@ -165,7 +167,7 @@ export class AgentAllocationComponent implements OnInit {
     this.stockList[stockIndex].isSet = false;
     // @ts-ignore
     // if (this.billDetailsData[index].agent_id !== 2){
-      // this.stockService.updateStockByDefaultAgent(this.billDetailsData, this.agentID)
+      // this.stockService.updateStockByDefaultAgent(this.billDetailsData, this.singleAgent)
       //   .subscribe((response: {success: number, data: Stock[]}) => {
       //   if (response.data){
       //     this.billDetailsData.splice(index, 1);
@@ -174,6 +176,7 @@ export class AgentAllocationComponent implements OnInit {
       // });
     // }else{
     this.billDetailsData.splice(index, 1);
+    this.tempStorageBillDetailsData = [...this.billDetailsData];
     // }
   }
 

@@ -57,15 +57,22 @@
       </div>
       <div class="col-3" style="text-align: center; background-color: #d9dd9b">
         <h2>Stocks Under Agent </h2>
-        <div class="container" fxLayout="column" fxLayout.xs="column" fxLayoutAlign="start" fxLayoutGap="10px" fxLayoutGap.xs="0">
-          <mat-form-field *ngIf="agentData">
-            <mat-label>Agent</mat-label>
-            <mat-select>
-              <mat-option *ngFor="let agent of agentData" [value]="agent.id" (blur)="setAgent(agent.id)">
-                {{agent.person_name}}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
+        <div class="" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="start" fxLayoutGap="0px" fxLayoutGap.xs="0">
+
+            <mat-form-field  class="col-10"*ngIf="agentData">
+              <mat-label>Select Agent</mat-label>
+              <mat-select>
+                <mat-option *ngFor="let agent of agentData" [value]="agent.id" (blur)="setAgent(agent)">
+                  {{agent.person_name}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <button class="col-3" mat-icon-button color="primary" aria-label="" (click)="searchStocks()" [disabled]="singleAgent === undefined" >
+              <mat-icon>search</mat-icon>
+            </button>
+
+
+<!--          &nbsp;&nbsp-->
 <!--          <mat-form-field fxFlex="30">-->
 <!--            <mat-label> Stock Bill Date</mat-label>-->
 <!--            <input matInput-->
@@ -122,9 +129,12 @@
           </table>
         </div>
 <!--          &lt;!&ndash;          <button class="btn badge-info" (click)="stockBillGenerate()">Generate Bill</button>&ndash;&gt;-->
-          <button class="btn badge-info" [disabled]="agentID === undefined" (click)="updateStockAgent()" [hidden]="showCheckbox || billDetailsData.length === 0">Save</button>&nbsp;&nbsp;&nbsp;
+<!--          <button class="btn badge-info" [disabled]="singleAgent === undefined" (click)="updateStockAgent()" [hidden]="showCheckbox || billDetailsData.length === 0">Save</button>&nbsp;&nbsp;&nbsp;-->
+          <button class="btn badge-info" [disabled]="singleAgent === undefined" (click)="updateStockAgent()" [hidden]="showCheckbox || billDetailsData.length === 0 || singleAgent === undefined">Allocate to {{singleAgent.person_name}}</button>&nbsp;&nbsp;&nbsp;
           <button class="btn badge-info" (click)="deallocateAgents()" [disabled]="stockDeallocation.length === 0" [hidden]="!showCheckbox">Deallocate</button>&nbsp;&nbsp;&nbsp;
-          <button class="btn badge-info" (click)="searchStocks()" [disabled]="agentID === undefined" >Search</button>&nbsp;&nbsp;&nbsp;
+<!--          <button class="btn badge-info" (click)="searchStocks()" [disabled]="agentID === undefined" >-->
+<!--            <mat-icon>search</mat-icon>-->
+<!--            Search</button>&nbsp;&nbsp;&nbsp;-->
 
 <!--          <button class="btn badge-info" (click)="clearStorage()">clear Storage</button>-->
 

@@ -53,15 +53,16 @@ export class StockBillComponent implements OnInit {
     this.customerData = this.customerService.getCustomers();
     this.selectedCustomerData = this.customerData[0];
     this.stockList = this.stockService.getStockList();
-    if (this.stockList){
-      this.stockList.forEach(function(value) {
-        value.isSet = false;
-        const x = value.tag.split('-');
-        // tslint:disable-next-line:radix
-        value.tag = (parseInt(x[1]).toString(16) + '-' + parseInt(x[2]).toString(16) + '-' + parseInt(x[3]));
-      });
-    }
+    // if (this.stockList){
+    //   this.stockList.forEach(function(value) {
+    //     value.isSet = false;
+    //     const x = value.tag.split('-');
+    //     // tslint:disable-next-line:radix
+    //     value.tag = (parseInt(x[1]).toString(16) + '-' + parseInt(x[2]).toString(16) + '-' + parseInt(x[3]));
+    //   });
+    // }
     this.tempStockList = this.stockList.filter(x => x.agent_id === 2);
+    // this.tempStockList = this.stockList;
     console.log(this.tempStockList);
     this.page = 1;
     this.pageSize = 10;
@@ -120,12 +121,12 @@ export class StockBillComponent implements OnInit {
 
     this.stockService.getStockUpdateListener().subscribe((response) => {
       this.stockList = response;
-      this.stockList.forEach(function(value) {
-        value.isSet = false;
-        const x = value.tag.split('-');
-        // tslint:disable-next-line:radix
-        value.tag = (parseInt(x[1]).toString(16) + '-' + parseInt(x[2]).toString(16) + '-' + parseInt(x[3]));
-      });
+      // this.stockList.forEach(function(value) {
+      //   value.isSet = false;
+      //   const x = value.tag.split('-');
+      //   // tslint:disable-next-line:radix
+      //   value.tag = (parseInt(x[1]).toString(16) + '-' + parseInt(x[2]).toString(16) + '-' + parseInt(x[3]));
+      // });
       this.tempStockList = this.stockList.filter(x => x.agent_id === 2);
 
 
@@ -350,6 +351,7 @@ export class StockBillComponent implements OnInit {
   }
   backBtn(){
     this.billView = true;
+    this.defaultAgentSelection();
     if (this.billMasterData.bill_number){
     //   window.location.href = '/stockBill';
       this.billDetailsData = [];
@@ -402,5 +404,8 @@ export class StockBillComponent implements OnInit {
   //     const index = this.tempStockList.findIndex(x => x.id === value.id);
   //     console.log(index);
   //   });
+  }
+  defaultAgentSelection(){
+    return this.agentData[0].id;
   }
 }

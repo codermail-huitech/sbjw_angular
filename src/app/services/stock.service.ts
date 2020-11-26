@@ -79,14 +79,14 @@ export class StockService {
     return this.http.post<StockResponseData>(GlobalVariable.BASE_API_URL + '/createStock', stockArray);
   }
 
-  getUpdatedStockRecord(){
-    this.http.get(GlobalVariable.BASE_API_URL + '/getStockRecord')
-      .subscribe((response: {success: number, data: Stock[]}) => {
-        const {data} = response;
-        this.stockData = data;
-        this.stockSub.next([...this.stockData]);
-      });
-  }
+  // getUpdatedStockRecord(){
+  //   this.http.get(GlobalVariable.BASE_API_URL + '/getStockRecord')
+  //     .subscribe((response: {success: number, data: Stock[]}) => {
+  //       const {data} = response;
+  //       this.stockData = data;
+  //       this.stockSub.next([...this.stockData]);
+  //     });
+  // }
 
   getStockList(){
     return [...this.stockData];

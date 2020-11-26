@@ -14,11 +14,11 @@
 <!--        </div>-->
         &nbsp;&nbsp;&nbsp;
 <!--        <div>-->
-
           <mat-form-field  class ="col-4" *ngIf="agentData">
             <mat-label>Select Agent</mat-label>
 <!--            <mat-select [(ngModel)]="agentData[0].id">-->
-            <mat-select>
+<!--            <mat-select [value]="agentData[0].id">-->
+            <mat-select [value]="defaultAgentSelection()">
               <mat-option *ngFor="let agent of agentData"  [value]="agent.id" (blur)="getStockListByAgentName(agent)" >
                 {{agent.person_name}}
               </mat-option>

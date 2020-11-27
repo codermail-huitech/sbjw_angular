@@ -60,6 +60,7 @@ export class AgentAllocationComponent implements OnInit {
       this.singleAgent = this.agentData[0];
     });
     this.agentData = this.agentService.getAgentList();
+    this.singleAgent = this.agentData[0];
   }
 
   updateStockAgent(){

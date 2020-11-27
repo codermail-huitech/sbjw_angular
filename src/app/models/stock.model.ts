@@ -28,6 +28,7 @@ export class Stock{
   pure_gold?: number;
   cost?: number;
   isSet?: boolean;
+  // isSet ?= false;
   agent_id?: number;
   in_stock?: number;
   // bill_number?: string;

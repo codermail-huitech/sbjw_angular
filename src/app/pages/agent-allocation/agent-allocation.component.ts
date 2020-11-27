@@ -60,7 +60,10 @@ export class AgentAllocationComponent implements OnInit {
       this.singleAgent = this.agentData[0];
     });
     this.agentData = this.agentService.getAgentList();
-    this.singleAgent = this.agentData[0];
+    if(this.agentData){
+      this.singleAgent = this.agentData[0];
+    }
+
   }
 
   updateStockAgent(){
@@ -82,6 +85,7 @@ export class AgentAllocationComponent implements OnInit {
 
   searchStocks(){
     this.showCheckbox = true;
+    this.billDetailsData = [];
     const tempStock =  this.stockList.filter(x => x.agent_id === this.singleAgent.id);
     // this.billDetailsData = tempStock.filter(x => x.in_stock === 1);
     const tempData = tempStock.filter(x => x.in_stock === 1);

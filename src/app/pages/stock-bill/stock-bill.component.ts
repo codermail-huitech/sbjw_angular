@@ -33,6 +33,7 @@ export class StockBillComponent implements OnInit {
   billView = true ;
   customerData: Customer[];
   selectedCustomerData: Customer;
+  selectedAgentData: Agent;
   minDate = new Date(2010, 11, 2);
   maxDate = new Date(2021, 3, 2);
   bill_date: string;
@@ -53,6 +54,7 @@ export class StockBillComponent implements OnInit {
     this.customerData = this.customerService.getCustomers();
     this.selectedCustomerData = this.customerData[0];
     this.stockList = this.stockService.getStockList();
+
     // if (this.stockList){
     //   this.stockList.forEach(function(value) {
     //     value.isSet = false;
@@ -63,7 +65,17 @@ export class StockBillComponent implements OnInit {
     // }
     this.tempStockList = this.stockList.filter(x => x.agent_id === 2);
     // this.tempStockList = this.stockList;
+    console.log('tempStockList');
     console.log(this.tempStockList);
+    // for (let i = 0; i < this.billDetailsData.length; i++ ) {
+    //   const index = this.tempStockList.findIndex(x => x.id === this.billDetailsData[i].id);
+    //   if(index === -1){
+    //     this.tempStockList[index].isSet = false;
+    //   }
+    //   else{
+    //     this.tempStockList[index].isSet = true;
+    //   }
+    // }
     this.page = 1;
     this.pageSize = 10;
     this.storage.get('stockBillContainer').subscribe((stockBillContainer: any) => {
@@ -121,6 +133,7 @@ export class StockBillComponent implements OnInit {
 
     this.stockService.getStockUpdateListener().subscribe((response) => {
       this.stockList = response;
+
       // this.stockList.forEach(function(value) {
       //   value.isSet = false;
       //   const x = value.tag.split('-');
@@ -181,6 +194,9 @@ export class StockBillComponent implements OnInit {
     this.agentService.getAgentUpdateListener()
       .subscribe((response) => {
         this.agentData = response;
+        if(this.agentData){
+          this.getStockListByAgentName(this.agentData[0]);
+        }
         console.log('agentData');
         console.log(this.agentData);
       });
@@ -351,13 +367,17 @@ export class StockBillComponent implements OnInit {
   }
   backBtn(){
     this.billView = true;
-    this.defaultAgentSelection();
+
+    this.tempStockList = this.stockList.filter(x => x.agent_id === this.selectedAgentData.id);
+    // console.log(this.selectedAgentData);
+    // this.defaultAgentSelection();
     if (this.billMasterData.bill_number){
     //   window.location.href = '/stockBill';
       this.billDetailsData = [];
       this.billMasterData = {};
       // customer is not initalising
       this.selectedCustomerData = this.customerData[0];
+
       this.selectedCustomerData.bill_date = this.date.getFullYear() + '-' + (this.date.getMonth() + 1) + '-' + this.date.getDate();
       this.storage.delete('stockBillContainer').subscribe();
     }
@@ -381,10 +401,29 @@ export class StockBillComponent implements OnInit {
   }
 
   getStockListByAgentName(item){
-    console.log(item);
-    console.log(this.stockList);
+    // this.stockList('false').fill();
+    // console.log("getStockListByAgentName");
+    // console.log(item);
+    // console.log("billDetailsData");
+    // console.log(this.billDetailsData);
+    // console.log(this.stockList);
+    this.selectedAgentData = item;
     this.tempStockList = this.stockList.filter(x => x.agent_id === item.id);
-    console.log(this.tempStockList);
+    if (this.billDetailsData.length > 0){
+      for(let i = 0; i < this.tempStockList.length; i++ ) {
+        const index = this.billDetailsData.findIndex(x => x.id === this.tempStockList[i].id);
+        if(index === -1){
+          this.tempStockList[i].isSet = false;
+        }
+        else{
+          this.tempStockList[i].isSet = true;
+        }
+
+      }
+      console.log(this.tempStockList);
+    }
+
+
   }
 
   selectDate(item){
@@ -406,6 +445,6 @@ export class StockBillComponent implements OnInit {
   //   });
   }
   defaultAgentSelection(){
-    return this.agentData[0].id;
+    // return this.agentData[0] ;
   }
 }

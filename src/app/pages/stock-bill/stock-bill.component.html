@@ -2,10 +2,10 @@
   <mat-card style="background-color: #e8c50e" >
     <mat-card style="background-color: lightgray" class="d-flex" >
 
-      <div class="col-9">
+      <div class="col-8">
         <div class="container" fxLayout fxLayout.xs="column" fxLayoutAlign="start" fxLayoutGap="30px" fxLayoutGap.xs="0">
           <mat-form-field class="example-full-width">
-            <input matInput placeholder="Enter Tag..." [(ngModel)]="searchTag" name="search" type="text" autofocus>
+            <input matInput placeholder="Search Tag..." [(ngModel)]="searchTag" name="search" type="text" autofocus>
           </mat-form-field>
 
 <!--          <mat-form-field class="example-full-width">-->
@@ -17,8 +17,8 @@
           <mat-form-field  class ="col-4" *ngIf="agentData">
             <mat-label>Select Agent</mat-label>
 <!--            <mat-select [(ngModel)]="agentData[0].id">-->
-<!--            <mat-select [value]="agentData[0].id">-->
-            <mat-select [value]="defaultAgentSelection()">
+            <mat-select [value]="agentData[0].id">
+<!--            <mat-select [value]="defaultAgentSelection()">-->
               <mat-option *ngFor="let agent of agentData"  [value]="agent.id" (blur)="getStockListByAgentName(agent)" >
                 {{agent.person_name}}
               </mat-option>
@@ -58,15 +58,15 @@
 <!--        </table>-->
         <table class="table table-hover" *ngIf="tempStockList ">
           <thead style="background-color: lightslategray">
-          <th>SL NO.</th>
-          <th>Tag</th>
-          <th>Model Name</th>
-          <th>Size</th>
-          <th>Gold</th>
-          <th>Gross Weight</th>
-          <th>Amount</th>
-          <th>Quantity</th>
-          <th>Add For Billing</th>
+          <th style="text-align: center">SL NO.</th>
+          <th style="text-align: center">Tag</th>
+          <th style="text-align: center">Model Name</th>
+          <th style="text-align: center">Size</th>
+          <th style="text-align: center">Gold</th>
+          <th style="text-align: center">Gross Weight</th>
+          <th style="text-align: center">Amount</th>
+          <th style="text-align: center">Quantity</th>
+          <th style="text-align: center">Allocate To Agent</th>
           </thead>
           <tbody>
           <tr *ngFor="let indexOfElement = index; let item of tempStockList |filter: searchTag | paginate: { itemsPerPage: pageSize, currentPage: p }; ">
@@ -74,10 +74,10 @@
             <td>{{item.tag | uppercase}}</td>
             <td>{{item.model_number}}</td>
             <td>{{item.size}}</td>
-            <td>{{item.gold}}</td>
-            <td>{{item.gross_weight}}</td>
-            <td>{{item.amount}}</td>
-            <td>{{item.quantity}}</td>
+            <td  style="text-align: right">{{item.gold}}</td>
+            <td  style="text-align: right">{{item.gross_weight}}</td>
+            <td  style="text-align: right">{{item.amount}}</td>
+            <td  style="text-align: right">{{item.quantity}}</td>
             <td style="text-align: center">
               <button mat-icon-button color="primary" aria-label="" [disabled]="item.isSet" (click)="stockSelectionForBill(item)" >
                 <mat-icon>add</mat-icon>
@@ -102,7 +102,7 @@
           </pagination-controls>
         </div>
       </div>
-      <div class="col-3" style="text-align: center; background-color: #d9dd9b">
+      <div class="col-4" style="text-align: center; background-color: #d9dd9b">
         <h2>Stock Bill Entry</h2>
         <div class="container" fxLayout="column" fxLayout.xs="column" fxLayoutAlign="start" fxLayoutGap="10px" fxLayoutGap.xs="0">
           <mat-form-field *ngIf="customerData">
@@ -141,6 +141,7 @@
             <thead style="background-color: lightslategray">
             <th>SL NO.</th>
             <th>Tag</th>
+            <th>Model Number</th>
             <th>Delete</th>
 
             </thead>
@@ -148,6 +149,7 @@
             <tr *ngFor="let indexOfElement = index; let item of billDetailsData">
               <td>{{indexOfElement+1}}</td>
               <td>{{item.tag | uppercase}}</td>
+              <td style="text-align: center">{{item.model_number}}</td>
               <td>
                 <button mat-icon-button color="accent" aria-label="" (click)="removeFromStockBillEntry(item)" >
                   <mat-icon>delete</mat-icon>

@@ -179,4 +179,21 @@ export class StockComponent implements OnInit {
         }
     });
   }
+
+  test(){
+    // Swal.fire(
+    //   {
+    //   // title: 'Esta é a imagem que pretende inserir?',
+    //   // text: 'fdsfds',
+    //   imageUrl: 'assets/images/loading6.gif',
+    //   // background: 'url(https://icon-library.com/images/loading-icon-animated-gif/loading-icon-animated-gif-19.jpg)',
+    //   animation: true
+    // }
+    // );
+    Swal.fire({
+      title: 'Auto close alert!',
+      text: 'I will close in 2 seconds.',
+      timer: 2000
+    });
+  }
 }

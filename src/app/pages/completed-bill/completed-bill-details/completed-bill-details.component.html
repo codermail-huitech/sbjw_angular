@@ -19,7 +19,7 @@
   </div>
   <div   class="container" id="bill-div" [hidden]="!showBill" >
 
-    <div style="text-align: right " >
+    <div style="text-align: right">
       <button
         mat-stroked-button
         class="btn-primary"
@@ -31,17 +31,17 @@
     <div id="printBillDiv">
       <div style="align-content: center; text-align: center">
         <h2 style="text-align: center; font-weight:bold">SRIKRISHNA BANGLE JEWELLERY WORKSHOP</h2>
-        <label style="font-weight: bold ; font-size: 13px ">সোনার পাত বসান ব্রোঞ্জ চুরি</label><br><br>
-        <label style="font-weight: bold ; font-size: 13px ">Sewli,P.O- S.T.P , (Baro Kanthaliya),Barrackpore,Dist:- North 24 Parganas,Kol-121</label><br>
-        <label style="font-weight: bold ; font-size: 11px">contact:- 033 2535 3727 , 2535 7777 , 2535 2222 ,Mob: - 9836444999 ,email: bangle312@gmail.com</label><br>
+        <label style="font-size: 13px ">সোনার পাত বসান ব্রোঞ্জ চুরি</label><br><br>
+        <label style="font-size: 13px ">Sewli,P.O- S.T.P , (Baro Kanthaliya),Barrackpore,Dist:- North 24 Parganas,Kol-121</label><br>
+        <label style="font-size: 11px">contact:- 033 2535 3727 , 2535 7777 , 2535 2222 ,Mob: - 9836444999 ,email: bangle312@gmail.com</label><br>
         <hr>
-        <label style="text-align: center ; font-weight: bold ;">Received the following materials along with design in good condition for manufacturing of Bangles against labour charges only </label>
+        <label style="text-align: center;">Received the following materials along with design in good condition for manufacturing of Bangles against labour charges only </label>
         <hr>
       </div>
       <div fxLayout="row" *ngIf="billDetailsData.length" style="justify-content: space-between">
         <div class="col-4" >
           <label>Customer Name & Address : </label><br>
-          <label style="font-weight: bolder;  font-size: larger">{{billDetailsData[0].person_name}}</label><br>
+          <label style="font-size: larger">{{billDetailsData[0].person_name}}</label><br>
           <label>{{billDetailsData[0].address1}}</label><br>
           <label>{{billDetailsData[0].city}} &nbsp;,&nbsp;{{billDetailsData[0].area}}</label><br>
           <label>pin code:-&nbsp;{{billDetailsData[0].pin}}</label><br>
@@ -50,13 +50,13 @@
         </div>
         <div class="col-4"></div>
         <div class="col-4"><br>
-          <label><b>Bill Number : {{billDetailsData[0].bill_number}}</b></label><br>
-          <label><b>Bill Date : {{billDetailsData[0].bill_date}}</b></label><br>
+          <label>Bill Number : {{billDetailsData[0].bill_number}}</label><br>
+          <label>Bill Date : {{billDetailsData[0].bill_date}}</label><br>
           <label>Order Number :</label><br>
           <label>Order Date :</label><br>
         </div>
       </div><br> <br>
-      <table id="bill-detail-table" class="table table-bordered">
+      <table id="bill-detail-table" class="table">
         <thead>
         <tr>
           <th>SL No.</th>
@@ -82,25 +82,25 @@
           <td style="padding: 2px; text-align: right">{{data.quantity}}</td>
           <td style="padding: 2px; text-align: right">{{data.LC | currency:"&#8377;"}}</td>
         </tr>
-        <hr>
+<!--        <hr>-->
         <tr style=" border-top : 1px solid black; border-collapse: collapse">
           <td></td>
           <td></td>
-          <td><b>Total</b></td>
+          <td>Total</td>
           <td></td>
           <td></td>
-          <td style="padding: 2px; text-align: right"><b>{{total92Gold.toFixed(3)}} g</b></td>
-          <td style="padding: 2px; text-align: right"><b>{{totalGold.toFixed(3)}} g</b></td>
-          <td style="padding: 2px; text-align: right"><b>{{totalQuantity}}</b></td>
-          <td style="padding: 2px; text-align: right"> <b>{{totalCost | currency:"&#8377;"}}</b></td>
+          <td style="padding: 2px; text-align: right">{{total92Gold.toFixed(3)}} g</td>
+          <td style="padding: 2px; text-align: right">{{totalGold.toFixed(3)}} g</td>
+          <td style="padding: 2px; text-align: right">{{totalQuantity}}</td>
+          <td style="padding: 2px; text-align: right">{{totalCost | currency:"&#8377;"}}</td>
         </tr>
         </tbody>
       </table>
       <br><br>
-      <div class="ml-2" *ngIf="totalCost"><b>Amount in Word:</b> Rupees {{convert(totalCost)}} only</div>
+      <div class="ml-2" *ngIf="totalCost">Amount in Word: Rupees {{convert(totalCost)}} only</div>
       <br><br>
       <div style="text-align: right">
-        <label style="text-align:right ; margin-right: 7px; font-size: small ; font-weight: bold">Party signature with stamp, Date & Time</label><br>
+        <label style="text-align:right ; margin-right: 7px; font-size: small">Party signature with stamp, Date & Time</label><br>
         <label style="text-align:right ; margin-right: 7px; font-size: smaller">Received goods as per requirement &  in good condition</label>
       </div>
       <br>

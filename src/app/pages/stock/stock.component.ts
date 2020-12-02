@@ -33,7 +33,7 @@ export class StockComponent implements OnInit {
   totalGold: number;
   filterResult: any;
   showStockList = false;
-
+  public user = JSON.parse(localStorage.getItem('user'));
 
 
   constructor(private stockService: StockService, private router: ActivatedRoute ,  private  jobService: JobService, private billService:BillService ) {
@@ -85,7 +85,7 @@ export class StockComponent implements OnInit {
               job_master_id: this.jobMasterContainer.jobMasterData[0].job_master_id,
               order_name: this.jobMasterContainer.jobMasterData[0].order_name,
               // // approx_gold: this.jobMasterData[0].approx_gold,
-              total_gold: this.jobMasterContainer.totalGold,
+              total_gold: this.jobMasterContainer.totalGold + (this.jobMasterContainer.jobMasterData[0].quantity * this.user.mv),
               quantity: this.jobMasterContainer.jobMasterData[0].quantity,
               price: this.jobMasterContainer.jobMasterData[0].price,
               size: this.jobMasterContainer.jobMasterData[0].size,

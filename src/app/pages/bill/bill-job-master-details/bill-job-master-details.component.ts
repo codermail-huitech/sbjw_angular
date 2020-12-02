@@ -31,6 +31,7 @@ export class BillJobMasterDetailsComponent implements OnInit {
   totalQuantity: number;
   totalCost: number;
   x: FinishedJobs[];
+  public user = JSON.parse(localStorage.getItem('user'));
 
   constructor(private  route: ActivatedRoute, private billService: BillService , private  goldReceiptService: GoldReceiptService, private stockService: StockService) {
   }
@@ -52,6 +53,10 @@ export class BillJobMasterDetailsComponent implements OnInit {
       this.billService.getFinishedJobData(params['id']);
     });
 
+    // const user = JSON.parse(localStorage.getItem('user'));
+    // console.log('user');
+    // console.log(user);
+
     this.billService.getfinishedJobDataSubUpdateListener()
       .subscribe((details: JobMaster[]) => {
         this.finishedJobData = details;
@@ -63,6 +68,7 @@ export class BillJobMasterDetailsComponent implements OnInit {
   }
 
   selectionForBill(data) {
+    console.log(this.user);
     const index = this.billDetailsData.findIndex(x => x.id === data.id);
     if (index >= 0) {
       this.total92Gold = this.total92Gold - Number(data.total);
@@ -71,8 +77,10 @@ export class BillJobMasterDetailsComponent implements OnInit {
       this.totalCost = this.totalCost - Number(data.cost);
       this.billDetailsData.splice(index, 1);
     } else {
-      this.billService.getTotalGoldQuantity(data.id).subscribe((response:{success: number, data: any}) => {
-        data.total = parseFloat(response.data.data.toFixed(3));
+      this.billService.getTotalGoldQuantity(data.id).subscribe((response: {success: number, data: any}) => {
+        // data.total = parseFloat(response.data.data.toFixed(3));
+        // const tempTotal = parseFloat(response.data.data.toFixed(3)) + this.user.mv;
+        data.total = parseFloat(response.data.data.toFixed(3)) + this.user.mv;
         data.pure_gold = parseFloat(((data.total * 92) / 100).toFixed(3));
         data.cost = data.price * data.quantity;
         this.total92Gold = this.total92Gold + Number(data.total);
@@ -123,7 +131,7 @@ export class BillJobMasterDetailsComponent implements OnInit {
           customerId: this.billDetailsData[0].customer_id,
           billDate:  x.getFullYear() + '-' + parseInt(String(x.getMonth() + 1)) + '-' + x.getDate(),
           discount: 0,
-          billNumber:response.data.bill_number
+          billNumber: response.data.bill_number
         };
         this.billService.getFinishedJobsCustomers();
         this.billService.getCompletedBillCustomers();

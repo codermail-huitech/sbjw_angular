@@ -9,7 +9,7 @@ import {GlobalVariable} from '../shared/global';
 
 export interface AuthResponseData {
   token: {headers: object, original: {access_token: string, token_type: string, expires_in: number}, exception: object };
-  user: {id: number, person_name: string,  person_type_id: number};
+  user: {id: number, person_name: string,  person_type_id: number, mv: number};
 }
 
 @Injectable({
@@ -28,11 +28,11 @@ export class AuthService {
     }
   }
   autoLogin(){
-    const userData: {id: number, personName: string, _authKey: string, personTypeId: number} = JSON.parse(localStorage.getItem('user'));
+    const userData: {id: number, personName: string, _authKey: string, personTypeId: number, mv: number} = JSON.parse(localStorage.getItem('user'));
     if (!userData){
       return;
     }
-    const loadedUser = new User(userData.id, userData.personName, userData._authKey, userData.personTypeId);
+    const loadedUser = new User(userData.id, userData.personName, userData._authKey, userData.personTypeId, userData.mv);
     if (loadedUser.authKey){
       this.user.next(loadedUser);
       //  if (loadedUser.isOwner){
@@ -47,7 +47,8 @@ export class AuthService {
           const user = new User(resData.user.id,
                   resData.user.person_name,
                   resData.token.original.access_token,
-                  resData.user.person_type_id);
+                  resData.user.person_type_id,
+                  resData.user.mv);
           this.user.next(user); // here two user is used one is user and another user is subject of rxjs
           localStorage.setItem('user', JSON.stringify(user));
       }));  // this.handleError is a method created by me

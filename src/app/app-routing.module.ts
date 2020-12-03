@@ -34,6 +34,8 @@ import {StockComponent} from './pages/stock/stock.component';
 import {StockBillComponent} from './pages/stock-bill/stock-bill.component';
 import {AgentComponent} from './pages/agent/agent.component';
 import {AgentAllocationComponent} from './pages/agent-allocation/agent-allocation.component';
+import {PaymentComponent} from './pages/payment/payment.component';
+import {GoldPaymentComponent} from './pages/gold-payment/gold-payment.component';
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -46,6 +48,8 @@ const routes: Routes = [
   {path: 'order', canActivate:  [AuthGuardService], component: OrderComponent},
   {path: 'job', canActivate:  [AuthGuardService], component: JobComponent},
   {path: 'job_task', canActivate : [AuthGuardService], component: JobTaskComponent},
+  {path: 'cash_payment', canActivate : [AuthGuardService], component: PaymentComponent},
+  {path: 'gold_payment', canActivate : [AuthGuardService], component: GoldPaymentComponent},
   {path: 'job_detail/:id', canActivate : [AuthGuardService], component: JobDetailComponent,
     children: [
       {path: '', component: JobTransactionComponent},
@@ -58,7 +62,7 @@ const routes: Routes = [
       {path: 'nitricReturn', component: NitricReturnComponent},
       {path: 'bronzeSubmit', component: BronzeSubmitComponent},
       {path: 'job_transaction', component: JobTransactionComponent},
-      {path: 'job_finish', component: FinishJobComponent},
+      {path: 'job_finish', component: FinishJobComponent}
       // {path: 'albums', component: ArtistAlbumListComponent},
     ]
   },

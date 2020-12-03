@@ -66,6 +66,8 @@ import { StockComponent } from './pages/stock/stock.component';
 import { StockBillComponent } from './pages/stock-bill/stock-bill.component';
 import { AgentComponent } from './pages/agent/agent.component';
 import { AgentAllocationComponent } from './pages/agent-allocation/agent-allocation.component';
+import { PaymentComponent } from './pages/payment/payment.component';
+import { GoldPaymentComponent } from './pages/gold-payment/gold-payment.component';
 
 
 @NgModule({
@@ -112,7 +114,9 @@ import { AgentAllocationComponent } from './pages/agent-allocation/agent-allocat
     StockComponent,
     StockBillComponent,
     AgentComponent,
-    AgentAllocationComponent
+    AgentAllocationComponent,
+    PaymentComponent,
+    GoldPaymentComponent
 
   ],
   imports: [

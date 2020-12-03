@@ -30,8 +30,9 @@ export class BillJobMasterDetailsComponent implements OnInit {
   totalGold: number;
   totalQuantity: number;
   totalCost: number;
+  mv: number;
   x: FinishedJobs[];
-  public user = JSON.parse(localStorage.getItem('user'));
+  // public user = JSON.parse(localStorage.getItem('user'));
 
   constructor(private  route: ActivatedRoute, private billService: BillService , private  goldReceiptService: GoldReceiptService, private stockService: StockService) {
   }
@@ -49,6 +50,7 @@ export class BillJobMasterDetailsComponent implements OnInit {
     this.totalQuantity = 0;
     this.totalCost = 0;
     this.showBill = false;
+    this.mv = 0;
     this.route.params.subscribe(params => {
       this.billService.getFinishedJobData(params['id']);
     });
@@ -60,6 +62,7 @@ export class BillJobMasterDetailsComponent implements OnInit {
     this.billService.getfinishedJobDataSubUpdateListener()
       .subscribe((details: JobMaster[]) => {
         this.finishedJobData = details;
+        this.mv = this.finishedJobData[0].mv;
       });
   }
 
@@ -68,7 +71,9 @@ export class BillJobMasterDetailsComponent implements OnInit {
   }
 
   selectionForBill(data) {
-    console.log(this.user);
+    console.log('bill selection console');
+    console.log(data);
+    console.log(this.mv);
     const index = this.billDetailsData.findIndex(x => x.id === data.id);
     if (index >= 0) {
       this.total92Gold = this.total92Gold - Number(data.total);
@@ -80,7 +85,7 @@ export class BillJobMasterDetailsComponent implements OnInit {
       this.billService.getTotalGoldQuantity(data.id).subscribe((response: {success: number, data: any}) => {
         // data.total = parseFloat(response.data.data.toFixed(3));
         // const tempTotal = parseFloat(response.data.data.toFixed(3)) + this.user.mv;
-        data.total = parseFloat(response.data.data.toFixed(3)) + this.user.mv;
+        data.total = parseFloat(response.data.data.toFixed(3)) + this.mv;
         data.pure_gold = parseFloat(((data.total * 92) / 100).toFixed(3));
         data.cost = data.price * data.quantity;
         this.total92Gold = this.total92Gold + Number(data.total);

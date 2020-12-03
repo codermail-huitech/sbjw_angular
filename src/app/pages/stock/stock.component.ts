@@ -20,6 +20,7 @@ export class StockComponent implements OnInit {
   stockForm: FormGroup;
   stockData: Stock[];
   stockList: Stock[] = [];
+  mv: number;
   // tslint:disable-next-line:max-line-length
   // tempStock: { approx_gold: any; amount: any; quantity: any; set_quantity: number; set_gold: string; order_details_id: any; set_amount: string; price: any; id: null; job_master_id: any; order_name: any };
   // tempStock: {};
@@ -33,7 +34,7 @@ export class StockComponent implements OnInit {
   totalGold: number;
   filterResult: any;
   showStockList = false;
-  public user = JSON.parse(localStorage.getItem('user'));
+  // public user = JSON.parse(localStorage.getItem('user'));
 
 
   constructor(private stockService: StockService, private router: ActivatedRoute ,  private  jobService: JobService, private billService:BillService ) {
@@ -48,6 +49,7 @@ export class StockComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.mv = 0;
 
     this.stockForm = this.stockService.stockFrom;
 
@@ -59,7 +61,7 @@ export class StockComponent implements OnInit {
       //   // tslint:disable-next-line:radix
       //   value.tag = (parseInt(x[1]).toString(16) + '-' + parseInt(x[2]).toString(16) + '-' + parseInt(x[3]));
       // });
-      console.log(this.stockData);
+      // console.log(this.stockData);
     });
 
     this.router.params.subscribe((params) => {
@@ -71,6 +73,11 @@ export class StockComponent implements OnInit {
 
         this.stockService.getJobMasterDataUpdateListener().subscribe((response) => {
           this.jobMasterData = response;
+          // console.log('this.job master data');
+          // console.log(this.jobMasterData);
+          this.mv = this.jobMasterData[0].mv;
+          // console.log('mv master data');
+          // console.log(this.mv);
           this.billService.getTotalGoldQuantity(params.id).subscribe((response:{success: number, data: any }) => {
             this.totalGold =  response.data.data.toFixed(3);
             this.jobMasterContainer = {
@@ -85,7 +92,8 @@ export class StockComponent implements OnInit {
               job_master_id: this.jobMasterContainer.jobMasterData[0].job_master_id,
               order_name: this.jobMasterContainer.jobMasterData[0].order_name,
               // // approx_gold: this.jobMasterData[0].approx_gold,
-              total_gold: this.jobMasterContainer.totalGold + (this.jobMasterContainer.jobMasterData[0].quantity * this.user.mv),
+              total_gold: this.jobMasterContainer.totalGold + (this.jobMasterContainer.jobMasterData[0].quantity * this.mv),
+              // total_gold: this.jobMasterContainer.totalGold + (this.jobMasterContainer.jobMasterData[0].quantity * this.user.mv),
               quantity: this.jobMasterContainer.jobMasterData[0].quantity,
               price: this.jobMasterContainer.jobMasterData[0].price,
               size: this.jobMasterContainer.jobMasterData[0].size,

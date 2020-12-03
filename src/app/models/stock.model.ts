@@ -16,6 +16,7 @@ export class Stock{
   person_name?: string;
   model_number?: string;
   job_number?: string;
+  mv? :number;
 
   size?: string;
   material_id?: number;

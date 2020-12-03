@@ -26,6 +26,7 @@ export class JobMaster{
   total?: number;
   pure_gold?: number;
   cost?: number;
+  mv?: number;
   constructor() {
   }
 }

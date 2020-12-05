@@ -17,13 +17,14 @@ export class PaymentService {
       id : new FormControl(null),
       person_id : new FormControl(null, [Validators.required]),
       agent_id : new FormControl(null, [Validators.required]),
-      cash_received : new FormControl(0.00, [Validators.required])
+      payment_mode : new FormControl(null, [Validators.required]),
+      cash_received : new FormControl(null, [Validators.required])
     });
     this.goldPaymentForm = new FormGroup({
       id : new FormControl(null),
       person_id : new FormControl(null, [Validators.required]),
       agent_id : new FormControl(null, [Validators.required]),
-      gold_received : new FormControl(0.00, [Validators.required])
+      gold_received : new FormControl(null, [Validators.required])
     });
   }
 

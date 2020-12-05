@@ -8,3 +8,7 @@ input::-webkit-inner-spin-button {
 input[type=number] {
   -moz-appearance: textfield;
 }
+
+.mat-radio-button ~ .mat-radio-button {
+  margin-left: 16px;
+}

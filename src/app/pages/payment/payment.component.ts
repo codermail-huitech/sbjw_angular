@@ -33,6 +33,8 @@ export class PaymentComponent implements OnInit {
   }
 
   savePayment(){
+    console.log(this.cashPaymentForm.value);
+    // return;
     Swal.fire({
       title: 'Are you sure?',
       text: 'Please confirm the payment',

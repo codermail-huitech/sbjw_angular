@@ -25,6 +25,18 @@
                 </mat-option>
               </mat-select>
             </mat-form-field>
+            <mat-form-field class="col-6">
+              <mat-label> Date</mat-label>
+              <input matInput
+                     [matDatepicker]="picker1"
+                     formControlName="received_date"
+                     [min]="minDate"
+                     [max]="maxDate">
+              <mat-datepicker-toggle matSuffix [for]="picker1">
+                <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
+              </mat-datepicker-toggle>
+              <mat-datepicker #picker1></mat-datepicker>
+            </mat-form-field>
           </div>
           <div class="container" fxLayout="column" fxLayout.xs="column" fxLayoutAlign="start" fxLayoutGap="10px" fxLayoutGap.xs="0">
             <mat-form-field class="col-6">

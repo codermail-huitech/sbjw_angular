@@ -6,6 +6,7 @@ import {CustomerService} from '../../services/customer.service';
 import {Agent} from '../../models/agent.model';
 import {OrderService} from '../../services/order.service';
 import Swal from "sweetalert2";
+import {DatePipe} from '@angular/common';
 
 @Component({
   selector: 'app-payment',
@@ -17,8 +18,14 @@ export class PaymentComponent implements OnInit {
   cashPaymentForm: FormGroup;
   customerList: Customer[];
   agentList: Agent[];
+  minDate = new Date(2010, 11, 2);
+  maxDate = new Date(2021, 3, 2);
+  pipe = new DatePipe('en-US');
 
-  constructor(private paymentService: PaymentService, private customerService: CustomerService, private orderService: OrderService) { }
+  constructor(private paymentService: PaymentService, private customerService: CustomerService, private orderService: OrderService) {
+    this.agentList = this.orderService.getAgentList();
+    this.customerList = this.customerService.getCustomers();
+  }
 
   ngOnInit(): void {
     this.cashPaymentForm = this.paymentService.cashPaymentForm;
@@ -44,6 +51,7 @@ export class PaymentComponent implements OnInit {
       cancelButtonText: 'Decline'
     }).then((result) => {
       if (result.value) {
+        this.cashPaymentForm.value.received_date = this.pipe.transform(this.cashPaymentForm.value.received_date, 'yyyy-MM-dd');
         this.paymentService.saveCashPayment().subscribe((response) => {
           if (response.data){
             Swal.fire(

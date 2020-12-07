@@ -11,6 +11,7 @@ export class Product{
   category_name?: string;
   p_loss?: number;
   price?: number;
+  discount?: number;
   constructor(){
 
   }

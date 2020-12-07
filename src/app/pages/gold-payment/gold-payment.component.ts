@@ -6,6 +6,7 @@ import {Customer} from '../../models/customer.model';
 import {Agent} from '../../models/agent.model';
 import {FormGroup} from '@angular/forms';
 import Swal from "sweetalert2";
+import {DatePipe} from '@angular/common';
 
 @Component({
   selector: 'app-gold-payment',
@@ -18,7 +19,14 @@ export class GoldPaymentComponent implements OnInit {
   customerList: Customer[];
   agentList: Agent[];
 
-  constructor(private paymentService: PaymentService, private customerService: CustomerService, private orderService: OrderService) { }
+  minDate = new Date(2010, 11, 2);
+  maxDate = new Date(2021, 3, 2);
+  pipe = new DatePipe('en-US');
+
+  constructor(private paymentService: PaymentService, private customerService: CustomerService, private orderService: OrderService) {
+    this.agentList = this.orderService.getAgentList();
+    this.customerList = this.customerService.getCustomers();
+  }
 
   ngOnInit(): void {
     this.goldPaymentForm = this.paymentService.goldPaymentForm;
@@ -42,7 +50,8 @@ export class GoldPaymentComponent implements OnInit {
       cancelButtonText: 'Decline'
     }).then((result) => {
       if (result.value) {
-        this.paymentService.saveGoldPayment().subscribe((response) => {
+        this.goldPaymentForm.value.received_date = this.pipe.transform(this.goldPaymentForm.value.received_date, 'yyyy-MM-dd') ;
+          this.paymentService.saveGoldPayment().subscribe((response) => {
           if (response.data){
             Swal.fire(
               'Done!',

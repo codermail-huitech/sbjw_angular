@@ -26,6 +26,7 @@ export class CompletedBillDetailsComponent implements OnInit {
   totalGold: number;
   totalQuantity: number;
   totalCost: number;
+  discount: number;
 
 
   x: FinishedJobs[];
@@ -45,6 +46,7 @@ export class CompletedBillDetailsComponent implements OnInit {
     this.totalGold = 0;
     this.totalQuantity = 0;
     this.totalCost = 0;
+    this.discount = 0;
     this.showBill = false;
 
     this.route.params.subscribe(params => {
@@ -56,7 +58,7 @@ export class CompletedBillDetailsComponent implements OnInit {
         this.finishedBillData = details;
       });
 
-    this.billService.showCompletedBillsDataSubUpdateListener().subscribe((response)=>{
+    this.billService.showCompletedBillsDataSubUpdateListener().subscribe((response) => {
       this.showBill = true;
       this.billDetailsData = response;
       for(let i = 0; i < this.billDetailsData.length; i++){
@@ -65,6 +67,9 @@ export class CompletedBillDetailsComponent implements OnInit {
         this.totalQuantity = this.totalQuantity + Number(this.billDetailsData[i].quantity);
         this.totalCost = this.totalCost + Number(this.billDetailsData[i].LC);
       }
+      this.discount = (this.finishedBillData[0].discount / 100) * this.totalCost;
+      console.log(this.finishedBillData[0].discount);
+      this.totalCost = this.totalCost - this.discount;
     });
   }
 

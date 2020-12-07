@@ -351,11 +351,11 @@ export class OrderComponent implements OnInit {
       if (responseProducts.data){
         const tempProduct = responseProducts.data;
         // tslint:disable-next-line:max-line-length
-        this.orderDetailsForm.patchValue({ product_id: tempProduct.id, p_loss: tempProduct.p_loss, price: tempProduct.price, price_code : tempProduct.price_code_name});
+        this.orderDetailsForm.patchValue({ product_id: tempProduct.id, p_loss: tempProduct.p_loss, price: tempProduct.price, price_code : tempProduct.price_code_name , discount : tempProduct.discount});
       }else{
         alert('This model does not exist');
         // tslint:disable-next-line:max-line-length
-        this.orderDetailsForm.patchValue({ p_loss: null, price: null, price_code : null});
+        this.orderDetailsForm.patchValue({ p_loss: null, price: null, price_code : null, discount : null});
       }
     });
   }

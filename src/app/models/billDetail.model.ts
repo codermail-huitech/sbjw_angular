@@ -36,6 +36,7 @@ export class BillDetail{
   isSet?: boolean;
   ginnie: number;
   LC?: number;
+  discount?: number;
 
 
   constructor() {

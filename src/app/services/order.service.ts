@@ -96,7 +96,8 @@ export class OrderService {
       approx_gold : new FormControl(null, [Validators.required]),
       size : new FormControl(null, [Validators.required]),
       quantity : new FormControl(null, [Validators.required]),
-      amount : new FormControl(0 , [Validators.required])
+      amount : new FormControl(0 , [Validators.required]),
+      discount : new FormControl(null , [Validators.required])
     });
     // fetching agents
     this.http.get(GlobalVariable.BASE_API_URL + '/agents')

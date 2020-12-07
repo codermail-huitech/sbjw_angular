@@ -21,6 +21,7 @@ export class JobMaster{
   model_number?: string;
   status_id ?: number;
   person_name?: string;
+  discount? : number;
   karigarh_name?: string;
   total_gold?: number;
   total?: number;

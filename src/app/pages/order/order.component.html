@@ -120,6 +120,7 @@
           <button mat-button (click)="updateOrder()" mat-stroked-button [hidden]="!orderDetailsForm.value.id" [disabled]="!orderDetailsForm.dirty">Update Order</button>
           <button mat-button (click)="clearForm()" mat-stroked-button>clear</button>
         </div>
+        <pre>{{orderDetailsForm.value | json }}</pre>
       </div>
     </mat-card>
     <div style="background-color: aqua; color : black">

@@ -7,6 +7,7 @@ export class Rate{
   customer_category_id: number;
   customer_category_name?: string;
   price_code_name?: string;
+  discount?: number;
 
   constructor() {
   }

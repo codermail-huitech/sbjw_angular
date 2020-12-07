@@ -30,6 +30,7 @@ export class BillJobMasterDetailsComponent implements OnInit {
   totalGold: number;
   totalQuantity: number;
   totalCost: number;
+  discount:number;
   mv: number;
   x: FinishedJobs[];
   // public user = JSON.parse(localStorage.getItem('user'));
@@ -49,6 +50,7 @@ export class BillJobMasterDetailsComponent implements OnInit {
     this.totalGold = 0;
     this.totalQuantity = 0;
     this.totalCost = 0;
+    this.discount = 0;
     this.showBill = false;
     this.mv = 0;
     this.route.params.subscribe(params => {
@@ -116,7 +118,7 @@ export class BillJobMasterDetailsComponent implements OnInit {
           customerId: this.billDetailsData[0].customer_id,
           agent_id: this.billDetailsData[0].agent_id,
           billDate:  x.getFullYear() + '-' + parseInt(String(x.getMonth() + 1)) + '-' + x.getDate(),
-          discount: 0
+          discount: this.billDetailsData[0].discount
         };
       }
     this.billService.saveBillMaster(this.billMasterData, this.billDetailsData).subscribe((response) => {
@@ -135,9 +137,11 @@ export class BillJobMasterDetailsComponent implements OnInit {
           karigarhId: this.billDetailsData[0].karigarh_id,
           customerId: this.billDetailsData[0].customer_id,
           billDate:  x.getFullYear() + '-' + parseInt(String(x.getMonth() + 1)) + '-' + x.getDate(),
-          discount: 0,
+          discount: this.billDetailsData[0].discount,
           billNumber: response.data.bill_number
         };
+        this.discount = (this.billDetailsData[0].discount / 100) * this.totalCost ;
+        this.totalCost = this.totalCost - this.discount;
         this.billService.getFinishedJobsCustomers();
         this.billService.getCompletedBillCustomers();
         this.goldReceiptService.getUpdatedList();

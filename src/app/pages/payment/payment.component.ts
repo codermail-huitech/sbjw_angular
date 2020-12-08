@@ -5,7 +5,7 @@ import {Customer} from '../../models/customer.model';
 import {CustomerService} from '../../services/customer.service';
 import {Agent} from '../../models/agent.model';
 import {OrderService} from '../../services/order.service';
-import Swal from "sweetalert2";
+import Swal from 'sweetalert2';
 import {DatePipe} from '@angular/common';
 
 @Component({

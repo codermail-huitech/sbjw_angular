@@ -3,14 +3,14 @@ import {ActivatedRoute} from '@angular/router';
 import {BillService} from '../../../services/bill.service';
 import {OrderDetail} from '../../../models/orderDetail.model';
 import {JobMaster} from '../../../models/jobMaster.model';
-import {BillMaster} from "../../../models/billMaster.model";
-import {BillDetail} from "../../../models/billDetail.model";
-import {toNumbers} from "@angular/compiler-cli/src/diagnostics/typescript_version";
-import {toInteger} from "@ng-bootstrap/ng-bootstrap/util/util";
-import {FinishedJobs} from "../../../models/finishedJobs";
+import {BillMaster} from '../../../models/billMaster.model';
+import {BillDetail} from '../../../models/billDetail.model';
+import {toNumbers} from '@angular/compiler-cli/src/diagnostics/typescript_version';
+import {toInteger} from '@ng-bootstrap/ng-bootstrap/util/util';
+import {FinishedJobs} from '../../../models/finishedJobs';
 // import {Location} from '@angular/common';
 import toWords from 'number-to-words/src/toWords.js';
-import {GoldReceiptService} from "../../../services/gold-receipt.service";
+import {GoldReceiptService} from '../../../services/gold-receipt.service';
 import {StockService} from '../../../services/stock.service';
 
 @Component({
@@ -30,7 +30,7 @@ export class BillJobMasterDetailsComponent implements OnInit {
   totalGold: number;
   totalQuantity: number;
   totalCost: number;
-  discount:number;
+  discount: number;
   mv: number;
   x: FinishedJobs[];
   // public user = JSON.parse(localStorage.getItem('user'));
@@ -40,8 +40,8 @@ export class BillJobMasterDetailsComponent implements OnInit {
 
   printDivStyle = {
     printBillDiv: {marginRight : '3px', marginLeft : '3px', marginTop : '5px'},
-    table: {'border-collapse': 'collapse', 'width' : '100%'},
-    label:{'width': '100%'},
+    table: {'border-collapse': 'collapse', width : '100%'},
+    label: {width: '100%'},
     th: {border: '1px  solid black'}
   };
 
@@ -54,7 +54,7 @@ export class BillJobMasterDetailsComponent implements OnInit {
     this.showBill = false;
     this.mv = 0;
     this.route.params.subscribe(params => {
-      this.billService.getFinishedJobData(params['id']);
+      this.billService.getFinishedJobData(params.id);
     });
 
     // const user = JSON.parse(localStorage.getItem('user'));
@@ -65,6 +65,7 @@ export class BillJobMasterDetailsComponent implements OnInit {
       .subscribe((details: JobMaster[]) => {
         this.finishedJobData = details;
         this.mv = this.finishedJobData[0].mv;
+        // console.log(this.finishedJobData);
       });
   }
 
@@ -73,9 +74,10 @@ export class BillJobMasterDetailsComponent implements OnInit {
   }
 
   selectionForBill(data) {
-    console.log('bill selection console');
-    console.log(data);
-    console.log(this.mv);
+    // console.log('bill selection console');
+    // console.log(data);
+    // console.log(this.mv);
+    // console.log(data);
     const index = this.billDetailsData.findIndex(x => x.id === data.id);
     if (index >= 0) {
       this.total92Gold = this.total92Gold - Number(data.total);
@@ -96,6 +98,7 @@ export class BillJobMasterDetailsComponent implements OnInit {
         this.totalCost = this.totalCost + Number(data.cost);
         this.billDetailsData.push(data);
       });
+      // console.log(this.billDetailsData);
     }
   }
 
@@ -118,11 +121,12 @@ export class BillJobMasterDetailsComponent implements OnInit {
           customerId: this.billDetailsData[0].customer_id,
           agent_id: this.billDetailsData[0].agent_id,
           billDate:  x.getFullYear() + '-' + parseInt(String(x.getMonth() + 1)) + '-' + x.getDate(),
-          discount: this.billDetailsData[0].discount
+          discount: (this.billDetailsData[0].discount / 100) * this.totalCost
         };
       }
     this.billService.saveBillMaster(this.billMasterData, this.billDetailsData).subscribe((response) => {
-        this.billMasterData = {
+
+      this.billMasterData = {
           order_master_id: this.billDetailsData[0].order_master_id,
           orderNumber: this.billDetailsData[0].order_number,
           personName: this.billDetailsData[0].person_name,
@@ -138,15 +142,16 @@ export class BillJobMasterDetailsComponent implements OnInit {
           customerId: this.billDetailsData[0].customer_id,
           billDate:  x.getFullYear() + '-' + parseInt(String(x.getMonth() + 1)) + '-' + x.getDate(),
           discount: this.billDetailsData[0].discount,
+          // discount: this.discount,
           billNumber: response.data.bill_number
         };
-        this.discount = (this.billDetailsData[0].discount / 100) * this.totalCost ;
-        this.totalCost = this.totalCost - this.discount;
-        this.billService.getFinishedJobsCustomers();
-        this.billService.getCompletedBillCustomers();
-        this.goldReceiptService.getUpdatedList();
+      this.discount = (this.billDetailsData[0].discount / 100) * this.totalCost ;
+      this.totalCost = this.totalCost - this.discount;
+      this.billService.getFinishedJobsCustomers();
+      this.billService.getCompletedBillCustomers();
+      this.goldReceiptService.getUpdatedList();
         // this.stockService.getUpdatedStockRecord();
-        this.showBill = true;
+      this.showBill = true;
       });
   }
 

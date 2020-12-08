@@ -37,6 +37,7 @@ export class BillDetail{
   ginnie: number;
   LC?: number;
   discount?: number;
+  rate?: number;
 
 
   constructor() {

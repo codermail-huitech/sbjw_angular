@@ -27,6 +27,7 @@ export class CompletedBillDetailsComponent implements OnInit {
   totalQuantity: number;
   totalCost: number;
   discount: number;
+  discountPercentage: number;
 
 
   x: FinishedJobs[];
@@ -61,14 +62,16 @@ export class CompletedBillDetailsComponent implements OnInit {
     this.billService.showCompletedBillsDataSubUpdateListener().subscribe((response) => {
       this.showBill = true;
       this.billDetailsData = response;
-      for(let i = 0; i < this.billDetailsData.length; i++){
+      this.discountPercentage = this.billDetailsData[0].discount;
+      for (let i = 0; i < this.billDetailsData.length; i++){
         this.total92Gold = this.total92Gold + Number(this.billDetailsData[i].ginnie);
         this.totalGold = this.totalGold + Number(this.billDetailsData[i].pure_gold);
         this.totalQuantity = this.totalQuantity + Number(this.billDetailsData[i].quantity);
-        this.totalCost = this.totalCost + Number(this.billDetailsData[i].LC);
+        this.totalCost = this.totalCost + Number(this.billDetailsData[i].quantity * this.billDetailsData[i].rate);
+        this.billDetailsData[i].LC = this.billDetailsData[i].quantity * this.billDetailsData[i].rate;
       }
-      this.discount = (this.finishedBillData[0].discount / 100) * this.totalCost;
-      console.log(this.finishedBillData[0].discount);
+      // this.discount = (this.finishedBillData[0].discount / 100) * this.totalCost;
+      // this.discount = this.finishedBillData[0].discount;
       this.totalCost = this.totalCost - this.discount;
     });
   }
@@ -79,5 +82,7 @@ export class CompletedBillDetailsComponent implements OnInit {
 
   getBillDetails(data){
     this.billService.showCompletedBills(data);
+    const index = this.finishedBillData.findIndex(x => x.id === data);
+    this.discount = this.finishedBillData[index].discount;
   }
 }

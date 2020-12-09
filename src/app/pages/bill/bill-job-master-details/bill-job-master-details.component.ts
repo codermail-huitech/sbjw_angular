@@ -31,6 +31,7 @@ export class BillJobMasterDetailsComponent implements OnInit {
   totalQuantity: number;
   totalCost: number;
   discount: number;
+  discountPercentage: number;
   mv: number;
   x: FinishedJobs[];
   // public user = JSON.parse(localStorage.getItem('user'));
@@ -50,16 +51,13 @@ export class BillJobMasterDetailsComponent implements OnInit {
     this.totalGold = 0;
     this.totalQuantity = 0;
     this.totalCost = 0;
+    this.discountPercentage = 0;
     this.discount = 0;
     this.showBill = false;
     this.mv = 0;
     this.route.params.subscribe(params => {
       this.billService.getFinishedJobData(params.id);
     });
-
-    // const user = JSON.parse(localStorage.getItem('user'));
-    // console.log('user');
-    // console.log(user);
 
     this.billService.getfinishedJobDataSubUpdateListener()
       .subscribe((details: JobMaster[]) => {
@@ -97,13 +95,15 @@ export class BillJobMasterDetailsComponent implements OnInit {
         this.totalQuantity = this.totalQuantity + Number(data.quantity);
         this.totalCost = this.totalCost + Number(data.cost);
         this.billDetailsData.push(data);
+        // console.log(this.billDetailsData);
       });
-      // console.log(this.billDetailsData);
+
     }
   }
 
   generateBill() {
     const x = new Date();
+
     if (this.billDetailsData[0]) {
         this.billMasterData = {
           order_master_id: this.billDetailsData[0].order_master_id,
@@ -141,11 +141,12 @@ export class BillJobMasterDetailsComponent implements OnInit {
           karigarhId: this.billDetailsData[0].karigarh_id,
           customerId: this.billDetailsData[0].customer_id,
           billDate:  x.getFullYear() + '-' + parseInt(String(x.getMonth() + 1)) + '-' + x.getDate(),
-          discount: this.billDetailsData[0].discount,
-          // discount: this.discount,
+          // discount: this.billDetailsData[0].discount,
+          discount: this.discount,
           billNumber: response.data.bill_number
         };
       this.discount = (this.billDetailsData[0].discount / 100) * this.totalCost ;
+      this.discountPercentage = this.billDetailsData[0].discount;
       this.totalCost = this.totalCost - this.discount;
       this.billService.getFinishedJobsCustomers();
       this.billService.getCompletedBillCustomers();

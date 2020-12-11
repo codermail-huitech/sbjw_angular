@@ -36,6 +36,8 @@ import {AgentComponent} from './pages/agent/agent.component';
 import {AgentAllocationComponent} from './pages/agent-allocation/agent-allocation.component';
 import {PaymentComponent} from './pages/payment/payment.component';
 import {GoldPaymentComponent} from './pages/gold-payment/gold-payment.component';
+import {DueByAgentComponent} from './pages/due-by-agent/due-by-agent.component';
+import {CustomerUnderAgentComponent} from './pages/due-by-agent/customer-under-agent/customer-under-agent.component';
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -50,6 +52,8 @@ const routes: Routes = [
   {path: 'job_task', canActivate : [AuthGuardService], component: JobTaskComponent},
   {path: 'cash_payment', canActivate : [AuthGuardService], component: PaymentComponent},
   {path: 'gold_payment', canActivate : [AuthGuardService], component: GoldPaymentComponent},
+  {path: 'due_by_agent', canActivate : [AuthGuardService], component: DueByAgentComponent},
+  {path: 'customer_under_agent/:id', canActivate : [AuthGuardService], component: CustomerUnderAgentComponent},
   {path: 'job_detail/:id', canActivate : [AuthGuardService], component: JobDetailComponent,
     children: [
       {path: '', component: JobTransactionComponent},

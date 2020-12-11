@@ -68,6 +68,8 @@ import { AgentComponent } from './pages/agent/agent.component';
 import { AgentAllocationComponent } from './pages/agent-allocation/agent-allocation.component';
 import { PaymentComponent } from './pages/payment/payment.component';
 import { GoldPaymentComponent } from './pages/gold-payment/gold-payment.component';
+import { DueByAgentComponent } from './pages/due-by-agent/due-by-agent.component';
+import { CustomerUnderAgentComponent } from './pages/due-by-agent/customer-under-agent/customer-under-agent.component';
 
 
 @NgModule({
@@ -116,7 +118,9 @@ import { GoldPaymentComponent } from './pages/gold-payment/gold-payment.componen
     AgentComponent,
     AgentAllocationComponent,
     PaymentComponent,
-    GoldPaymentComponent
+    GoldPaymentComponent,
+    DueByAgentComponent,
+    CustomerUnderAgentComponent
 
   ],
   imports: [

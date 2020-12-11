@@ -5,6 +5,10 @@ import {Subject} from 'rxjs';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {Product} from '../models/product.model';
 import {ProductResponseData} from './product.service';
+import {GlobalVariable} from '../shared/global';
+import {Customer} from '../models/customer.model';
+import {catchError, tap} from 'rxjs/operators';
+import {OrderMaster} from '../models/orderMaster.model';
 
 export interface AgentResponseData {
   success: number;
@@ -16,13 +20,20 @@ export interface AgentResponseData {
 })
 
 export class AgentService {
-  agentData: Agent[];
+  agentData: Agent[] = [];
+  dueByAgentData: any = [];
+  customerUnderAgentData: Customer[] = [];
+  private dueByAgentDataSub = new Subject<any>();
+  private  customerUnderAgentDataSub = new Subject<Customer[]>();
   agentForm: FormGroup;
 
   private agentSub = new Subject<Agent[]>();
 
   getAgentUpdateListener(){
     return this.agentSub.asObservable();
+  }
+  getDueByAgentDataUpdateListener(){
+    return  this.dueByAgentDataSub.asObservable();
   }
 
   constructor(private http: HttpClient) {
@@ -51,7 +62,14 @@ export class AgentService {
         // @ts-ignore
         const {data} = response;
         this.agentData = data;
+        console.log(this.agentData);
         this.agentSub.next([...this.agentData]);
+      });
+
+    this.http.get(GlobalVariable.BASE_API_URL + '/getDueByAgent')
+      .subscribe((response: {success: number, data: any}) => {
+        this.dueByAgentData = response.data;
+        this.dueByAgentDataSub.next([...this.dueByAgentData]);
       });
   }
 
@@ -69,6 +87,15 @@ export class AgentService {
       });
   }
 
+  getCustomerUnderAgent(data){
+    return  this.http.get(GlobalVariable.BASE_API_URL + '/getCustomerUnderAgent/' + data)
+       .pipe(tap(((response: {success: number, data: Customer[]}) => {
+        this.customerUnderAgentData = response.data;
+        this.customerUnderAgentDataSub.next([...this.customerUnderAgentData]);
+       })));
+  }
+
+
   saveAgent(){
     return this.http.post<AgentResponseData>('http://127.0.0.1:8000/api/agents', this.agentForm.value);
   }
@@ -82,5 +109,9 @@ export class AgentService {
   }
   getAgentList(){
     return [...this.agentData];
+  }
+
+  getDueByAgentList(){
+    return [...this.dueByAgentData];
   }
 }

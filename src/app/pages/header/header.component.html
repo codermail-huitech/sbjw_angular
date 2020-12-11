@@ -100,6 +100,7 @@
         <mat-menu #billInfo="matMenu">
           <button mat-menu-item [matMenuTriggerFor]="bills">Bills</button>
           <button mat-menu-item [matMenuTriggerFor]="receipts">Receipts</button>
+          <button mat-menu-item [routerLink]="['/due_by_agent']">Due</button>
         </mat-menu>
 
         <mat-menu #stockInfo="matMenu">

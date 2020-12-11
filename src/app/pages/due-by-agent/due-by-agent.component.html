@@ -9,11 +9,21 @@
       <mat-form-field class="example-full-width">
         <input matInput placeholder="Items per page" [(ngModel)]="pageSize" name="PageSize" type="text">
       </mat-form-field>
+
+      <div fxFlex="100" style="text-align: right">
+        <button class="btn-primary"
+                mat-stroked-button
+                [printStyle]="printDivStyle"
+                printSectionId="printBillDiv"
+                ngxPrint ><mat-icon>print</mat-icon>
+        </button>
+      </div>
     </div>
 <!--    <div>-->
 <!--      <pre>{{agentList| json}}</pre>-->
 <!--    </div>-->
-    <table class="table">
+    <div id="printBillDiv">
+      <table class="table">
       <thead>
       <tr>
         <th>SL No.</th>
@@ -38,6 +48,7 @@
       </tr>
       </tbody>
     </table>
+    </div>
     <div fxLayout.xs="column" fxLayout="column" fxFlexFill>
       <!--    https://www.npmjs.com/package/ngx-pagination-->
       <!--    npm i ngx-pagination-->

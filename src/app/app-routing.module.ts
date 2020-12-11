@@ -52,7 +52,11 @@ const routes: Routes = [
   {path: 'job_task', canActivate : [AuthGuardService], component: JobTaskComponent},
   {path: 'cash_payment', canActivate : [AuthGuardService], component: PaymentComponent},
   {path: 'gold_payment', canActivate : [AuthGuardService], component: GoldPaymentComponent},
-  {path: 'due_by_agent', canActivate : [AuthGuardService], component: DueByAgentComponent},
+  {path: 'due_by_agent', canActivate : [AuthGuardService], component: DueByAgentComponent,
+    // children: [
+    //   {path: 'customer_under_agent/:id', canActivate : [AuthGuardService], component: CustomerUnderAgentComponent},
+    // ],
+  },
   {path: 'customer_under_agent/:id', canActivate : [AuthGuardService], component: CustomerUnderAgentComponent},
   {path: 'job_detail/:id', canActivate : [AuthGuardService], component: JobDetailComponent,
     children: [

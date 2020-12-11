@@ -11,6 +11,7 @@ export class DueByAgentComponent implements OnInit {
 
   agentList: Agent[];
   dueByAgentList: any;
+  public searchTerm: string;
 
   page: number;
   pageSize: number;

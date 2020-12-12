@@ -19,8 +19,11 @@ export class Customer{
   job_master_id ?: number;
   // bill_date is for testing
   bill_date?: string;
+  LC_Due?: number;
+  gold_due?: number;
+
   constructor(public id: number, public person_name: string, public email: string, public customer_category_id: number) {
-      this.person_type_id = 10;
+    this.person_type_id = 10;
   }
 }
 

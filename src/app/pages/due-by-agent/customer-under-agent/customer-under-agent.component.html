@@ -32,6 +32,28 @@
         </tr>
         </tbody>
       </table>
+      <thead>
+      <tr>
+        <th>SL No.</th>
+        <th>Customer Name</th>
+        <th>LC Due</th>
+        <th>Gold Due</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr  *ngFor="let data of customerList; let indexOfelement = index" >
+        <td>{{indexOfelement+1}}</td>
+        <td>{{data.person_name | uppercase}}</td>
+        <td>{{data.LC_Due}}</td>
+        <td>{{data.gold_due}}</td>
+<!--        <td>-->
+<!--          <button  mat-icon-button color="primary" aria-label="Open Details" style="text-align: center" [routerLink]="['./bill_jobMaster_details',data.id]" (click)="disablePage()">-->
+<!--            <mat-icon>forward</mat-icon>-->
+<!--          </button>-->
+<!--        </td>-->
+      </tr>
+      </tbody>
+    </table>
     </div>
 
   </div>

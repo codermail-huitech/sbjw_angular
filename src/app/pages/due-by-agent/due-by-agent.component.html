@@ -10,19 +10,11 @@
         <input matInput placeholder="Items per page" [(ngModel)]="pageSize" name="PageSize" type="text">
       </mat-form-field>
 
-      <div fxFlex="100" style="text-align: right">
-        <button class="btn-primary"
-                mat-stroked-button
-                [printStyle]="printDivStyle"
-                printSectionId="printBillDiv"
-                ngxPrint ><mat-icon>print</mat-icon>
-        </button>
-      </div>
     </div>
     <!--    <div>-->
     <!--      <pre>{{agentList| json}}</pre>-->
     <!--    </div>-->
-    <div id="printBillDiv">
+
       <table class="table">
         <thead>
         <tr>
@@ -48,6 +40,35 @@
         </tr>
         </tbody>
       </table>
+<!--    <div>-->
+<!--      <pre>{{agentList| json}}</pre>-->
+<!--    </div>-->
+    <div id="printBillDiv">
+      <table class="table">
+      <thead>
+      <tr>
+        <th>SL No.</th>
+        <th>Agent Name</th>
+        <th>LC Due</th>
+        <th>Gold due</th>
+        <th>View Customer Details</th>
+
+      </tr>
+      </thead>
+      <tbody>
+      <tr  *ngFor="let data of dueByAgentList| filter : searchTerm | paginate: { itemsPerPage: pageSize, currentPage: p } let indexOfelement = index " >
+        <td>{{indexOfelement+1}}</td>
+        <td >{{data.person_name | uppercase}}</td>
+        <td>{{data.LCdueByAgent}}</td>
+        <td>{{data.goldDueByAgent}}</td>
+        <td>
+          <button  mat-icon-button color="primary" aria-label="Open Details" style="text-align: center" [routerLink]="['/customer_under_agent',data.agent_id]">
+            <mat-icon>forward</mat-icon>
+          </button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
     </div>
     <div fxLayout.xs="column" fxLayout="column" fxFlexFill>
       <!--    https://www.npmjs.com/package/ngx-pagination-->

@@ -13,7 +13,12 @@ export class CustomerUnderAgentComponent implements OnInit {
   customerList: Customer[];
   agentId: number;
 
-
+  printDivStyle = {
+    printBillDiv: {marginRight : '3px', marginLeft : '3px', marginTop : '5px'},
+    table: {'border-collapse': 'collapse', width : '100%'},
+    label: {width: '100%'},
+    th: {border: '1px  solid black'}
+  };
 
   constructor(private  agentService: AgentService, private  route: ActivatedRoute) { }
 

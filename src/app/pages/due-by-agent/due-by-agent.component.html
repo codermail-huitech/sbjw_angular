@@ -19,7 +19,7 @@
         </button>
       </div>
     </div>
-<<<<<<< HEAD
+
     <!--    <div>-->
     <!--      <pre>{{agentList| json}}</pre>-->
     <!--    </div>-->
@@ -49,38 +49,38 @@
         </tr>
         </tbody>
       </table>
-=======
+
 <!--    <div>-->
 <!--      <pre>{{agentList| json}}</pre>-->
 <!--    </div>-->
-    <div id="printBillDiv">
-      <table class="table">
-      <thead>
-      <tr>
-        <th>SL No.</th>
-        <th>Agent Name</th>
-        <th>LC Due</th>
-        <th>Gold due</th>
-        <th>View Customer Details</th>
+<!--    <div id="printBillDiv">-->
+<!--      <table class="table">-->
+<!--      <thead>-->
+<!--      <tr>-->
+<!--        <th>SL No.</th>-->
+<!--        <th>Agent Name</th>-->
+<!--        <th>LC Due</th>-->
+<!--        <th>Gold due</th>-->
+<!--        <th>View Customer Details</th>-->
 
-      </tr>
-      </thead>
-      <tbody>
-      <tr  *ngFor="let data of dueByAgentList| filter : searchTerm | paginate: { itemsPerPage: pageSize, currentPage: p } let indexOfelement = index " >
-        <td>{{indexOfelement+1}}</td>
-        <td >{{data.person_name | uppercase}}</td>
-        <td>{{data.LCdueByAgent}}</td>
-        <td>{{data.goldDueByAgent}}</td>
-        <td>
-          <button  mat-icon-button color="primary" aria-label="Open Details" style="text-align: center" [routerLink]="['/customer_under_agent',data.agent_id]">
-            <mat-icon>forward</mat-icon>
-          </button>
-        </td>
-      </tr>
-      </tbody>
-    </table>
->>>>>>> 7637662b6238498c7c4f11b4874bfe00b8e9cad0
-    </div>
+<!--      </tr>-->
+<!--      </thead>-->
+<!--      <tbody>-->
+<!--      <tr  *ngFor="let data of dueByAgentList| filter : searchTerm | paginate: { itemsPerPage: pageSize, currentPage: p } let indexOfelement = index " >-->
+<!--        <td>{{indexOfelement+1}}</td>-->
+<!--        <td >{{data.person_name | uppercase}}</td>-->
+<!--        <td>{{data.LCdueByAgent}}</td>-->
+<!--        <td>{{data.goldDueByAgent}}</td>-->
+<!--        <td>-->
+<!--          <button  mat-icon-button color="primary" aria-label="Open Details" style="text-align: center" [routerLink]="['/customer_under_agent',data.agent_id]">-->
+<!--            <mat-icon>forward</mat-icon>-->
+<!--          </button>-->
+<!--        </td>-->
+<!--      </tr>-->
+<!--      </tbody>-->
+<!--    </table>-->
+<!--&gt;>>>>>> 7637662b6238498c7c4f11b4874bfe00b8e9cad0-->
+<!--    </div>-->
     <div fxLayout.xs="column" fxLayout="column" fxFlexFill>
       <!--    https://www.npmjs.com/package/ngx-pagination-->
       <!--    npm i ngx-pagination-->

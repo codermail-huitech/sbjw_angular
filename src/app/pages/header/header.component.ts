@@ -28,10 +28,12 @@ export class HeaderComponent implements OnInit, OnDestroy {
         this.isWorker = user.isWorker;
       }else{
         this.isAuthenticated = false;
+        this.isOwner = false;
         this.isManager = false;
         this.isWorker = false;
       }
     });
+    // console.log(this.userSub);
   }
 
   ngOnDestroy(): void {

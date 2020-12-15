@@ -70,6 +70,7 @@ import { PaymentComponent } from './pages/payment/payment.component';
 import { GoldPaymentComponent } from './pages/gold-payment/gold-payment.component';
 import { DueByAgentComponent } from './pages/due-by-agent/due-by-agent.component';
 import { CustomerUnderAgentComponent } from './pages/due-by-agent/customer-under-agent/customer-under-agent.component';
+import { TransactionComponent } from './pages/transaction/transaction.component';
 
 
 @NgModule({
@@ -120,7 +121,8 @@ import { CustomerUnderAgentComponent } from './pages/due-by-agent/customer-under
     PaymentComponent,
     GoldPaymentComponent,
     DueByAgentComponent,
-    CustomerUnderAgentComponent
+    CustomerUnderAgentComponent,
+    TransactionComponent
 
   ],
   imports: [

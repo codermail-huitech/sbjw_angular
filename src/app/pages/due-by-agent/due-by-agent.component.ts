@@ -26,7 +26,10 @@ export class DueByAgentComponent implements OnInit {
 
   constructor(private  agentService: AgentService ) {
     this.agentList = this.agentService.getAgentList();
-    this.dueByAgentList = this.agentService.getDueByAgentList();
+    this.dueByAgentList = this.agentService.getDueByAgentListList();
+    // this.agentService.getDueByAgentDataUpdateListener().subscribe((response) => {
+    //   this.dueByAgentList = response;
+    // });
     this.page = 1;
     this.pageSize = 5;
   }

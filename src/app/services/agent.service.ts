@@ -111,7 +111,15 @@ export class AgentService {
     return [...this.agentData];
   }
 
-  getDueByAgentList(){
-    return [...this.dueByAgentData];
+  // getDueByAgentList(){
+  //   return [...this.dueByAgentData];
+  // }
+
+  getDueByAgentListList(){
+   return this.http.get(GlobalVariable.BASE_API_URL + '/getDueByAgent')
+      .subscribe((response: {success: number, data: any}) => {
+        this.dueByAgentData = response.data;
+        this.dueByAgentDataSub.next([...this.dueByAgentData]);
+      });
   }
 }

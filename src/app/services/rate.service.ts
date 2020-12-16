@@ -55,10 +55,6 @@ private rateSub = new Subject<Rate[]>();
 
   saveRate(){
     return this.http.post(GlobalVariable.BASE_API_URL + '/saveRate', {rateData: this.rateForm.value});
-      // .subscribe((response: {success: number, data: Rate[]}) => {
-      //   console.log("rate data");
-      //   console.log(response);
-      // });
   }
 
   deleteRate(data){

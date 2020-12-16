@@ -26,7 +26,6 @@ export class GoldReceiptsComponent implements OnInit {
   minDate = new Date(2010, 11, 2);
   maxDate = new Date(2021, 3, 2);
   pipe = new DatePipe('en-US');
-
   public searchTerm: string;
   filter = new FormControl('');
   page: number;

@@ -14,10 +14,10 @@ import {formatDate} from "@angular/common";
 })
 export class GoldReceiptService {
 
-  completedBillList : GoldReceipt[]=[];
+  completedBillList: GoldReceipt[] = [];
   private completedBillSub = new Subject<GoldReceipt[]>();
 
-  goldReceivedForm : FormGroup;
+  goldReceivedForm: FormGroup;
 
 
   getCompletedBillUpdateListener(){

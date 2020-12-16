@@ -33,21 +33,13 @@ export class AuthComponent implements OnInit {
     authObserable = this.authService.login({email: form.value.email, password: passwordMd5});
     authObserable.subscribe(response => {
       this.isLoading = false;
-      console.log(response);
+      // console.log(response);
       // tslint:disable-next-line:triple-equals
-      if (response.user.person_type_id == 1){
+      if (response.user.person_type_id === 1){
+        this.router.navigate(['/owner']);
+      }else if (response.user.person_type_id === 8){
         this.router.navigate(['/owner']);
       }
-      // tslint:disable-next-line:max-line-length
-      // setting person to local storage
-      // this.storage.set('user', response.user)
-      //   .subscribe(() => {console.log('User set to local storage'); }, (error) => {console.log(error); });
-      // this.storage.get('user').subscribe((data) => {
-      //   console.log(data);
-      // });
-      // if (response.token){
-      //   this.router.navigate(['/customer']);
-      // }
 
     }, (error) => {
       console.log('error occured ');

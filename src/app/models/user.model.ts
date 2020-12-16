@@ -6,8 +6,7 @@ export class User{
               public personName: string,
               // tslint:disable-next-line:variable-name
               private _authKey: string,
-              public personTypeId: number,
-              public mv: number
+              public personTypeId: number
   ){}
 
 

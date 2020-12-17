@@ -16,6 +16,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
   isOwner = false;
   isManager = false;
   isWorker = false;
+  isWorkshopManager = false;
+  isSalesManager = false;
+  isAccountManager = false;
+  isOfficeStaff = false;
   router: Router;
   constructor(private authService: AuthService) { }
 
@@ -26,6 +30,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
         this.isOwner = user.isOwner;
         this.isManager = user.isManager;
         this.isWorker = user.isWorker;
+        this.isWorkshopManager = user.isWorkshopManager;
+        this.isSalesManager = user.isSalesManager;
+        this.isAccountManager = user.isAccountManager;
+        this.isOfficeStaff = user.isOfficeStaff;
       }else{
         this.isAuthenticated = false;
         this.isOwner = false;

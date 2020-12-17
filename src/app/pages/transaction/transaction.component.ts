@@ -40,6 +40,9 @@ export class TransactionComponent implements OnInit {
       if (this.user.personTypeId === 2){
         this.transactionTypeData = this.transactionTypeData.filter(x => x.id === 3 || x.id === 4);
         console.log(this.transactionTypeData);
+      }else if (this.user.personTypeId === 3 || this.user.personTypeId === 4 || this.user.personTypeId === 5 || this.user.personTypeId === 6){
+        this.transactionTypeData = this.transactionTypeData.filter(x => x.id === 3);
+        console.log(this.transactionTypeData);
       }
     });
     this.transactionService.getEmployeeDataUpdateListener().subscribe((response) => {

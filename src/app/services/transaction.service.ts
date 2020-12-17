@@ -11,6 +11,7 @@ import {JobMaster} from '../models/jobMaster.model';
 import {JobResponseData} from './job.service';
 import {User} from '../models/user.model';
 import {Agent} from '../models/agent.model';
+import {Material} from '../models/material.model';
 
 @Injectable({
   providedIn: 'root'
@@ -19,16 +20,21 @@ import {Agent} from '../models/agent.model';
 export class TransactionService {
   transactionForm: FormGroup;
   transactionTypeData: TransactionType[];
-  employeeData: Agent[];
+  employeeData: User[];
+  materialData: Material[] = [];
 
   private transactionTypeSub = new Subject<TransactionType[]>();
-  private employeeDataSub = new Subject<Agent[]>();
+  private employeeDataSub = new Subject<User[]>();
+  private materialDataSub = new Subject<Material[]>();
 
   getTransactionTypeUpdateListener(){
     return this.transactionTypeSub.asObservable();
   }
   getEmployeeDataUpdateListener(){
     return this.employeeDataSub.asObservable();
+  }
+  getMaterialDataUpdateListener(){
+    return this.materialDataSub.asObservable();
   }
 
   constructor(private http: HttpClient) {
@@ -38,8 +44,10 @@ export class TransactionService {
       id : new FormControl(null),
       transaction_id : new FormControl(null, [Validators.required]),
       employee_id : new FormControl(null, [Validators.required]),
+      material_id : new FormControl(null, [Validators.required]),
       person_id : new FormControl(null, [Validators.required]),
-      amount : new FormControl(null, [Validators.required]),
+      quantity : new FormControl(null, [Validators.required]),
+      transaction_comment : new FormControl(null, [Validators.required]),
       received_date : new FormControl(received_date_format, [Validators.required])
     });
 
@@ -48,19 +56,25 @@ export class TransactionService {
       this.transactionTypeSub.next([...this.transactionTypeData]);
     });
 
-    this.http.get(GlobalVariable.BASE_API_URL + '/getEmployees').subscribe((response: {success: number, data: Agent[]}) => {
+    this.http.get(GlobalVariable.BASE_API_URL + '/getEmployees').subscribe((response: {success: number, data: User[]}) => {
       this.employeeData = response.data;
       this.employeeDataSub.next([...this.employeeData]);
     });
+
+    this.http.get(GlobalVariable.BASE_API_URL + '/materials').subscribe((response: {success: number, data: Material[]}) => {
+      this.materialData = response.data;
+      this.materialDataSub.next([...this.materialData]);
+    });
   }
 
-  saveTransaction(){
+  saveTransaction(master, details){
     // this.transactionForm.value = data;
     console.log('service');
     console.log(this.transactionForm.value);
     // return;
 
-    return this.http.post(GlobalVariable.BASE_API_URL + '/saveTransaction',  this.transactionForm.value);
+    // return this.http.post(GlobalVariable.BASE_API_URL + '/saveTransaction',  this.transactionForm.value);
+    return this.http.post(GlobalVariable.BASE_API_URL + '/saveTransaction',  {materialTransactionMaster: master, materialTransactionDetails: details});
   }
 
   private _serverError(err: any) {

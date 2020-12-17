@@ -39,6 +39,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
         this.isOwner = false;
         this.isManager = false;
         this.isWorker = false;
+        this.isWorkshopManager = false;
+        this.isSalesManager = false;
+        this.isAccountManager = false;
+        this.isOfficeStaff = false;
       }
     });
     // console.log(this.userSub);

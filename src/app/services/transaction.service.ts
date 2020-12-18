@@ -45,7 +45,6 @@ export class TransactionService {
       transaction_id : new FormControl(null, [Validators.required]),
       employee_id : new FormControl(null, [Validators.required]),
       material_id : new FormControl(null, [Validators.required]),
-      person_id : new FormControl(null, [Validators.required]),
       quantity : new FormControl(null, [Validators.required]),
       transaction_comment : new FormControl(null, [Validators.required]),
       received_date : new FormControl(received_date_format, [Validators.required])

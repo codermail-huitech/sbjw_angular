@@ -60,8 +60,6 @@ import { CompletedBillComponent } from './pages/completed-bill/completed-bill.co
 import { CompletedBillOrderDetailsComponent } from './pages/completed-bill/completed-bill-order-details/completed-bill-order-details.component';
 import { CompletedBillDetailsComponent } from './pages/completed-bill/completed-bill-details/completed-bill-details.component';
 import { RateComponent } from './pages/rate/rate.component';
-import { GoldReceiptsComponent } from './pages/gold-receipts/gold-receipts.component';
-import { LcReceiptsComponent } from './pages/lc-receipts/lc-receipts.component';
 import { StockComponent } from './pages/stock/stock.component';
 import { StockBillComponent } from './pages/stock-bill/stock-bill.component';
 import { AgentComponent } from './pages/agent/agent.component';
@@ -112,8 +110,6 @@ import { TransactionComponent } from './pages/transaction/transaction.component'
     CompletedBillOrderDetailsComponent,
     CompletedBillDetailsComponent,
     RateComponent,
-    GoldReceiptsComponent,
-    LcReceiptsComponent,
     StockComponent,
     StockBillComponent,
     AgentComponent,

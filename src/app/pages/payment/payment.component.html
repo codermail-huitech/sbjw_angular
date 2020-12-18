@@ -52,7 +52,7 @@
           </div>
         </form>
         <div class="container" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="end" fxLayoutGap="10px" fxLayoutGap.xs="0" >
-          <button mat-button (click)="savePayment()" mat-stroked-button [disabled]="!cashPaymentForm.valid " >Save</button>
+          <button mat-button class="btn btn-info" (click)="savePayment()" mat-stroked-button [disabled]="!cashPaymentForm.valid " >Save</button>
         </div>
       </div>
     </mat-card>

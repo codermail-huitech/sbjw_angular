@@ -23,7 +23,7 @@ export class TransactionComponent implements OnInit {
   transactionTypeData: TransactionType[];
   employeeList: User[];
   materialList: Material[];
-  agentValue = true;
+  employee_value = false;
   materialTransactionMaster: MaterialTransactionMaster;
   materialTransactionDetails: MaterialTransactionDetail[] = [];
 
@@ -36,7 +36,7 @@ export class TransactionComponent implements OnInit {
   constructor(private transactionService: TransactionService, private orderService: OrderService) { }
 
   ngOnInit(): void {
-    this.agentValue = true;
+    this.employee_value = false;
     this.transactionForm = this.transactionService.transactionForm;
 
     this.transactionService.getTransactionTypeUpdateListener().subscribe((response) => {
@@ -57,10 +57,12 @@ export class TransactionComponent implements OnInit {
   }
 
   enableAgent(){
-    if ((this.transactionForm.value.transaction_id === 3) || (this.transactionForm.value.transaction_id === 4)){
-      this.agentValue = false;
+    if ((this.transactionForm.value.transaction_id === 1) || (this.transactionForm.value.transaction_id === 2)){
+      // this.transactionForm.setValue({employee_id: null});
+      this.employee_value = true;
+      this.transactionForm.setValue({employee_id: null});
     }else {
-      this.agentValue = true;
+      this.employee_value = false;
     }
   }
 

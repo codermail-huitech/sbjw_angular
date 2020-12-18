@@ -23,6 +23,7 @@ export class PaymentComponent implements OnInit {
   pipe = new DatePipe('en-US');
 
   constructor(private paymentService: PaymentService, private customerService: CustomerService, private orderService: OrderService) {
+    // this.agentList = this.orderService.getAgentList();
     this.agentList = this.orderService.getAgentList();
     this.customerList = this.customerService.getCustomers();
   }

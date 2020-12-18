@@ -28,8 +28,6 @@ import {CompletedBillOrderDetailsComponent} from "./pages/completed-bill/complet
 import {CommonJsUsageWarnPlugin} from "@angular-devkit/build-angular/src/angular-cli-files/plugins/common-js-usage-warn-plugin";
 import {CompletedBillDetailsComponent} from "./pages/completed-bill/completed-bill-details/completed-bill-details.component";
 import {RateComponent} from './pages/rate/rate.component';
-import {GoldReceiptsComponent} from "./pages/gold-receipts/gold-receipts.component";
-import {LcReceiptsComponent} from "./pages/lc-receipts/lc-receipts.component";
 import {StockComponent} from './pages/stock/stock.component';
 import {StockBillComponent} from './pages/stock-bill/stock-bill.component';
 import {AgentComponent} from './pages/agent/agent.component';
@@ -88,8 +86,6 @@ const routes: Routes = [
       {path: 'completed_bill_details/:id', component: CompletedBillDetailsComponent}
     ],
   },
-  {path: 'gold_receipt', canActivate: [AuthGuardService], component: GoldReceiptsComponent},
-  {path: 'lc_receipt', canActivate: [AuthGuardService], component: LcReceiptsComponent},
   {path: 'stock/:id', canActivate: [AuthGuardService], component: StockComponent },
   {path: 'stock', canActivate: [AuthGuardService], component: StockComponent },
   {path: 'agentAllocation', canActivate: [AuthGuardService], component: AgentAllocationComponent },

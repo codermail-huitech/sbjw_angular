@@ -132,7 +132,13 @@ export class OrderService {
     return([...this.materialData]);
   }
   getAgentList(){
-    return([...this.agentData]);
+   this.http.get(GlobalVariable.BASE_API_URL + '/agents')
+      .subscribe((response: {success: number, data: Agent[]}) => {
+        const {data} = response;
+        this.agentData = data;
+        this.agentSub.next([...this.agentData]);
+   });
+   return [...this.agentData];
   }
   // this function is to save the orderMasterForm value while pressing in save
   setOrderMasterData() {

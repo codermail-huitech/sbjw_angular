@@ -10,7 +10,6 @@ import {toInteger} from '@ng-bootstrap/ng-bootstrap/util/util';
 import {FinishedJobs} from '../../../models/finishedJobs';
 // import {Location} from '@angular/common';
 import toWords from 'number-to-words/src/toWords.js';
-import {GoldReceiptService} from '../../../services/gold-receipt.service';
 import {StockService} from '../../../services/stock.service';
 
 @Component({
@@ -36,7 +35,7 @@ export class BillJobMasterDetailsComponent implements OnInit {
   x: FinishedJobs[];
   // public user = JSON.parse(localStorage.getItem('user'));
 
-  constructor(private  route: ActivatedRoute, private billService: BillService , private  goldReceiptService: GoldReceiptService, private stockService: StockService) {
+  constructor(private  route: ActivatedRoute, private billService: BillService , private stockService: StockService) {
   }
 
   printDivStyle = {
@@ -150,7 +149,7 @@ export class BillJobMasterDetailsComponent implements OnInit {
       this.totalCost = this.totalCost - this.discount;
       this.billService.getFinishedJobsCustomers();
       this.billService.getCompletedBillCustomers();
-      this.goldReceiptService.getUpdatedList();
+
         // this.stockService.getUpdatedStockRecord();
       this.showBill = true;
       });

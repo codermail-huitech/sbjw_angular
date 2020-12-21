@@ -27,8 +27,8 @@ export class JobService {
   karigarhData: Karigarh[] = [];
   orderMaster: OrderMaster[];
 
-  savedJobsList: JobMaster[];
-  finishedJobsList: JobMaster[];
+  savedJobsList: JobMaster[] = [];
+  finishedJobsList: JobMaster[] = [];
   // jobMasterData: JobMaster;
 
   // subject declaration
@@ -70,9 +70,6 @@ export class JobService {
       .subscribe((response: {success: number, data: Karigarh[]}) => {
         const {data} = response;
         this.karigarhData = data;
-        console.log("karigarh data");
-        console.log(this.karigarhData);
-        // console.log(this.karigarhData);
         this.karigarhSub.next([...this.karigarhData]);
       });
 
@@ -120,12 +117,10 @@ export class JobService {
 
   saveJob(){
     // tslint:disable-next-line:max-line-length
-    console.log(this.jobMasterForm);
     return this.http.post<JobResponseData>( GlobalVariable.BASE_API_URL + '/jobs', {master: this.jobMasterForm.value, details: this.jobDetailsForm.value})
       .pipe(catchError(this._serverError), tap(((response: {success: number, data: JobMaster}) => {
-        if(response.data){
+        if (response.data){
              this.savedJobsList.unshift(response.data);
-             console.log(this.savedJobsList);
              // this.savedJobsSub.next([...this.savedJobsList]);
         }
       })));

@@ -32,7 +32,7 @@ export class StockBillComponent implements OnInit {
   stockBillContainer: any;
   billView = true ;
   customerData: Customer[];
-  selectedCustomerData: Customer;
+  selectedCustomerData: Customer = null ;
   selectedAgentData: Agent;
   minDate = new Date(2010, 11, 2);
   maxDate = new Date(2021, 3, 2);

@@ -19,15 +19,18 @@ export class JobTaskService implements OnDestroy{
 
   jobTaskForm: FormGroup;
   jobMasterForm: FormGroup;
-  materialData : Material[];
+  materialData: Material[];
 
-  savedJobsList: JobMaster[];
-  finishedJobsList: JobMaster[];
+  // oneJobData: JobMaster[] = [];
+  oneJobData: JobMaster = null;
+
+  savedJobsList: JobMaster[] = [];
+  finishedJobsList: JobMaster[] = [];
   jobMasterData: JobMaster;
   jobDetailData: JobDetail[];
-  jobReturnData : JobDetail;
-  totalData : JobDetail[];
-  jobTransactionData : JobDetail[];
+  jobReturnData: JobDetail;
+  totalData: JobDetail[];
+  jobTransactionData: JobDetail[];
 
   private savedJobsSub = new Subject<JobMaster[]>();
   private materialDataSub = new Subject<Material[]>();
@@ -219,14 +222,22 @@ export class JobTaskService implements OnDestroy{
       });
   }
 
-  getAllTransactions(data){
-      return this.http.get(GlobalVariable.BASE_API_URL + '/getAllTransactions/' + data)
-      .pipe(catchError(this._serverError), tap(((response: {success: number, data: JobDetail[]}) => {
-          this.jobTransactionData = response.data;
-          this.jobTransactionSub.next([...this.jobTransactionData]);
+  getAllTransactions(data) {
+    return this.http.get(GlobalVariable.BASE_API_URL + '/getAllTransactions/' + data)
+      .pipe(catchError(this._serverError), tap(((response: { success: number, data: JobDetail[] }) => {
+        this.jobTransactionData = response.data;
+        this.jobTransactionSub.next([...this.jobTransactionData]);
 
-       })));
+      })));
   }
+    getOneJobData(data){
+      return this.http.get(GlobalVariable.BASE_API_URL + '/getOneJobData/' + data )
+        .pipe(catchError(this._serverError), tap(((response: { success: number, data: JobMaster}) => {
+          this.oneJobData = response.data;
+
+        })));
+
+    }
 
 
 

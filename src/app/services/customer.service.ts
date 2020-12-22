@@ -100,13 +100,13 @@ export class CustomerService implements OnDestroy{
 
 
   fillFormByUpdatebaleData(customer){
-    console.log(customer);
+    // console.log(customer);
     this.customerForm.setValue(customer);
   }
 
   private handleError(errorResponse: HttpErrorResponse){
-     console.log('Error occured');
-     console.log(errorResponse);
+     // console.log('Error occured');
+     // console.log(errorResponse);
      return throwError(errorResponse.error);
   }
   private _serverError(err: any) {

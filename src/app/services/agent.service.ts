@@ -62,7 +62,6 @@ export class AgentService {
         // @ts-ignore
         const {data} = response;
         this.agentData = data;
-        console.log(this.agentData);
         this.agentSub.next([...this.agentData]);
       });
 

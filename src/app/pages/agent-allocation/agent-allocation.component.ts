@@ -18,7 +18,7 @@ export class AgentAllocationComponent implements OnInit {
   stockList: Stock[];
   billDetailsData: Stock[] = [];
   agentData: Agent[];
-  singleAgent: Agent;
+  singleAgent: Agent = null;
   page: number;
   pageSize: number;
   p = 1;
@@ -152,7 +152,7 @@ export class AgentAllocationComponent implements OnInit {
     // @ts-ignore
     if (this.showCheckbox === true){
       this.billDetailsData = [];
-      console.log(this.showCheckbox);
+      // console.log(this.showCheckbox);
       // if (this.tempStorageBillDetailsData.length !== 0){
       this.billDetailsData = [...this.tempStorageBillDetailsData];
       // }

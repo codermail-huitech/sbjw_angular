@@ -1,61 +1,66 @@
 <div style="background-color: #d9dd9b">
   <mat-card style="background-color: #e8c50e; padding: 0px" >
-    <mat-card style="background-color: lightgray; padding: 0px" class="d-flex" >
+    <mat-card style="background-color: lightgray; padding: 0px;" class="d-flex" >
 
       <div class="col-8">
-        <div>
-                    <mat-form-field class="example-full-width">
-                      <input matInput placeholder="Enter Tag..." [(ngModel)]="searchTerm" name="search" type="text" autofocus>
-                    </mat-form-field>
+        <div *ngIf="stockList.length === 0" style="text-align: center; font-weight: bold ; font-size: xx-large ; padding-top: 50px">
+          NO DATA IN STOCK
         </div>
-        <table class="table table-hover">
-          <thead style="background-color: lightslategray">
-          <th style="text-align: center">SL NO.</th>
-          <th style="text-align: center">Tag</th>
-          <th style="text-align: center">Model Name</th>
-          <th style="text-align: center">Size</th>
-          <th style="text-align: center">Gold</th>
-          <th style="text-align: center">Gross Weight</th>
-          <th style="text-align: center">Amount</th>
-          <th style="text-align: center">Quantity</th>
-          <th style="text-align: center">Allocate To Agent</th>
-          </thead>
-          <tbody>
-<!--          <tr *ngFor="let indexOfElement = index; let item of stockList |filter: searchTag">-->
-          <tr *ngFor="let indexOfElement = index; let item of stockList | filter:searchTerm |  paginate: { itemsPerPage: 10, currentPage: p };">
-            <td style="text-align: center">{{indexOfElement+1}}</td>
-            <td style="text-align: center">{{item.tag | uppercase}}</td>
-            <td style="text-align: center">{{item.model_number}}</td>
-            <td style="text-align: center">{{item.size}}</td>
-            <td  style="text-align: right">{{item.gold}}</td>
-            <td  style="text-align: right">{{item.gross_weight}}</td>
-            <td style="text-align: right">{{item.amount}}</td>
-            <td  style="text-align: right">{{item.quantity}}</td>
-            <td style="text-align: center">
-              <button mat-icon-button color="primary" aria-label="" [disabled]="item.isSet" (click)="stockSelection(item)" >
-                <mat-icon>add</mat-icon>
-              </button>
-            </td>
-          </tr>
-          </tbody>
-        </table>
-        <div fxLayout.xs="column" fxLayout="column" fxFlexFill>
-          <pagination-controls (pageChange)="p = $event"></pagination-controls>
-          <pagination-controls  id="some_id"
-                                (pageChange)="p=($event)"
-                                maxSize="10"
-                                directionLinks="true"
-                                autoHide="true"
-                                responsive="true"
-                                previousLabel="Previous"
-                                nextLabel="Next"
-                                screenReaderPaginationLabel="Pagination"
-                                screenReaderPageLabel="page"
-                                screenReaderCurrentLabel="You're on page">
-          </pagination-controls>
+        <div *ngIf="stockList.length > 0" style="padding-top: 10px">
+          <div>
+            <mat-form-field class="example-full-width">
+              <input matInput placeholder="Enter Tag..." [(ngModel)]="searchTerm" name="search" type="text" autofocus>
+            </mat-form-field>
+          </div>
+          <table class="table table-hover">
+            <thead style="background-color: lightslategray">
+            <th style="text-align: center">SL NO.</th>
+            <th style="text-align: center">Tag</th>
+            <th style="text-align: center">Model Name</th>
+            <th style="text-align: center">Size</th>
+            <th style="text-align: center">Gold</th>
+            <th style="text-align: center">Gross Weight</th>
+            <th style="text-align: center">Amount</th>
+            <th style="text-align: center">Quantity</th>
+            <th style="text-align: center">Allocate To Agent</th>
+            </thead>
+            <tbody>
+            <!--          <tr *ngFor="let indexOfElement = index; let item of stockList |filter: searchTag">-->
+            <tr *ngFor="let indexOfElement = index; let item of stockList | filter:searchTerm |  paginate: { itemsPerPage: 10, currentPage: p };">
+              <td style="text-align: center">{{indexOfElement+1}}</td>
+              <td style="text-align: center">{{item.tag | uppercase}}</td>
+              <td style="text-align: center">{{item.model_number}}</td>
+              <td style="text-align: center">{{item.size}}</td>
+              <td  style="text-align: right">{{item.gold}}</td>
+              <td  style="text-align: right">{{item.gross_weight}}</td>
+              <td style="text-align: right">{{item.amount}}</td>
+              <td  style="text-align: right">{{item.quantity}}</td>
+              <td style="text-align: center">
+                <button mat-icon-button color="primary" aria-label="" [disabled]="item.isSet" (click)="stockSelection(item)" >
+                  <mat-icon>add</mat-icon>
+                </button>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+          <div fxLayout.xs="column" fxLayout="column" fxFlexFill>
+            <pagination-controls (pageChange)="p = $event"></pagination-controls>
+            <pagination-controls  id="some_id"
+                                  (pageChange)="p=($event)"
+                                  maxSize="10"
+                                  directionLinks="true"
+                                  autoHide="true"
+                                  responsive="true"
+                                  previousLabel="Previous"
+                                  nextLabel="Next"
+                                  screenReaderPaginationLabel="Pagination"
+                                  screenReaderPageLabel="page"
+                                  screenReaderCurrentLabel="You're on page">
+            </pagination-controls>
+          </div>
         </div>
       </div>
-      <div class="col-4" style="text-align: center; background-color: #d9dd9b">
+      <div class="col-4" style="text-align: center; background-color: #d9dd9b; padding-top: 10px">
         <h2>Stocks Under Agent </h2>
         <div class="" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="start" fxLayoutGap="0px" fxLayoutGap.xs="0">
 
@@ -132,7 +137,8 @@
         </div>
 <!--          &lt;!&ndash;          <button class="btn badge-info" (click)="stockBillGenerate()">Generate Bill</button>&ndash;&gt;-->
 <!--          <button class="btn badge-info" [disabled]="singleAgent === undefined" (click)="updateStockAgent()" [hidden]="showCheckbox || billDetailsData.length === 0">Save</button>&nbsp;&nbsp;&nbsp;-->
-          <button class="btn badge-info" [disabled]="singleAgent === undefined" (click)="updateStockAgent()" [hidden]="showCheckbox || billDetailsData.length === 0 || singleAgent === undefined">Allocate to {{singleAgent.person_name}}</button>&nbsp;&nbsp;&nbsp;
+<!--          <button class="btn badge-info" [disabled]="singleAgent === undefined" (click)="updateStockAgent()" [hidden]="showCheckbox || billDetailsData.length === 0 || singleAgent === undefined">Allocate to {{singleAgent.person_name}}</button>&nbsp;&nbsp;&nbsp;-->
+        <button *ngIf="singleAgent" class="btn badge-info" (click)="updateStockAgent()" [hidden]="showCheckbox || billDetailsData.length === 0">Allocate to {{singleAgent.person_name}}</button>&nbsp;&nbsp;&nbsp;
           <button class="btn badge-info" (click)="deallocateAgents()" [disabled]="stockDeallocation.length === 0" [hidden]="!showCheckbox">Deallocate</button>&nbsp;&nbsp;&nbsp;
 <!--          <button class="btn badge-info" (click)="searchStocks()" [disabled]="agentID === undefined" >-->
 <!--            <mat-icon>search</mat-icon>-->

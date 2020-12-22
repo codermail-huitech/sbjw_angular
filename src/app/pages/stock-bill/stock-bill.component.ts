@@ -54,6 +54,7 @@ export class StockBillComponent implements OnInit {
     this.customerData = this.customerService.getCustomers();
     this.selectedCustomerData = this.customerData[0];
     this.stockList = this.stockService.getStockList();
+    console.log(this.stockList);
 
     // if (this.stockList){
     //   this.stockList.forEach(function(value) {
@@ -65,17 +66,15 @@ export class StockBillComponent implements OnInit {
     // }
     this.tempStockList = this.stockList.filter(x => x.agent_id === 2);
     // this.tempStockList = this.stockList;
-    console.log('tempStockList');
-    console.log(this.tempStockList);
-    // for (let i = 0; i < this.billDetailsData.length; i++ ) {
-    //   const index = this.tempStockList.findIndex(x => x.id === this.billDetailsData[i].id);
-    //   if(index === -1){
-    //     this.tempStockList[index].isSet = false;
-    //   }
-    //   else{
-    //     this.tempStockList[index].isSet = true;
-    //   }
-    // }
+    for (let i = 0; i < this.billDetailsData.length; i++ ) {
+      const index = this.tempStockList.findIndex(x => x.id === this.billDetailsData[i].id);
+      if(index === -1){
+        this.tempStockList[index].isSet = false;
+      }
+      else{
+        this.tempStockList[index].isSet = true;
+      }
+    }
     this.page = 1;
     this.pageSize = 10;
     this.storage.get('stockBillContainer').subscribe((stockBillContainer: any) => {
@@ -133,6 +132,7 @@ export class StockBillComponent implements OnInit {
 
     this.stockService.getStockUpdateListener().subscribe((response) => {
       this.stockList = response;
+      console.log(this.stockList);
 
       // this.stockList.forEach(function(value) {
       //   value.isSet = false;
@@ -144,7 +144,7 @@ export class StockBillComponent implements OnInit {
 
 
       this.storage.get('stockBillContainer').subscribe((stockBillContainer: any) => {
-        console.log(stockBillContainer);
+        // console.log(stockBillContainer);
         if (stockBillContainer) {
           this.total92Gold = 0;
           this.totalGold = 0;
@@ -197,8 +197,6 @@ export class StockBillComponent implements OnInit {
         if(this.agentData){
           this.getStockListByAgentName(this.agentData[0]);
         }
-        console.log('agentData');
-        console.log(this.agentData);
       });
     this.agentData = this.agentService.getAgentList();
 
@@ -361,7 +359,7 @@ export class StockBillComponent implements OnInit {
     // this.billService.testBillSave(this.billDetailsData).subscribe();
   }
   ViewBill(){
-    console.log(this.billMasterData);
+    // console.log(this.billMasterData);
     this.billView = false;
     // console.log(this.billDetailsData);
   }
@@ -409,6 +407,7 @@ export class StockBillComponent implements OnInit {
     // console.log(this.stockList);
     this.selectedAgentData = item;
     this.tempStockList = this.stockList.filter(x => x.agent_id === item.id);
+    console.log(this.tempStockList);
     if (this.billDetailsData.length > 0){
       for(let i = 0; i < this.tempStockList.length; i++ ) {
         const index = this.billDetailsData.findIndex(x => x.id === this.tempStockList[i].id);
@@ -420,7 +419,6 @@ export class StockBillComponent implements OnInit {
         }
 
       }
-      console.log(this.tempStockList);
     }
 
 

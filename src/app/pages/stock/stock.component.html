@@ -79,27 +79,33 @@
 <div  *ngIf="showStockList">
   <mat-card style="background-color: black">
     <mat-card style="background-color: #d9dd9b">
-      <table class="table table-hover">
-        <thead style="background-color: lightslategray">
-        <th>SL NO.</th>
-        <th>Model Name</th>
-        <th>Tag</th>
-        <th>Gold</th>
-        <th>Amount</th>
-        <th>Quantity</th>
-        </thead>
+      <div *ngIf="stockData.length === 0" style="text-align: center; font-weight: bold ; font-size: xx-large">
+        NO DATA IN STOCK
+      </div>
+      <div *ngIf="stockData.length > 0">
+        <table class="table table-hover">
+          <thead style="background-color: lightslategray">
+          <th>SL NO.</th>
+          <th>Model Name</th>
+          <th>Tag</th>
+          <th>Gold</th>
+          <th>Amount</th>
+          <th>Quantity</th>
+          </thead>
 
-        <tbody>
-        <tr *ngFor="let item of stockData ; let indexofElement = index">
-          <td>{{indexofElement+1}}</td>
-          <td>{{item.model_number}}</td>
-          <td>{{item.tag | uppercase}}</td>
-          <td>{{item.gold}}</td>
-          <td>{{item.amount}}</td>
-          <td>{{item.quantity}}</td>
-        </tr>
-        </tbody>
-      </table>
+          <tbody>
+          <tr *ngFor="let item of stockData ; let indexofElement = index">
+            <td>{{indexofElement+1}}</td>
+            <td>{{item.model_number}}</td>
+            <td>{{item.tag | uppercase}}</td>
+            <td>{{item.gold}}</td>
+            <td>{{item.amount}}</td>
+            <td>{{item.quantity}}</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+
     </mat-card>
   </mat-card>
 </div>

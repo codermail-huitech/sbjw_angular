@@ -32,6 +32,15 @@ export class AgentAllocationComponent implements OnInit {
     this.page = 1;
     this.pageSize = 10;
     // this.agentData = this.agentService.getAgentList();
+    this.stockList.forEach(function(value){
+      if (value.agent_id === 2 && value.in_stock === 1) {
+        // value.isSet = false;
+        value.isAgentSet = false;
+      }else{
+        // value.isSet = true;
+        value.isAgentSet = true;
+      }
+    });
   }
 
   ngOnInit(): void {
@@ -42,9 +51,11 @@ export class AgentAllocationComponent implements OnInit {
       // const tempData = this.stockList.filter(x => x.in_stock === 1);
       this.stockList.forEach(function(value){
         if (value.agent_id === 2 && value.in_stock === 1) {
-          value.isSet = false;
+          // value.isSet = false;
+          value.isAgentSet = false;
         }else{
-          value.isSet = true;
+          // value.isSet = true;
+          value.isAgentSet = true;
         }
       });
       // tslint:disable-next-line:only-arrow-functions
@@ -163,7 +174,8 @@ export class AgentAllocationComponent implements OnInit {
     // @ts-ignore
     // this.billDetailsData.push(data);
     const index = this.stockList.findIndex(x => x.id === data.id);
-    this.stockList[index].isSet = true;
+    // this.stockList[index].isSet = true;
+    this.stockList[index].isAgentSet = true;
   }
 
   removeFromStockBillEntry(data){

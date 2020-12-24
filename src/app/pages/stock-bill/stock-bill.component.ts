@@ -55,6 +55,23 @@ export class StockBillComponent implements OnInit {
     this.selectedCustomerData = this.customerData[0];
     this.stockList = this.stockService.getStockList();
     console.log(this.stockList);
+    // if(this.billDetailsData != null){
+    //   for (let i = 0; i < this.billDetailsData.length; i++ ) {
+    //     const index = this.stockList.findIndex(x => x.id === this.billDetailsData[i].id);
+    //     if(index === -1){
+    //       this.stockList[index].isSet = false;
+    //     }
+    //     else{
+    //       this.stockList[index].isSet = true;
+    //     }
+    //   }
+    // }
+    // else{
+    //   for (let i = 0; i < this.stockList.length; i++ ) {
+    //     this.stockList[i].isSet = false;
+    //   }
+    // }
+    // console.log(this.stockList);
 
     // if (this.stockList){
     //   this.stockList.forEach(function(value) {
@@ -66,15 +83,16 @@ export class StockBillComponent implements OnInit {
     // }
     this.tempStockList = this.stockList.filter(x => x.agent_id === 2);
     // this.tempStockList = this.stockList;
-    for (let i = 0; i < this.billDetailsData.length; i++ ) {
-      const index = this.tempStockList.findIndex(x => x.id === this.billDetailsData[i].id);
-      if(index === -1){
-        this.tempStockList[index].isSet = false;
-      }
-      else{
-        this.tempStockList[index].isSet = true;
-      }
-    }
+    // for (let i = 0; i < this.billDetailsData.length; i++ ) {
+    //   const index = this.tempStockList.findIndex(x => x.id === this.billDetailsData[i].id);
+    //   if(index === -1){
+    //     this.tempStockList[index].isSet = false;
+    //   }
+    //   else{
+    //     this.tempStockList[index].isSet = true;
+    //   }
+    // }
+
     this.page = 1;
     this.pageSize = 10;
     this.storage.get('stockBillContainer').subscribe((stockBillContainer: any) => {
@@ -132,6 +150,7 @@ export class StockBillComponent implements OnInit {
 
     this.stockService.getStockUpdateListener().subscribe((response) => {
       this.stockList = response;
+      console.log('from init');
       console.log(this.stockList);
 
       // this.stockList.forEach(function(value) {
@@ -404,9 +423,11 @@ export class StockBillComponent implements OnInit {
     // console.log(item);
     // console.log("billDetailsData");
     // console.log(this.billDetailsData);
-    // console.log(this.stockList);
+    console.log('from getStockListByAgentName function');
+    console.log(this.stockList);
     this.selectedAgentData = item;
     this.tempStockList = this.stockList.filter(x => x.agent_id === item.id);
+    console.log('from getStockListByAgentName function');
     console.log(this.tempStockList);
     if (this.billDetailsData.length > 0){
       for(let i = 0; i < this.tempStockList.length; i++ ) {

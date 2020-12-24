@@ -16,7 +16,7 @@ export class Stock{
   person_name?: string;
   model_number?: string;
   job_number?: string;
-  mv? :number;
+  mv?: number;
 
   size?: string;
   material_id?: number;
@@ -29,6 +29,7 @@ export class Stock{
   pure_gold?: number;
   cost?: number;
   isSet?: boolean;
+  isAgentSet?: boolean;
   // isSet ?= false;
   agent_id?: number;
   in_stock?: number;

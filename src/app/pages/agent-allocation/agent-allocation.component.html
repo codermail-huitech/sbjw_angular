@@ -36,7 +36,10 @@
               <td style="text-align: right">{{item.amount}}</td>
               <td  style="text-align: right">{{item.quantity}}</td>
               <td style="text-align: center">
-                <button mat-icon-button color="primary" aria-label="" [disabled]="item.isSet" (click)="stockSelection(item)" >
+<!--                <button mat-icon-button color="primary" aria-label="" [disabled]="item.isSet" (click)="stockSelection(item)" >-->
+<!--                  <mat-icon>add</mat-icon>-->
+<!--                </button>-->
+                <button mat-icon-button color="primary" aria-label="" [disabled]="item.isAgentSet" (click)="stockSelection(item)" >
                   <mat-icon>add</mat-icon>
                 </button>
               </td>

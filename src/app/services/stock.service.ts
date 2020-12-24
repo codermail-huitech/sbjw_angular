@@ -93,7 +93,7 @@ export class StockService {
   }
 
   getUpdatedStockList(){
-    this.http.get(GlobalVariable.BASE_API_URL + '/getStockList').subscribe((response: {success: number, data: Stock[]})=>{
+    this.http.get(GlobalVariable.BASE_API_URL + '/getStockList').subscribe((response: {success: number, data: Stock[]} ) => {
       this.stockData = response.data;
       this.stockSub.next([...this.stockData]);
     });

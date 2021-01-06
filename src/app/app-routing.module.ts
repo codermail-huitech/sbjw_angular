@@ -92,7 +92,7 @@ const routes: Routes = [
   {path: 'agentAllocation', canActivate: [AuthGuardService], component: AgentAllocationComponent },
   {path: 'stockBill', canActivate: [AuthGuardService], component: StockBillComponent },
   {path: 'transaction', canActivate: [AuthGuardService], component: TransactionComponent },
-  {path: 'EmployeeStock', canActivate: [AuthGuardService], component: EmployeeStockComponent },
+  {path: 'employeeStock', canActivate: [AuthGuardService], component: EmployeeStockComponent },
 ];
 
 @NgModule({

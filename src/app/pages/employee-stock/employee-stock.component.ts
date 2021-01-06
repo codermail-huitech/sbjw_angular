@@ -9,6 +9,7 @@ import {EmployeeStockService} from '../../services/employee-stock.service';
 export class EmployeeStockComponent implements OnInit {
 
   employeeStockList: any;
+  public searchTerm: any;
   constructor(public  employeeStockService: EmployeeStockService ) { }
 
   ngOnInit(): void {

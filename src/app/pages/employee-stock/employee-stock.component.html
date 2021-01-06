@@ -1,0 +1,18 @@
+<div style="background-color: #a6e0ff">
+  <table class="table table-hover">
+    <thead>
+      <th>SL No.</th>
+      <th>Name</th>
+      <th>Material</th>
+      <th>Stock Balance</th>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of employeeStockList ; let indexofElement = index">
+        <td>{{indexofElement+1}}</td>
+        <td>{{item.person_name}}</td>
+        <td>{{item.material_name}}</td>
+        <td>{{item.employee_balance}}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

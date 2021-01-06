@@ -37,6 +37,7 @@ import {GoldPaymentComponent} from './pages/gold-payment/gold-payment.component'
 import {DueByAgentComponent} from './pages/due-by-agent/due-by-agent.component';
 import {CustomerUnderAgentComponent} from './pages/due-by-agent/customer-under-agent/customer-under-agent.component';
 import {TransactionComponent} from './pages/transaction/transaction.component';
+import {EmployeeStockComponent} from './pages/employee-stock/employee-stock.component';
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -91,6 +92,7 @@ const routes: Routes = [
   {path: 'agentAllocation', canActivate: [AuthGuardService], component: AgentAllocationComponent },
   {path: 'stockBill', canActivate: [AuthGuardService], component: StockBillComponent },
   {path: 'transaction', canActivate: [AuthGuardService], component: TransactionComponent },
+  {path: 'EmployeeStock', canActivate: [AuthGuardService], component: EmployeeStockComponent },
 ];
 
 @NgModule({

@@ -53,6 +53,9 @@ export class PaymentComponent implements OnInit {
     }).then((result) => {
       if (result.value) {
         this.cashPaymentForm.value.received_date = this.pipe.transform(this.cashPaymentForm.value.received_date, 'yyyy-MM-dd');
+        const user = JSON.parse(localStorage.getItem('user'));
+        // this.cashPaymentForm.patchValue({user_id: user.id});
+        this.cashPaymentForm.value.user_id = user.id;
         this.paymentService.saveCashPayment().subscribe((response) => {
           if (response.data){
             Swal.fire(
@@ -61,6 +64,7 @@ export class PaymentComponent implements OnInit {
               'success'
             );
             this.cashPaymentForm.reset();
+            this.cashPaymentForm.patchValue({user_id: 0});
           }
         });
         // For more information about handling dismissals please visit

@@ -12,6 +12,12 @@ export class EmployeeStockComponent implements OnInit {
   public searchTerm: any;
   constructor(public  employeeStockService: EmployeeStockService ) { }
 
+  printDivStyle = {
+    table: {'border-collapse': 'collapse', 'width' : '100%' },
+    label:{'width': '100%'},
+    th: {border: '1px  solid black' , 'fontSize' : 'small'}
+  };
+
   ngOnInit(): void {
      this.employeeStockService.getEmployeeStockDataUpdateListener().subscribe((response) => {
        this.employeeStockList = response;

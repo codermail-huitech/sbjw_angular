@@ -1,9 +1,23 @@
 <div style="background-color: #a6e0ff">
-  <mat-form-field style="padding-left: 30px; padding-top: 20px" class="example-full-width">
-    <input matInput placeholder="Search..." [(ngModel)]="searchTerm" name="search" type="text" autofocus>
-  </mat-form-field>
-  <table class="table table-hover">
-    <thead>
+  <div style="text-align: right" class="d-flex">
+    <mat-form-field  class = "col-3" style="padding-left: 30px; padding-top: 20px" class="example-full-width">
+      <input matInput placeholder="Search..." [(ngModel)]="searchTerm" name="search" type="text" autofocus>
+    </mat-form-field>
+    <div class="col-3">
+      <button
+        mat-stroked-button
+        class="btn-primary"
+        [printStyle]="printDivStyle"
+        printSectionId="printBillDiv"
+        ngxPrint ><mat-icon>print</mat-icon>
+      </button>
+    </div>
+
+  </div>
+
+  <div id ="printBillDiv">
+    <table class="table table-hover">
+      <thead>
       <th>SL No.</th>
       <th>Name</th>
       <th>Pure Gold</th>
@@ -14,8 +28,8 @@
       <th>Dal</th>
       <th>Nitric</th>
       <th>Production_dust</th>
-    </thead>
-    <tbody>
+      </thead>
+      <tbody>
       <tr *ngFor="let item of employeeStockList | filter: searchTerm ; let indexofElement = index">
         <td>{{indexofElement+1}}</td>
         <td>{{item.person_name}}</td>
@@ -28,6 +42,9 @@
         <td>{{item.Nitric.toFixed(3)}}</td>
         <td>{{item.Production_dust.toFixed(3)}}</td>
       </tr>
-    </tbody>
-  </table>
+      </tbody>
+    </table>
+  </div>
+
+
 </div>

@@ -5,6 +5,7 @@ export class Payment{
   id?: number;
   person_id: number;
   agent_id: number;
+  user_id: number;
   cash_received?: number;
   gold_received?: number;
 

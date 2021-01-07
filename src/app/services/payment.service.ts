@@ -20,6 +20,7 @@ export class PaymentService {
       id : new FormControl(null),
       person_id : new FormControl(null, [Validators.required]),
       agent_id : new FormControl(null, [Validators.required]),
+      user_id : new FormControl(0, [Validators.required]),
       payment_mode : new FormControl(null, [Validators.required]),
       cash_received : new FormControl(null, [Validators.required]),
       received_date : new FormControl(received_date_format, [Validators.required]),
@@ -28,11 +29,11 @@ export class PaymentService {
       id : new FormControl(null),
       person_id : new FormControl(null, [Validators.required]),
       agent_id : new FormControl(null, [Validators.required]),
+      user_id : new FormControl(0, [Validators.required]),
       gold_received : new FormControl(null, [Validators.required]),
       received_date : new FormControl(received_date_format, [Validators.required]),
     });
   }
-
 
   saveCashPayment(){
     return this.http.post<AgentResponseData>(GlobalVariable.BASE_API_URL + '/saveCashPayment', this.cashPaymentForm.value);

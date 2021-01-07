@@ -51,6 +51,9 @@ export class GoldPaymentComponent implements OnInit {
     }).then((result) => {
       if (result.value) {
         this.goldPaymentForm.value.received_date = this.pipe.transform(this.goldPaymentForm.value.received_date, 'yyyy-MM-dd') ;
+        const user = JSON.parse(localStorage.getItem('user'));
+        // this.cashPaymentForm.patchValue({user_id: user.id});
+        this.goldPaymentForm.value.user_id = user.id;
           this.paymentService.saveGoldPayment().subscribe((response) => {
           if (response.data){
             Swal.fire(
@@ -59,6 +62,7 @@ export class GoldPaymentComponent implements OnInit {
               'success'
             );
             this.goldPaymentForm.reset();
+            this.goldPaymentForm.patchValue({user_id: 0});
           }
         });
         // For more information about handling dismissals please visit

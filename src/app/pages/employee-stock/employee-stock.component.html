@@ -6,15 +6,27 @@
     <thead>
       <th>SL No.</th>
       <th>Name</th>
-      <th>Material</th>
-      <th>Stock Balance</th>
+      <th>Pure Gold</th>
+      <th>Pure Silver</th>
+      <th>92 Ginnie</th>
+      <th>Pan</th>
+      <th>90 Ginnie</th>
+      <th>Dal</th>
+      <th>Nitric</th>
+      <th>Production_dust</th>
     </thead>
     <tbody>
       <tr *ngFor="let item of employeeStockList | filter: searchTerm ; let indexofElement = index">
         <td>{{indexofElement+1}}</td>
         <td>{{item.person_name}}</td>
-        <td>{{item.material_name}}</td>
-        <td>{{item.employee_balance}}</td>
+        <td>{{item.Pure_gold.toFixed(3)}}</td>
+        <td>{{item.Pure_silver.toFixed(3)}}</td>
+        <td>{{item.ginnie_92.toFixed(3)}}</td>
+        <td>{{item.Pan.toFixed(3)}}</td>
+        <td>{{item.ginnie_90.toFixed(3)}}</td>
+        <td>{{item.Dal.toFixed(3)}}</td>
+        <td>{{item.Nitric.toFixed(3)}}</td>
+        <td>{{item.Production_dust.toFixed(3)}}</td>
       </tr>
     </tbody>
   </table>

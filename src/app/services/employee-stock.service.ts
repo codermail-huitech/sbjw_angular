@@ -21,12 +21,21 @@ export class EmployeeStockService {
   constructor(private http: HttpClient) {
 
     // fetching employee stocks
-    this.http.get(GlobalVariable.BASE_API_URL + '/testGetEmployeeMaterial')
+    // this.http.get(GlobalVariable.BASE_API_URL + '/testGetEmployeeMaterial')
+    //   .subscribe((response: {success: number, data: any}) => {
+    //     const {data} = response;
+    //     this.employeeStockData = data;
+    //     this.employeeStockDataSub.next([...this.employeeStockData]);
+    //   });
+
+    this.http.get(GlobalVariable.BASE_API_URL + '/myTest')
       .subscribe((response: {success: number, data: any}) => {
         const {data} = response;
         this.employeeStockData = data;
         this.employeeStockDataSub.next([...this.employeeStockData]);
       });
+
+
 
      }
   }

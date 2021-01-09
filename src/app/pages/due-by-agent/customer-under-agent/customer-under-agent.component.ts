@@ -12,6 +12,8 @@ export class CustomerUnderAgentComponent implements OnInit {
 
   customerList: Customer[];
   agentId: number;
+  CustomerPassbookList: any;
+  isPassbookShown = false;
 
   printDivStyle = {
     printBillDiv: {marginRight : '3px', marginLeft : '3px', marginTop : '5px'},
@@ -30,6 +32,14 @@ export class CustomerUnderAgentComponent implements OnInit {
       });
 
     });
+  }
+  viewPassbook(data){
+    this.agentService.getCustomerPassbook(data).subscribe((response)=>{
+      this.CustomerPassbookList = response.data;
+      this.isPassbookShown = true;
+      console.log(this.CustomerPassbookList);
+    });
+
   }
 
 }

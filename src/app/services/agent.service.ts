@@ -94,6 +94,13 @@ export class AgentService {
        })));
   }
 
+  getCustomerPassbook(data){
+    return  this.http.get(GlobalVariable.BASE_API_URL + '/getCustomerPassbook/' + data)
+      .pipe(tap(((response: {success: number, data: any }) => {
+
+      })));
+  }
+
 
   saveAgent(){
     return this.http.post<AgentResponseData>('http://127.0.0.1:8000/api/agents', this.agentForm.value);

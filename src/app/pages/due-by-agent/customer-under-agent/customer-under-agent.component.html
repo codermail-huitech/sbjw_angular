@@ -1,13 +1,29 @@
 <div fxLayout.xs="column"  fxLayout="row" fxLayoutAlign="space-between stretch" fxFlexFill id ="bill-orderDetails-div">
   <div  fxFlex="100" class="col">
-    <div style="text-align: right">
-      <button class="btn-primary"
-              mat-stroked-button
-              [printStyle]="printDivStyle"
-              printSectionId="printBillDiv"
-              ngxPrint ><mat-icon>print</mat-icon>
-      </button>
+    <div class="d-flex">
+      <div  class="col-2" style="text-align: left" [hidden]="!isPassbookShown">
+        <button class="btn-primary" mat-stroked-button (click)="backToPrevious()">
+          <mat-icon>keyboard_arrow_left</mat-icon>
+                    Back
+        </button>
+      </div>
+      <div  class="col-2" style="text-align: left" [hidden]="isPassbookShown">
+        <button class="btn-primary" mat-stroked-button [routerLink]="['/due_by_agent']">
+          <mat-icon>keyboard_arrow_left</mat-icon>
+          Back
+        </button>
+      </div>
+      <div class="col-8"></div>
+      <div class="col-2" style="text-align: right">
+        <button class="btn-primary"
+                mat-stroked-button
+                [printStyle]="printDivStyle"
+                printSectionId="printBillDiv"
+                ngxPrint ><mat-icon>print</mat-icon>
+        </button>
+      </div>
     </div>
+
     <div id="printBillDiv">
       <div [hidden]="isPassbookShown">
         <table class="table" >
@@ -27,18 +43,22 @@
             <td>{{data.LC_Due.toFixed(3)}}</td>
             <td>{{data.gold_due.toFixed(3)}}</td>
             <td>
-              <button class="btn btn-info" (click)="viewPassbook(data.id)" >View Passbook</button>
+              <button class="btn btn-info" (click)="viewPassbook(data.id,data.person_name)" >View Passbook</button>
             </td>
           </tr>
           </tbody>
         </table>
       </div>
-      <div [hidden]="!isPassbookShown" style="background-color: #d9dd9b">
-        <table class="table">
+      <div [hidden]="!isPassbookShown" >
+        <div style="text-align: center">
+          <h3>Transaction of  <b>{{customerName}}</b></h3>
+        </div>
+        <table class="table" style="background-color: #d9dd9b">
           <thead>
           <tr>
             <th>SL No.</th>
             <th>Date</th>
+            <th>Statement</th>
             <th>LC</th>
             <th>Gold </th>
           </tr>
@@ -47,8 +67,9 @@
           <tr  *ngFor="let data of CustomerPassbookList; let indexOfelement = index" >
             <td>{{indexOfelement+1}}</td>
             <td>{{data.created_at | date:"dd-MM-yyyy HH:mm:ss"}}</td>
+            <td>{{data.statement}}</td>
             <td>{{data.cash_received === "--"? "--": data.cash_received |currency:"&#8377;"}}</td>
-            <td>{{data.gold_received}}</td>
+            <td>{{data.gold_received === "--"? "--":data.gold_received+" gm" }}</td>
 
           </tr>
           </tbody>

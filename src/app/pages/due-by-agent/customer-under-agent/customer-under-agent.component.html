@@ -61,6 +61,8 @@
             <th>Statement</th>
             <th>LC</th>
             <th>Gold </th>
+            <th>LC Balance</th>
+            <th>Gold Balance</th>
           </tr>
           </thead>
           <tbody>
@@ -68,8 +70,10 @@
             <td>{{indexOfelement+1}}</td>
             <td>{{data.created_at | date:"dd-MM-yyyy HH:mm:ss"}}</td>
             <td>{{data.statement}}</td>
-            <td>{{data.cash_received === "--"? "--": data.cash_received |currency:"&#8377;"}}</td>
+            <td>{{data.cash_received === "--"? "--": data.cash_received.toFixed(3) |currency:"&#8377;"}}</td>
             <td>{{data.gold_received === "--"? "--":data.gold_received+" gm" }}</td>
+            <td>{{data.LC_balance .toFixed(3)|currency:"&#8377;"}}</td>
+            <td>{{data.gold_balance.toFixed(3)+" gm" }}</td>
 
           </tr>
           </tbody>

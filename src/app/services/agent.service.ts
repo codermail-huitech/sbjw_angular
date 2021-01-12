@@ -121,11 +121,14 @@ export class AgentService {
   //   return [...this.dueByAgentData];
   // }
 
-  getDueByAgentListList(){
+  getLatestDueByAgentListList(){
    return this.http.get(GlobalVariable.BASE_API_URL + '/getDueByAgent')
       .subscribe((response: {success: number, data: any}) => {
         this.dueByAgentData = response.data;
         this.dueByAgentDataSub.next([...this.dueByAgentData]);
       });
+  }
+  getDueByAgentListList(){
+    return [...this.dueByAgentData];
   }
 }

@@ -32,7 +32,7 @@
           </tr>
           </thead>
           <tbody>
-          <tr  *ngFor="let data of dueByAgentList| filter : searchTerm | paginate: { itemsPerPage: pageSize, currentPage: p } let indexOfelement = index " >
+          <tr  *ngFor="let data of dueByAgentList| filter : searchTerm | paginate: { itemsPerPage: pageSize, currentPage: p }; let indexOfelement = index;" >
             <td>{{indexOfelement+1}}</td>
             <td >{{data.person_name | uppercase}}</td>
             <td>{{data.LCdueByAgent.toFixed(3)}}</td>

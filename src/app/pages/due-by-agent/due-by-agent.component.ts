@@ -42,5 +42,4 @@ export class DueByAgentComponent implements OnInit {
       this.dueByAgentList = response;
     });
   }
-
 }

@@ -40,8 +40,8 @@
           <tr  *ngFor="let data of customerList; let indexOfelement = index" >
             <td>{{indexOfelement+1}}</td>
             <td>{{data.person_name | uppercase}}</td>
-            <td>{{data.LC_Due.toFixed(3)}}</td>
-            <td>{{data.gold_due.toFixed(3)}}</td>
+            <td>{{data.LC_Due.toFixed(3) | currency:"&#8377;"}}</td>
+            <td>{{data.gold_due.toFixed(3)}}gm</td>
             <td>
               <button class="btn btn-info" (click)="viewPassbook(data.id,data.person_name)" >View Passbook</button>
             </td>
@@ -56,24 +56,28 @@
         <table class="table" style="background-color: #d9dd9b">
           <thead>
           <tr>
-            <th>SL No.</th>
-            <th>Date</th>
-            <th>Statement</th>
-            <th>LC</th>
-            <th>Gold </th>
-            <th>LC Balance</th>
-            <th>Gold Balance</th>
+            <th style="text-align: center">SL No.</th>
+            <th style="text-align: center">Date</th>
+            <th style="text-align: center">Statement</th>
+            <th style="text-align: center">Reference Number</th>
+            <th style="text-align: center">LC</th>
+            <th style="text-align: center">Gold </th>
+            <th style="text-align: center">LC Balance</th>
+            <th style="text-align: center">Gold Balance</th>
           </tr>
           </thead>
           <tbody>
           <tr  *ngFor="let data of CustomerPassbookList; let indexOfelement = index" >
-            <td>{{indexOfelement+1}}</td>
-            <td>{{data.created_at | date:"dd-MM-yyyy HH:mm:ss"}}</td>
-            <td>{{data.statement}}</td>
-            <td>{{data.cash_received === "--"? "--": data.cash_received.toFixed(3) |currency:"&#8377;"}}</td>
-            <td>{{data.gold_received === "--"? "--":data.gold_received+" gm" }}</td>
-            <td>{{data.LC_balance .toFixed(3)|currency:"&#8377;"}}</td>
-            <td>{{data.gold_balance.toFixed(3)+" gm" }}</td>
+            <td style="text-align: center">{{indexOfelement+1}}</td>
+            <td style="text-align: center">{{data.created_at | date:"dd-MM-yyyy HH:mm:ss"}}</td>
+            <td style="text-align: center">{{data.statement}}</td>
+<!--            <td style="text-align: center" *ngIf="data.id" [routerLink]="['/completed_bill_details/', data.id]"><a target="_blank">{{data.reference_number}}</a></td>-->
+            <td style="text-align: center" *ngIf="data.id" ><a href="/completed_bill_details/{{data.id}}" target="_blank">{{data.reference_number}}</a></td>
+            <td style="text-align: center" *ngIf="!data.id">{{data.reference_number}}</td>
+            <td style="text-align: right">{{data.cash_received === "--"? "--": data.cash_received.toFixed(3) |currency:"&#8377;"}}</td>
+            <td style="text-align: right">{{data.gold_received === "--"? "--":data.gold_received+" gm" }}</td>
+            <td style="text-align: right">{{data.LC_balance .toFixed(3)|currency:"&#8377;"}}</td>
+            <td style="text-align: right">{{data.gold_balance.toFixed(3)+" gm" }}</td>
 
           </tr>
           </tbody>

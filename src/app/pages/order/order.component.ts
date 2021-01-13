@@ -394,6 +394,7 @@ export class OrderComponent implements OnInit {
           this.totalQuantity = 0;
           this.totalApproxGold = 0;
 
+
           // this.orderMasterList.unshift(response.data);
         }
     });

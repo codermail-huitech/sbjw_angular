@@ -151,8 +151,8 @@ export class BillService {
   showCompletedBills(data){
     return this.http.get(GlobalVariable.BASE_API_URL + '/showCompletedBills/' + data)
       .subscribe((response: {success: number, data: BillDetail[]}) => {
-           this.showCompletedBillsData = response.data;
-           this.showCompletedBillsDataSub.next([...this.showCompletedBillsData]);
+         this.showCompletedBillsData = response.data;
+         this.showCompletedBillsDataSub.next([...this.showCompletedBillsData]);
       });
 
   }

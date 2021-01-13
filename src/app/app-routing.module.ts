@@ -58,6 +58,7 @@ const routes: Routes = [
     // ],
   },
   {path: 'customer_under_agent/:id', canActivate : [AuthGuardService], component: CustomerUnderAgentComponent},
+  {path: 'completed_bill_details/:id', canActivate : [AuthGuardService], component: CompletedBillDetailsComponent},
   {path: 'job_detail/:id', canActivate : [AuthGuardService], component: JobDetailComponent,
     children: [
       {path: '', component: JobTransactionComponent},

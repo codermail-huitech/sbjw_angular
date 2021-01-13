@@ -11,6 +11,7 @@ import {FinishedJobs} from '../../../models/finishedJobs';
 // import {Location} from '@angular/common';
 import toWords from 'number-to-words/src/toWords.js';
 import {StockService} from '../../../services/stock.service';
+import {AgentService} from '../../../services/agent.service';
 
 @Component({
   selector: 'app-bill-job-master-details',
@@ -35,7 +36,7 @@ export class BillJobMasterDetailsComponent implements OnInit {
   x: FinishedJobs[];
   // public user = JSON.parse(localStorage.getItem('user'));
 
-  constructor(private  route: ActivatedRoute, private billService: BillService , private stockService: StockService) {
+  constructor(private  route: ActivatedRoute, private billService: BillService , private stockService: StockService , private agentService: AgentService ) {
   }
 
   printDivStyle = {
@@ -149,6 +150,7 @@ export class BillJobMasterDetailsComponent implements OnInit {
       this.totalCost = this.totalCost - this.discount;
       this.billService.getFinishedJobsCustomers();
       this.billService.getCompletedBillCustomers();
+      this.agentService.getLatestDueByAgentListList();
 
         // this.stockService.getUpdatedStockRecord();
       this.showBill = true;

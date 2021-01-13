@@ -53,10 +53,16 @@ export class CompletedBillDetailsComponent implements OnInit {
     this.route.params.subscribe(params => {
       this.billService.getFinishedBillData(params['id']);
     });
+    console.log(location.href);
+    console.log(location.href.split('/')[3]);
+    if (location.href.split('/')[3] === 'completed_bill_details'){
+      this.getBillDetails(location.href.split('/')[4]);
+    }
 
     this.billService.getfinishedBillDataSubUpdateListener()
       .subscribe((details: JobMaster[]) => {
         this.finishedBillData = details;
+        console.log(this.finishedBillData);
       });
 
     this.billService.showCompletedBillsDataSubUpdateListener().subscribe((response) => {
@@ -73,6 +79,9 @@ export class CompletedBillDetailsComponent implements OnInit {
       // this.discount = (this.finishedBillData[0].discount / 100) * this.totalCost;
       // this.discount = this.finishedBillData[0].discount;
       this.totalCost = this.totalCost - this.discount;
+      this.discount = (this.discountPercentage / 100) * this.totalCost;
+      console.log(this.discountPercentage);
+      // this.totalCost = this.totalCost - ((this.discountPercentage / 100) * this.totalCost);
     });
   }
 
@@ -81,8 +90,11 @@ export class CompletedBillDetailsComponent implements OnInit {
   }
 
   getBillDetails(data){
+    // const index = this.finishedBillData.findIndex(x => x.id === data);
+    // this.discount = this.finishedBillData[index].discount;
     this.billService.showCompletedBills(data);
-    const index = this.finishedBillData.findIndex(x => x.id === data);
-    this.discount = this.finishedBillData[index].discount;
+    // console.log();
+    // const index = this.finishedBillData.findIndex(x => x.id === data);
+    // this.discount = this.finishedBillData[index].discount;
   }
 }

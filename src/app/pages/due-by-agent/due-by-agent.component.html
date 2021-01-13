@@ -35,8 +35,8 @@
           <tr  *ngFor="let data of dueByAgentList| filter : searchTerm | paginate: { itemsPerPage: pageSize, currentPage: p }; let indexOfelement = index;" >
             <td>{{indexOfelement+1}}</td>
             <td >{{data.person_name | uppercase}}</td>
-            <td>{{data.LCdueByAgent.toFixed(3)}}</td>
-            <td>{{data.goldDueByAgent.toFixed(3)}}</td>
+            <td>{{data.LCdueByAgent.toFixed(3)|currency:"&#8377;"}}</td>
+            <td>{{data.goldDueByAgent.toFixed(3)}}gm</td>
             <td>
               <button  mat-icon-button color="primary" aria-label="Open Details" style="text-align: center" [routerLink]="['/customer_under_agent',data.agent_id]">
                 <mat-icon>forward</mat-icon>

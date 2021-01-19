@@ -1,9 +1,11 @@
 <div style="background-color: #a6e0ff">
-  <div style="text-align: right" class="d-flex">
-    <mat-form-field  class = "col-3" style="padding-left: 30px; padding-top: 20px" class="example-full-width">
-      <input matInput placeholder="Search..." [(ngModel)]="searchTerm" name="search" type="text" autofocus>
-    </mat-form-field>
-    <div class="col-3">
+  <div  class="d-flex">
+    <div class="col-4">
+      <mat-form-field  class = "col-3" style="padding-left: 15px; padding-top: 20px" class="example-full-width">
+        <input matInput placeholder="Search..." [(ngModel)]="searchTerm" name="search" type="text" autofocus>
+      </mat-form-field>
+    </div>
+    <div class="col-8" style="text-align: right;padding-top: 20px">
       <button
         mat-stroked-button
         class="btn-primary"
@@ -12,7 +14,6 @@
         ngxPrint ><mat-icon>print</mat-icon>
       </button>
     </div>
-
   </div>
 
   <div id ="printBillDiv">

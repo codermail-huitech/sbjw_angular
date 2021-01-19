@@ -42,6 +42,8 @@ export class StockBillComponent implements OnInit {
   tempStockList: Stock[];
   date = new Date();
 
+  mv: number;
+
   page: number;
   pageSize: number;
   p = 1;
@@ -54,7 +56,10 @@ export class StockBillComponent implements OnInit {
     this.customerData = this.customerService.getCustomers();
     this.selectedCustomerData = this.customerData[0];
     this.stockList = this.stockService.getStockList();
-    console.log(this.stockList);
+    this.date = new Date();
+    // this.selectedCustomerData.bill_date = this.date.getFullYear() + '-' + (this.date.getMonth() + 1) + '-' + this.date.getDate();
+    // console.log(this.selectedCustomerData.bill_date);
+
     // if(this.billDetailsData != null){
     //   for (let i = 0; i < this.billDetailsData.length; i++ ) {
     //     const index = this.stockList.findIndex(x => x.id === this.billDetailsData[i].id);
@@ -175,9 +180,7 @@ export class StockBillComponent implements OnInit {
             for (let i = 0; i < this.billDetailsData.length; i++ ){
               const index = this.stockList.findIndex(x => x.id === this.billDetailsData[i].id);
               this.stockList[index].isSet = true;
-
-
-              const pure_gold = parseFloat(((this.billDetailsData[i].total * 92) / 100).toFixed(3));
+              const pure_gold = parseFloat((((this.billDetailsData[i].total) * 92) / 100).toFixed(3));
               this.total92Gold = this.total92Gold + Number(this.billDetailsData[i].total);
               this.totalGold = this.totalGold + Number(pure_gold);
               this.totalQuantity = this.totalQuantity + Number(this.billDetailsData[i].quantity);
@@ -204,7 +207,7 @@ export class StockBillComponent implements OnInit {
         this.customerData = customers;
         this.selectedCustomerData = this.customerData[0];
         // this.selectedCustomerData.bill_date = '2010-11-02';
-        this.selectedCustomerData.bill_date = this.date.getFullYear() + '-' + (this.date.getMonth() + 1) + '-' + this.date.getDate();;
+        this.selectedCustomerData.bill_date = this.date.getFullYear() + '-' + (this.date.getMonth() + 1) + '-' + this.date.getDate();
         // console.log(formatDate(this.date.getDate(), 'yyyy-MM-dd', 'en'));
         // this.selectedCustomerData.bill_date = this. datepipe. transform(this.date, 'yyyy-MM-dd');
         // console.log(this.date);
@@ -241,12 +244,13 @@ export class StockBillComponent implements OnInit {
   }
 
   stockSelectionForBill(item) {
-
     const index = this.billDetailsData.findIndex(x => x.id === item.id);
     if (index === -1){
 
-      item.total = item.gold;
+      item.total = item.gold + this.selectedCustomerData.mv * Number(item.quantity);
       item.cost = item.amount;
+      item.mv = this.selectedCustomerData.mv;
+      item.price =  item.amount / item.quantity;
 
       item.pure_gold = parseFloat(((item.total * 92) / 100).toFixed(3));
 
@@ -405,6 +409,7 @@ export class StockBillComponent implements OnInit {
     // data.bill_date = "2020-12-20";
     // console.log(this.selectedCustomerData.bill_date);
 
+
     data.bill_date = this.selectedCustomerData.bill_date;
     this.selectedCustomerData = data;
     this.stockBillContainer = {
@@ -423,12 +428,12 @@ export class StockBillComponent implements OnInit {
     // console.log(item);
     // console.log("billDetailsData");
     // console.log(this.billDetailsData);
-    console.log('from getStockListByAgentName function');
-    console.log(this.stockList);
+    // console.log('from getStockListByAgentName function');
+    // console.log(this.stockList);
     this.selectedAgentData = item;
     this.tempStockList = this.stockList.filter(x => x.agent_id === item.id);
-    console.log('from getStockListByAgentName function');
-    console.log(this.tempStockList);
+    // console.log('from getStockListByAgentName function');
+    // console.log(this.tempStockList);
     if (this.billDetailsData.length > 0){
       for(let i = 0; i < this.tempStockList.length; i++ ) {
         const index = this.billDetailsData.findIndex(x => x.id === this.tempStockList[i].id);
@@ -446,8 +451,8 @@ export class StockBillComponent implements OnInit {
   }
 
   selectDate(item){
-    const date =  item.getFullYear() + '-' + parseInt(String(item.getMonth() + 1)) + '-' + item.getDate();
-
+    // const date =  item.getFullYear() + '-' + parseInt(String(item.getMonth() + 1)) + '-' + item.getDate();
+    const date =  this.date.getFullYear() + '-' + (this.date.getMonth() + 1) + '-' + this.date.getDate();
     this.selectedCustomerData.bill_date = date;
     this.stockBillContainer = {
       stockBillDetailsData: this.billDetailsData,

@@ -10,7 +10,7 @@ import {JobMaster} from '../models/jobMaster.model';
 })
 export class EmployeeStockService {
 
-  employeeStockData: any;
+  employeeStockData: any = [] ;
   private employeeStockDataSub = new Subject<any>();
 
 
@@ -37,5 +37,10 @@ export class EmployeeStockService {
 
 
 
+     }
+
+     getEmployeeStock(){
+
+        return [...this.employeeStockData];
      }
   }

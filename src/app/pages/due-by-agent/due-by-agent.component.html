@@ -1,6 +1,7 @@
 <div fxLayout.xs="column"   fxLayout="row" fxLayoutAlign="space-between stretch" fxFlexFill id="create-bill-div" >
   <!--  <div *ngIf="finshedJobs.length == 0" style="text-align: center; align-items: center"><h1>Nothing to show...</h1></div>-->
   <div  fxFlex="100" >
+    <div *ngIf="dueByAgentList.length > 0 ">
       <div  fxLayout fxLayout.xs="column" fxLayoutAlign="start" fxLayoutGap="30px" fxLayoutGap.xs="0">
         <mat-form-field class="example-full-width">
           <input matInput placeholder="Search..." [(ngModel)]="searchTerm" name="search" type="text" autofocus>
@@ -45,23 +46,28 @@
           </tr>
           </tbody>
         </table>
-      <div fxLayout.xs="column" fxLayout="column" fxFlexFill>
-        <!--    https://www.npmjs.com/package/ngx-pagination-->
-        <!--    npm i ngx-pagination-->
-        <pagination-controls (pageChange)="p = $event"></pagination-controls>
-        <pagination-controls  id="some_id"
-                              (pageChange)="p=($event)"
-                              maxSize="5"
-                              directionLinks="true"
-                              autoHide="true"
-                              responsive="true"
-                              previousLabel="Previous"
-                              nextLabel="Next"
-                              screenReaderPaginationLabel="Pagination"
-                              screenReaderPageLabel="page"
-                              screenReaderCurrentLabel="You're on page">
-        </pagination-controls>
+        <div fxLayout.xs="column" fxLayout="column" fxFlexFill>
+          <!--    https://www.npmjs.com/package/ngx-pagination-->
+          <!--    npm i ngx-pagination-->
+          <pagination-controls (pageChange)="p = $event"></pagination-controls>
+          <pagination-controls  id="some_id"
+                                (pageChange)="p=($event)"
+                                maxSize="5"
+                                directionLinks="true"
+                                autoHide="true"
+                                responsive="true"
+                                previousLabel="Previous"
+                                nextLabel="Next"
+                                screenReaderPaginationLabel="Pagination"
+                                screenReaderPageLabel="page"
+                                screenReaderCurrentLabel="You're on page">
+          </pagination-controls>
+        </div>
       </div>
     </div>
+    <div *ngIf="dueByAgentList.length === 0"  style="text-align: center; font-weight: bold ; font-size: xx-large">
+       NO DATA
+    </div>
+
   </div>
 </div>

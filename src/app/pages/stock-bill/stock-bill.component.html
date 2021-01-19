@@ -126,8 +126,9 @@
           </mat-form-field>
           <mat-form-field fxFlex="30" *ngIf="selectedCustomerData">
             <mat-label> Stock Bill Date</mat-label>
-            <input matInput
-                   [(ngModel)]="selectedCustomerData.bill_date"
+<!--            <input matInput [(ngModel)]="date"-->
+<!--                   [(ngModel)]="selectedCustomerData.bill_date"-->
+            <input matInput [(ngModel)]="date"
                    (ngModelChange)="selectDate(selectedCustomerData.bill_date)"
                    [matDatepicker]="picker1"
                    [min]="minDate"

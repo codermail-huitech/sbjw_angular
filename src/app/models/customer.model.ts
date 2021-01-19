@@ -21,6 +21,7 @@ export class Customer{
   bill_date?: string;
   LC_Due?: number;
   gold_due?: number;
+  mv?: number;
 
   constructor(public id: number, public person_name: string, public email: string, public customer_category_id: number) {
     this.person_type_id = 10;

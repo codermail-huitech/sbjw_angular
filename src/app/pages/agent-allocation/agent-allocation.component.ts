@@ -117,11 +117,11 @@ export class AgentAllocationComponent implements OnInit {
 
   deallocateAgent(item){
     const index = this.stockDeallocation.findIndex(x => x.id === item.id);
-    // if (index === -1){
-    //   this.stockDeallocation.push(item);
-    // }else{
+    if (index === -1){
+      this.stockDeallocation.push(item);
+    }else{
     this.stockDeallocation.splice(index,1);
-    // }
+    }
   }
 
   deallocateAgents(){
@@ -181,7 +181,8 @@ export class AgentAllocationComponent implements OnInit {
   removeFromStockBillEntry(data){
     const index = this.billDetailsData.findIndex(x => x.id === data.id );
     const stockIndex = this.stockList.findIndex(x => x.id === data.id );
-    this.stockList[stockIndex].isSet = false;
+    // this.stockList[stockIndex].isSet = false;
+    this.stockList[stockIndex].isAgentSet = false;
     // @ts-ignore
     // if (this.billDetailsData[index].agent_id !== 2){
       // this.stockService.updateStockByDefaultAgent(this.billDetailsData, this.singleAgent)

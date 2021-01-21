@@ -75,7 +75,7 @@
             <td style="text-align: center" *ngIf="data.id" ><a href="/completed_bill_details/{{data.id}}" target="_blank">{{data.reference_number}}</a></td>
             <td style="text-align: center" *ngIf="!data.id">{{data.reference_number}}</td>
             <td style="text-align: right">{{data.cash_received === "--"? "--": data.cash_received.toFixed(3) |currency:"&#8377;"}}</td>
-            <td style="text-align: right">{{data.gold_received === "--"? "--":data.gold_received+" gm" }}</td>
+            <td style="text-align: right">{{data.gold_received === "--"? "--":data.gold_received.toFixed(3)+" gm" }}</td>
             <td style="text-align: right">{{data.LC_balance .toFixed(3)|currency:"&#8377;"}}</td>
             <td style="text-align: right">{{data.gold_balance.toFixed(3)+" gm" }}</td>
 

@@ -155,8 +155,8 @@ export class StockBillComponent implements OnInit {
 
     this.stockService.getStockUpdateListener().subscribe((response) => {
       this.stockList = response;
-      console.log('from init');
-      console.log(this.stockList);
+      // console.log('from init');
+      // console.log(this.stockList);
 
       // this.stockList.forEach(function(value) {
       //   value.isSet = false;

@@ -53,6 +53,7 @@ export class JobTaskComponent implements OnInit {
 
     this.jobService.getFinishedJobsUpdateListener().subscribe((finishedjobData: JobMaster[]) => {
       this.finishedJobsList = finishedjobData;
+
     });
 
     this.savedJobsData = this.jobService.getAllJobList();

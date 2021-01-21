@@ -43,6 +43,7 @@ export class GoldSubmitComponent implements OnInit {
     this.jobTaskService.getUpdatedSavedJobs();
     this.jobTaskService.getSavedJobsUpdateListener().subscribe((response) => {
       this.savedJobsData = response;
+      console.log(this.savedJobsData);
       const index = this.savedJobsData.findIndex(x => x.id === this.jobMasterId);
       this.oneJobData = this.savedJobsData[index];
       this.jobTaskForm.patchValue({material_name: this.oneJobData.material_name});

@@ -39,6 +39,7 @@ export class JobTaskService implements OnDestroy{
   private totalDataSub = new Subject<JobDetail[]>();
   private jobTransactionSub = new Subject<JobDetail[]>();
   private finishedJobsSub = new Subject<JobMaster[]>();
+  private oneJobDataSub = new Subject<JobMaster[]>();
 
   getSavedJobsUpdateListener(){
     return this.savedJobsSub.asObservable();
@@ -234,7 +235,6 @@ export class JobTaskService implements OnDestroy{
       return this.http.get(GlobalVariable.BASE_API_URL + '/getOneJobData/' + data )
         .pipe(catchError(this._serverError), tap(((response: { success: number, data: JobMaster}) => {
           this.oneJobData = response.data;
-
         })));
 
     }

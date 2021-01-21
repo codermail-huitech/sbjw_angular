@@ -24,7 +24,7 @@ export class JobComponent implements OnInit {
   jobMasterForm: FormGroup;
   jobDetailsForm: FormGroup;
   karigarhData: Karigarh[] = [];
-  orderMasterData: OrderMaster[]=[];
+  orderMasterData: OrderMaster[] = [];
   orderDetails: OrderDetail[];
   products: Product[];
   materialList: Material[] = [];
@@ -32,6 +32,8 @@ export class JobComponent implements OnInit {
   minDate = new Date(2010, 11, 2);
   maxDate = new Date(2021, 3, 2);
   pipe = new DatePipe('en-US');
+  selectedJobIndex = -1;
+  selectedJobItem: OrderDetail;
 
   public searchTerm: string;
   filter = new FormControl('');
@@ -47,6 +49,7 @@ export class JobComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.selectedJobIndex = -1;
     this.jobMasterForm = this.jobService.jobMasterForm;
     this.jobDetailsForm = this.jobService.jobDetailsForm;
     this.products = this.productService.getProducts();
@@ -82,6 +85,8 @@ export class JobComponent implements OnInit {
   }
 
   placeJob(details) {
+    this.selectedJobIndex = this.orderDetails.findIndex(x => x.id === details.id);
+    this.selectedJobItem = details;
     const index = this.materialList.findIndex(x => x.id === details.material_id);
     this.jobMasterForm.patchValue({
       model_number: details.model_number,
@@ -124,6 +129,22 @@ export class JobComponent implements OnInit {
         console.log('User dismissed the dialog (e.gf., by using ESC, clicking the cross icon, or clicking outside the dialog)');
       });
   }
+  getBackgroundColor(index: number) {
+    if (index === this.selectedJobIndex){
+      return {
+           'background-color': '#6b6b47',
+           color: 'seashell'
+         };
+    }
+  }
+  onCancel(){
+    this.jobMasterForm.reset();
+    this.jobDetailsForm.reset();
+  }
+
+
+
+
 
 
 }

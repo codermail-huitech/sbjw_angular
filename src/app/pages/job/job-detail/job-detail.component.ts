@@ -55,7 +55,7 @@ export class JobDetailComponent implements OnInit {
     this.route.params.subscribe(params => {
       this.showTransactionDiv = false;
       this.id = parseInt(params.id);
-      this.jobTaskService.getOneJobData(this.id).subscribe((response: {success: number , data: JobMaster }) => {
+      this.jobTaskService.getOneJobData(this.id).subscribe((response: {success: number , data: JobMaster}) => {
         this.oneJobData = response.data;
         this.jobTaskForm.patchValue({id: this.oneJobData.id});
         this.job_number = this.oneJobData.job_number;

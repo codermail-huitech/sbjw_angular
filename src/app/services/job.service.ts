@@ -10,6 +10,7 @@ import {catchError, tap} from 'rxjs/operators';
 import {OrderResponseData} from './order.service';
 import {JobMaster} from '../models/jobMaster.model';
 import {FinishedJobs} from "../models/finishedJobs";
+import {formatDate} from '@angular/common';
 
 export interface JobResponseData {
   success: number;
@@ -49,9 +50,13 @@ export class JobService {
 
   constructor(private http: HttpClient) {
 
+    const job_date = new Date();
+    const job_date_format = formatDate(job_date , 'dd/MM/yyyy', 'en');
+    console.log(job_date_format);
+
     this.jobMasterForm = new FormGroup({
       id : new FormControl(null),
-      date : new FormControl(null, [Validators.required]),
+      date : new FormControl({value: job_date_format, disabled: true}, [Validators.required]),
       karigarh_id : new FormControl(null, [Validators.required]),
       gross_weight : new FormControl(null, [Validators.required]),
       order_details_id : new FormControl(null, [Validators.required]),
@@ -117,6 +122,7 @@ export class JobService {
 
   saveJob(){
     // tslint:disable-next-line:max-line-length
+    this.jobMasterForm.value.date = formatDate(this.jobMasterForm.value.date , 'yyyy-MM-dd', 'en');
     return this.http.post<JobResponseData>( GlobalVariable.BASE_API_URL + '/jobs', {master: this.jobMasterForm.value, details: this.jobDetailsForm.value})
       .pipe(catchError(this._serverError), tap(((response: {success: number, data: JobMaster}) => {
         if (response.data){

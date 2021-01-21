@@ -43,6 +43,12 @@ export class FinishJobComponent implements OnInit {
           this.billService.getFinishedJobsCustomers();
           // this.stockService.getUpdatedStockRecord();
           this.stockService.getUpdatedStockList();
+          this.jobTaskService.getOneJobData(this.id).subscribe((response) => {
+            console.log(response.data);
+          });
+
+
+
           Swal.fire(
             'Done !',
             'The job has been finished',

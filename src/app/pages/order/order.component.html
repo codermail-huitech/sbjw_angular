@@ -116,7 +116,7 @@
         </form>
 
         <div class="container" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="end" fxLayoutGap="10px" fxLayoutGap.xs="0" >
-          <button mat-button (click)="addOrder()" mat-stroked-button [disabled]="!orderDetailsForm.valid " >Add Order</button>
+          <button mat-button (click)="addOrder()" mat-stroked-button [disabled]="!orderDetailsForm.valid " >Add Item</button>
           <button mat-button (click)="updateOrder()" mat-stroked-button [hidden]="!orderDetailsForm.value.id" [disabled]="!orderDetailsForm.dirty">Update Order</button>
           <button mat-button (click)="clearForm()" mat-stroked-button>clear</button>
         </div>

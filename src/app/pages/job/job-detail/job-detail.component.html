@@ -65,6 +65,12 @@
                 <td colspan="2" class="col-6">Dal: {{tempTotalData[2] ? tempTotalData[2].toFixed(3) : 0}}</td>
                 <td colspan="2" class="col-6">Pan+ : {{tempTotalData[4] ? tempTotalData[4].toFixed(3) : 0}}</td>
               </tr>
+
+              <tr>
+                <td colspan="2" class="col-6">DalR-: {{tempTotalData[3] ? tempTotalData[3].toFixed(3) : 0}}</td>
+                <td colspan="2" class="col-6">PanR- : {{tempTotalData[5] ? tempTotalData[5].toFixed(3) : 0}}</td>
+              </tr>
+
               <tr>
                 <td colspan="2" class="col-6">Bnz : {{tempTotalData[7] ? tempTotalData[7].toFixed(3) : 0}}</td>
                 <td colspan="2" class="col-6">PLoss+ :{{oneJobData.p_loss}}</td>
@@ -119,17 +125,30 @@
   </div>
 
   <div fxLayout="column" fxFlex="60" class="mr-1" id ="jobTask-div" style="background-color: #e8af0a" *ngIf="oneJobData">
+<!--    <div class="m-2">-->
+<!--      <button type="button"  class="btn btn-warning" [hidden]="oneJobData.status_id==100" [routerLink]="['./goldReturn']">Gold Return</button>-->
+<!--      <button type="button"  class="btn btn-primary" [hidden]="oneJobData.status_id==100" [routerLink]="['./dalSubmit']">Dal Submit</button>-->
+<!--      <button type="button" class="btn btn-warning"  [hidden]="oneJobData.status_id==100" [routerLink]="['./bronzeSubmit']">Bronze Submit</button>-->
+<!--      <button type="button" class="btn btn-primary"  [hidden]="oneJobData.status_id==100" [routerLink]="['./panSubmit']">Pan Submit</button>-->
+<!--      <button type="button" class="btn btn-warning"  [hidden]="oneJobData.status_id==100" [routerLink]="['./panReturn']">Pan Return</button>-->
+<!--      <button type="button" class="btn btn-primary"  [hidden]="oneJobData.status_id==100" [routerLink]="['./dalReturn']">Dal Return</button>-->
+<!--      <button type="button" class="btn btn-warning"  [hidden]="oneJobData.status_id==100" [routerLink]="['./goldSubmit']">Gold Submit</button>-->
+<!--      <button type="button" class="btn btn-primary"  [hidden]="oneJobData.status_id==100" [routerLink]="['./nitricReturn']">Nitric Return</button>-->
+<!--      <button type="button" class="btn btn-warning" [routerLink]="['./job_finish']">Finish</button>-->
+<!--      <button type="button" class="btn btn-primary"  [hidden]="oneJobData.status_id==100"   [routerLink]="['./job_transaction']">Details</button>-->
+<!--    </div>-->
+
     <div class="m-2">
-      <button type="button"  class="btn btn-warning" [hidden]="oneJobData.status_id==100" [routerLink]="['./goldSubmit']">Gold Submit</button>
-      <button type="button"  class="btn btn-primary" [hidden]="oneJobData.status_id==100" [routerLink]="['./goldReturn']">Gold Return</button>
-      <button type="button" class="btn btn-warning"  [hidden]="oneJobData.status_id==100" [routerLink]="['./dalSubmit']">Dal Submit</button>
+      <button type="button"  class="btn btn-warning" [hidden]="oneJobData.status_id==100" [routerLink]="['./goldReturn']">Gold Return</button>
+      <button type="button"  class="btn btn-primary" [hidden]="oneJobData.status_id==100" [routerLink]="['./dalSubmit']">Dal Submit</button>
+      <button type="button" class="btn btn-warning"  [hidden]="oneJobData.status_id==100" [routerLink]="['./bronzeSubmit']">Bronze Submit</button>
+      <button type="button" class="btn btn-primary"  [hidden]="oneJobData.status_id==100" [routerLink]="['./panSubmit']">Pan Submit</button>
+      <button type="button" class="btn btn-warning"  [hidden]="oneJobData.status_id==100" [routerLink]="['./panReturn']">Pan Return</button>
       <button type="button" class="btn btn-primary"  [hidden]="oneJobData.status_id==100" [routerLink]="['./dalReturn']">Dal Return</button>
-      <button type="button" class="btn btn-warning"  [hidden]="oneJobData.status_id==100" [routerLink]="['./panSubmit']">Pan Submit</button>
-      <button type="button" class="btn btn-primary"  [hidden]="oneJobData.status_id==100" [routerLink]="['./panReturn']">Pan Return</button>
-      <button type="button" class="btn btn-warning"  [hidden]="oneJobData.status_id==100" [routerLink]="['./nitricReturn']">Nitric Return</button>
-      <button type="button" class="btn btn-primary"  [hidden]="oneJobData.status_id==100" [routerLink]="['./bronzeSubmit']">Bronze Submit</button>
-      <button type="button" class="btn btn-warning" [routerLink]="['./job_transaction']">Details</button>
-      <button type="button" class="btn btn-primary"  [hidden]="oneJobData.status_id==100"   [routerLink]="['./job_finish']">Finish</button>
+      <button type="button" class="btn btn-warning"  [hidden]="oneJobData.status_id==100" [routerLink]="['./goldSubmit']">Gold Submit</button>
+      <button type="button" class="btn btn-primary"  [hidden]="oneJobData.status_id==100" [routerLink]="['./nitricReturn']">Nitric Return</button>
+      <button type="button" class="btn btn-warning" [routerLink]="['./job_finish']">Finish</button>
+      <button type="button" class="btn btn-primary" [routerLink]="['./job_transaction']">Details</button>
     </div>
     <div>
       <router-outlet ></router-outlet>

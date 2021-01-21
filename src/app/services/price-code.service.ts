@@ -27,4 +27,7 @@ export class PriceCodeService {
   getPriceCodeUpdateListener(){
     return this.priceCodeSubject.asObservable();
   }
+  getPriceCodes(){
+    return [...this.priceCodes];
+  }
 }

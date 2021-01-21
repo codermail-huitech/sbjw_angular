@@ -27,4 +27,7 @@ export class ProductCategoryService {
   getProductCategoryUpdateListener(){
     return this.productCategorySubject.asObservable();
   }
+  getProductCategory(){
+    return [...this.productCategories];
+  }
 }

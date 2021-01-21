@@ -12,6 +12,7 @@ import {FinishedJobs} from '../../../models/finishedJobs';
 import toWords from 'number-to-words/src/toWords.js';
 import {StockService} from '../../../services/stock.service';
 import {AgentService} from '../../../services/agent.service';
+import {JobService} from '../../../services/job.service';
 
 @Component({
   selector: 'app-bill-job-master-details',
@@ -36,7 +37,7 @@ export class BillJobMasterDetailsComponent implements OnInit {
   x: FinishedJobs[];
   // public user = JSON.parse(localStorage.getItem('user'));
 
-  constructor(private  route: ActivatedRoute, private billService: BillService , private stockService: StockService , private agentService: AgentService ) {
+  constructor(private  route: ActivatedRoute, private billService: BillService , private stockService: StockService , private agentService: AgentService , private  jobService: JobService) {
   }
 
   printDivStyle = {
@@ -151,6 +152,7 @@ export class BillJobMasterDetailsComponent implements OnInit {
       this.billService.getFinishedJobsCustomers();
       this.billService.getCompletedBillCustomers();
       this.agentService.getLatestDueByAgentListList();
+      this.jobService.getFinishedJobList();
 
         // this.stockService.getUpdatedStockRecord();
       this.showBill = true;

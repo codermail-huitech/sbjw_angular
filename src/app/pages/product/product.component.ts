@@ -33,6 +33,8 @@ export class ProductComponent implements OnInit {
   p = 1;
   // tslint:disable-next-line:max-line-length
   constructor(private productService: ProductService, private priceCodeService: PriceCodeService, private productCategoryService: ProductCategoryService, private  snackBar: MatSnackBar, private confirmationDialogService: ConfirmationDialogService) {
+    this.priceCodes = this.priceCodeService.getPriceCodes();
+    this.productCategories = this.productCategoryService.getProductCategory();
   }
 
   ngOnInit(): void {

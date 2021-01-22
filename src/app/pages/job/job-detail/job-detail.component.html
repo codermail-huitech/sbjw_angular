@@ -138,7 +138,7 @@
 <!--      <button type="button" class="btn btn-primary"  [hidden]="oneJobData.status_id==100"   [routerLink]="['./job_transaction']">Details</button>-->
 <!--    </div>-->
 
-    <div class="m-2">
+    <div class="m-2" *ngIf="true">
       <button type="button"  class="btn btn-warning" [hidden]="oneJobData.status_id==100" [routerLink]="['./goldReturn']">Gold Return</button>
       <button type="button"  class="btn btn-primary" [hidden]="oneJobData.status_id==100" [routerLink]="['./dalSubmit']">Dal Submit</button>
       <button type="button" class="btn btn-warning"  [hidden]="oneJobData.status_id==100" [routerLink]="['./bronzeSubmit']">Bronze Submit</button>
@@ -148,8 +148,8 @@
       <button type="button" class="btn btn-warning"  [hidden]="oneJobData.status_id==100" [routerLink]="['./goldSubmit']">Gold Submit</button>
       <button type="button" class="btn btn-primary"  [hidden]="oneJobData.status_id==100" [routerLink]="['./nitricReturn']">Nitric Return</button>
       <button type="button" class="btn btn-warning" [routerLink]="['./job_finish']">Finish</button>
-      <button type="button" class="btn btn-primary" [routerLink]="['./job_transaction']">Details</button>
     </div>
+    <button type="button" class="btn btn-primary" [routerLink]="['./job_transaction']">Details</button>
     <div>
       <router-outlet ></router-outlet>
     </div>

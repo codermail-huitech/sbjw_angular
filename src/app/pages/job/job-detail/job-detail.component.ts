@@ -54,6 +54,7 @@ export class JobDetailComponent implements OnInit {
 
     this.route.params.subscribe(params => {
       this.showTransactionDiv = false;
+      // tslint:disable-next-line:radix
       this.id = parseInt(params.id);
       this.jobTaskService.getOneJobData(this.id).subscribe((response: {success: number , data: JobMaster}) => {
         this.oneJobData = response.data;
@@ -63,6 +64,7 @@ export class JobDetailComponent implements OnInit {
         this.karigarhName = this.karigarhData[index1].person_name;
 
         this.userData = JSON.parse(localStorage.getItem('user'));
+        // tslint:disable-next-line:no-shadowed-variable
         this.orderService.getMaterialUpdateListener().subscribe((response) => {
           this.materialList = response;
           const index = this.materialList.findIndex(x => x.id === this.oneJobData.material_id);
@@ -128,7 +130,7 @@ export class JobDetailComponent implements OnInit {
       //   console.log(this.karigarhData);
       // }
       // console.log(this.karigarhData);
-       this.jobTaskService.getTotalData();
+      this.jobTaskService.getTotalData();
       this.jobTaskService.getTotal().subscribe((response) => {
         this.totalData = response.data;
         for (let i = 1; i <= 8; i ++){

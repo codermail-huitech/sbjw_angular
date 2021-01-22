@@ -33,6 +33,7 @@ export class JobDetailComponent implements OnInit {
   tempTotalData = [0, 0 , 0 , 0 , 0 , 0, 0, 0];
 
 
+  // tslint:disable-next-line:max-line-length
   constructor(private route: ActivatedRoute , private  jobTaskService: JobTaskService , private  jobService: JobService , private  orderService: OrderService) {
     this.karigarhData = this.jobService.getAllKarigarhs();
   }

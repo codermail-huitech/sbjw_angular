@@ -149,10 +149,15 @@
       <button type="button" class="btn btn-primary"  [hidden]="oneJobData.status_id==100" [routerLink]="['./nitricReturn']">Nitric Return</button>
       <button type="button" class="btn btn-warning" [routerLink]="['./job_finish']">Finish</button>
     </div>
-    <button type="button" class="btn btn-primary" [routerLink]="['./job_transaction']">Details</button>
+<!--    this is used to change the detail button look-->
+    <div class="example-button-row">
+      <a mat-fab [routerLink]="['./job_transaction']">Details</a>
+    </div>
+<!--    <button type="button" class="btn btn-primary" [routerLink]="['./job_transaction']">Details</button>-->
     <div>
       <router-outlet ></router-outlet>
     </div>
+
 <!--    <div>-->
 <!--      <pre>{{totalData | json}}</pre>-->
 <!--    </div>-->

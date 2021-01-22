@@ -30,11 +30,18 @@ export class JobDetailComponent implements OnInit {
   totalData: JobDetail[];
   showTransactionDiv = false;
   jobTransactionData: JobDetail[];
+  btnControl: boolean = null;
   tempTotalData = [0, 0 , 0 , 0 , 0 , 0, 0, 0];
 
 
   // tslint:disable-next-line:max-line-length
   constructor(private route: ActivatedRoute , private  jobTaskService: JobTaskService , private  jobService: JobService , private  orderService: OrderService) {
+    this.jobTaskService.testObserble().subscribe((response) => {
+      this.btnControl = response;
+      console.log('test');
+      console.log(this.btnControl);
+    });
+    // console.log(this.jobTaskService.btnControl);
     this.karigarhData = this.jobService.getAllKarigarhs();
   }
 
@@ -72,6 +79,14 @@ export class JobDetailComponent implements OnInit {
           const materialData = this.materialList[index];
           this.jobTaskForm.patchValue({material_name: materialData.material_name , size: this.oneJobData.size});
         });
+      });
+
+      this.jobTaskService.testObserble().subscribe((response) => {
+        this.btnControl = response;
+        //this can also be done
+        // if(this.btnControl === true){
+        //   this.oneJobData.status_id = 100;
+        // }
       });
 
       this.jobTaskForm.patchValue({id: params.id});
@@ -144,6 +159,7 @@ export class JobDetailComponent implements OnInit {
             this.tempTotalData[i - 1] = 0;
           }
         }
+        console.log(this.tempTotalData);
       });
       this.jobTaskService.getTotalDataUpdateListener().subscribe((response) => {
         this.totalData = response;

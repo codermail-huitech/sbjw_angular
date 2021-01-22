@@ -38,6 +38,7 @@ export class FinishJobComponent implements OnInit {
       this.jobService.finishJob().subscribe((response) => {
 
         if (response.data){
+          this.jobTaskService.getTotal().subscribe();
           this.jobService.getSavedJobsUpdateListener().subscribe();
           this.jobService.getFinishedJobsUpdateListener().subscribe();
           this.billService.getFinishedJobsCustomers();
@@ -46,14 +47,12 @@ export class FinishJobComponent implements OnInit {
           this.jobTaskService.getOneJobData(this.id).subscribe((response) => {
             console.log(response.data);
           });
-
-
-
           Swal.fire(
             'Done !',
             'The job has been finished',
             'success'
           );
+          this.jobTaskService.resolve(true);
           this.isSubmitEnabled  = false;
           this.jobMasterForm.controls.gross_weight.reset();
         }

@@ -6,7 +6,7 @@ import {Product} from '../../models/product.model';
 import {OrderService} from '../../services/order.service';
 import {OrderMaster} from '../../models/orderMaster.model';
 import {OrderDetail} from '../../models/orderDetail.model';
-import {DatePipe} from '@angular/common';
+import {DatePipe, formatDate} from '@angular/common';
 import {Observable} from 'rxjs';
 import {SncakBarComponent} from '../../common/sncak-bar/sncak-bar.component';
 import {ConfirmationDialogService} from '../../common/confirmation-dialog/confirmation-dialog.service';
@@ -34,6 +34,9 @@ export class JobComponent implements OnInit {
   pipe = new DatePipe('en-US');
   selectedJobIndex = -1;
   selectedJobItem: OrderDetail;
+
+  new_job_date = new Date();
+  job_date_format = formatDate(this.new_job_date , 'dd/MM/yyyy', 'en');
 
   public searchTerm: string;
   filter = new FormControl('');
@@ -93,7 +96,11 @@ export class JobComponent implements OnInit {
       order_details_id: details.id,
       material_name: this.materialList[index].material_name
     });
-    this.jobDetailsForm.patchValue({material_id: details.material_id, id: details.id});
+    const user = JSON.parse(localStorage.getItem('user'));
+    this.jobDetailsForm.value.employee_id = user.id;
+    this.jobDetailsForm.patchValue({material_id: details.material_id, id: details.id, employee_id: user.id});
+    this.jobMasterForm.patchValue({date: this.job_date_format});
+    // this.jobMasterForm.value.date = this.pipe.transform(this.jobMasterForm.value.date, 'yyyy-MM-dd');
   }
 
   onSubmit() {
@@ -101,8 +108,8 @@ export class JobComponent implements OnInit {
       .then((confirmed) => {
         if (confirmed) {
           this.jobMasterForm.value.date = this.pipe.transform(this.jobMasterForm.value.date, 'yyyy-MM-dd');
-          const user = JSON.parse(localStorage.getItem('user'));
-          this.jobDetailsForm.value.employee_id = user.id;
+          // const user = JSON.parse(localStorage.getItem('user'));
+          // this.jobDetailsForm.value.employee_id = user.id;
           let saveObserable = new Observable<any>();
           saveObserable = this.jobService.saveJob();
           saveObserable.subscribe((response) => {
@@ -117,6 +124,7 @@ export class JobComponent implements OnInit {
                 'Order has been sent to job',
                 'success'
               );
+              this.selectedJobIndex = -1;
             }
           }, (error) => {
             this._snackBar.openFromComponent(SncakBarComponent, {
@@ -140,6 +148,7 @@ export class JobComponent implements OnInit {
   onCancel(){
     this.jobMasterForm.reset();
     this.jobDetailsForm.reset();
+    this.selectedJobIndex = -1;
   }
 
 

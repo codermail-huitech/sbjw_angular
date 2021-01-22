@@ -12,6 +12,7 @@ export class JobDetail{
   task_name ?: string;
   date?: string;
   time?: string;
+  gross_weight?: number;
 
   constructor() {
   }

@@ -32,6 +32,9 @@ export class JobTaskService implements OnDestroy{
   totalData: JobDetail[];
   jobTransactionData: JobDetail[];
 
+  // btnControl: boolean;
+  btnControl = false;
+
   private savedJobsSub = new Subject<JobMaster[]>();
   private materialDataSub = new Subject<Material[]>();
   private getJobTaskDataSub = new Subject<JobDetail[]>();
@@ -40,6 +43,8 @@ export class JobTaskService implements OnDestroy{
   private jobTransactionSub = new Subject<JobDetail[]>();
   private finishedJobsSub = new Subject<JobMaster[]>();
   private oneJobDataSub = new Subject<JobMaster[]>();
+  private btnControlSub: Subject<boolean> = new Subject<boolean>();
+
 
   getSavedJobsUpdateListener(){
     return this.savedJobsSub.asObservable();
@@ -66,8 +71,9 @@ export class JobTaskService implements OnDestroy{
   }
 
 
-
   constructor(private http: HttpClient) {
+    this.btnControl = false;
+    this.resolve(false);
 
     this.jobTaskForm = new FormGroup({
       id : new FormControl(null),
@@ -122,6 +128,27 @@ export class JobTaskService implements OnDestroy{
         this.materialData = data;
         this.materialDataSub.next([...this.materialData]);
       });
+  }
+
+  testObserble(){
+    return this.btnControlSub.asObservable();
+  }
+
+  // testData(data) {
+  //   if (data === true){
+  //     this.btnControl = true;
+  //   }
+  //   this.resolve();
+  // }
+
+  resolve(data){
+    this.btnControl = data;
+    if (this.btnControl === true){
+       this.btnControlSub.next(this.btnControl);
+    }else{
+      this.btnControl = false;
+      this.btnControlSub.next(this.btnControl);
+    }
   }
 
   getAllJobList(){

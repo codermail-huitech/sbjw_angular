@@ -165,6 +165,13 @@ export class OrderComponent implements OnInit {
     });
   }
 
+  material_quantity_decimal(){
+    const x = String(this.orderDetailsForm.value.approx_gold).split('.');
+    if (!x[1]){
+      this.orderDetailsForm.patchValue({approx_gold : (this.orderDetailsForm.value.approx_gold / 1000)});
+    }
+  }
+
   addOrder(){
     this.showProduct = true;
     if (this.orderMasterForm.value.id){

@@ -87,6 +87,13 @@ export class JobComponent implements OnInit {
     this.showProduct = !this.showProduct;
   }
 
+  material_quantity_decimal(){
+    const x = String(this.jobDetailsForm.value.approx_gold).split('.');
+    if (!x[1]){
+      this.jobDetailsForm.patchValue({material_quantity : (this.jobDetailsForm.value.material_quantity / 1000)});
+    }
+  }
+
   placeJob(details) {
     this.selectedJobIndex = this.orderDetails.findIndex(x => x.id === details.id);
     this.selectedJobItem = details;

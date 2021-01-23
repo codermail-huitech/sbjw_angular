@@ -89,6 +89,14 @@ export class BronzeSubmitComponent implements OnInit {
       });
     }
   }
+
+  // material_quantity_decimal(){
+  //   const x = this.jobTaskForm.value.return_quantity.split('.');
+  //   if (!x[1]){
+  //     this.jobTaskForm.patchValue({return_quantity : (this.jobTaskForm.value.return_quantity / 1000)});
+  //   }
+  // }
+
   getTotal(){
     this.total = 0;
     this.showJobTaskData = true;

@@ -24,6 +24,14 @@ export class FinishJobComponent implements OnInit {
     this.isSubmitEnabled = true;
     this.jobMasterForm = this.jobService.jobMasterForm;
   }
+
+  material_quantity_decimal(){
+    const x = this.jobMasterForm.value.gross_weight.split('.');
+    if (!x[1]){
+      this.jobMasterForm.patchValue({gross_weight : (this.jobMasterForm.value.gross_weight / 1000)});
+    }
+  }
+
   onSubmit(){
     if (this.jobMasterForm.value.gross_weight == null){
       this._snackBar.openFromComponent(SncakBarComponent, {
@@ -44,9 +52,10 @@ export class FinishJobComponent implements OnInit {
           this.billService.getFinishedJobsCustomers();
           // this.stockService.getUpdatedStockRecord();
           this.stockService.getUpdatedStockList();
-          this.jobTaskService.getOneJobData(this.id).subscribe((response) => {
-            console.log(response.data);
-          });
+          // this.jobTaskService.getOneJobData(this.id).subscribe((response) => {
+          //   console.log(response.data);
+          // });
+          his.jobTaskService.getOneJobData(this.id).subscribe();
           Swal.fire(
             'Done !',
             'The job has been finished',

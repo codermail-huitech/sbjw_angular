@@ -88,7 +88,7 @@ export class JobComponent implements OnInit {
   }
 
   material_quantity_decimal(){
-    const x = String(this.jobDetailsForm.value.approx_gold).split('.');
+    const x = String(this.jobDetailsForm.value.material_quantity).split('.');
     if (!x[1]){
       this.jobDetailsForm.patchValue({material_quantity : (this.jobDetailsForm.value.material_quantity / 1000)});
     }

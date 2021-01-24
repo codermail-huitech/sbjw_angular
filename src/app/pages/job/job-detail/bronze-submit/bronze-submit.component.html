@@ -14,7 +14,7 @@
             </mat-form-field>
 
             <mat-form-field class="col-2">
-              <input  style ="text-align: right;" matInput placeholder="Quantity" formControlName="return_quantity">
+              <input  style ="text-align: right;" matInput placeholder="Quantity" (change)="material_quantity_decimal()" formControlName="return_quantity">
             </mat-form-field>
           </div>
         </div>

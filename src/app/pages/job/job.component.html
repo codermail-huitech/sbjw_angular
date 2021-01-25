@@ -140,9 +140,9 @@
                       </tr>
                       </thead>
                       <tbody>
-                      <tr [ngStyle]="getBackgroundColor(indexOfelement)" *ngFor="let details of orderDetails ; let indexOfelement = index;">
+                      <tr [ngStyle]="getBackgroundColor(indexOfelement)" *ngFor="let details of orderDetails ; let indexOfelement = index;" [ngClass]="{'red': details.status_id!=40}">
                         <td>{{indexOfelement+1}}</td>
-                        <td >{{details.model_number}}</td>
+                        <td>{{details.model_number}}</td>
                         <td >{{details.price_code}}</td>
                         <td>{{details.price}}</td>
                         <td>{{(details.p_loss).toFixed(3)}}</td>

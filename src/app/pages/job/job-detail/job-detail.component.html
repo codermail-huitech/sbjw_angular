@@ -77,11 +77,11 @@
               </tr>
               <tr>
                 <td colspan="2" class="col-6">Bati No :</td>
-                <td colspan="2" class="col-6">FG Wt. = {{totalData[0].gross_weight}}</td>
+                <td colspan="2" class="col-6">FG Wt. :</td>
               </tr>
               <tr>
                 <td colspan="2" class="col-6"></td>
-                <td colspan="2" class="col-6">B. Wt. :</td>
+                <td colspan="2" class="col-6">B. Wt. : {{totalData[0].gross_weight}}</td>
               </tr>
               </tbody>
             </table>
@@ -147,7 +147,7 @@
       <button type="button" class="btn btn-primary" [disabled] = this.btnControl [hidden]="oneJobData.status_id==100" [routerLink]="['./dalReturn']">Dal Return</button>
       <button type="button" class="btn btn-warning" [disabled] = this.btnControl [hidden]="oneJobData.status_id==100" [routerLink]="['./goldSubmit']">Gold Submit</button>
       <button type="button" class="btn btn-primary" [disabled] = this.btnControl [hidden]="oneJobData.status_id==100" [routerLink]="['./nitricReturn']">Nitric Return</button>
-      <button type="button" class="btn btn-warning" [routerLink]="['./job_finish']">Finish</button>
+      <button type="button" class="btn btn-warning" [disabled] = this.btnControl [hidden]="oneJobData.status_id==100" [routerLink]="['./job_finish']">Finish</button>
     </div>
 <!--    this is used to change the detail button look-->
     <div class="example-button-row">

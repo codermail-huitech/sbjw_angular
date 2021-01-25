@@ -6,6 +6,7 @@
         <th style="text-align: center">SL No.</th>
         <th style="text-align: center">Job Number</th>
         <th style="text-align: center">Karigarh Name</th>
+        <th style="text-align: center">Model Number</th>
         <th style="text-align: center">Status</th>
         <th style="text-align: center">Create Bill</th>
       </tr>
@@ -15,6 +16,7 @@
         <td style="text-align: center">{{indexOfelement+1}}</td>
         <td  style="text-align: center">{{data.job_number}}</td>
         <td style="text-align: center">{{data.karigarh_name | uppercase}}</td>
+        <td style="text-align: center">{{data.model_number}}</td>
         <td style="text-align: center">{{data.status}}</td>
         <td [hidden]="data.status_id != 100" style="text-align: center">
           <input type="checkbox" name="nameOfChoice" (click)="selectionForBill(data)" [disabled]="data.status_id != 100" >

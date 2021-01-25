@@ -90,8 +90,8 @@
           <td></td>
           <td style="padding: 2px;"></td>
           <td style="padding: 2px;"></td>
-          <td style="padding: 2px;text-align: right">({{discountPercentage}}%)</td>
-          <td style="padding: 2px; text-align: right"> - {{discount | currency:"&#8377;"}}</td>
+          <td *ngIf=discount style="padding: 2px;text-align: right" >({{discountPercentage}}%)</td>
+          <td *ngIf=discount style="padding: 2px; text-align: right" > - {{discount | currency:"&#8377;"}}</td>
         </tr>
 <!--        <hr>-->
         <tr style=" border-top : 1px solid black; border-collapse: collapse">

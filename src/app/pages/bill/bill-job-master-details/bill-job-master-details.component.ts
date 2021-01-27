@@ -153,6 +153,7 @@ export class BillJobMasterDetailsComponent implements OnInit {
       this.billService.getCompletedBillCustomers();
       this.agentService.getLatestDueByAgentListList();
       this.jobService.getFinishedJobList();
+      this.jobService.getUpdatedFinishedJob();
 
         // this.stockService.getUpdatedStockRecord();
       this.showBill = true;

@@ -114,7 +114,8 @@ export class JobComponent implements OnInit {
     this.confirmationDialogService.confirm('Please confirm..', 'Do you really want to send order to job ?')
       .then((confirmed) => {
         if (confirmed) {
-          this.jobMasterForm.value.date = this.pipe.transform(this.jobMasterForm.value.date, 'yyyy-MM-dd');
+          // this.jobMasterForm.value.date = this.pipe.transform(this.jobMasterForm.value.date, 'yyyy-MM-dd');
+          this.jobMasterForm.value.date = this.pipe.transform(this.new_job_date, 'yyyy-MM-dd');
           // const user = JSON.parse(localStorage.getItem('user'));
           // this.jobDetailsForm.value.employee_id = user.id;
           let saveObserable = new Observable<any>();

@@ -88,7 +88,7 @@ export class BillJobMasterDetailsComponent implements OnInit {
       this.billService.getTotalGoldQuantity(data.id).subscribe((response: {success: number, data: any}) => {
         // data.total = parseFloat(response.data.data.toFixed(3));
         // const tempTotal = parseFloat(response.data.data.toFixed(3)) + this.user.mv;
-        data.total = parseFloat(response.data.data.toFixed(3)) + (this.mv * Number(data.quantity));
+        data.total = parseFloat(response.data.data.toFixed(3));
         data.pure_gold = parseFloat(((data.total * 92) / 100).toFixed(3));
         data.cost = data.price * data.quantity;
         this.total92Gold = this.total92Gold + Number(data.total);
@@ -96,6 +96,7 @@ export class BillJobMasterDetailsComponent implements OnInit {
         this.totalQuantity = this.totalQuantity + Number(data.quantity);
         this.totalCost = this.totalCost + Number(data.cost);
         this.billDetailsData.push(data);
+        console.log(this.billDetailsData);
         // console.log(this.billDetailsData);
       });
 

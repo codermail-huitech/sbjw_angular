@@ -52,8 +52,6 @@ export class JobService {
 
     const job_date = new Date();
     const job_date_format = formatDate(job_date , 'dd/MM/yyyy', 'en');
-    console.log(job_date_format);
-
     this.jobMasterForm = new FormGroup({
       id : new FormControl(null),
       date : new FormControl({value: job_date_format, disabled: true}, [Validators.required]),

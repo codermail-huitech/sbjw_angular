@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-owner',
@@ -12,8 +13,13 @@ export class OwnerComponent implements OnInit {
       { value: 'lmn', checked: true }
     ];
 
-
-  constructor() {
+  name = 'Angular 5';
+  fileUrl;
+  constructor(private sanitizer: DomSanitizer) {
+    // following code will initiate a text file
+    const data = 'some text';
+    const blob = new Blob([data], { type: 'application/octet-stream' });
+    this.fileUrl = this.sanitizer.bypassSecurityTrustResourceUrl(window.URL.createObjectURL(blob));
   }
 
   ngOnInit(): void {

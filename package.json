@@ -29,6 +29,7 @@
     "@fortawesome/free-regular-svg-icons": "^5.13.0",
     "@fortawesome/free-solid-svg-icons": "^5.13.0",
     "@ng-bootstrap/ng-bootstrap": "^6.0.2",
+    "@ng-select/ng-select": "^6.0.0",
     "@ngx-pwa/local-storage": "^9.0.3",
     "alasql": "^0.6.0",
     "alasql-angular": "0.0.19",

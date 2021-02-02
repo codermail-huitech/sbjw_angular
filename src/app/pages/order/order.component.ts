@@ -81,7 +81,6 @@ export class OrderComponent implements OnInit {
     this.materialList = this.orderService.getMaterials();
     this.page = 1;
     this.pageSize = 15;
-    this.showDeveloperDiv = false;
   }
 
   printDivStyle = {

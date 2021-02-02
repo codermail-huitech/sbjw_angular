@@ -71,6 +71,7 @@ import { CustomerUnderAgentComponent } from './pages/due-by-agent/customer-under
 import { TransactionComponent } from './pages/transaction/transaction.component';
 import { EmployeeStockComponent } from './pages/employee-stock/employee-stock.component';
 import { FooterComponent } from './pages/footer/footer.component';
+import {NgSelectModule} from "@ng-select/ng-select";
 
 
 @NgModule({
@@ -139,7 +140,8 @@ import { FooterComponent } from './pages/footer/footer.component';
     HttpClientModule,
     NgxPrintModule,
     Ng2SearchPipeModule,
-    NgxPaginationModule
+    NgxPaginationModule,
+    NgSelectModule
   ],
   providers: [{provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorInterceptor, multi: true},
               {provide: DateAdapter, useClass: DateFormat} ],

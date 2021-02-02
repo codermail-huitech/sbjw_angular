@@ -12,15 +12,21 @@
                                    <input matInput placeholder="Material Name" formControlName="material_name">
                                  </mat-form-field>
                                </div>
+<!--                               <div class="container" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="start">-->
+<!--                                 <mat-form-field class="col-6">-->
+<!--                                   <mat-label>Karigarh</mat-label>-->
+<!--                                   <mat-select  formControlName="karigarh_id">-->
+<!--                                     <mat-option *ngFor="let karigarh of karigarhData" [value]="karigarh.id">-->
+<!--                                       {{karigarh.person_name}}-->
+<!--                                     </mat-option>-->
+<!--                                   </mat-select>-->
+<!--                                 </mat-form-field>-->
+<!--                               </div>-->
                                <div class="container" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="start">
-                                 <mat-form-field class="col-6">
-                                   <mat-label>Karigarh</mat-label>
-                                   <mat-select  formControlName="karigarh_id">
-                                     <mat-option *ngFor="let karigarh of karigarhData" [value]="karigarh.id">
-                                       {{karigarh.person_name}}
-                                     </mat-option>
-                                   </mat-select>
-                                 </mat-form-field>
+                                 <div class="container material" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="start" fxLayoutGap="10px" fxLayoutGap.xs="0">
+                                   <ng-select [items]="karigarhData" fxFlex="50"  bindLabel="person_name" class="custom" bindValue="id" formControlName="karigarh_id" placeholder="Karigarh">
+                                   </ng-select>
+                                 </div>
                                </div>
                                 <div class="container" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="start" fxLayoutGap="10px" fxLayoutGap.xs="0">
 <!--                                  <mat-form-field class="col-6">-->

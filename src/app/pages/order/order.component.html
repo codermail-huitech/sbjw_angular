@@ -4,16 +4,16 @@
       <div class="form-container-master">
       <!--Order Master form-->
         <form [formGroup] = orderMasterForm >
-          <div class="container" fxLayout="column" fxLayout.xs="column" fxLayoutAlign="start" fxLayoutGap="10px" fxLayoutGap.xs="0">
-              <mat-form-field>
-                <mat-label>Customer</mat-label>
-                <mat-select  formControlName="customer_id">
-                  <mat-option *ngFor="let customer of customerList" [value]="customer.id">
-                    {{customer.person_name}}
-                  </mat-option>
-                </mat-select>
-              </mat-form-field>
-          </div>
+<!--          <div class="container" fxLayout="column" fxLayout.xs="column" fxLayoutAlign="start" fxLayoutGap="10px" fxLayoutGap.xs="0">-->
+<!--              <mat-form-field>-->
+<!--                <mat-label>Customer</mat-label>-->
+<!--                <mat-select  formControlName="customer_id">-->
+<!--                  <mat-option *ngFor="let customer of customerList" [value]="customer.id">-->
+<!--                    {{customer.person_name}}-->
+<!--                  </mat-option>-->
+<!--                </mat-select>-->
+<!--              </mat-form-field>-->
+<!--          </div>-->
 
 
           <div class="container material" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="start" fxLayoutGap="10px" fxLayoutGap.xs="0">
@@ -21,16 +21,22 @@
             </ng-select>
           </div>
 
-          <div class="container" fxLayout="column" fxLayout.xs="column" fxLayoutAlign="start" fxLayoutGap="10px" fxLayoutGap.xs="0">
-              <mat-form-field>
-                <mat-label>Agent</mat-label>
-                <mat-select  formControlName="agent_id">
-                  <mat-option *ngFor="let agent of agentList" [value]="agent.id">
-                    {{agent.person_name}}
-                  </mat-option>
-                </mat-select>
-              </mat-form-field>
+<!--          <div class="container" fxLayout="column" fxLayout.xs="column" fxLayoutAlign="start" fxLayoutGap="10px" fxLayoutGap.xs="0">-->
+<!--              <mat-form-field>-->
+<!--                <mat-label>Agent</mat-label>-->
+<!--                <mat-select  formControlName="agent_id">-->
+<!--                  <mat-option *ngFor="let agent of agentList" [value]="agent.id">-->
+<!--                    {{agent.person_name}}-->
+<!--                  </mat-option>-->
+<!--                </mat-select>-->
+<!--              </mat-form-field>-->
+<!--          </div>-->
+
+          <div class="container material" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="start" fxLayoutGap="10px" fxLayoutGap.xs="0">
+            <ng-select [items]="agentList" fxFlex="80"  bindLabel="person_name" class="custom" bindValue="id" formControlName="agent_id" placeholder="Select Agent">
+            </ng-select>
           </div>
+
           <!--Both dates-->
           <div class="container" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="start" fxLayoutGap="10px" fxLayoutGap.xs="0">
               <!--              Order date-->

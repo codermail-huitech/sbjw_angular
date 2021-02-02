@@ -6,28 +6,40 @@
       <div class="form-container">
         <form [formGroup] = cashPaymentForm>
           <h1 style="text-align: center">Cash Payment</h1>
+<!--          <div class="container" fxLayout="column" fxLayout.xs="column" fxLayoutAlign="start" fxLayoutGap="10px" fxLayoutGap.xs="0">-->
+<!--            <mat-form-field class="col-6">-->
+<!--              <mat-label>Customer</mat-label>-->
+<!--              <mat-select  formControlName="person_id">-->
+<!--                <mat-option *ngFor="let customer of customerList" [value]="customer.id">-->
+<!--                  {{customer.person_name}}-->
+<!--                </mat-option>-->
+<!--              </mat-select>-->
+<!--            </mat-form-field>-->
+<!--          </div>-->
           <div class="container" fxLayout="column" fxLayout.xs="column" fxLayoutAlign="start" fxLayoutGap="10px" fxLayoutGap.xs="0">
-            <mat-form-field class="col-6">
-              <mat-label>Customer</mat-label>
-              <mat-select  formControlName="person_id">
-                <mat-option *ngFor="let customer of customerList" [value]="customer.id">
-                  {{customer.person_name}}
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
+            <div class="container material" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="start" fxLayoutGap="10px" fxLayoutGap.xs="0">
+              <ng-select [items]="customerList" fxFlex="50"  bindLabel="person_name" class="custom" bindValue="id" formControlName="person_id" placeholder="Select Customer">
+              </ng-select>
+            </div>
           </div>
+<!--          <div class="container" fxLayout="column" fxLayout.xs="column" fxLayoutAlign="start" fxLayoutGap="10px" fxLayoutGap.xs="0">-->
+<!--            <mat-form-field class="col-6">-->
+<!--              <mat-label>Agent</mat-label>-->
+<!--              <mat-select  formControlName="agent_id">-->
+<!--                <mat-option *ngFor="let agent of agentList" [value]="agent.id">-->
+<!--                  {{agent.person_name}}-->
+<!--                </mat-option>-->
+<!--              </mat-select>-->
+<!--            </mat-form-field>-->
+<!--          </div>-->
+            <div class="container" fxLayout="column" fxLayout.xs="column" fxLayoutAlign="start" fxLayoutGap="10px" fxLayoutGap.xs="0">
+              <div class="container material" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="start" fxLayoutGap="10px" fxLayoutGap.xs="0">
+                <ng-select [items]="agentList" fxFlex="50"  bindLabel="person_name" class="custom" bindValue="id" formControlName="agent_id" placeholder="Select Agent">
+                </ng-select>
+              </div>
+            </div>
           <div class="container" fxLayout="column" fxLayout.xs="column" fxLayoutAlign="start" fxLayoutGap="10px" fxLayoutGap.xs="0">
-            <mat-form-field class="col-6">
-              <mat-label>Agent</mat-label>
-              <mat-select  formControlName="agent_id">
-                <mat-option *ngFor="let agent of agentList" [value]="agent.id">
-                  {{agent.person_name}}
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
-          </div>
-          <div class="container" fxLayout="column" fxLayout.xs="column" fxLayoutAlign="start" fxLayoutGap="10px" fxLayoutGap.xs="0">
-            <mat-radio-group formControlName="payment_mode" style="margin-top: 10px; margin-left: 10px; margin-bottom: 10px" aria-label="Select an option">
+            <mat-radio-group formControlName="payment_mode" style="margin-top: 10px; margin-left: 13px; margin-bottom: 10px" aria-label="Select an option">
               <mat-radio-button value="1">Cash</mat-radio-button>
               <mat-radio-button value="2">Cheque</mat-radio-button>
             </mat-radio-group>

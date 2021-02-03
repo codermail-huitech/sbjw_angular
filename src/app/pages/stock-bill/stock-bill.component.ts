@@ -320,6 +320,10 @@ export class StockBillComponent implements OnInit {
 
   }
 
+  test(data){
+    console.log(data);
+  }
+
 
   removeFromStockBillEntry(item){
     // console.log(this.billDetailsData);

@@ -184,7 +184,7 @@ export class StockComponent implements OnInit {
       title: 'Please Wait !',
       html: 'data saving',// add html attribute if you want or remove
       allowOutsideClick: false,
-      timer: 3000,
+      // timer: 3000,
       onBeforeOpen: () => {
         Swal.showLoading();
       },
@@ -197,6 +197,7 @@ export class StockComponent implements OnInit {
             'Submitted in Stock',
             'success'
           );
+          Swal.hideLoading();
           this.jobService.getUpdatedFinishedJob();
           this.stockService.getUpdatedStockList();
           this.stockForm.reset();

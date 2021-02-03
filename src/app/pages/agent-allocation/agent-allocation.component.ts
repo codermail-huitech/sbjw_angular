@@ -15,6 +15,7 @@ import {delay} from 'rxjs/operators';
 export class AgentAllocationComponent implements OnInit {
 
   public searchTerm: string;
+  public selected = [];
   stockList: Stock[];
   billDetailsData: Stock[] = [];
   agentData: Agent[];
@@ -113,6 +114,10 @@ export class AgentAllocationComponent implements OnInit {
   setAgent(data){
     this.singleAgent = data;
     // this.singleAgent = data;
+  }
+
+  testSetAgent(data){
+    console.log(data);
   }
 
   deallocateAgent(item){

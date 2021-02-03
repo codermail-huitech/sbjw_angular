@@ -67,14 +67,20 @@
         <h2>Stocks Under Agent </h2>
         <div class="" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="start" fxLayoutGap="0px" fxLayoutGap.xs="0">
 
-            <mat-form-field  class="col-10"*ngIf="agentData">
-              <mat-label>Select Agent</mat-label>
-              <mat-select>
-                <mat-option *ngFor="let agent of agentData" [value]="agent.id" (blur)="setAgent(agent)">
-                  {{agent.person_name}}
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
+<!--            <mat-form-field  class="col-10"*ngIf="agentData">-->
+<!--              <mat-label>Select Agent</mat-label>-->
+<!--              <mat-select>-->
+<!--                <mat-option *ngFor="let agent of agentData" [value]="agent.id" (blur)="setAgent(agent)">-->
+<!--                  {{agent.person_name}}-->
+<!--                </mat-option>-->
+<!--              </mat-select>-->
+<!--            </mat-form-field>-->
+
+          <div class="container material" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="start" fxLayoutGap="10px" fxLayoutGap.xs="0">
+            <ng-select [items]="agentData" fxFlex="100"  bindLabel="person_name" [(ngModel)]="selected" (change)="setAgent(selected)" placeholder="Select Agent">
+            </ng-select>
+          </div>
+
             <button class="col-3" mat-icon-button color="primary" aria-label="" (click)="searchStocks()" [disabled]="singleAgent === undefined" >
               <mat-icon>search</mat-icon>
             </button>

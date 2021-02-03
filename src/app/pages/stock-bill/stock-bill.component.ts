@@ -385,11 +385,7 @@ export class StockBillComponent implements OnInit {
     });
     // this.billService.testBillSave(this.billDetailsData).subscribe();
   }
-  ViewBill(){
-    // console.log(this.billMasterData);
-    this.billView = false;
-    // console.log(this.billDetailsData);
-  }
+
   backBtn(){
     this.billView = true;
 
@@ -408,23 +404,25 @@ export class StockBillComponent implements OnInit {
     }
 
   }
-  customerSelected(data){
-    // let date = "2020-12-20";
-    // data.bill_date = "2020-12-20";
-    // console.log(this.selectedCustomerData.bill_date);
-
-
-    data.bill_date = this.selectedCustomerData.bill_date;
-    this.selectedCustomerData = data;
-    this.stockBillContainer = {
-      stockBillDetailsData: this.billDetailsData,
-      stockBillCustomer: this.selectedCustomerData,
-    };
-    this.storage.set('stockBillContainer', this.stockBillContainer).subscribe(() => {
-    });
-
-    // console.log(this.stockBillContainer);
-  }
+  // customerSelected(data){
+  //
+  //   console.log('test');
+  //   console.log(data);
+  //   data.bill_date = this.selectedCustomerData.bill_date;
+  //   this.selectedCustomerData = data;
+  //   this.stockBillContainer = {
+  //     stockBillDetailsData: this.billDetailsData,
+  //     stockBillCustomer: this.selectedCustomerData,
+  //   };
+  //   this.storage.set('stockBillContainer', this.stockBillContainer).subscribe(() => {
+  //   });
+  //   this.storage.get('stockBillContainer').subscribe((stockBillContainer: any) => {
+  //     console.log('from customerSelected');
+  //     console.log(stockBillContainer.stockBillCustomer);
+  //   });
+  //
+  //   // console.log(this.stockBillContainer);
+  // }
 
   getStockListByAgentName(item){
     // this.stockList('false').fill();
@@ -454,10 +452,13 @@ export class StockBillComponent implements OnInit {
 
   }
 
-  selectDate(item){
+  selectDate(){
+
     // const date =  item.getFullYear() + '-' + parseInt(String(item.getMonth() + 1)) + '-' + item.getDate();
     const date =  this.date.getFullYear() + '-' + (this.date.getMonth() + 1) + '-' + this.date.getDate();
+    // console.log(this.selectedCustomerData.bill_date);
     this.selectedCustomerData.bill_date = date;
+    // console.log(this.selectedCustomerData.bill_date);
     this.stockBillContainer = {
       stockBillDetailsData: this.billDetailsData,
       stockBillCustomer: this.selectedCustomerData,
@@ -474,5 +475,20 @@ export class StockBillComponent implements OnInit {
   }
   defaultAgentSelection(){
     // return this.agentData[0] ;
+  }
+  ViewBill(){
+    this.billView = false;
+    const date =  this.date.getFullYear() + '-' + (this.date.getMonth() + 1) + '-' + this.date.getDate();
+    this.selectedCustomerData.bill_date = date;
+    this.storage.get('stockBillContainer').subscribe(() => {
+
+    });
+
+    this.stockBillContainer = {
+      stockBillDetailsData: this.billDetailsData,
+      stockBillCustomer: this.selectedCustomerData,
+    };
+    this.storage.set('stockBillContainer', this.stockBillContainer).subscribe(() => {
+    });
   }
 }

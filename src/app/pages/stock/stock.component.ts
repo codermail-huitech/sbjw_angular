@@ -192,12 +192,13 @@ export class StockComponent implements OnInit {
     });
     this.stockService.saveStock(this.stockList).subscribe((response: {success: number, data: Stock})  => {
       if (response.data) {
+          Swal.hideLoading();
           Swal.fire(
             'Done!',
             'Submitted in Stock',
             'success'
           );
-          Swal.hideLoading();
+          // Swal.hideLoading();
           this.jobService.getUpdatedFinishedJob();
           this.stockService.getUpdatedStockList();
           this.stockForm.reset();

@@ -177,8 +177,8 @@ export class BillService {
   }
 
   saveBillMaster(billMasterData, billDetailsData){
-    // console.log("service");
-    // console.log(billDetailsData);
+    console.log("service");
+    console.log(billMasterData);
     return this.http.post<{ success: number, data: BillMaster }>( GlobalVariable.BASE_API_URL + '/saveBillMaster' , {master : billMasterData, details: billDetailsData })
       .pipe(catchError(this._serverError), tap(((response: {success: number, data: BillMaster}) => {
 

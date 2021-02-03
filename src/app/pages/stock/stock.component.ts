@@ -34,11 +34,17 @@ export class StockComponent implements OnInit {
   totalGold: number;
   filterResult: any;
   showStockList = false;
+  public searchTerm: string;
+  page: number;
+  pageSize: number;
+  p = 1;
   // public user = JSON.parse(localStorage.getItem('user'));
 
 
   constructor(private stockService: StockService, private router: ActivatedRoute ,  private  jobService: JobService, private billService:BillService ) {
     this.stockData = this.stockService.getStockList();
+    this.page = 1;
+    this.pageSize = 5;
     // if (this.stockData){
     //   this.stockData.forEach(function(value) {
     //     const x = value.tag.split('-');

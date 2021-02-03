@@ -174,8 +174,18 @@ export class StockComponent implements OnInit {
     if (this.tempStock){
       this.stockList.push(this.tempStock);
     }
+    Swal.fire({
+      title: 'Please Wait !',
+      html: 'data saving',// add html attribute if you want or remove
+      allowOutsideClick: false,
+      timer: 3000,
+      onBeforeOpen: () => {
+        Swal.showLoading();
+      },
+
+    });
     this.stockService.saveStock(this.stockList).subscribe((response: {success: number, data: Stock})  => {
-        if (response.data) {
+      if (response.data) {
           Swal.fire(
             'Done!',
             'Submitted in Stock',

@@ -4,6 +4,9 @@ import {Agent} from '../../models/agent.model';
 import {FormGroup} from '@angular/forms';
 import Swal from "sweetalert2";
 import {OrderDetail} from '../../models/orderDetail.model';
+import {formatDate} from '@angular/common';
+import {Router} from '@angular/router';
+import {StorageMap} from '@ngx-pwa/local-storage';
 
 @Component({
   selector: 'app-agent',
@@ -15,6 +18,8 @@ export class AgentComponent implements OnInit {
 
   agentData: Agent[];
   agentForm: FormGroup;
+
+
 
   constructor(public agentService: AgentService) { }
 
@@ -100,6 +105,4 @@ export class AgentComponent implements OnInit {
       }
     });
   }
-
-
 }

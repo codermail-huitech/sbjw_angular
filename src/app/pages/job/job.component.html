@@ -52,7 +52,7 @@
                           <form [formGroup] = jobDetailsForm>
                               <div class="container" fxLayout="column" fxLayout.xs="column" fxLayoutAlign="start">
                                 <mat-form-field class="col-6 pl-4">
-                                  <input matInput placeholder="Gold Quantity" formControlName="material_quantity" (change)="material_quantity_decimal()">
+                                  <input matInput type="text" placeholder="Gold Quantity" formControlName="material_quantity" (change)="material_quantity_decimal()">
                                 </mat-form-field>
                               </div>
                           </form>

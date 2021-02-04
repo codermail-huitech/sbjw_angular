@@ -54,7 +54,7 @@ export class StockBillComponent implements OnInit {
     console.log('constructor invoked');
     this.agentData = this.agentService.getAgentList();
     this.customerData = this.customerService.getCustomers();
-    this.selectedCustomerData = this.customerData[0];
+    // this.selectedCustomerData = this.customerData[0];
     this.selectedAgentData = this.agentData[0];
     this.stockList = this.stockService.getStockList();
     this.date = new Date();
@@ -191,6 +191,8 @@ export class StockBillComponent implements OnInit {
 
           if (stockBillContainer.stockBillCustomer){
             this.selectedCustomerData =  stockBillContainer.stockBillCustomer;
+          }else{
+            this.selectedCustomerData = this.customerData[0];
           }
 
 
@@ -406,25 +408,25 @@ export class StockBillComponent implements OnInit {
     }
 
   }
-  // customerSelected(data){
-  //
-  //   console.log('test');
-  //   console.log(data);
-  //   data.bill_date = this.selectedCustomerData.bill_date;
-  //   this.selectedCustomerData = data;
-  //   this.stockBillContainer = {
-  //     stockBillDetailsData: this.billDetailsData,
-  //     stockBillCustomer: this.selectedCustomerData,
-  //   };
-  //   this.storage.set('stockBillContainer', this.stockBillContainer).subscribe(() => {
-  //   });
-  //   this.storage.get('stockBillContainer').subscribe((stockBillContainer: any) => {
-  //     console.log('from customerSelected');
-  //     console.log(stockBillContainer.stockBillCustomer);
-  //   });
-  //
-  //   // console.log(this.stockBillContainer);
-  // }
+  customerSelected(data){
+
+    console.log('test');
+    console.log(data);
+    data.bill_date = this.selectedCustomerData.bill_date;
+    this.selectedCustomerData = data;
+    this.stockBillContainer = {
+      stockBillDetailsData: this.billDetailsData,
+      stockBillCustomer: this.selectedCustomerData,
+    };
+    this.storage.set('stockBillContainer', this.stockBillContainer).subscribe(() => {
+    });
+    // this.storage.get('stockBillContainer').subscribe((stockBillContainer: any) => {
+    //   console.log('from customerSelected');
+    //   console.log(stockBillContainer.stockBillCustomer);
+    // });
+
+    // console.log(this.stockBillContainer);
+  }
 
   getStockListByAgentName(item){
 

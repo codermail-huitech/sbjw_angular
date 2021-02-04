@@ -107,7 +107,7 @@
           <div class="container" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="start" fxLayoutGap="10px" fxLayoutGap.xs="0">
             <mat-form-field fxFlex="40" class="pr-4">
               <mat-placeholder>Approx Gold</mat-placeholder>
-              <input matInput type="number"  formControlName="approx_gold" (change)="material_quantity_decimal()">
+              <input matInput type="text"  formControlName="approx_gold" (change)="material_quantity_decimal()">
             </mat-form-field>
 
             <mat-form-field fxFlex="40">
@@ -140,8 +140,9 @@
     </div>
   </div>
   <div id ="order-table-div" fxLayout="column" fxFlex="70" class="mr-1">
-    <div class="row" style="align-content: center; text-align: center">
-      <div class="col"><button style="background-color: green" mat-button class="col-12" mat-stroked-button (click)="productShow()">{{showProduct==true? 'Show Order Master List':'Show Order Details List'}}</button></div>
+    <div class="container" style="padding: 6px">
+<!--      <div class="col"><button style="background-color: green" mat-button class="col-12" mat-stroked-button (click)="productShow()">{{showProduct==true? 'Show Order Master List':'Show Order Details List'}}</button></div>-->
+      <mat-slide-toggle (change)="productShow()">{{showProduct==true? 'Show Order Master List':'Show Order Details List'}}</mat-slide-toggle>
     </div>
     <div [hidden]="!showProduct">
       <table class="table" id="order-details-table">

@@ -8,10 +8,10 @@
         </div>
         <div *ngIf="stockList.length > 0" style="padding-top: 10px">
           <div class="container" fxLayout fxLayout.xs="column" fxLayoutAlign="start" fxLayoutGap="30px" fxLayoutGap.xs="0">
-            <mat-form-field class="example-full-width">
+            <mat-form-field class="example-full-width" style="padding-top: 12px">
               <input matInput placeholder="Search Tag..." [(ngModel)]="searchTag" name="search" type="text" autofocus>
             </mat-form-field>
-            <ng-select [items]="agentData" fxFlex="100"  bindLabel="person_name"  [(ngModel)]="selectedAgentData"  placeholder="Select Agent" (change)="getStockListByAgentName(selectedAgentData)">
+            <ng-select [items]="agentData" fxFlex="40"  bindLabel="person_name"  [(ngModel)]="selectedAgentData"  placeholder="Select Agent" (change)="getStockListByAgentName(selectedAgentData)">
             </ng-select>
 
 
@@ -136,7 +136,7 @@
             <div class="container material" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="start" fxLayoutGap="10px" fxLayoutGap.xs="0">
 <!--              <ng-select [items]="customerData" fxFlex="100"  bindLabel="person_name" (change)="customerSelected(selectedCustomerData)" [ngModel]="selectedCustomerData.person_name"  placeholder="Select Customer">-->
 <!--              </ng-select>-->
-              <ng-select [items]="customerData" fxFlex="100"  bindLabel="person_name"  [(ngModel)]="selectedCustomerData"  placeholder="Select Customer">
+              <ng-select [items]="customerData" fxFlex="100"  bindLabel="person_name"  [(ngModel)]="selectedCustomerData"  (change)="customerSelected(selectedCustomerData)" placeholder="Select Customer">
               </ng-select>
             </div>
 

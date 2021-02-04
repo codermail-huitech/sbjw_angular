@@ -1,5 +1,6 @@
-<div class="row" style="align-content: center; text-align: center">
-  <div class="col"><button style="background-color: green" mat-button class="col-12" mat-stroked-button (click)="jobListShow()">{{showCompleteJobs==true ? 'Show Pending Jobs List':'Show Finished Jobs List'}}</button></div>
+<div  style="padding: 8px; background-color: white">
+<!--  <div class="col"><button style="background-color: green" mat-button class="col-12" mat-stroked-button (click)="jobListShow()">{{showCompleteJobs==true ? 'Show Pending Jobs List':'Show Finished Jobs List'}}</button></div>-->
+  <mat-slide-toggle (change)="jobListShow()">{{showCompleteJobs==true ? 'Show Pending Jobs List':'Show Finished Jobs List'}}</mat-slide-toggle>
 </div>
 <div fxLayout.xs="column" [hidden]="formTaskDiv" fxLayout="row" fxLayoutAlign="space-between stretch" fxFlexFill id="job-div">
   <div fxLayout="column" fxFlex="100" [hidden]="showCompleteJobs" class="mr-1">
@@ -12,6 +13,7 @@
           <mat-form-field class="example-full-width">
             <input matInput placeholder="Items per page" [(ngModel)]="pageSize" name="PageSize" type="text">
           </mat-form-field>
+<!--          <mat-slide-toggle (change)="jobListShow()" checked="false">{{showCompleteJobs==true ? 'Show Pending Jobs List':'Show Finished Jobs List'}}</mat-slide-toggle>-->
         </div>
 
         <table class="table" *ngIf="savedJobsData.length > 0">
@@ -80,6 +82,7 @@
           <mat-form-field class="example-full-width">
             <input matInput placeholder="Items per page" [(ngModel)]="pageSize" name="PageSize" type="text">
           </mat-form-field>
+<!--          <mat-slide-toggle (change)="jobListShow()" checked="true">{{showCompleteJobs==true ? 'Show Pending Jobs List':'Show Finished Jobs List'}}</mat-slide-toggle>-->
         </div>
         <table class="table" *ngIf="finishedJobsList.length!=0">
           <thead>

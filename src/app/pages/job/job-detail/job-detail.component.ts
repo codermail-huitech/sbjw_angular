@@ -66,6 +66,7 @@ export class JobDetailComponent implements OnInit {
       this.id = parseInt(params.id);
       this.jobTaskService.getOneJobData(this.id).subscribe((response: {success: number , data: JobMaster}) => {
         this.oneJobData = response.data;
+        console.log(this.oneJobData);
         this.jobTaskForm.patchValue({id: this.oneJobData.id});
         this.job_number = this.oneJobData.job_number;
         const index1 = this.karigarhData.findIndex(x => x.id === this.oneJobData.karigarh_id);

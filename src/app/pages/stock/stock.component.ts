@@ -176,22 +176,30 @@ export class StockComponent implements OnInit {
 
   saveStock(){
     // tslint:disable-next-line:radix
-    this.stockList = Array(parseInt(this.stockForm.value.division)).fill(this.stockForm.value);
-    if (this.tempStock){
-      this.stockList.push(this.tempStock);
-    }
     Swal.fire({
-      title: 'Please Wait !',
-      html: 'data saving',// add html attribute if you want or remove
-      allowOutsideClick: false,
-      // timer: 3000,
-      onBeforeOpen: () => {
-        Swal.showLoading();
-      },
+      title: 'Do you want to save data in stock ?',
+      text: 'Stock  will be created',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, save it!',
+      cancelButtonText: 'No, cancel it'
+    }).then((result) => {
+      this.stockList = Array(parseInt(this.stockForm.value.division)).fill(this.stockForm.value);
+      if (this.tempStock){
+        this.stockList.push(this.tempStock);
+      }
+      Swal.fire({
+        title: 'Please Wait !',
+        html: 'data saving',// add html attribute if you want or remove
+        allowOutsideClick: false,
+        // timer: 3000,
+        onBeforeOpen: () => {
+          Swal.showLoading();
+        },
 
-    });
-    this.stockService.saveStock(this.stockList).subscribe((response: {success: number, data: Stock})  => {
-      if (response.data) {
+      });
+      this.stockService.saveStock(this.stockList).subscribe((response: {success: number, data: Stock})  => {
+        if (response.data) {
           Swal.hideLoading();
           Swal.fire(
             'Done!',
@@ -203,7 +211,9 @@ export class StockComponent implements OnInit {
           this.stockService.getUpdatedStockList();
           this.stockForm.reset();
         }
+      });
     });
+
   }
 
   test(){

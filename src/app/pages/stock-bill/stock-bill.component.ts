@@ -52,9 +52,10 @@ export class StockBillComponent implements OnInit {
 
   constructor(private customerService: CustomerService, private  stockService: StockService, private  billService: BillService, private  storage: StorageMap, private agentService: AgentService) {
     console.log('constructor invoked');
-    // this.agentData = this.agentService.getAgentList();
+    this.agentData = this.agentService.getAgentList();
     this.customerData = this.customerService.getCustomers();
     this.selectedCustomerData = this.customerData[0];
+    this.selectedAgentData = this.agentData[0];
     this.stockList = this.stockService.getStockList();
     this.date = new Date();
     // this.selectedCustomerData.bill_date = this.date.getFullYear() + '-' + (this.date.getMonth() + 1) + '-' + this.date.getDate();
@@ -216,6 +217,7 @@ export class StockBillComponent implements OnInit {
     this.agentService.getAgentUpdateListener()
       .subscribe((response) => {
         this.agentData = response;
+        this.selectedAgentData = this.agentData[0];
         if(this.agentData){
           this.getStockListByAgentName(this.agentData[0]);
         }
@@ -425,6 +427,7 @@ export class StockBillComponent implements OnInit {
   // }
 
   getStockListByAgentName(item){
+
     // this.stockList('false').fill();
     // console.log("getStockListByAgentName");
     // console.log(item);
@@ -432,10 +435,11 @@ export class StockBillComponent implements OnInit {
     // console.log(this.billDetailsData);
     // console.log('from getStockListByAgentName function');
     // console.log(this.stockList);
-    this.selectedAgentData = item;
+    // this.selectedAgentData = item;
     this.tempStockList = this.stockList.filter(x => x.agent_id === item.id);
     // console.log('from getStockListByAgentName function');
     // console.log(this.tempStockList);
+    // this.tempStockList = this.stockList.filter(x => x.agent_id === item);
     if (this.billDetailsData.length > 0){
       for(let i = 0; i < this.tempStockList.length; i++ ) {
         const index = this.billDetailsData.findIndex(x => x.id === this.tempStockList[i].id);
@@ -480,10 +484,6 @@ export class StockBillComponent implements OnInit {
     this.billView = false;
     const date =  this.date.getFullYear() + '-' + (this.date.getMonth() + 1) + '-' + this.date.getDate();
     this.selectedCustomerData.bill_date = date;
-    this.storage.get('stockBillContainer').subscribe(() => {
-
-    });
-
     this.stockBillContainer = {
       stockBillDetailsData: this.billDetailsData,
       stockBillCustomer: this.selectedCustomerData,

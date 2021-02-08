@@ -83,9 +83,12 @@
               </mat-form-field>
           </div>
           <div class="container" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="start" fxLayoutGap="10px" fxLayoutGap.xs="0">
-            <mat-form-field class="example-full-width" *ngIf="orderMasterForm.value.customer_id">
-              <input type="text" placeholder="Model" aria-label="Number" matInput  (blur)="findModel($event)" formControlName="model_number">
-            </mat-form-field>
+<!--            <mat-form-field class="example-full-width" *ngIf="orderMasterForm.value.customer_id">-->
+<!--              <input type="text" placeholder="Model" aria-label="Number" matInput  (blur)="findModel($event)" formControlName="model_number">-->
+<!--            </mat-form-field>-->
+
+            <ng-select  *ngIf="orderMasterForm.value.customer_id" [items]="productList" fxFlex="40"  bindLabel="model_number" class="custom" bindValue="model_number" formControlName="model_number" placeholder="Model Number" (blur)="findModel()">
+            </ng-select>
 
             <div class="container" fxLayout="row" fxFlex="50" fxLayout.xs="column" fxLayoutAlign="right" fxLayoutGap="10px" fxLayoutGap.xs="0" *ngIf="orderDetailsForm.value.product_id">
               <mat-form-field fxFlex="20">

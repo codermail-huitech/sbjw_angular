@@ -21,6 +21,7 @@ import {ExcelService} from '../../services/excel.service';
 import * as jsPDF from 'jspdf';
 import 'jspdf-autotable';
 import {  ViewChild, ElementRef } from '@angular/core';
+import {ProductService} from '../../services/product.service';
 
 
 @Component({
@@ -52,6 +53,7 @@ export class OrderComponent implements OnInit {
   showUpdate = false;
   isAddEnabled = true;
   yourModelDate: string;
+  productList: Product[];
   minDate = new Date(2010, 11, 2);
   maxDate = new Date(2021, 3, 2);
   startDate = new Date(2020, 0, 2);
@@ -74,11 +76,12 @@ export class OrderComponent implements OnInit {
   p = 1;
 
   // tslint:disable-next-line:max-line-length
-  constructor(private confirmationDialogService: ConfirmationDialogService, private customerService: CustomerService, private orderService: OrderService, private storage: StorageMap, private _snackBar: MatSnackBar , private  excelService: ExcelService) {
+  constructor(private confirmationDialogService: ConfirmationDialogService, private customerService: CustomerService, private orderService: OrderService, private storage: StorageMap, private _snackBar: MatSnackBar , private  excelService: ExcelService, private  productService: ProductService) {
     this.orderMasterList = this.orderService.getOrderMaster();
     this.customerList = this.customerService.getCustomers();
     this.agentList = this.orderService.getAgentList();
     this.materialList = this.orderService.getMaterials();
+    this.productList = this.productService.getProducts();
     this.page = 1;
     this.pageSize = 15;
   }
@@ -117,6 +120,10 @@ export class OrderComponent implements OnInit {
       .subscribe((responseOrders: OrderMaster[]) => {
          this.orderMasterList = responseOrders;
       });
+    this.productService.getProductUpdateListener().subscribe((response)=>{
+      this.productList  = response;
+      console.log(this.productList);
+    });
     this.orderService.getOrderDetailsListener()
       .subscribe((orderDetail) => {
           this.orderDetails = orderDetail;
@@ -349,9 +356,11 @@ export class OrderComponent implements OnInit {
     });
   }
 
-  findModel(event){
+  findModel(){
     const index = this.customerList.findIndex(k => k.id === this.orderMasterForm.value.customer_id );
     // tslint:disable-next-line:max-line-length
+    console.log(this.orderDetailsForm.value.model_number);
+    console.log(this.customerList[index].customer_category_id);
     this.orderService.getProductData(this.orderDetailsForm.value.model_number, this.customerList[index].customer_category_id)
       .subscribe((responseProducts: {success: number, data: Product}) => {
       if (responseProducts.data){
@@ -359,7 +368,7 @@ export class OrderComponent implements OnInit {
         // tslint:disable-next-line:max-line-length
         this.orderDetailsForm.patchValue({ product_id: tempProduct.id, p_loss: tempProduct.p_loss, price: tempProduct.price, price_code : tempProduct.price_code_name , discount : tempProduct.discount});
       }else{
-        alert('This model does not exist');
+        alert('This model does not exist for this customer');
         // tslint:disable-next-line:max-line-length
         this.orderDetailsForm.patchValue({ p_loss: null, price: null, price_code : null, discount : null});
       }

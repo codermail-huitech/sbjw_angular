@@ -124,8 +124,14 @@ export class AgentAllocationComponent implements OnInit {
     const index = this.stockDeallocation.findIndex(x => x.id === item.id);
     if (index === -1){
       this.stockDeallocation.push(item);
+      if (this.stockDeallocation.length === this.billDetailsData.length){
+        this.isChecked = true;
+      }
     }else{
     this.stockDeallocation.splice(index,1);
+    if (this.stockDeallocation.length === 0){
+      this.isChecked = false;
+    }
     }
   }
 
@@ -150,6 +156,7 @@ export class AgentAllocationComponent implements OnInit {
 
   selectAll(){
     if (this.isChecked === false) {
+
       this.stockDeallocation = [...this.billDetailsData];
       this.isChecked = true;
     }else{

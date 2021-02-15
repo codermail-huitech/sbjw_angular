@@ -108,9 +108,10 @@
             </div>
           </div>
           <div class="container" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="start" fxLayoutGap="10px" fxLayoutGap.xs="0">
-            <mat-form-field fxFlex="40" class="pr-4">
-              <mat-placeholder>Approx Gold</mat-placeholder>
-              <input matInput type="text"  formControlName="approx_gold" (change)="material_quantity_decimal()">
+
+            <mat-form-field fxFlex="40"  class="pr-4">
+              <mat-placeholder>Quantity</mat-placeholder>
+              <input matInput type="number"  formControlName="quantity" (change)="updateItemAmount()">
             </mat-form-field>
 
             <mat-form-field fxFlex="40">
@@ -120,9 +121,9 @@
           </div>
 
           <div class="container" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="start" fxLayoutGap="10px" fxLayoutGap.xs="0">
-            <mat-form-field fxFlex="40"  class="pr-4">
-              <mat-placeholder>Quantity</mat-placeholder>
-              <input matInput type="number"  formControlName="quantity" (change)="updateItemAmount()">
+            <mat-form-field fxFlex="40" class="pr-4">
+              <mat-placeholder>Approx Gold</mat-placeholder>
+              <input matInput type="number"  formControlName="approx_gold" (change)="material_quantity_decimal()">
             </mat-form-field>
             <mat-form-field fxFlex="40">
               <mat-placeholder>Amount</mat-placeholder>
@@ -193,7 +194,8 @@
         <tfoot>
         <tr>
           <td class="text-center" colspan="4">Total</td>
-          <td class="text-right">{{totalApproxGold | number:'1.3-3'}}</td>
+<!--          <td class="text-right">{{totalApproxGold | number:'1.3-3'}}</td>-->
+          <td class="text-right">{{totalApproxGold.toFixed(3)}}</td>
           <td class="text-right">{{totalQuantity }}</td>
           <td class="text-right"></td>
           <td class="text-right">{{totalOrderAmount | currency:"&#8377;"}}</td>

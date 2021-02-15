@@ -34,7 +34,7 @@ export class CompletedBillDetailsComponent implements OnInit {
 
 
 
-  constructor(private  route: ActivatedRoute, private billService: BillService ,private excelService: ExcelService,) {}
+  constructor(private  route: ActivatedRoute, private billService: BillService , private excelService: ExcelService) {}
 
   printDivStyle = {
     table: {'border-collapse': 'collapse', 'width' : '100%' },

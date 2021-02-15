@@ -22,6 +22,7 @@ import * as jsPDF from 'jspdf';
 import 'jspdf-autotable';
 import {  ViewChild, ElementRef } from '@angular/core';
 import {ProductService} from '../../services/product.service';
+import {isNumber} from '@ng-bootstrap/ng-bootstrap/util/util';
 
 
 @Component({
@@ -120,7 +121,7 @@ export class OrderComponent implements OnInit {
       .subscribe((responseOrders: OrderMaster[]) => {
          this.orderMasterList = responseOrders;
       });
-    this.productService.getProductUpdateListener().subscribe((response)=>{
+    this.productService.getProductUpdateListener().subscribe((response) => {
       this.productList  = response;
       console.log(this.productList);
     });
@@ -408,6 +409,7 @@ export class OrderComponent implements OnInit {
           this.totalOrderAmount = 0;
           this.totalQuantity = 0;
           this.totalApproxGold = 0;
+          this.showProduct = false;
 
 
           // this.orderMasterList.unshift(response.data);

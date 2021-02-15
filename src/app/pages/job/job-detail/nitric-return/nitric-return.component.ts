@@ -7,6 +7,7 @@ import {Material} from '../../../../models/material.model';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import {SncakBarComponent} from '../../../../common/sncak-bar/sncak-bar.component';
 import {JobDetail} from '../../../../models/jobDetail.model';
+import {BillService} from '../../../../services/bill.service';
 
 @Component({
   selector: 'app-nitric-return',
@@ -26,7 +27,7 @@ export class NitricReturnComponent implements OnInit {
   jobTaskData: JobDetail[];
   total: number;
 
-  constructor(private jobTaskService: JobTaskService, private router: ActivatedRoute, private _snackBar: MatSnackBar) { }
+  constructor(private jobTaskService: JobTaskService, private router: ActivatedRoute, private _snackBar: MatSnackBar, private billService: BillService) { }
 
   ngOnInit(): void {
     this.total = 0;
@@ -89,6 +90,9 @@ export class NitricReturnComponent implements OnInit {
           });
           this.total = this.total + Math.abs(parseFloat(this.jobTaskForm.value.return_quantity));
           this.jobTaskService.getTotal().subscribe();
+
+          // this.billService.getTotalGoldQuantity(this.oneJobData.id).subscribe();
+
           this.jobTaskService.jobTaskData().subscribe((response) => {
             this.jobTaskData = response.data;
           });

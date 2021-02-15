@@ -10,6 +10,7 @@ import {Material} from '../../../models/material.model';
 import {Karigarh} from '../../../models/karigarh.model';
 import {User} from '../../../models/user.model';
 import {JobDetail} from '../../../models/jobDetail.model';
+import {BillService} from '../../../services/bill.service';
 
 @Component({
   selector: 'app-job-detail',
@@ -32,10 +33,11 @@ export class JobDetailComponent implements OnInit {
   jobTransactionData: JobDetail[];
   btnControl: boolean = null;
   tempTotalData = [0, 0 , 0 , 0 , 0 , 0, 0, 0];
+  FGWt = 0 ;
 
 
   // tslint:disable-next-line:max-line-length
-  constructor(private route: ActivatedRoute , private  jobTaskService: JobTaskService , private  jobService: JobService , private  orderService: OrderService) {
+  constructor(private route: ActivatedRoute , private  jobTaskService: JobTaskService , private  jobService: JobService , private  orderService: OrderService, private billService: BillService) {
     this.jobTaskService.testObserble().subscribe((response) => {
       this.btnControl = response;
       console.log('test');
@@ -43,6 +45,7 @@ export class JobDetailComponent implements OnInit {
     });
     // console.log(this.jobTaskService.btnControl);
     this.karigarhData = this.jobService.getAllKarigarhs();
+    this.FGWt = 0;
   }
 
   printDivStyle = {
@@ -71,7 +74,6 @@ export class JobDetailComponent implements OnInit {
         this.job_number = this.oneJobData.job_number;
         const index1 = this.karigarhData.findIndex(x => x.id === this.oneJobData.karigarh_id);
         this.karigarhName = this.karigarhData[index1].person_name;
-
         this.userData = JSON.parse(localStorage.getItem('user'));
         // tslint:disable-next-line:no-shadowed-variable
         this.orderService.getMaterialUpdateListener().subscribe((response) => {
@@ -91,6 +93,12 @@ export class JobDetailComponent implements OnInit {
       });
 
       this.jobTaskForm.patchValue({id: params.id});
+
+      // this.billService.getTotalGoldQuantityDataSubUpdateListener().subscribe((response) =>{
+      //   this.FGWt = response;
+      //   console.log(this.FGWt);
+      // });
+
       this.jobTaskService.getUpdatedSavedJobs();
       this.jobTaskService.getUpdatedFinishedJobs();
       this.karigarhData = this.jobService.getAllKarigarhs();

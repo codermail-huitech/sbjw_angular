@@ -111,39 +111,46 @@ export class JobComponent implements OnInit {
   }
 
   onSubmit() {
-    this.confirmationDialogService.confirm('Please confirm..', 'Do you really want to send order to job ?')
-      .then((confirmed) => {
-        if (confirmed) {
-          // this.jobMasterForm.value.date = this.pipe.transform(this.jobMasterForm.value.date, 'yyyy-MM-dd');
-          this.jobMasterForm.value.date = this.pipe.transform(this.new_job_date, 'yyyy-MM-dd');
-          // const user = JSON.parse(localStorage.getItem('user'));
-          // this.jobDetailsForm.value.employee_id = user.id;
-          let saveObserable = new Observable<any>();
-          saveObserable = this.jobService.saveJob();
-          saveObserable.subscribe((response) => {
-            if (response.success === 1) {
-              const index = this.orderDetails.findIndex(x => x.id === this.jobDetailsForm.value.id);
-              this.orderDetails[index].status_id = 1;
-              this.jobMasterForm.reset();
-              this.jobDetailsForm.reset();
-              this.jobService.getSavedJobsUpdateListener().subscribe();
-              Swal.fire(
-                'Saved!',
-                'Order has been sent to job',
-                'success'
-              );
-              this.selectedJobIndex = -1;
-            }
-          }, (error) => {
-            this._snackBar.openFromComponent(SncakBarComponent, {
-              duration: 4000, data: {message: error.message}
+    console.log(this.jobMasterForm.value);
+    if(this.jobMasterForm.value.karigarh_id) {
+      this.confirmationDialogService.confirm('Please confirm..', 'Do you really want to send order to job ?')
+        .then((confirmed) => {
+          if (confirmed) {
+            // this.jobMasterForm.value.date = this.pipe.transform(this.jobMasterForm.value.date, 'yyyy-MM-dd');
+            this.jobMasterForm.value.date = this.pipe.transform(this.new_job_date, 'yyyy-MM-dd');
+            // const user = JSON.parse(localStorage.getItem('user'));
+            // this.jobDetailsForm.value.employee_id = user.id;
+            let saveObserable = new Observable<any>();
+            saveObserable = this.jobService.saveJob();
+            saveObserable.subscribe((response) => {
+              if (response.success === 1) {
+                const index = this.orderDetails.findIndex(x => x.id === this.jobDetailsForm.value.id);
+                this.orderDetails[index].status_id = 1;
+                this.jobMasterForm.reset();
+                this.jobDetailsForm.reset();
+                this.jobService.getSavedJobsUpdateListener().subscribe();
+                Swal.fire(
+                  'Saved!',
+                  'Order has been sent to job',
+                  'success'
+                );
+                this.selectedJobIndex = -1;
+              }
+            }, (error) => {
+              this._snackBar.openFromComponent(SncakBarComponent, {
+                duration: 4000, data: {message: error.message}
+              });
             });
-          });
-        }
-      })
-      .catch(() => {
-        console.log('User dismissed the dialog (e.gf., by using ESC, clicking the cross icon, or clicking outside the dialog)');
+          }
+        })
+        .catch(() => {
+          console.log('User dismissed the dialog (e.gf., by using ESC, clicking the cross icon, or clicking outside the dialog)');
+        });
+    }else{
+      this._snackBar.openFromComponent(SncakBarComponent, {
+        duration: 4000, data: {message: 'Failed to save'}
       });
+    }
   }
   getBackgroundColor(index: number) {
     if (index === this.selectedJobIndex){

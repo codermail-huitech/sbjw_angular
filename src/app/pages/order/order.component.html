@@ -205,7 +205,7 @@
       </table>
       <div class="container" fxLayout fxLayout.xs="column" fxLayoutAlign="start" fxLayoutGap="30px" fxLayoutGap.xs="0" >
         <button mat-button  (click)="cancelOrder()" mat-stroked-button>Cancel Order</button>
-        <button mat-button (click)="onSubmit()" mat-stroked-button [disabled]="orderDetails.length<1 || orderDetailsForm.valid">Save Order</button>
+        <button mat-button (click)="onSubmit()" mat-stroked-button [disabled]="(orderDetails.length<1 || orderDetailsForm.valid) || !orderMasterForm.valid">Save Order</button>
       </div>
     </div>
     <div [hidden]="showProduct" *ngIf="orderMasterList">

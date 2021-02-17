@@ -55,6 +55,9 @@ export class JobDetailComponent implements OnInit {
     h2 : {border: 'solid 1px'},
     td: {border: '1px solid red', margin: '0px', padding: '3px'}
   };
+  // we have to change this values dynamically
+  finshBadgeValue = 0;
+  goldSendBadge = 1;
 
   ngOnInit(): void {
 

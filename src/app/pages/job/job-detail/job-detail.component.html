@@ -139,16 +139,16 @@
 <!--    </div>-->
 
     <div class="m-2" *ngIf="true">
-      <button mat-raised-button class="btn btn-warning ml-2" [matBadge]="goldSendBadge" matBadgePosition="above before" [disabled] = this.btnControl [hidden]="oneJobData.status_id==100" [routerLink]="['./goldReturn']">Gold Return</button>
-      <button type="button" class="btn btn-primary ml-2" [disabled] = this.btnControl [hidden]="oneJobData.status_id==100" [routerLink]="['./dalSubmit']">Dal Submit</button>
-      <button type="button" class="btn btn-warning ml-2" [disabled] = this.btnControl [hidden]="oneJobData.status_id==100" [routerLink]="['./bronzeSubmit']">Bronze Submit</button>
-      <button type="button" class="btn btn-primary ml-2" [disabled] = this.btnControl [hidden]="oneJobData.status_id==100" [routerLink]="['./panSubmit']">Pan Submit</button>
-      <button type="button" class="btn btn-warning ml-2" [disabled] = this.btnControl [hidden]="oneJobData.status_id==100" [routerLink]="['./panReturn']">Pan Return</button>
-      <button type="button" class="btn btn-primary ml-2" [disabled] = this.btnControl [hidden]="oneJobData.status_id==100" [routerLink]="['./dalReturn']">Dal Return</button>
-      <button type="button" class="btn btn-warning ml-2" [disabled] = this.btnControl [hidden]="oneJobData.status_id==100" [routerLink]="['./goldSubmit']">Gold Submit</button>
-      <button type="button" class="btn btn-primary ml-2" [disabled] = this.btnControl [hidden]="oneJobData.status_id==100" [routerLink]="['./nitricReturn']">Nitric Return</button>
+      <button mat-raised-button class="btn btn-warning ml-2 mt-1 mb-1"[matBadge] = "goldRetBadge"  matBadgePosition="above before" [disabled] = this.btnControl [hidden]="oneJobData.status_id==100" [routerLink]="['./goldReturn']">Gold Return</button>
+      <button mat-raised-button class="btn btn-primary ml-2 mt-1 mb-1" [matBadge] = "dalSendBadge"  matBadgePosition="above before" [disabled] = this.btnControl [hidden]="oneJobData.status_id==100" [routerLink]="['./dalSubmit']">Dal Submit</button>
+      <button mat-raised-button class="btn btn-warning ml-2 mt-1 mb-1" [matBadge] = "BronzeSendBadge"  matBadgePosition="above before" [disabled] = this.btnControl [hidden]="oneJobData.status_id==100" [routerLink]="['./bronzeSubmit']">Bronze Submit</button>
+      <button mat-raised-button class="btn btn-primary ml-2 mt-1 mb-1" [matBadge] = "panSendBadge"  matBadgePosition="above before" [disabled] = this.btnControl [hidden]="oneJobData.status_id==100" [routerLink]="['./panSubmit']">Pan Submit</button>
+      <button mat-raised-button class="btn btn-warning ml-2 mt-1 mb-1" [matBadge] = "panRetBadge"  matBadgePosition="above before" [disabled] = this.btnControl [hidden]="oneJobData.status_id==100" [routerLink]="['./panReturn']">Pan Return</button>
+      <button mat-raised-button class="btn btn-primary ml-2 mt-1 mb-1" [matBadge] = "dalRetBadge" matBadgePosition="above before" [disabled] = this.btnControl [hidden]="oneJobData.status_id==100" [routerLink]="['./dalReturn']">Dal Return</button>
+      <button mat-raised-button class="btn btn-warning ml-2 mt-1 mb-1" [matBadge] = "goldSendBadge" matBadgePosition="above before" [disabled] = this.btnControl [hidden]="oneJobData.status_id==100" [routerLink]="['./goldSubmit']">Gold Submit</button>
+      <button mat-raised-button class="btn btn-primary ml-2 mt-1 mb-1" [matBadge] = "nitricRetBadge"  matBadgePosition="above before" [disabled] = this.btnControl [hidden]="oneJobData.status_id==100" [routerLink]="['./nitricReturn']">Nitric Return</button>
 <!--      <button type="button" class="btn btn-warning" [disabled] = this.btnControl [hidden]="oneJobData.status_id==100" [routerLink]="['./job_finish']">Finish</button>-->
-      <button mat-raised-button class="btn btn-warning ml-2" [matBadge]="finshBadgeValue" matBadgePosition="above before" [disabled] = this.btnControl [hidden]="oneJobData.status_id==100" [routerLink]="['./job_finish']">Finish</button>
+      <button mat-raised-button class="btn btn-warning ml-2 mt-1 mb-1" [matBadge]="finshBadgeValue" matBadgePosition="above before" [disabled] = this.btnControl [hidden]="oneJobData.status_id==100" [routerLink]="['./job_finish']">Finish</button>
     </div>
 <!--    this is used to change the detail button look-->
     <div class="example-button-row">

@@ -35,17 +35,42 @@ export class JobDetailComponent implements OnInit {
   tempTotalData = [0, 0 , 0 , 0 , 0 , 0, 0, 0];
   FGWt = 0 ;
 
+  // we have to change this values dynamically
+  finshBadgeValue = 0;
+  goldSendBadge = 0;
+  goldRetBadge = 0;
+  dalSendBadge = 0;
+  dalRetBadge = 0;
+  panSendBadge = 0;
+  panRetBadge = 0;
+  BronzeSendBadge = 0;
+  nitricRetBadge = 0;
+
 
   // tslint:disable-next-line:max-line-length
   constructor(private route: ActivatedRoute , private  jobTaskService: JobTaskService , private  jobService: JobService , private  orderService: OrderService, private billService: BillService) {
     this.jobTaskService.testObserble().subscribe((response) => {
       this.btnControl = response;
-      console.log('test');
-      console.log(this.btnControl);
+      // console.log('test');
+      // console.log(this.btnControl);
     });
     // console.log(this.jobTaskService.btnControl);
     this.karigarhData = this.jobService.getAllKarigarhs();
     this.FGWt = 0;
+    this. jobTaskService.getBadgeValue().subscribe((response) => {
+      let index = response.findIndex(x => x.id === this.id);
+      if (index === -1){
+        this.goldSendBadge = 1;
+      }
+      else{
+        this.goldSendBadge = response[index].GS;
+      }
+    });
+
+    // console.log(this.jobTaskService.getLatestBadgeValue());
+
+
+
   }
 
   printDivStyle = {
@@ -55,9 +80,7 @@ export class JobDetailComponent implements OnInit {
     h2 : {border: 'solid 1px'},
     td: {border: '1px solid red', margin: '0px', padding: '3px'}
   };
-  // we have to change this values dynamically
-  finshBadgeValue = 0;
-  goldSendBadge = 1;
+
 
   ngOnInit(): void {
 
@@ -66,13 +89,15 @@ export class JobDetailComponent implements OnInit {
     this.jobTaskForm = this.jobTaskService.jobTaskForm;
     this.userData = JSON.parse(localStorage.getItem('user'));
 
+
+
     this.route.params.subscribe(params => {
       this.showTransactionDiv = false;
       // tslint:disable-next-line:radix
       this.id = parseInt(params.id);
       this.jobTaskService.getOneJobData(this.id).subscribe((response: {success: number , data: JobMaster}) => {
         this.oneJobData = response.data;
-        console.log(this.oneJobData);
+        // console.log(this.oneJobData);
         this.jobTaskForm.patchValue({id: this.oneJobData.id});
         this.job_number = this.oneJobData.job_number;
         const index1 = this.karigarhData.findIndex(x => x.id === this.oneJobData.karigarh_id);
@@ -85,6 +110,19 @@ export class JobDetailComponent implements OnInit {
           const materialData = this.materialList[index];
           this.jobTaskForm.patchValue({material_name: materialData.material_name , size: this.oneJobData.size});
         });
+      });
+
+      this.jobTaskService.getBadgeValue().subscribe((response) => {
+        // console.log('response');
+        // console.log(response);
+        let index = response.findIndex(x => x.id === this.id);
+        if (index === -1)
+         {
+           this.goldSendBadge = 1;
+         }
+         else {
+           this.goldSendBadge = response[index].GS;
+         }
       });
 
       this.jobTaskService.testObserble().subscribe((response) => {
@@ -171,7 +209,7 @@ export class JobDetailComponent implements OnInit {
             this.tempTotalData[i - 1] = 0;
           }
         }
-        console.log(this.tempTotalData);
+        // console.log(this.tempTotalData);
       });
       this.jobTaskService.getTotalDataUpdateListener().subscribe((response) => {
         this.totalData = response;

@@ -35,6 +35,23 @@ export class JobTaskService implements OnDestroy{
   // btnControl: boolean;
   btnControl = false;
 
+  // finshBadgeValue = 0;
+  // goldSendBadge = 1;
+  // goldSendBadge = 1;
+  // goldSendBadge = 1;
+  jobBadgeArray = [];
+
+
+  finshBadgeValue = 0;
+  goldSendBadge = 0;
+  goldRetBadge = 0;
+  dalSendBadge = 0;
+  dalRetBadge = 0;
+  panSendBadge = 0;
+  panRetBadge = 0;
+  BronzeSendBadge = 0;
+  nitricRetBadge = 0;
+
   private savedJobsSub = new Subject<JobMaster[]>();
   private materialDataSub = new Subject<Material[]>();
   private getJobTaskDataSub = new Subject<JobDetail[]>();
@@ -43,6 +60,7 @@ export class JobTaskService implements OnDestroy{
   private jobTransactionSub = new Subject<JobDetail[]>();
   private finishedJobsSub = new Subject<JobMaster[]>();
   private oneJobDataSub = new Subject<JobMaster[]>();
+  private badgeValueSub = new Subject<any>();
   private btnControlSub: Subject<boolean> = new Subject<boolean>();
 
 
@@ -74,6 +92,7 @@ export class JobTaskService implements OnDestroy{
   constructor(private http: HttpClient) {
     this.btnControl = false;
     this.resolve(false);
+
 
     this.jobTaskForm = new FormGroup({
       id : new FormControl(null),
@@ -161,6 +180,11 @@ export class JobTaskService implements OnDestroy{
     return [...this.finishedJobsList];
   }
 
+  // getLatestBadgeValue(){
+  //
+  //   return [...this.jobBadgeArray];
+  // }
+
 
 
 
@@ -197,9 +221,23 @@ export class JobTaskService implements OnDestroy{
        .pipe(catchError(this._serverError), tap(((response: {success: number, data: JobDetail}) => {
              const {data} = response;
              this.jobReturnData = data;
-            //  this.jobReturnDataSub.next([...this.jobReturnData]);
 
-      })));
+            //  this.jobReturnDataSub.next([...this.jobReturnData]);
+             let index = this.jobBadgeArray.findIndex(x => x.id === this.jobTaskForm.value.id);
+             if (index === -1){
+               this.goldSendBadge = this.goldSendBadge + 1;
+               this.jobBadgeArray.push({id: this.jobTaskForm.value.id, GS: this.goldSendBadge, GR: 0, DS: 0, DR: 0, PS: 0, PR: 0, BS: 0, NR: 0, F: 0});
+             }
+             else{
+               this.jobBadgeArray[index].GS = this.jobBadgeArray[index].GS + 1;
+             }
+
+             // this.jobBadgeArray.id = this.jobTaskForm.value.id;
+             // this.jobBadgeArray.GS = this.goldSendBadge;
+
+             console.log(this.jobBadgeArray);
+             this.badgeValueSub.next(this.jobBadgeArray);
+       })));
 
 
     // this.http.post(GlobalVariable.BASE_API_URL + '/saveReturn', { data : this.jobTaskForm.value})
@@ -267,6 +305,18 @@ export class JobTaskService implements OnDestroy{
     }
 
 
+  getBadgeValue(){
+    return this.badgeValueSub.asObservable();
+  }
+
+
+  // updateBadgeValue(jobTaskId){
+  //   if(jobTaskId === 1){
+  //     this.goldSendBadge = this.goldSendBadge + 1;
+  //     this.badgeValueSub.next([...this.goldSendBadge]);
+  //   }
+  //   return 1;
+  // }
 
 
 

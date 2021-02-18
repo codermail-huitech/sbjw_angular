@@ -43,7 +43,7 @@ export class GoldSubmitComponent implements OnInit {
     this.jobTaskService.getUpdatedSavedJobs();
     this.jobTaskService.getSavedJobsUpdateListener().subscribe((response) => {
       this.savedJobsData = response;
-      console.log(this.savedJobsData);
+      // console.log(this.savedJobsData);
       const index = this.savedJobsData.findIndex(x => x.id === this.jobMasterId);
       this.oneJobData = this.savedJobsData[index];
       this.jobTaskForm.patchValue({material_name: this.oneJobData.material_name});
@@ -75,7 +75,7 @@ export class GoldSubmitComponent implements OnInit {
       this.oneJobData = this.savedJobsData[index];
       const user = JSON.parse(localStorage.getItem('user'));
       this.jobTaskForm.patchValue({ job_Task_id: 1, material_id: this.oneJobData.material_id, id: this.jobMasterId, size: this.oneJobData.size, employee_id: user.id });
-      console.log(this.jobTaskForm.value);
+      // console.log(this.jobTaskForm.value);
       this.jobTaskForm.value.return_quantity = parseFloat(this.jobTaskForm.value.return_quantity);
       this.jobTaskService.jobReturn().subscribe((response ) => {
         if (response.success === 1){
@@ -88,6 +88,11 @@ export class GoldSubmitComponent implements OnInit {
             this.jobTaskData = response.data;
           });
           this.jobTaskForm.controls.return_quantity.reset();
+
+
+          // console.log(this.jobTaskService.goldSendBadge);
+
+
         }
         this.currentError = null;
 

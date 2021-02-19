@@ -57,20 +57,23 @@ export class JobDetailComponent implements OnInit {
     // console.log(this.jobTaskService.btnControl);
     this.karigarhData = this.jobService.getAllKarigarhs();
     this.FGWt = 0;
-    this. jobTaskService.getBadgeValue().subscribe((response) => {
-      let index = response.findIndex(x => x.id === this.id);
-      if (index === -1){
-        this.goldSendBadge = 1;
-      }
-      else{
-        this.goldSendBadge = response[index].GS;
-      }
-    });
+    // this. jobTaskService.getBadgeValue().subscribe((response) => {
+    //   let index = response.findIndex(x => x.id === this.id);
+    //   if (index === -1){
+    //     this.goldSendBadge = 1;
+    //   }
+    //   else{
+    //     this.goldSendBadge = response[index].GS;
+    //   }
+    // });
 
     // console.log(this.jobTaskService.getLatestBadgeValue());
 
+<<<<<<< HEAD
     // this.FGWt = this.billService.FGWt;
 
+=======
+>>>>>>> d8929a9b5c7b4108a4f1dcb0386d9e02241043c5
   }
 
   printDivStyle = {
@@ -91,10 +94,13 @@ export class JobDetailComponent implements OnInit {
     this.jobTaskForm = this.jobTaskService.jobTaskForm;
     this.userData = JSON.parse(localStorage.getItem('user'));
 
+<<<<<<< HEAD
     this.billService.getTotalGoldQuantityDataSubUpdateListener().subscribe((response) => {
       this.FGWt = response;
     });
 
+=======
+>>>>>>> d8929a9b5c7b4108a4f1dcb0386d9e02241043c5
     this.route.params.subscribe(params => {
       this.showTransactionDiv = false;
       // tslint:disable-next-line:radix
@@ -104,6 +110,7 @@ export class JobDetailComponent implements OnInit {
         // console.log(this.oneJobData);
         this.jobTaskForm.patchValue({id: this.oneJobData.id});
         this.job_number = this.oneJobData.job_number;
+        this.jobTaskForm.patchValue({size: this.oneJobData.size});
         const index1 = this.karigarhData.findIndex(x => x.id === this.oneJobData.karigarh_id);
         this.karigarhName = this.karigarhData[index1].person_name;
         this.userData = JSON.parse(localStorage.getItem('user'));
@@ -112,22 +119,24 @@ export class JobDetailComponent implements OnInit {
           this.materialList = response;
           const index = this.materialList.findIndex(x => x.id === this.oneJobData.material_id);
           const materialData = this.materialList[index];
-          this.jobTaskForm.patchValue({material_name: materialData.material_name , size: this.oneJobData.size});
+          this.jobTaskForm.patchValue({material_name: materialData.material_name});
         });
+        // console.log(this.jobTaskForm.value);
       });
 
+
       this.jobTaskService.getBadgeValue().subscribe((response) => {
-        // console.log('response');
-        // console.log(response);
-        let index = response.findIndex(x => x.id === this.id);
-        if (index === -1)
-         {
-           this.goldSendBadge = 1;
-         }
-         else {
-           this.goldSendBadge = response[index].GS;
-         }
+        this.finshBadgeValue = response.finshBadgeValue || 0;
+        this.goldSendBadge = response.goldSendBadge;
+        this.goldRetBadge = response.goldRetBadge;
+        this.dalSendBadge = response.dalSendBadge;
+        this.dalRetBadge = response.dalRetBadge;
+        this.panSendBadge = response.panSendBadge;
+        this.panRetBadge = response.panRetBadge;
+        this.BronzeSendBadge = response.bronzeSendBadge;
+        this.nitricRetBadge = response.nitricRetBadge;
       });
+      this.jobTaskService.getBatchCount(params.id);
 
       this.jobTaskService.testObserble().subscribe((response) => {
         this.btnControl = response;

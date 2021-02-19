@@ -49,7 +49,7 @@ export class JobTaskService implements OnDestroy{
   dalRetBadge = 0;
   panSendBadge = 0;
   panRetBadge = 0;
-  BronzeSendBadge = 0;
+  bronzeSendBadge = 0;
   nitricRetBadge = 0;
 
   private savedJobsSub = new Subject<JobMaster[]>();
@@ -88,6 +88,10 @@ export class JobTaskService implements OnDestroy{
     return this.materialDataSub.asObservable();
   }
 
+  getBadgeValue(){
+    return this.badgeValueSub.asObservable();
+  }
+
 
   constructor(private http: HttpClient) {
     this.btnControl = false;
@@ -109,7 +113,6 @@ export class JobTaskService implements OnDestroy{
     });
 
 
-
     //---------------------------
 
     this.jobMasterForm = new FormGroup({
@@ -121,7 +124,6 @@ export class JobTaskService implements OnDestroy{
       model_number : new FormControl({value: null, disabled: true}, [Validators.required]),
       material_name : new FormControl({value: null, disabled: true}, [Validators.required])
     });
-
 
 
     //---------------------
@@ -163,7 +165,19 @@ export class JobTaskService implements OnDestroy{
   resolve(data){
     this.btnControl = data;
     if (this.btnControl === true){
-       this.btnControlSub.next(this.btnControl);
+      const a = {
+        finshBadgeValue : 1,
+        goldSendBadge : this.goldSendBadge,
+        goldRetBadge : this.goldRetBadge,
+        dalSendBadge : this.dalSendBadge,
+        dalRetBadge : this.dalRetBadge,
+        panSendBadge : this.panSendBadge,
+        panRetBadge : this.panRetBadge,
+        bronzeSendBadge : this.bronzeSendBadge,
+        nitricRetBadge : this.nitricRetBadge
+      };
+      this.badgeValueSub.next(a);
+      this.btnControlSub.next(this.btnControl);
     }else{
       this.btnControl = false;
       this.btnControlSub.next(this.btnControl);
@@ -171,12 +185,10 @@ export class JobTaskService implements OnDestroy{
   }
 
   getAllJobList(){
-
     return [...this.savedJobsList];
   }
 
   getFinishedJobList(){
-
     return [...this.finishedJobsList];
   }
 
@@ -221,22 +233,51 @@ export class JobTaskService implements OnDestroy{
        .pipe(catchError(this._serverError), tap(((response: {success: number, data: JobDetail}) => {
              const {data} = response;
              this.jobReturnData = data;
+             if (this.jobReturnData.job_task_id === 1){
+               this.goldSendBadge = this.goldSendBadge + 1;
+             }else if (this.jobReturnData.job_task_id === 2){
+               this.goldRetBadge = this.goldRetBadge + 1;
+             }else if (this.jobReturnData.job_task_id === 3){
+               this.dalSendBadge = this.dalSendBadge + 1;
+             }else if (this.jobReturnData.job_task_id === 4){
+               this.dalRetBadge = this.dalRetBadge + 1;
+             }else if (this.jobReturnData.job_task_id === 5){
+               this.panSendBadge = this.panSendBadge + 1;
+             }else if (this.jobReturnData.job_task_id === 6){
+               this.panRetBadge = this.panRetBadge + 1;
+             }else if (this.jobReturnData.job_task_id === 8){
+               this.bronzeSendBadge = this.bronzeSendBadge + 1;
+             }else if (this.jobReturnData.job_task_id === 7){
+               this.nitricRetBadge = this.nitricRetBadge + 1;
+             }
+
+             const a = {
+               goldSendBadge : this.goldSendBadge,
+               goldRetBadge : this.goldRetBadge,
+               dalSendBadge : this.dalSendBadge,
+               dalRetBadge : this.dalRetBadge,
+               panSendBadge : this.panSendBadge,
+               panRetBadge : this.panRetBadge,
+               bronzeSendBadge : this.bronzeSendBadge,
+               nitricRetBadge : this.nitricRetBadge
+             };
+             this.badgeValueSub.next(a);
 
             //  this.jobReturnDataSub.next([...this.jobReturnData]);
-             let index = this.jobBadgeArray.findIndex(x => x.id === this.jobTaskForm.value.id);
-             if (index === -1){
-               this.goldSendBadge = this.goldSendBadge + 1;
-               this.jobBadgeArray.push({id: this.jobTaskForm.value.id, GS: this.goldSendBadge, GR: 0, DS: 0, DR: 0, PS: 0, PR: 0, BS: 0, NR: 0, F: 0});
-             }
-             else{
-               this.jobBadgeArray[index].GS = this.jobBadgeArray[index].GS + 1;
-             }
-
-             // this.jobBadgeArray.id = this.jobTaskForm.value.id;
-             // this.jobBadgeArray.GS = this.goldSendBadge;
-
-             console.log(this.jobBadgeArray);
-             this.badgeValueSub.next(this.jobBadgeArray);
+            //  let index = this.jobBadgeArray.findIndex(x => x.id === this.jobTaskForm.value.id);
+            //  if (index === -1){
+            //    this.goldSendBadge = this.goldSendBadge + 1;
+            //    this.jobBadgeArray.push({id: this.jobTaskForm.value.id, GS: this.goldSendBadge, GR: 0, DS: 0, DR: 0, PS: 0, PR: 0, BS: 0, NR: 0, F: 0});
+            //  }
+            //  else{
+            //    this.jobBadgeArray[index].GS = this.jobBadgeArray[index].GS + 1;
+            //  }
+            //
+            //  // this.jobBadgeArray.id = this.jobTaskForm.value.id;
+            //  // this.jobBadgeArray.GS = this.goldSendBadge;
+            //
+            //  console.log(this.jobBadgeArray);
+            //  // this.badgeValueSub.next(this.jobBadgeArray);
        })));
 
 
@@ -251,6 +292,32 @@ export class JobTaskService implements OnDestroy{
     //   });
   }
 
+  getBatchCount(data){
+    this.http.get(GlobalVariable.BASE_API_URL + '/countTaskBadgeValue/' + data)
+      .subscribe((response: {success: number, data: object}) => {
+        const a = {
+          goldSendBadge : response.data[0].badgeValue,
+          goldRetBadge : response.data[1].badgeValue,
+          dalSendBadge : response.data[2].badgeValue,
+          dalRetBadge : response.data[3].badgeValue,
+          panSendBadge : response.data[4].badgeValue,
+          panRetBadge : response.data[5].badgeValue,
+          bronzeSendBadge : response.data[7].badgeValue,
+          nitricRetBadge : response.data[6].badgeValue
+        };
+
+        this.goldSendBadge = response.data[0].badgeValue;
+        this.goldRetBadge = response.data[1].badgeValue;
+        this.dalSendBadge = response.data[2].badgeValue;
+        this.dalRetBadge = response.data[3].badgeValue;
+        this.panSendBadge = response.data[4].badgeValue;
+        this.panRetBadge = response.data[5].badgeValue;
+        this.bronzeSendBadge = response.data[7].badgeValue;
+        this.nitricRetBadge = response.data[6].badgeValue;
+
+        this.badgeValueSub.next(a);
+      });
+  }
 
 
   // jobTaskData(task_id) {
@@ -261,6 +328,7 @@ export class JobTaskService implements OnDestroy{
   //       this.getJobTaskDataSub.next([...this.jobDetailData]);
   //     });
   // }
+
   jobTaskData() {
     return this.http.post( GlobalVariable.BASE_API_URL + '/getJobTaskData', { data : this.jobTaskForm.value})
       .pipe(catchError(this._serverError), tap(((response: {success: number, data: JobDetail[]}) => {
@@ -301,13 +369,7 @@ export class JobTaskService implements OnDestroy{
         .pipe(catchError(this._serverError), tap(((response: { success: number, data: JobMaster}) => {
           this.oneJobData = response.data;
         })));
-
     }
-
-
-  getBadgeValue(){
-    return this.badgeValueSub.asObservable();
-  }
 
 
   // updateBadgeValue(jobTaskId){
@@ -317,10 +379,6 @@ export class JobTaskService implements OnDestroy{
   //   }
   //   return 1;
   // }
-
-
-
-
 
   private _serverError(err: any) {
     // console.log('sever error:', err);  // debug

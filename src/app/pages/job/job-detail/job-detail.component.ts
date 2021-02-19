@@ -69,11 +69,10 @@ export class JobDetailComponent implements OnInit {
 
     // console.log(this.jobTaskService.getLatestBadgeValue());
 
-<<<<<<< HEAD
+
     // this.FGWt = this.billService.FGWt;
 
-=======
->>>>>>> d8929a9b5c7b4108a4f1dcb0386d9e02241043c5
+
   }
 
   printDivStyle = {
@@ -94,13 +93,12 @@ export class JobDetailComponent implements OnInit {
     this.jobTaskForm = this.jobTaskService.jobTaskForm;
     this.userData = JSON.parse(localStorage.getItem('user'));
 
-<<<<<<< HEAD
+
     this.billService.getTotalGoldQuantityDataSubUpdateListener().subscribe((response) => {
       this.FGWt = response;
     });
 
-=======
->>>>>>> d8929a9b5c7b4108a4f1dcb0386d9e02241043c5
+
     this.route.params.subscribe(params => {
       this.showTransactionDiv = false;
       // tslint:disable-next-line:radix

@@ -91,7 +91,7 @@ export class NitricReturnComponent implements OnInit {
           this.total = this.total + Math.abs(parseFloat(this.jobTaskForm.value.return_quantity));
           this.jobTaskService.getTotal().subscribe();
 
-          // this.billService.getTotalGoldQuantity(this.oneJobData.id).subscribe();
+          this.billService.getTotalGoldQuantity(this.oneJobData.id).subscribe();
 
           this.jobTaskService.jobTaskData().subscribe((response) => {
             this.jobTaskData = response.data;

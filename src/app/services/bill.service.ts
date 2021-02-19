@@ -33,6 +33,7 @@ export class BillService {
   showCompletedBillsDataSub = new Subject<BillDetail[]>();
   completedBillDataSub = new Subject<FinishedJobs[]>();
   getTotalGoldQuantitySub =  new Subject<any>();
+  FGWt: any ;
 
   getFinishedJobsSubUpdateListener(){
     return this.finishedJobsSub.asObservable();
@@ -202,7 +203,8 @@ export class BillService {
   getTotalGoldQuantity(data){
     return this.http.get<{ success: number, data: number }>( GlobalVariable.BASE_API_URL + '/getTotalGoldQuantity/' + data)
       .pipe(catchError(this._serverError), tap(((response: {success: number, data: any }) => {
-        this.getTotalGoldQuantitySub = response.data;
+         this.FGWt = response.data.data;
+         this.getTotalGoldQuantitySub.next(this.FGWt);
       })));
   }
 

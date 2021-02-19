@@ -33,7 +33,7 @@ export class JobDetailComponent implements OnInit {
   jobTransactionData: JobDetail[];
   btnControl: boolean = null;
   tempTotalData = [0, 0 , 0 , 0 , 0 , 0, 0, 0];
-  FGWt = 0 ;
+  FGWt: number;
 
   // we have to change this values dynamically
   finshBadgeValue = 0;
@@ -69,7 +69,7 @@ export class JobDetailComponent implements OnInit {
 
     // console.log(this.jobTaskService.getLatestBadgeValue());
 
-
+    // this.FGWt = this.billService.FGWt;
 
   }
 
@@ -86,10 +86,14 @@ export class JobDetailComponent implements OnInit {
 
     this.showTransactionDiv = true;
 
+
+
     this.jobTaskForm = this.jobTaskService.jobTaskForm;
     this.userData = JSON.parse(localStorage.getItem('user'));
 
-
+    this.billService.getTotalGoldQuantityDataSubUpdateListener().subscribe((response) => {
+      this.FGWt = response;
+    });
 
     this.route.params.subscribe(params => {
       this.showTransactionDiv = false;
@@ -132,13 +136,13 @@ export class JobDetailComponent implements OnInit {
         //   this.oneJobData.status_id = 100;
         // }
       });
+      //
+      this.billService.getTotalGoldQuantity(this.id).subscribe((response) => {
+        this.FGWt = response.data.data;
+      });
 
       this.jobTaskForm.patchValue({id: params.id});
 
-      // this.billService.getTotalGoldQuantityDataSubUpdateListener().subscribe((response) =>{
-      //   this.FGWt = response;
-      //   console.log(this.FGWt);
-      // });
 
       this.jobTaskService.getUpdatedSavedJobs();
       this.jobTaskService.getUpdatedFinishedJobs();

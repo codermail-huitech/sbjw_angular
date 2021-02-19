@@ -148,7 +148,6 @@ export class JobService {
           this.finishedJobsList.unshift(this.savedJobsList[index]);
           this.savedJobsList.splice(index,1);
 
-
           this.finishedJobsSub.next([...this.finishedJobsList]);
           this.savedJobsSub.next([...this.savedJobsList]);
         }

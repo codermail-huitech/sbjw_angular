@@ -62,6 +62,8 @@ export class GoldSubmitComponent implements OnInit {
   }
 
   onSubmit(){
+
+    // this.jobTaskService.getBatchCount();
     if (this.jobTaskForm.value.return_quantity === null){
       this._snackBar.openFromComponent(SncakBarComponent, {
         duration: 4000, data: {message: 'Please enter quantity before submit'}
@@ -77,6 +79,8 @@ export class GoldSubmitComponent implements OnInit {
       this.jobTaskForm.patchValue({ job_Task_id: 1, material_id: this.oneJobData.material_id, id: this.jobMasterId, size: this.oneJobData.size, employee_id: user.id });
       // console.log(this.jobTaskForm.value);
       this.jobTaskForm.value.return_quantity = parseFloat(this.jobTaskForm.value.return_quantity);
+      // console.log(this.jobTaskForm.value);
+      // this.jobTaskService.getBatchCount(this.jobTaskForm.value.job_Task_id);
       this.jobTaskService.jobReturn().subscribe((response ) => {
         if (response.success === 1){
           this._snackBar.openFromComponent(SncakBarComponent, {

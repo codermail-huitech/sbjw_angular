@@ -85,6 +85,7 @@ export class JobDetailComponent implements OnInit {
 
 
   ngOnInit(): void {
+    console.log('job deteil init invoked');
 
     this.showTransactionDiv = true;
 
@@ -124,6 +125,7 @@ export class JobDetailComponent implements OnInit {
 
 
       this.jobTaskService.getBadgeValue().subscribe((response) => {
+        console.log('listener invoked');
         this.finshBadgeValue = response.finshBadgeValue || 0;
         this.goldSendBadge = response.goldSendBadge;
         this.goldRetBadge = response.goldRetBadge;

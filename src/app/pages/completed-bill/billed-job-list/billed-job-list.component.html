@@ -1,0 +1,19 @@
+<div  fxFlex="100" class="col"  id ="show-billNumber-div"  style="background-color: #d9dd9b">
+  <table class="table">
+    <thead>
+    <tr>
+      <th>SL No.</th>
+      <th>Job Number</th>
+      <th>Report</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr  *ngFor="let data of billedJobList; let indexOfelement = index" >
+      <td>{{indexOfelement+1}}</td>
+      <td>{{data.job_number}}</td>
+      <td><button  class="btn btn-primary" (click)="getReport(data.id)">View Report</button></td>
+
+    </tr>
+    </tbody>
+  </table>
+</div>

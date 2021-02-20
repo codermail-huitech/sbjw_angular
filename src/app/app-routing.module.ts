@@ -38,6 +38,7 @@ import {DueByAgentComponent} from './pages/due-by-agent/due-by-agent.component';
 import {CustomerUnderAgentComponent} from './pages/due-by-agent/customer-under-agent/customer-under-agent.component';
 import {TransactionComponent} from './pages/transaction/transaction.component';
 import {EmployeeStockComponent} from './pages/employee-stock/employee-stock.component';
+import {BilledJobListComponent} from './pages/completed-bill/billed-job-list/billed-job-list.component';
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -59,6 +60,7 @@ const routes: Routes = [
   },
   {path: 'customer_under_agent/:id', canActivate : [AuthGuardService], component: CustomerUnderAgentComponent},
   {path: 'completed_bill_details/:id', canActivate : [AuthGuardService], component: CompletedBillDetailsComponent},
+  {path: 'billedJobList/:id', canActivate : [AuthGuardService], component: BilledJobListComponent},
   {path: 'job_detail/:id', canActivate : [AuthGuardService], component: JobDetailComponent,
     children: [
       {path: '', component: JobTransactionComponent},

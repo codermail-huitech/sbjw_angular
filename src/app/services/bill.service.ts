@@ -20,6 +20,7 @@ export class BillService {
 
   finshedJobs : FinishedJobs[] = [];
   completedBill : FinishedJobs[] = [];
+  billedJobs : FinishedJobs[] = [];
   orderDetails : OrderDetail[] = [];
   completedBillOrderDetails : OrderDetail[] = [];
   finishedJobData : JobMaster[];
@@ -32,6 +33,7 @@ export class BillService {
   finishedBillDataSub = new Subject<JobMaster[]>();
   showCompletedBillsDataSub = new Subject<BillDetail[]>();
   completedBillDataSub = new Subject<FinishedJobs[]>();
+  billedJobListSub = new Subject<FinishedJobs[]>();
   getTotalGoldQuantitySub =  new Subject<any>();
   FGWt: any ;
 
@@ -65,6 +67,10 @@ export class BillService {
     return this.getTotalGoldQuantitySub.asObservable();
   }
 
+  getBilledJobListSubUpdateListener(){
+    return this.billedJobListSub.asObservable();
+  }
+
 
   constructor(private http: HttpClient) {
     this.http.get(GlobalVariable.BASE_API_URL + '/finishedJobsCustomers')
@@ -82,6 +88,9 @@ export class BillService {
         // console.log(this.finshedJobs);
         this.completedBillDataSub.next([...this.completedBill]);
       });
+
+
+
   }
 
   getFinishedJobs(){
@@ -139,6 +148,23 @@ export class BillService {
         this.finishedJobData = data;
         this.finishedJobDataSub.next([...this.finishedJobData]);
       });
+  }
+
+  getBilledJobList(data){
+    this.http.get(GlobalVariable.BASE_API_URL + '/getBilledJobList/' + data)
+      .subscribe((response: {success: number, data: FinishedJobs[]}) => {
+        const {data} = response;
+        this.billedJobs = data;
+        // console.log(this.finshedJobs);
+        this.billedJobListSub.next([...this.billedJobs]);
+      });
+
+  }
+
+  getBilledJobReport(data){
+    return this.http.get( GlobalVariable.BASE_API_URL + '/getBilledJobInfo/' + data)
+      .pipe(catchError(this._serverError), tap(((response: {success: number, data: any}) => {
+      })));
   }
 
 
@@ -215,7 +241,6 @@ export class BillService {
       .pipe(catchError(this._serverError), tap(((response: {success: number, data: BillDetail}) => {
       })));
   }
-
 
   private _serverError(err: any) {
     // console.log('sever error:', err);  // debug

@@ -6,6 +6,7 @@
         <th>SL No.</th>
         <th>Bill Number</th>
         <th>Status</th>
+        <th>Report</th>
       </tr>
       </thead>
       <tbody>
@@ -13,6 +14,7 @@
         <td>{{indexOfelement+1}}</td>
         <td>{{data.bill_number}}</td>
         <td><button  class="btn btn-primary" (click)="getBillDetails(data.id)">View Bill</button></td>
+        <td><button  class="btn btn-primary" [routerLink]="['/billedJobList',data.id]">job details</button></td>
       </tr>
       </tbody>
     </table>

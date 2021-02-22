@@ -23,6 +23,7 @@
             <th>Customer Name</th>
             <th>Job Number</th>
             <th>Model Number</th>
+            <th>Date</th>
             <th>Quantity</th>
             <th>Size</th>
             <th>Send to Task</th>
@@ -34,6 +35,7 @@
             <td>{{data.person_name | uppercase}}</td>
             <td >{{data.job_number}}</td>
             <td >{{data.model_number}}</td>
+            <td >{{data.date | date : 'dd/MM/yyyy'}}</td>
             <td >{{data.quantity}}</td>
             <td >{{data.size}}</td>
             <td>
@@ -91,6 +93,7 @@
             <th>Customer Name </th>
             <th>Job Number</th>
             <th>Model Number</th>
+            <th>Date</th>
             <th>Quantity</th>
             <th>Size</th>
             <th>Show Details</th>
@@ -103,6 +106,7 @@
             <td>{{data.person_name | uppercase}}</td>
             <td >{{data.job_number}}</td>
             <td >{{data.model_number}}</td>
+            <td >{{data.date | date : 'dd/MM/yyyy'}}</td>
             <td >{{data.quantity}}</td>
             <td >{{data.size}}</td>
             <td>

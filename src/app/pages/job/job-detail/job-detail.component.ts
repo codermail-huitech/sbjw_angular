@@ -85,25 +85,20 @@ export class JobDetailComponent implements OnInit {
 
 
   ngOnInit(): void {
-    console.log('job deteil init invoked');
-
     this.showTransactionDiv = true;
-
-
 
     this.jobTaskForm = this.jobTaskService.jobTaskForm;
     this.userData = JSON.parse(localStorage.getItem('user'));
-
 
     this.billService.getTotalGoldQuantityDataSubUpdateListener().subscribe((response) => {
       this.FGWt = response;
     });
 
-
     this.route.params.subscribe(params => {
       this.showTransactionDiv = false;
       // tslint:disable-next-line:radix
       this.id = parseInt(params.id);
+      // console.log(this.id);
       this.jobTaskService.getOneJobData(this.id).subscribe((response: {success: number , data: JobMaster}) => {
         this.oneJobData = response.data;
         // console.log(this.oneJobData);
@@ -125,7 +120,6 @@ export class JobDetailComponent implements OnInit {
 
 
       this.jobTaskService.getBadgeValue().subscribe((response) => {
-        console.log('listener invoked');
         this.finshBadgeValue = response.finshBadgeValue || 0;
         this.goldSendBadge = response.goldSendBadge;
         this.goldRetBadge = response.goldRetBadge;

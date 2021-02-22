@@ -28,6 +28,7 @@ export class GoldSubmitComponent implements OnInit {
   showJobTaskData = false;
   jobTaskData: JobDetail[];
   total: number;
+  materialName: string;
 
   constructor(private jobTaskService: JobTaskService, private router: ActivatedRoute, private _snackBar: MatSnackBar) {
     // this.savedJobsData = this.jobTaskService.getAllJobList();
@@ -46,11 +47,23 @@ export class GoldSubmitComponent implements OnInit {
       // console.log(this.savedJobsData);
       const index = this.savedJobsData.findIndex(x => x.id === this.jobMasterId);
       this.oneJobData = this.savedJobsData[index];
-      this.jobTaskForm.patchValue({material_name: this.oneJobData.material_name});
+      this.materialName = this.oneJobData.material_name;
+      // console.log(this.oneJobData);
+      // this.jobTaskForm.patchValue({material_name: this.oneJobData.material_name});
+      // this.jobTaskForm.value.material_name = this.oneJobData.material_name;
     });
-    const index = this.savedJobsData.findIndex(x => x.id === this.jobMasterId);
-    this.oneJobData = this.savedJobsData[index];
-    this.jobTaskForm.patchValue({material_name: this.oneJobData.material_name});
+    // const index = this.savedJobsData.findIndex(x => x.id === this.jobMasterId);
+    // this.oneJobData = this.savedJobsData[index];
+    // this.materialName = this.oneJobData.material_name;
+
+    // this.jobTaskService.getMaterialDataUpdateListener().subscribe((response) => {
+    //   this.materialData = response;
+    // });
+    // this.materialData = this.jobTaskService.getMaterials();
+    // const matIndex = this.materialData.findIndex(x => x.id === this.oneJobData.material_id);
+    // // this.returnMaterial = this.materialData[matIndex].material_name;
+    // this.jobTaskForm.patchValue({material_name: this.materialData[matIndex].material_name});
+    // this.jobTaskForm.patchValue({material_name: this.oneJobData.material_name});
 
   }
 
@@ -62,7 +75,6 @@ export class GoldSubmitComponent implements OnInit {
   }
 
   onSubmit(){
-
     // this.jobTaskService.getBatchCount();
     if (this.jobTaskForm.value.return_quantity === null){
       this._snackBar.openFromComponent(SncakBarComponent, {

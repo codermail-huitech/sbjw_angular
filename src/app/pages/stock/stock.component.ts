@@ -184,34 +184,44 @@ export class StockComponent implements OnInit {
       confirmButtonText: 'Yes, save it!',
       cancelButtonText: 'No, cancel it'
     }).then((result) => {
-      this.stockList = Array(parseInt(this.stockForm.value.division)).fill(this.stockForm.value);
-      if (this.tempStock){
-        this.stockList.push(this.tempStock);
-      }
-      Swal.fire({
-        title: 'Please Wait !',
-        html: 'data saving',// add html attribute if you want or remove
-        allowOutsideClick: false,
-        // timer: 3000,
-        onBeforeOpen: () => {
-          Swal.showLoading();
-        },
-
-      });
-      this.stockService.saveStock(this.stockList).subscribe((response: {success: number, data: Stock})  => {
-        if (response.data) {
-          Swal.hideLoading();
-          Swal.fire(
-            'Done!',
-            'Submitted in Stock',
-            'success'
-          );
-          // Swal.hideLoading();
-          this.jobService.getUpdatedFinishedJob();
-          this.stockService.getUpdatedStockList();
-          this.stockForm.reset();
+      if(result.value){
+        this.stockList = Array(parseInt(this.stockForm.value.division)).fill(this.stockForm.value);
+        if (this.tempStock){
+          this.stockList.push(this.tempStock);
         }
-      });
+        Swal.fire({
+          title: 'Please Wait !',
+          html: 'data saving',// add html attribute if you want or remove
+          allowOutsideClick: false,
+          // timer: 3000,
+          onBeforeOpen: () => {
+            Swal.showLoading();
+          },
+
+        });
+        this.stockService.saveStock(this.stockList).subscribe((response: {success: number, data: Stock})  => {
+          if (response.data) {
+            Swal.hideLoading();
+            Swal.fire(
+              'Done!',
+              'Submitted in Stock',
+              'success'
+            );
+            // Swal.hideLoading();
+            this.jobService.getUpdatedFinishedJob();
+            this.stockService.getUpdatedStockList();
+            this.stockForm.reset();
+          }
+        });
+      }
+      else if (result.dismiss === Swal.DismissReason.cancel) {
+        Swal.fire(
+          'Cancelled',
+          'Stock is not generated',
+          'error'
+        );
+      }
+
     });
 
   }

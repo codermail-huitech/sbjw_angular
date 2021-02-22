@@ -38,13 +38,11 @@ export class JobTaskComponent implements OnInit {
 
   constructor(private jobTaskService: JobTaskService , private _snackBar: MatSnackBar, private confirmationDialogService: ConfirmationDialogService, private orderService: OrderService , private  jobService: JobService) {
 
-    console.log('i am constructor');
     this.page = 1;
     this.pageSize = 15;
   }
 
   ngOnInit(): void {
-    console.log('i am initializer');
     this.showCompleteJobs = false;
     this.jobTaskForm = this.jobTaskService.jobTaskForm;
     this.jobService.getSavedJobsUpdateListener().subscribe((jobData: JobMaster[]) => {

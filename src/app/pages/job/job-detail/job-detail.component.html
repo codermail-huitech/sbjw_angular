@@ -138,7 +138,7 @@
 <!--      <button type="button" class="btn btn-primary"  [hidden]="oneJobData.status_id==100"   [routerLink]="['./job_transaction']">Details</button>-->
 <!--    </div>-->
 
-    <div class="m-2" *ngIf="true">
+    <div class="m-2" *ngIf="true"  >
       <button mat-raised-button class="btn btn-warning ml-2 mt-1 mb-1"[matBadge] = "goldRetBadge"  matBadgePosition="above before" [disabled] = this.btnControl [hidden]="oneJobData.status_id==100" [routerLink]="['./goldReturn']">Gold Return</button>
       <button mat-raised-button class="btn btn-primary ml-2 mt-1 mb-1" [matBadge] = "dalSendBadge"  matBadgePosition="above before" [disabled] = this.btnControl [hidden]="oneJobData.status_id==100" [routerLink]="['./dalSubmit']">Dal Submit</button>
       <button mat-raised-button class="btn btn-warning ml-2 mt-1 mb-1" [matBadge] = "BronzeSendBadge"  matBadgePosition="above before" [disabled] = this.btnControl [hidden]="oneJobData.status_id==100" [routerLink]="['./bronzeSubmit']">Bronze Submit</button>

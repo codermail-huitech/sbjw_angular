@@ -13,6 +13,7 @@ import toWords from 'number-to-words/src/toWords.js';
 import {StockService} from '../../../services/stock.service';
 import {AgentService} from '../../../services/agent.service';
 import {JobService} from '../../../services/job.service';
+import Swal from "sweetalert2";
 
 @Component({
   selector: 'app-bill-job-master-details',
@@ -104,61 +105,80 @@ export class BillJobMasterDetailsComponent implements OnInit {
   }
 
   generateBill() {
-    const x = new Date();
+    Swal.fire({
+      title: 'Do you want to generate the bill?',
+      text: 'Bill  will be generated',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, generate it!',
+      cancelButtonText: 'No, cancel it'
+    }).then((result) => {
+      if(result.value){
+        const x = new Date();
 
-    if (this.billDetailsData[0]) {
-        this.billMasterData = {
-          order_master_id: this.billDetailsData[0].order_master_id,
-          orderNumber: this.billDetailsData[0].orderNumber,
-          personName: this.billDetailsData[0].person_name,
-          address1: this.billDetailsData[0].address1,
-          mobile1: this.billDetailsData[0].mobile1,
-          pin: this.billDetailsData[0].pin,
-          area: this.billDetailsData[0].area,
-          city: this.billDetailsData[0].city,
-          state: this.billDetailsData[0].state,
-          po: this.billDetailsData[0].po,
-          orderDate: this.billDetailsData[0].date_of_order,
-          karigarhId: this.billDetailsData[0].karigarh_id,
-          customerId: this.billDetailsData[0].customer_id,
-          agent_id: this.billDetailsData[0].agent_id,
-          billDate:  x.getFullYear() + '-' + parseInt(String(x.getMonth() + 1)) + '-' + x.getDate(),
-          discount: (this.billDetailsData[0].discount / 100) * this.totalCost
-        };
+        if (this.billDetailsData[0]) {
+          this.billMasterData = {
+            order_master_id: this.billDetailsData[0].order_master_id,
+            orderNumber: this.billDetailsData[0].orderNumber,
+            personName: this.billDetailsData[0].person_name,
+            address1: this.billDetailsData[0].address1,
+            mobile1: this.billDetailsData[0].mobile1,
+            pin: this.billDetailsData[0].pin,
+            area: this.billDetailsData[0].area,
+            city: this.billDetailsData[0].city,
+            state: this.billDetailsData[0].state,
+            po: this.billDetailsData[0].po,
+            orderDate: this.billDetailsData[0].date_of_order,
+            karigarhId: this.billDetailsData[0].karigarh_id,
+            customerId: this.billDetailsData[0].customer_id,
+            agent_id: this.billDetailsData[0].agent_id,
+            billDate: x.getFullYear() + '-' + parseInt(String(x.getMonth() + 1)) + '-' + x.getDate(),
+            discount: (this.billDetailsData[0].discount / 100) * this.totalCost
+          };
+        }
+        this.billService.saveBillMaster(this.billMasterData, this.billDetailsData).subscribe((response) => {
+
+          this.billMasterData = {
+            order_master_id: this.billDetailsData[0].order_master_id,
+            orderNumber: this.billDetailsData[0].order_number,
+            personName: this.billDetailsData[0].person_name,
+            address1: this.billDetailsData[0].address1,
+            mobile1: this.billDetailsData[0].mobile1,
+            pin: this.billDetailsData[0].pin,
+            area: this.billDetailsData[0].area,
+            city: this.billDetailsData[0].city,
+            state: this.billDetailsData[0].state,
+            po: this.billDetailsData[0].po,
+            orderDate: this.billDetailsData[0].date_of_order,
+            karigarhId: this.billDetailsData[0].karigarh_id,
+            customerId: this.billDetailsData[0].customer_id,
+            billDate: x.getFullYear() + '-' + parseInt(String(x.getMonth() + 1)) + '-' + x.getDate(),
+            // discount: this.billDetailsData[0].discount,
+            discount: this.discount,
+            billNumber: response.data.bill_number
+          };
+          this.discount = (this.billDetailsData[0].discount / 100) * this.totalCost;
+          this.discountPercentage = this.billDetailsData[0].discount;
+          this.totalCost = this.totalCost - this.discount;
+          this.billService.getFinishedJobsCustomers();
+          this.billService.getCompletedBillCustomers();
+          this.agentService.getLatestDueByAgentListList();
+          this.jobService.getFinishedJobList();
+          this.jobService.getUpdatedFinishedJob();
+
+          // this.stockService.getUpdatedStockRecord();
+          this.showBill = true;
+        });
       }
-    this.billService.saveBillMaster(this.billMasterData, this.billDetailsData).subscribe((response) => {
+      else if (result.dismiss === Swal.DismissReason.cancel) {
+        Swal.fire(
+          'Cancelled',
+          'Bill is not generated',
+          'error'
+        );
+      }
 
-      this.billMasterData = {
-          order_master_id: this.billDetailsData[0].order_master_id,
-          orderNumber: this.billDetailsData[0].order_number,
-          personName: this.billDetailsData[0].person_name,
-          address1: this.billDetailsData[0].address1,
-          mobile1: this.billDetailsData[0].mobile1,
-          pin: this.billDetailsData[0].pin,
-          area: this.billDetailsData[0].area,
-          city: this.billDetailsData[0].city,
-          state: this.billDetailsData[0].state,
-          po: this.billDetailsData[0].po,
-          orderDate: this.billDetailsData[0].date_of_order,
-          karigarhId: this.billDetailsData[0].karigarh_id,
-          customerId: this.billDetailsData[0].customer_id,
-          billDate:  x.getFullYear() + '-' + parseInt(String(x.getMonth() + 1)) + '-' + x.getDate(),
-          // discount: this.billDetailsData[0].discount,
-          discount: this.discount,
-          billNumber: response.data.bill_number
-        };
-      this.discount = (this.billDetailsData[0].discount / 100) * this.totalCost ;
-      this.discountPercentage = this.billDetailsData[0].discount;
-      this.totalCost = this.totalCost - this.discount;
-      this.billService.getFinishedJobsCustomers();
-      this.billService.getCompletedBillCustomers();
-      this.agentService.getLatestDueByAgentListList();
-      this.jobService.getFinishedJobList();
-      this.jobService.getUpdatedFinishedJob();
-
-        // this.stockService.getUpdatedStockRecord();
-      this.showBill = true;
-      });
+    });
   }
 
 

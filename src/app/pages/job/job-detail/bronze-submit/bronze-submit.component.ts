@@ -37,7 +37,7 @@ export class BronzeSubmitComponent implements OnInit {
     this.savedJobsData = this.jobTaskService.getAllJobList();
     const index = this.savedJobsData.findIndex(x => x.id == this.jobMasterId);
     this.oneJobData = this.savedJobsData[index];
-    this.jobTaskForm.patchValue({material_name: this.oneJobData.material_name});
+    // this.jobTaskForm.patchValue({material_name: this.oneJobData.material_name});
     this.jobTaskService.getJobTaskDataUpdateListener().subscribe((response) => {
       this.jobTaskData = response;
     });

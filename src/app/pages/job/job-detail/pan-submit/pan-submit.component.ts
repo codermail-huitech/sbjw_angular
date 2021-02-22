@@ -14,26 +14,28 @@ import {JobDetail} from "../../../../models/jobDetail.model";
 })
 export class PanSubmitComponent implements OnInit {
 
-  jobMasterId : number;
+  jobMasterId: number;
   jobTaskForm: FormGroup;
-  savedJobsData : JobMaster[];
-  oneJobData : JobMaster;
+  savedJobsData: JobMaster[];
+  oneJobData: JobMaster;
   public currentError: any;
   showJobTaskData = false;
-  jobTaskData : JobDetail[];
-  total : number;
-  constructor(private jobTaskService: JobTaskService,private router: ActivatedRoute,private _snackBar: MatSnackBar) { }
+  jobTaskData: JobDetail[];
+  total: number;
+  constructor(private jobTaskService: JobTaskService, private router: ActivatedRoute, private _snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
     this.total = 0;
     this.jobTaskForm = this.jobTaskService.jobTaskForm;
     this.router.parent.params.subscribe(params =>{
-      this.jobMasterId=parseInt(params.id);
+      this.jobMasterId = parseInt(params.id);
     });
     this.savedJobsData = this.jobTaskService.getAllJobList();
     const index = this.savedJobsData.findIndex(x => x.id === this.jobMasterId);
     this.oneJobData = this.savedJobsData[index];
-    this.jobTaskForm.patchValue({material_name: this.oneJobData.material_name});
+    // this.jobTaskForm.patchValue({material_name: this.oneJobData.material_name});
+    // this.jobTaskForm.patchValue({material_name: 'test'});
+    // console.log(this.oneJobData.material_name);
     this.jobTaskService.getJobTaskDataUpdateListener().subscribe((response) => {
       this.jobTaskData = response;
     });

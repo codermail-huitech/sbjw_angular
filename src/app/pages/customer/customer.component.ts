@@ -25,6 +25,7 @@ export class CustomerComponent implements OnInit {
 
   constructor(public customerService: CustomerService, private http: HttpClient, private _snackBar: MatSnackBar) {
     this.showDeveloperDiv = false;
+
   }
 
   onCustomerInsert(){
@@ -35,20 +36,25 @@ export class CustomerComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
      // this.customers = this.customerService.getCustomers();
      this.customerForm = this.customerService.customerForm;
-     // this.customerService.getCustomerUpdateListener();
+     this.customerService.getCustomerUpdateListener().subscribe((response)=>{
+       this.customers = response;
+
+     });
   }
 
   onSubmit() {
     this.customerService.saveCustomer(this.customerForm.value).subscribe((response: {success: number, data: Customer}) => {
       if (response.data){
+        console.log(response.data);
         Swal.fire(
           'Done!',
           'Customer Added',
           'success'
         );
-        this.customers.unshift(response.data);
+        // this.customers.unshift(response.data);
       }
     });
   }
@@ -68,6 +74,7 @@ export class CustomerComponent implements OnInit {
   // this function will update the customer
   updateCustomer() {
     let updateObserable = new Observable<any>();
+    console.log(this.customerForm.value);
     updateObserable = this.customerService.updateCustomer(this.customerForm.value);
 
 

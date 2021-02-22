@@ -59,9 +59,9 @@ export class CustomerService implements OnDestroy{
       area : new FormControl(null),
       city : new FormControl(null),
       pin : new FormControl(null, [Validators.pattern('^[0-9]*$'), Validators.maxLength(6)]),
-      opening_balance_LC : new FormControl(0.00),
-      opening_balance_Gold : new FormControl(0.00),
-      mv : new FormControl(0.00),
+      opening_balance_LC : new FormControl(0),
+      opening_balance_Gold : new FormControl(0),
+      mv : new FormControl(0),
     });
 
   } // End of Controller
@@ -72,10 +72,12 @@ export class CustomerService implements OnDestroy{
     return this.http.post<CustomerResponseData>('http://127.0.0.1:8000/api/customers', customer)
       .pipe(tap((response: {success: number, data: Customer} ) => {
         this.customerData.unshift(response.data);
+        // this.customerData.push(response.data);
         this.customerSub.next([...this.customerData]);
       }));
   }
   updateCustomer(customer){
+    console.log(customer);
     return this.http.patch<CustomerResponseData>('http://127.0.0.1:8000/api/customers/' + customer.id, customer)
       .pipe(catchError(this._serverError), tap((response: {success: number, data: Customer}) => {
         const index = this.customerData.findIndex(x => x.id === customer.id);
@@ -100,8 +102,9 @@ export class CustomerService implements OnDestroy{
 
 
   fillFormByUpdatebaleData(customer){
-    // console.log(customer);
+    console.log(customer);
     this.customerForm.setValue(customer);
+    // console.log(this.customerForm.value);
   }
 
   private handleError(errorResponse: HttpErrorResponse){

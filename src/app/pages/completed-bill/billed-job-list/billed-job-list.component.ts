@@ -14,8 +14,11 @@ export class BilledJobListComponent implements OnInit {
   showReport = false;
   jobReport: any[];
   jobNumber: string;
+  totalBilledGold: any;
+  totalPureGold: any;
+  testMath =  Math;
 
-  constructor(private  route: ActivatedRoute,private billService: BillService) { }
+  constructor(private  route: ActivatedRoute, private billService: BillService) { }
 
   ngOnInit(): void {
     this.showReport = false;
@@ -29,10 +32,16 @@ export class BilledJobListComponent implements OnInit {
   }
   getReport(item){
     console.log(item);
-     this.billService.getBilledJobReport(item.id).subscribe((response) => {
+    this.totalBilledGold = 0;
+    this.totalPureGold = 0;
+    this.billService.getBilledJobReport(item.id).subscribe((response) => {
        if(response.data){
          this.showReport = true;
          this.jobReport = response.data;
+         for (let i = 0; i < this.jobReport.length ; i++){
+            this.totalBilledGold = this.totalBilledGold + this.jobReport[i].total;
+         }
+         this.totalPureGold = this.totalBilledGold * 0.92;
          this.jobNumber = item.job_number;
        }
      });

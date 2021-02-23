@@ -5,7 +5,7 @@
         <tr>
           <th>SL No.</th>
           <th>Job Number</th>
-          <th>Report</th>
+          <th>Action</th>
         </tr>
       </thead>
       <tbody>
@@ -20,49 +20,57 @@
   </div>
 </div>
 <div [hidden]="!showReport">
-  <div  fxFlex="100" class="col"  id ="show-billNumber-div"  style="background-color: #d9dd9b">
+  <div  fxFlex="100" class="row"  id ="show-billNumber-div"  style="background-color: #d9dd9b">
 
 <!--    <th style="width: 5px">PLoss :</th>{{jobReport[0].p_loss}}-->
 <!--    <th style="width: 5px">Quantity :</th>{{jobReport[0].quantity}}-->
 <!--    <th style="width: 5px">Rate : </th>{{jobReport[0].rate}}-->
 <!--    <th style="width: 5px">MV  :</th>{{jobReport[0].mv}}-->
-    <div style="text-align: center; font-weight: bolder; padding-top: 10px">
+    <div fxFlex="100" style="text-align: center; font-weight: bolder; padding-top: 10px">
       <h1>{{jobNumber}}</h1>
     </div>
+    <div fxFlex="100" class="col">
+      <div fxFlex="10"></div>
+      <div fxFlex="80" style="align-content: center; padding-top: 5px; padding-left: 10px; padding-right: 10px">
+        <table class="table jobInfo" style="margin: 0px" *ngIf="jobReport">
+          <tbody>
+          <tr>
+            <td>PLoss: &nbsp;&nbsp;&nbsp; {{jobReport[0].p_loss}}</td>
+            <td>Quantity:  &nbsp;&nbsp;&nbsp;{{jobReport[0].quantity}}</td>
+            <td>Rate: &nbsp;&nbsp;&nbsp;{{jobReport[0].rate}}</td>
+            <td>MV: &nbsp;&nbsp;&nbsp;{{jobReport[0].mv}}</td>
+          </tr>
+          </tbody>
+        </table>
+        <table class="table table-bordered taskReport" *ngIf="jobReport">
+          <thead>
+          <tr>
+            <th>SL No.</th>
+            <th class="text-left">Task Name</th>
+            <th class="text-right">Submit</th>
+            <th class="text-right">Return</th>
+            <th class="text-right">Value Taken</th>
+            <th class="text-right">Total</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr  *ngFor="let data of jobReport; let indexOfelement = index" >
+            <td>{{indexOfelement+1}}</td>
+            <td class="text-left">{{data.task_name}}</td>
+            <td class="text-right">{{data.submit.toFixed(3)}} gm</td>
+            <td class="text-right">{{data.return.toFixed(3)}} gm</td>
+            <td class="text-right">{{data.valueTaken}}%</td>
+            <td class="text-right">{{data.total.toFixed(3)}} gm</td>
+            <!--        <td><button  class="btn btn-primary" (click)="getReport(data.id)">View Report</button></td>-->
 
-    <table class="table" style="margin: 0px" *ngIf="jobReport">
-      <tbody>
-      <tr>
-        <td>PLoss: &nbsp;&nbsp;&nbsp; {{jobReport[0].p_loss}}</td>
-        <td>Quantity:  &nbsp;&nbsp;&nbsp;{{jobReport[0].quantity}}</td>
-        <td>Rate: &nbsp;&nbsp;&nbsp;{{jobReport[0].rate}}</td>
-        <td>MV: &nbsp;&nbsp;&nbsp;{{jobReport[0].mv}}</td>
-      </tr>
-      </tbody>
-    </table>
-    <table class="table" *ngIf="jobReport">
-      <thead>
-      <tr>
-        <th>SL No.</th>
-        <th>Task Name</th>
-        <th>Submit</th>
-        <th>Return</th>
-        <th>Value Taken</th>
-        <th>Total</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr  *ngFor="let data of jobReport; let indexOfelement = index" >
-        <td>{{indexOfelement+1}}</td>
-        <td>{{data.task_name}}</td>
-        <td>{{data.submit.toFixed(3)}}</td>
-        <td>{{data.return.toFixed(3)}}</td>
-        <td>{{data.valueTaken}}%</td>
-        <td>{{data.total.toFixed(3)}}</td>
-<!--        <td><button  class="btn btn-primary" (click)="getReport(data.id)">View Report</button></td>-->
+          </tr>
+          </tbody>
+        </table>
+      </div>
+      <div fxFlex="10"></div>
+    </div>
 
-      </tr>
-      </tbody>
-    </table>
+
+
   </div>
 </div>

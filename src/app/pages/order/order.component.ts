@@ -123,7 +123,6 @@ export class OrderComponent implements OnInit {
       });
     this.productService.getProductUpdateListener().subscribe((response) => {
       this.productList  = response;
-      console.log(this.productList);
     });
     this.orderService.getOrderDetailsListener()
       .subscribe((orderDetail) => {
@@ -360,14 +359,18 @@ export class OrderComponent implements OnInit {
   findModel(){
     const index = this.customerList.findIndex(k => k.id === this.orderMasterForm.value.customer_id );
     // tslint:disable-next-line:max-line-length
-    console.log(this.orderDetailsForm.value.model_number);
-    console.log(this.customerList[index].customer_category_id);
+    // console.log(this.orderDetailsForm.value.model_number);
+    // console.log(this.customerList[index].customer_category_id);
     this.orderService.getProductData(this.orderDetailsForm.value.model_number, this.customerList[index].customer_category_id)
       .subscribe((responseProducts: {success: number, data: Product}) => {
       if (responseProducts.data){
         const tempProduct = responseProducts.data;
         // tslint:disable-next-line:max-line-length
-        this.orderDetailsForm.patchValue({ product_id: tempProduct.id, p_loss: tempProduct.p_loss, price: tempProduct.price, price_code : tempProduct.price_code_name , discount : tempProduct.discount});
+        const index2 =  this.customerList.findIndex(x => x.id === this.orderMasterForm.value.customer_id);
+        console.log(this.customerList[index2]);
+        console.log(this.customerList[index2].discount);
+        // this.orderDetailsForm.patchValue({discount : this.customerList[index].discount})
+        this.orderDetailsForm.patchValue({discount : this.customerList[index2].discount, product_id: tempProduct.id, p_loss: tempProduct.p_loss, price: tempProduct.price, price_code : tempProduct.price_code_name});
       }else{
         alert('This model does not exist for this customer');
         // tslint:disable-next-line:max-line-length
@@ -389,6 +392,8 @@ export class OrderComponent implements OnInit {
     this.orderMasterForm.value.employee_id = user.id;
     this.orderMasterForm.value.order_date = this.pipe.transform(this.orderMasterForm.value.order_date, 'yyyy-MM-dd');
     this.orderMasterForm.value.delivery_date = this.pipe.transform(this.orderMasterForm.value.delivery_date, 'yyyy-MM-dd');
+    // const index =  this.customerList.findIndex(x => x.id === this.orderMasterForm.value.customer_id);
+    // this.orderDetailsForm.patchValue({discount : this.customerList[index].discount});
     // this.orderService.setOrderMasterData();
 
     this.orderMaster = this.orderMasterForm.value;

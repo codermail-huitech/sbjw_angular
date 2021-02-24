@@ -62,12 +62,13 @@ export class CompletedBillDetailsComponent implements OnInit {
     this.billService.getfinishedBillDataSubUpdateListener()
       .subscribe((details: JobMaster[]) => {
         this.finishedBillData = details;
-        console.log(this.finishedBillData);
+        // console.log(this.finishedBillData);
       });
 
     this.billService.showCompletedBillsDataSubUpdateListener().subscribe((response) => {
       this.showBill = true;
       this.billDetailsData = response;
+      console.log(this.billDetailsData);
       this.discountPercentage = this.billDetailsData[0].discount;
       for (let i = 0; i < this.billDetailsData.length; i++){
         this.total92Gold = this.total92Gold + Number(this.billDetailsData[i].ginnie);
@@ -80,7 +81,7 @@ export class CompletedBillDetailsComponent implements OnInit {
       // this.discount = this.finishedBillData[0].discount;
       this.totalCost = this.totalCost - this.discount;
       this.discount = (this.discountPercentage / 100) * this.totalCost;
-      console.log(this.discountPercentage);
+      // console.log(this.discountPercentage);
       // this.totalCost = this.totalCost - ((this.discountPercentage / 100) * this.totalCost);
     });
   }
